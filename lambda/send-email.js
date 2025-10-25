@@ -1,5 +1,5 @@
-const AWS = require('aws-sdk');
-const ses = new AWS.SES({ region: 'us-east-1' }); // Cambia la región según tu configuración
+const { SESClient, SendEmailCommand } = require('@aws-sdk/client-ses');
+const ses = new SESClient({ region: 'us-east-1' });
 
 exports.handler = async (event) => {
     // Configurar CORS
@@ -110,7 +110,8 @@ Enviado desde el formulario de contacto de RTM Pantallas LED
         };
 
         // Enviar el email
-        const result = await ses.sendEmail(params).promise();
+        const command = new SendEmailCommand(params);
+        const result = await ses.send(command);
 
         return {
             statusCode: 200,
