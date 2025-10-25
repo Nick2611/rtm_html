@@ -1,9 +1,0 @@
-/* ===== CSS RESET ===== */
-*{ box-sizing: border-box; }
-html,body{ margin:0; padding:0; }
-body{
-  font-family: "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Arial, sans-serif;
-  color: var(--ink);
-  line-height: 1.5;
-  background: #fff;
-}
