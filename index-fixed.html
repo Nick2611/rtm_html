@@ -1495,6 +1495,8 @@
         submitBtn.disabled = true;
 
         try {
+          console.log('📤 Enviando datos:', data);
+          
           // Enviar datos a la función Lambda
           const response = await fetch('https://bjzit3ty35.execute-api.us-east-1.amazonaws.com/Prod/send-email', {
             method: 'POST',
@@ -1504,23 +1506,27 @@
             body: JSON.stringify(data)
           });
 
+          console.log('📡 Response recibida:', response);
+          console.log('📊 Response status:', response.status);
+          console.log('📊 Response ok:', response.ok);
+
           const result = await response.json();
-          
-          console.log('Response status:', response.status);
-          console.log('Response body:', result);
+          console.log('📦 Response body:', result);
 
           if (response.ok && result.message && result.message.includes('exitosamente')) {
-            // Mostrar popup de éxito
+            console.log('✅ Éxito: Mostrando popup');
             showPopup();
-            // Limpiar formulario
             form.reset();
           } else {
+            console.log('❌ Error en respuesta:', result);
             throw new Error(result.error || result.message || 'Error enviando el formulario');
           }
 
         } catch (error) {
-          console.error('Error:', error);
-          alert('Hubo un error al enviar tu consulta. Por favor, inténtalo de nuevo o contáctanos directamente.');
+          console.error('💥 Error completo:', error);
+          console.error('💥 Error message:', error.message);
+          console.error('💥 Error stack:', error.stack);
+          alert('Hubo un error al enviar tu consulta: ' + error.message + '. Por favor, inténtalo de nuevo o contáctanos directamente.');
         } finally {
           // Restaurar botón
           submitBtn.classList.remove('loading');
