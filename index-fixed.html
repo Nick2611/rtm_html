@@ -10,8 +10,25 @@
   <!-- Iconos -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
 
-  <style>
-    :root{
+    <style>
+      /* Reset CSS para eliminar bordes blancos */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      html, body {
+        width: 100%;
+        overflow-x: hidden;
+      }
+      
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      
+      :root{
       /* Colores del header */
       --nav-bg: #141416;
       --nav-text: #dfe6ee;
@@ -23,6 +40,7 @@
       
       /* Colores generales */
       --container: 1200px;
+      --container-mobile: 100%;
       --ink: #2b2b2b;
       --muted: #6b7280;
       --border: #d3d6da;
@@ -75,6 +93,65 @@
       align-items: center;
       justify-content: space-between;
       gap: 16px;
+      position: relative;
+      width: 100%;
+      min-height: 70px;
+      flex-wrap: nowrap;
+    }
+
+    /* Sistema adaptativo dinámico del header */
+    @media (max-width: 1200px) {
+      nav.navbar {
+        padding: 16px 20px;
+        min-height: 70px;
+      }
+      .brand img {
+        width: 250px;
+        height: 50px;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      nav.navbar {
+        padding: 14px 20px;
+        min-height: 65px;
+      }
+      .brand img {
+        width: 220px;
+        height: 45px;
+      }
+    }
+
+    @media (max-width: 950px) {
+      nav.navbar {
+        padding: 12px 20px;
+        min-height: 60px;
+      }
+      .brand img {
+        width: 200px;
+        height: 40px;
+      }
+      .btn {
+        padding: 10px 16px;
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 900px) {
+      nav.navbar {
+        padding: 10px 15px;
+        min-height: 60px;
+        align-items: center;
+        gap: 10px;
+      }
+      .brand img {
+        width: 180px;
+        height: 36px;
+      }
+      .btn {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+      }
     }
 
     .brand{
@@ -82,12 +159,31 @@
       align-items: center;
       gap: 14px;
       min-width: 180px;
+      flex: 0 0 auto;
+    }
+
+    /* Ajustar brand en móvil */
+    @media (max-width: 900px) {
+      .brand {
+        min-width: auto;
+        flex: 1;
+        justify-content: flex-start;
+        order: 1;
+      }
     }
     .brand img{
       display: block;
       width: 300px;
       height: 60px;
       object-fit: contain;
+    }
+
+    /* Reducir tamaño del logo en móvil */
+    @media (max-width: 900px) {
+      .brand img {
+        width: 220px;
+        height: 45px;
+      }
     }
 
     .nav-center{
@@ -134,6 +230,19 @@
     .cta{
       flex: 0 0 auto;
     }
+
+    /* Ajustar CTA en móvil */
+    @media (max-width: 900px) {
+      .cta {
+        display: flex;
+        flex: 0 0 auto;
+        order: 2;
+      }
+      .btn {
+        padding: 8px 14px;
+        font-size: 0.85rem;
+      }
+    }
     .btn{
       appearance: none;
       border: 0;
@@ -148,18 +257,40 @@
       transition: transform .06s ease, background .2s ease, box-shadow .2s ease;
       box-shadow: 0 6px 14px rgba(232,74,69,.22);
     }
+
+    /* Reducir tamaño del botón en móvil */
+    @media (max-width: 900px) {
+      .btn {
+        padding: 10px 16px;
+        font-size: 0.9rem;
+      }
+    }
     .btn:hover{ background: var(--accent-hover); }
     .btn:active{ transform: translateY(1px); }
 
-    /* Responsive header */
+    /* Sistema adaptativo del menú hamburguesa */
     .burger-wrap{
       display: none;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       cursor: pointer;
+      padding: 8px;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+      background-color: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      flex-shrink: 0;
+      min-width: 44px;
+      min-height: 44px;
+      justify-content: center;
+    }
+    .burger-wrap:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: scale(1.05);
     }
     .burger{
-      width: 28px; height: 22px; position: relative; cursor: pointer;
+      width: 32px; height: 24px; position: relative; cursor: pointer;
     }
     .burger span,
     .burger::before,
@@ -169,28 +300,72 @@
       height: 3px; background: var(--nav-text);
       transition: transform .25s ease, opacity .2s ease;
       border-radius: 2px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
     }
     .burger span{ top: 10px; }
     .burger::before{ top: 0; }
     .burger::after{ bottom: 0; }
 
     #nav-toggle{ display:none; }
-    @media (max-width: 900px){
+    
+    /* Breakpoints adaptativos para el menú hamburguesa */
+    @media (max-width: 1000px){
       .nav-center{ display:none; }
-      .burger-wrap{ display:flex; }
-      #nav-toggle:checked ~ .drawer{
-        max-height: 300px;
-        opacity: 1;
-        pointer-events: auto;
+      .burger-wrap{ 
+        display: flex;
+        z-index: 1001;
+        flex: 0 0 auto;
+        order: 3;
+        padding: 10px;
+        min-width: 48px;
+        min-height: 48px;
       }
-      #nav-toggle:checked + label .burger::before{
-        transform: translateY(10px) rotate(45deg);
-      }
-      #nav-toggle:checked + label .burger::after{
-        transform: translateY(-10px) rotate(-45deg);
-      }
-      #nav-toggle:checked + label .burger span{ opacity:0; }
     }
+    
+    @media (max-width: 900px){
+      .burger-wrap{ 
+        padding: 8px;
+        min-width: 44px;
+        min-height: 44px;
+      }
+    }
+    
+    @media (max-width: 768px){
+      .burger-wrap{ 
+        padding: 6px;
+        min-width: 40px;
+        min-height: 40px;
+      }
+      .burger {
+        width: 28px;
+        height: 20px;
+      }
+    }
+    
+    @media (max-width: 480px){
+      .burger-wrap{ 
+        padding: 4px;
+        min-width: 36px;
+        min-height: 36px;
+      }
+      .burger {
+        width: 24px;
+        height: 18px;
+      }
+    }
+
+    #nav-toggle:checked ~ .drawer{
+      max-height: 400px;
+      opacity: 1;
+      pointer-events: auto;
+    }
+    #nav-toggle:checked + label .burger::before{
+      transform: translateY(10px) rotate(45deg);
+    }
+    #nav-toggle:checked + label .burger::after{
+      transform: translateY(-10px) rotate(-45deg);
+    }
+    #nav-toggle:checked + label .burger span{ opacity:0; }
 
     .drawer{
       position: absolute;
@@ -204,20 +379,21 @@
       opacity: 0;
       pointer-events: none;
       transition: max-height .35s ease, opacity .25s ease;
-      z-index: 1000;
+      z-index: 1002;
       border-top: 1px solid rgba(255,255,255,0.1);
     }
     .drawer ul{
-      list-style:none; margin:0; padding:20px;
-      display:flex; flex-direction:column; gap:16px;
+      list-style:none; margin:0; padding:24px 20px;
+      display:flex; flex-direction:column; gap:20px;
     }
     .drawer a{
       color: var(--nav-text); 
       text-decoration:none; 
       font-weight:600;
-      padding: 12px 0;
+      padding: 16px 0;
       display: block;
       border-bottom: 1px solid rgba(255,255,255,0.1);
+      font-size: 1.1rem;
     }
     .drawer a:last-child{
       border-bottom: none;
@@ -958,9 +1134,40 @@
     .footer__social a:hover{ opacity:.85; transform: translateY(-1px); }
 
     /* ======= RESPONSIVE ======= */
+    @media (max-width: 1200px){
+      nav.navbar {
+        padding: 16px 20px;
+      }
+      .brand img {
+        width: 250px;
+        height: 50px;
+      }
+    }
+
     @media (max-width: 1024px){
       .hero__wrap{
         padding: 0 20px;
+      }
+      nav.navbar {
+        padding: 14px 20px;
+      }
+      .brand img {
+        width: 220px;
+        height: 45px;
+      }
+    }
+
+    @media (max-width: 950px){
+      nav.navbar {
+        padding: 12px 20px;
+      }
+      .brand img {
+        width: 200px;
+        height: 40px;
+      }
+      .btn {
+        padding: 10px 16px;
+        font-size: 0.9rem;
       }
     }
 
@@ -970,8 +1177,43 @@
     }
 
     @media (max-width: 768px){
+      /* Usar todo el ancho en móviles */
+      nav.navbar,
+      .hero__wrap,
+      .about__wrap,
+      .servicios-container,
+      .proyectos-container,
+      .contacto__wrap,
+      .footer__wrap {
+        max-width: var(--container-mobile);
+        width: 100%;
+        margin: 0;
+      }
+      
+      /* Asegurar que el header use todo el ancho */
+      nav.navbar {
+        max-width: 100%;
+        padding: 10px 15px;
+      }
+      
+      /* Eliminar padding lateral en secciones para usar todo el ancho */
+      section.hero,
+      section.about,
+      section.servicios,
+      section.proyectos,
+      section.contacto,
+      section.footer {
+        padding-left: 0;
+        padding-right: 0;
+      }
+      
       section.hero{
-        padding: 100px 20px 80px;
+        padding: 100px 0 80px;
+      }
+      
+      .hero__wrap{
+        padding: 0 15px;
+        width: 100%;
       }
       
       .hero__actions{
@@ -984,13 +1226,44 @@
         font-size: 1rem;
       }
 
-      section.about{ padding:64px 18px; }
+      section.about{ 
+        padding: 64px 0; 
+      }
       section.about::after{ left:8px; }
+      
+      .about__wrap {
+        padding: 0 15px;
+        width: 100%;
+      }
       .servicios-header h2, .proyectos-header h2 {
         font-size: 2rem;
       }
       .btn-mas-proyectos {
         margin-bottom: 40px;
+      }
+      
+      /* Ajustar padding de secciones */
+      section.servicios {
+        padding: 80px 0;
+      }
+      
+      section.proyectos {
+        padding: 80px 0;
+      }
+      
+      section.contacto {
+        padding: 36px 0 48px;
+      }
+      
+      section.footer {
+        padding: 40px 0 56px;
+      }
+      
+      .servicios-container,
+      .proyectos-container,
+      .contacto__wrap,
+      .footer__wrap {
+        padding: 0 15px;
       }
     }
 
@@ -1000,6 +1273,53 @@
         text-align:left;
       }
       .footer__brand img{ margin: 0; }
+    }
+
+    /* Pantallas muy pequeñas (móviles pequeños) */
+    @media (max-width: 480px){
+      nav.navbar {
+        padding: 8px 15px;
+      }
+      
+      .brand img {
+        width: 180px;
+        height: 36px;
+      }
+      
+      .btn {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+      }
+      
+      section.hero{
+        padding: 80px 0 60px;
+      }
+      
+      .hero__wrap{
+        padding: 0 10px;
+        width: 100%;
+      }
+      
+      .hero__title{
+        font-size: 2rem;
+      }
+      
+      .hero__subtitle{
+        font-size: 1rem;
+      }
+      
+      section.about{ 
+        padding: 50px 0; 
+      }
+      
+      .about__wrap {
+        padding: 0 10px;
+        width: 100%;
+      }
+      
+      .servicios-header h2, .proyectos-header h2 {
+        font-size: 1.8rem;
+      }
     }
 
     /* Responsive para videos */
@@ -1031,34 +1351,10 @@
         z-index: 1001;
       }
       
-      .drawer {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(20, 20, 22, 0.95);
-        backdrop-filter: blur(10px);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        max-height: 100vh;
-        z-index: 999;
-      }
-      
-      .drawer ul {
-        text-align: center;
-        padding: 40px 20px;
-      }
-      
-      .drawer a {
-        font-size: 1.5rem;
-        padding: 20px 0;
-        border-bottom: 1px solid rgba(255,255,255,0.2);
-      }
-      
-      .drawer a:last-child {
-        border-bottom: none;
+      /* Debug: asegurar que el menú sea visible cuando está activo */
+      #nav-toggle:checked ~ .drawer {
+        display: block !important;
+        visibility: visible !important;
       }
     }
   </style>
@@ -1069,7 +1365,7 @@
   <header class="site-header" role="banner">
     <nav class="navbar" aria-label="Principal">
       <!-- Logo -->
-      <a class="brand" href="#" aria-label="RTM Pantallas LED - Inicio">
+      <a class="brand" href="index-fixed.html" aria-label="RTM Pantallas LED - Inicio">
         <img src="rtm_logo/rtmLogo.png" alt="RTM Pantallas LED - Logo">
       </a>
 
@@ -1341,6 +1637,8 @@
         const navToggle = document.getElementById('nav-toggle');
         if (navToggle) {
           navToggle.checked = false;
+          // Forzar el evento change para actualizar el estado visual
+          navToggle.dispatchEvent(new Event('change'));
         }
       });
     });

@@ -10,8 +10,25 @@
   <!-- Iconos -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
 
-  <style>
-    :root{
+    <style>
+      /* Reset CSS para eliminar bordes blancos */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      html, body {
+        width: 100%;
+        overflow-x: hidden;
+      }
+      
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      
+      :root{
       /* Colores del header */
       --nav-bg: #141416;
       --nav-text: #dfe6ee;
@@ -23,6 +40,7 @@
       
       /* Colores generales */
       --container: 1200px;
+      --container-mobile: 100%;
       --ink: #2b2b2b;
       --muted: #6b7280;
       --border: #d3d6da;
@@ -67,6 +85,65 @@
       align-items: center;
       justify-content: space-between;
       gap: 16px;
+      position: relative;
+      width: 100%;
+      min-height: 70px;
+      flex-wrap: nowrap;
+    }
+
+    /* Sistema adaptativo dinámico del header */
+    @media (max-width: 1200px) {
+      nav.navbar {
+        padding: 16px 20px;
+        min-height: 70px;
+      }
+      .brand img {
+        width: 250px;
+        height: 50px;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      nav.navbar {
+        padding: 14px 20px;
+        min-height: 65px;
+      }
+      .brand img {
+        width: 220px;
+        height: 45px;
+      }
+    }
+
+    @media (max-width: 950px) {
+      nav.navbar {
+        padding: 12px 20px;
+        min-height: 60px;
+      }
+      .brand img {
+        width: 200px;
+        height: 40px;
+      }
+      .btn {
+        padding: 10px 16px;
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 900px) {
+      nav.navbar {
+        padding: 10px 15px;
+        min-height: 60px;
+        align-items: center;
+        gap: 10px;
+      }
+      .brand img {
+        width: 180px;
+        height: 36px;
+      }
+      .btn {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+      }
     }
 
     .brand{
@@ -74,12 +151,31 @@
       align-items: center;
       gap: 14px;
       min-width: 180px;
+      flex: 0 0 auto;
+    }
+
+    /* Ajustar brand en móvil */
+    @media (max-width: 900px) {
+      .brand {
+        min-width: auto;
+        flex: 1;
+        justify-content: flex-start;
+        order: 1;
+      }
     }
     .brand img{
       display: block;
       width: 300px;
       height: 60px;
       object-fit: contain;
+    }
+
+    /* Reducir tamaño del logo en móvil */
+    @media (max-width: 900px) {
+      .brand img {
+        width: 220px;
+        height: 45px;
+      }
     }
 
     .nav-center{
@@ -126,6 +222,19 @@
     .cta{
       flex: 0 0 auto;
     }
+
+    /* Ajustar CTA en móvil */
+    @media (max-width: 900px) {
+      .cta {
+        display: flex;
+        flex: 0 0 auto;
+        order: 2;
+      }
+      .btn {
+        padding: 8px 14px;
+        font-size: 0.85rem;
+      }
+    }
     .btn{
       appearance: none;
       border: 0;
@@ -140,70 +249,152 @@
       transition: transform .06s ease, background .2s ease, box-shadow .2s ease;
       box-shadow: 0 6px 14px rgba(232,74,69,.22);
     }
+
+    /* Reducir tamaño del botón en móvil */
+    @media (max-width: 900px) {
+      .btn {
+        padding: 10px 16px;
+        font-size: 0.9rem;
+      }
+    }
     .btn:hover{ background: var(--accent-hover); }
     .btn:active{ transform: translateY(1px); }
 
-    /* Responsive header */
+    /* Sistema adaptativo del menú hamburguesa */
     .burger-wrap{
       display: none;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+      background-color: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      flex-shrink: 0;
+      min-width: 44px;
+      min-height: 44px;
+      justify-content: center;
+    }
+    .burger-wrap:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: scale(1.05);
     }
     .burger{
-      width: 28px; height: 22px; position: relative; cursor: pointer;
+      width: 32px; height: 24px; position: relative; cursor: pointer;
     }
     .burger span,
     .burger::before,
     .burger::after{
       content:"";
       position:absolute; left:0; right:0;
-      height: 2px; background: var(--nav-text);
+      height: 3px; background: var(--nav-text);
       transition: transform .25s ease, opacity .2s ease;
+      border-radius: 2px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
     }
     .burger span{ top: 10px; }
     .burger::before{ top: 0; }
     .burger::after{ bottom: 0; }
 
     #nav-toggle{ display:none; }
-    @media (max-width: 900px){
+    
+    /* Breakpoints adaptativos para el menú hamburguesa */
+    @media (max-width: 1000px){
       .nav-center{ display:none; }
-      .burger-wrap{ display:flex; }
-      #nav-toggle:checked ~ .drawer{
-        max-height: 260px;
-        opacity: 1;
-        pointer-events: auto;
+      .burger-wrap{ 
+        display: flex;
+        z-index: 1001;
+        flex: 0 0 auto;
+        order: 3;
+        padding: 10px;
+        min-width: 48px;
+        min-height: 48px;
       }
-      #nav-toggle:checked + label .burger::before{
-        transform: translateY(10px) rotate(45deg);
+    }
+    
+    @media (max-width: 900px){
+      .burger-wrap{ 
+        padding: 8px;
+        min-width: 44px;
+        min-height: 44px;
       }
-      #nav-toggle:checked + label .burger::after{
-        transform: translateY(-10px) rotate(-45deg);
+    }
+    
+    @media (max-width: 768px){
+      .burger-wrap{ 
+        padding: 6px;
+        min-width: 40px;
+        min-height: 40px;
       }
-      #nav-toggle:checked + label .burger span{ opacity:0; }
+      .burger {
+        width: 28px;
+        height: 20px;
+      }
+    }
+    
+    @media (max-width: 480px){
+      .burger-wrap{ 
+        padding: 4px;
+        min-width: 36px;
+        min-height: 36px;
+      }
+      .burger {
+        width: 24px;
+        height: 18px;
+      }
     }
 
+    #nav-toggle:checked ~ .drawer{
+      max-height: 400px;
+      opacity: 1;
+      pointer-events: auto;
+    }
+    #nav-toggle:checked + label .burger::before{
+      transform: translateY(10px) rotate(45deg);
+    }
+    #nav-toggle:checked + label .burger::after{
+      transform: translateY(-10px) rotate(-45deg);
+    }
+    #nav-toggle:checked + label .burger span{ opacity:0; }
+
     .drawer{
-      max-width: var(--container);
-      margin: 0 auto;
-      padding: 0 20px 12px;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--nav-bg);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
       max-height: 0;
       overflow: hidden;
       opacity: 0;
       pointer-events: none;
       transition: max-height .35s ease, opacity .25s ease;
+      z-index: 1002;
+      border-top: 1px solid rgba(255,255,255,0.1);
     }
     .drawer ul{
-      list-style:none; margin:12px 0 0; padding:0;
-      display:flex; flex-direction:column; gap:16px;
-      border-top: 1px solid rgba(255,255,255,.08);
-      padding-top: 14px;
+      list-style:none; margin:0; padding:24px 20px;
+      display:flex; flex-direction:column; gap:20px;
     }
     .drawer a{
-      color: var(--nav-text); text-decoration:none; font-weight:600;
+      color: var(--nav-text); 
+      text-decoration:none; 
+      font-weight:600;
+      padding: 16px 0;
+      display: block;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      font-size: 1.1rem;
+    }
+    .drawer a:last-child{
+      border-bottom: none;
     }
     .drawer a.active{
-      text-decoration: underline; text-decoration-color: var(--active-underline);
-      text-underline-offset: 6px;
+      color: var(--accent);
+    }
+    .drawer a:hover{
+      color: var(--accent);
     }
 
     /* ======= HERO SERVICIOS ======= */
@@ -498,7 +689,143 @@
       cursor: not-allowed;
     }
 
+    /* ======= CONTACTO SECTION ======= */
+    section.contacto{
+      padding: 36px 20px 48px;
+      background:#ffffff;
+    }
+    .contacto__wrap{
+      max-width: var(--container);
+      margin: 0 auto;
+    }
+    .contacto h3{
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 0 0 22px;
+      color: var(--ink);
+    }
+
+    form.contact-form{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px 24px;
+    }
+    .form-field{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .form-field.full{ grid-column: 1 / -1; }
+
+    label{
+      font-size:.95rem;
+      color:var(--ink);
+    }
+    .req::after{
+      content:" *";
+      color:#a12a2a;
+      font-weight:700;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    textarea{
+      width:100%;
+      padding: 14px 14px;
+      background: var(--field-bg);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      font: inherit;
+      color: var(--ink);
+      outline: none;
+      transition: border-color .2s ease, box-shadow .2s ease;
+    }
+    textarea{ min-height: 140px; resize: vertical; }
+
+    input::placeholder, textarea::placeholder{ color:#9aa1aa; }
+
+    input:focus, textarea:focus{
+      border-color:#9aa7b2;
+      box-shadow: 0 0 0 3px rgba(100,116,139,.15);
+    }
+
+    .form-actions{
+      grid-column: 1 / -1;
+      margin-top: 6px;
+      display: flex;
+      justify-content: center;
+    }
+    .btn-submit{
+      width: auto;
+      min-width: 200px;
+      background: var(--accent);
+      color: #fff;
+      border: 0;
+      padding: 12px 22px;
+      border-radius: 4px;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: .3px;
+      transition: transform .06s ease, background .2s ease, box-shadow .2s ease;
+      box-shadow: 0 6px 14px rgba(232,74,69,.22);
+    }
+    .btn-submit:hover{ 
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(232,74,69,.3);
+    }
+    .btn-submit:active{ transform: translateY(1px); }
+
+    /* Estado de carga del botón */
+    .btn-submit.loading .btn-text {
+      display: none;
+    }
+
+    .btn-submit.loading .btn-loading {
+      display: inline;
+    }
+
+    .btn-submit:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
     /* ======= RESPONSIVE ======= */
+    @media (max-width: 1200px){
+      nav.navbar {
+        padding: 16px 20px;
+      }
+      .brand img {
+        width: 250px;
+        height: 50px;
+      }
+    }
+
+    @media (max-width: 1024px){
+      nav.navbar {
+        padding: 14px 20px;
+      }
+      .brand img {
+        width: 220px;
+        height: 45px;
+      }
+    }
+
+    @media (max-width: 950px){
+      nav.navbar {
+        padding: 12px 20px;
+      }
+      .brand img {
+        width: 200px;
+        height: 40px;
+      }
+      .btn {
+        padding: 10px 16px;
+        font-size: 0.9rem;
+      }
+    }
+
     @media (max-width: 960px){
       .footer__wrap{
         grid-template-columns: 1fr;
@@ -508,12 +835,95 @@
     }
 
     @media (max-width: 768px){
+      /* Usar todo el ancho en móviles */
+      nav.navbar,
+      .servicios-container,
+      .contacto__wrap,
+      .footer__wrap {
+        max-width: var(--container-mobile);
+        width: 100%;
+        margin: 0;
+      }
+      
+      /* Asegurar que el header use todo el ancho */
+      nav.navbar {
+        max-width: 100%;
+        padding: 10px 15px;
+      }
+      
+      /* Eliminar padding lateral en secciones para usar todo el ancho */
+      section.servicios,
+      section.contacto,
+      section.footer {
+        padding-left: 0;
+        padding-right: 0;
+      }
+      
+      /* Ajustar padding de secciones */
+      section.servicios {
+        padding: 80px 0;
+      }
+      
+      section.contacto {
+        padding: 36px 0 48px;
+      }
+      
+      section.footer {
+        padding: 40px 0 56px;
+      }
+      
+      .servicios-container,
+      .contacto__wrap,
+      .footer__wrap {
+        padding: 0 15px;
+      }
+      
       .servicios-grid__items{
         grid-template-columns: 1fr;
         gap: 30px;
       }
       .servicio-card__content{
         padding: 20px;
+      }
+    }
+
+    @media (max-width: 900px){
+      form.contact-form{ grid-template-columns: 1fr; }
+      .form-actions{ grid-column: 1 / -1; }
+    }
+
+    /* Pantallas muy pequeñas (móviles pequeños) */
+    @media (max-width: 480px){
+      nav.navbar {
+        padding: 8px 15px;
+      }
+      
+      .brand img {
+        width: 180px;
+        height: 36px;
+      }
+      
+      .btn {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+      }
+      
+      .servicios-grid__item{
+        padding: 20px 10px;
+      }
+      
+      .servicio-card__content{
+        padding: 15px;
+      }
+      
+      .servicios-container,
+      .contacto__wrap,
+      .footer__wrap {
+        padding: 0 10px;
+      }
+      
+      .servicios-header h2 {
+        font-size: 1.8rem;
       }
     }
   </style>
@@ -524,24 +934,24 @@
   <header class="site-header" role="banner">
     <nav class="navbar" aria-label="Principal">
       <!-- Logo -->
-      <a class="brand" href="index.html" aria-label="RTM Pantallas LED - Inicio">
+      <a class="brand" href="index-fixed.html" aria-label="RTM Pantallas LED - Inicio">
         <img src="rtm_logo/rtmLogo.png" alt="RTM Pantallas LED - Logo">
       </a>
 
       <!-- Navegación centrada (desktop) -->
       <div class="nav-center">
         <ul class="menu" role="menubar">
-          <li role="none"><a role="menuitem" href="index.html">Home</a></li>
-          <li role="none"><a role="menuitem" href="index.html#about">About</a></li>
+          <li role="none"><a role="menuitem" href="index-fixed.html">Home</a></li>
+          <li role="none"><a role="menuitem" href="index-fixed.html#about">About</a></li>
           <li role="none"><a role="menuitem" class="active" href="servicios.html">Servicios</a></li>
-          <li role="none"><a role="menuitem" href="index.html#clientes">Clientes</a></li>
-          <li role="none"><a role="menuitem" href="index.html#proyectos">Proyectos</a></li>
+          <li role="none"><a role="menuitem" href="index-fixed.html#clientes">Clientes</a></li>
+          <li role="none"><a role="menuitem" href="index-fixed.html#proyectos">Proyectos</a></li>
         </ul>
       </div>
 
       <!-- CTA derecha -->
       <div class="cta">
-        <a class="btn" href="index.html#contacto" role="button" aria-label="Ir a Contacto">CONTACTANOS</a>
+        <a class="btn" href="index-fixed.html#contacto" role="button" aria-label="Ir a Contacto">CONTACTANOS</a>
       </div>
 
       <!-- Hamburguesa (móvil) -->
@@ -549,19 +959,19 @@
       <label for="nav-toggle" class="burger-wrap" aria-hidden="true">
         <div class="burger"><span></span></div>
       </label>
-    </nav>
 
-    <!-- Drawer móvil -->
-    <div class="drawer" aria-label="Menú móvil">
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="index.html#about">About</a></li>
-        <li><a class="active" href="servicios.html">Servicios</a></li>
-        <li><a href="index.html#clientes">Clientes</a></li>
-        <li><a href="index.html#proyectos">Proyectos</a></li>
-        <li><a href="index.html#contacto">Contactanos</a></li>
-      </ul>
-    </div>
+      <!-- Drawer móvil -->
+      <div class="drawer" aria-label="Menú móvil">
+        <ul>
+          <li><a href="index-fixed.html">Home</a></li>
+          <li><a href="index-fixed.html#about">About</a></li>
+          <li><a class="active" href="servicios.html">Servicios</a></li>
+          <li><a href="index-fixed.html#clientes">Clientes</a></li>
+          <li><a href="index-fixed.html#proyectos">Proyectos</a></li>
+          <li><a href="index-fixed.html#contacto">Contactanos</a></li>
+        </ul>
+      </div>
+    </nav>
   </header>
   <!-- =============== /HEADER =============== -->
 
@@ -600,7 +1010,7 @@
         <!-- Tótems LED -->
         <div class="servicio-card">
           <div class="servicio-card__image">
-            <img src="seccion_servicios/totem_logo/TI.mov" alt="Tótems LED" style="width: 100%; height: 100%; object-fit: contain;">
+            <img src="seccion_servicios/serie_ifi_logo/salon_leones.png" alt="Tótems LED" style="width: 100%; height: 100%; object-fit: contain;">
           </div>
           <div class="servicio-card__content">
             <h3 class="servicio-card__title">Tótems LED</h3>
@@ -628,7 +1038,7 @@
         <!-- Ramaleros LED -->
         <div class="servicio-card">
           <div class="servicio-card__image">
-            <img src="seccion_servicios/ramaleros_logo/RAMALEROS.mov" alt="Ramaleros LED" style="width: 100%; height: 100%; object-fit: contain;">
+            <img src="seccion_servicios/serie_re_logo/serie_re_logo.jpg" alt="Ramaleros LED" style="width: 100%; height: 100%; object-fit: contain;">
           </div>
           <div class="servicio-card__content">
             <h3 class="servicio-card__title">Ramaleros LED</h3>
@@ -747,7 +1157,12 @@
     // Cerrar menú móvil al hacer clic en un enlace
     document.querySelectorAll('.drawer a').forEach(link => {
       link.addEventListener('click', () => {
-        document.getElementById('nav-toggle').checked = false;
+        const navToggle = document.getElementById('nav-toggle');
+        if (navToggle) {
+          navToggle.checked = false;
+          // Forzar el evento change para actualizar el estado visual
+          navToggle.dispatchEvent(new Event('change'));
+        }
       });
     });
 
@@ -867,6 +1282,16 @@
     // Inicializar formulario cuando el DOM esté listo
     document.addEventListener('DOMContentLoaded', initContactForm);
   </script>
+
+  <style>
+    /* Debug: asegurar que el menú sea visible cuando está activo */
+    @media (max-width: 900px) {
+      #nav-toggle:checked ~ .drawer {
+        display: block !important;
+        visibility: visible !important;
+      }
+    }
+  </style>
 
 </body>
 </html>
