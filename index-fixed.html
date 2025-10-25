@@ -156,6 +156,7 @@
       display: none;
       align-items: center;
       gap: 10px;
+      cursor: pointer;
     }
     .burger{
       width: 28px; height: 22px; position: relative; cursor: pointer;
@@ -165,8 +166,9 @@
     .burger::after{
       content:"";
       position:absolute; left:0; right:0;
-      height: 2px; background: var(--nav-text);
+      height: 3px; background: var(--nav-text);
       transition: transform .25s ease, opacity .2s ease;
+      border-radius: 2px;
     }
     .burger span{ top: 10px; }
     .burger::before{ top: 0; }
@@ -177,7 +179,7 @@
       .nav-center{ display:none; }
       .burger-wrap{ display:flex; }
       #nav-toggle:checked ~ .drawer{
-        max-height: 260px;
+        max-height: 300px;
         opacity: 1;
         pointer-events: auto;
       }
@@ -191,27 +193,40 @@
     }
 
     .drawer{
-      max-width: var(--container);
-      margin: 0 auto;
-      padding: 0 20px 12px;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--nav-bg);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
       max-height: 0;
       overflow: hidden;
       opacity: 0;
       pointer-events: none;
       transition: max-height .35s ease, opacity .25s ease;
+      z-index: 1000;
+      border-top: 1px solid rgba(255,255,255,0.1);
     }
     .drawer ul{
-      list-style:none; margin:12px 0 0; padding:0;
+      list-style:none; margin:0; padding:20px;
       display:flex; flex-direction:column; gap:16px;
-      border-top: 1px solid rgba(255,255,255,.08);
-      padding-top: 14px;
     }
     .drawer a{
-      color: var(--nav-text); text-decoration:none; font-weight:600;
+      color: var(--nav-text); 
+      text-decoration:none; 
+      font-weight:600;
+      padding: 12px 0;
+      display: block;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .drawer a:last-child{
+      border-bottom: none;
     }
     .drawer a.active{
-      text-decoration: underline; text-decoration-color: var(--active-underline);
-      text-underline-offset: 6px;
+      color: var(--accent);
+    }
+    .drawer a:hover{
+      color: var(--accent);
     }
 
     /* ======= HERO SECTION ======= */
@@ -916,6 +931,43 @@
         max-width: 140px;
       }
     }
+
+    /* Mejoras adicionales para el menú móvil */
+    @media (max-width: 900px) {
+      .burger-wrap {
+        z-index: 1001;
+      }
+      
+      .drawer {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(20, 20, 22, 0.95);
+        backdrop-filter: blur(10px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        max-height: 100vh;
+        z-index: 999;
+      }
+      
+      .drawer ul {
+        text-align: center;
+        padding: 40px 20px;
+      }
+      
+      .drawer a {
+        font-size: 1.5rem;
+        padding: 20px 0;
+        border-bottom: 1px solid rgba(255,255,255,0.2);
+      }
+      
+      .drawer a:last-child {
+        border-bottom: none;
+      }
+    }
   </style>
 </head>
 <body>
@@ -949,19 +1001,19 @@
       <label for="nav-toggle" class="burger-wrap" aria-hidden="true">
         <div class="burger"><span></span></div>
       </label>
-    </nav>
 
-    <!-- Drawer móvil -->
-    <div class="drawer" aria-label="Menú móvil">
-      <ul>
-        <li><a class="active" href="#home">Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="servicios.html">Servicios</a></li>
-        <li><a href="#clientes">Clientes</a></li>
-        <li><a href="#proyectos">Proyectos</a></li>
-        <li><a href="#contacto">Contactanos</a></li>
-      </ul>
-    </div>
+      <!-- Drawer móvil -->
+      <div class="drawer" aria-label="Menú móvil">
+        <ul>
+          <li><a class="active" href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="servicios.html">Servicios</a></li>
+          <li><a href="#clientes">Clientes</a></li>
+          <li><a href="#proyectos">Proyectos</a></li>
+          <li><a href="#contacto">Contactanos</a></li>
+        </ul>
+      </div>
+    </nav>
   </header>
   <!-- =============== /HEADER =============== -->
 
@@ -1150,8 +1202,8 @@
       <section class="footer__block" aria-labelledby="novedades-title">
         <h4 id="novedades-title">Enterate de las<br>novedades</h4>
         <nav class="footer__social" aria-label="Redes sociales">
-          <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-          <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+          <a href="https://www.instagram.com/pantallasledrtm/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://www.linkedin.com/in/rtmpantallasled/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
         </nav>
       </section>
     </div>
@@ -1176,9 +1228,40 @@
     // Cerrar menú móvil al hacer clic en un enlace
     document.querySelectorAll('.drawer a').forEach(link => {
       link.addEventListener('click', () => {
-        document.getElementById('nav-toggle').checked = false;
+        const navToggle = document.getElementById('nav-toggle');
+        if (navToggle) {
+          navToggle.checked = false;
+        }
       });
     });
+
+    // Asegurar que el menú móvil funcione correctamente
+    const navToggle = document.getElementById('nav-toggle');
+    const drawer = document.querySelector('.drawer');
+    
+    if (navToggle && drawer) {
+      navToggle.addEventListener('change', function() {
+        if (this.checked) {
+          drawer.style.maxHeight = '100vh';
+          drawer.style.opacity = '1';
+          drawer.style.pointerEvents = 'auto';
+          document.body.style.overflow = 'hidden'; // Prevenir scroll
+        } else {
+          drawer.style.maxHeight = '0';
+          drawer.style.opacity = '0';
+          drawer.style.pointerEvents = 'none';
+          document.body.style.overflow = 'auto'; // Restaurar scroll
+        }
+      });
+      
+      // Cerrar menú al hacer clic fuera de él
+      drawer.addEventListener('click', function(e) {
+        if (e.target === drawer) {
+          navToggle.checked = false;
+          navToggle.dispatchEvent(new Event('change'));
+        }
+      });
+    }
 
     // Carrusel dinámico de logos de clientes
     function loadClientLogos() {
