@@ -792,14 +792,17 @@
           });
 
           const result = await response.json();
+          
+          console.log('Response status:', response.status);
+          console.log('Response body:', result);
 
-          if (response.ok) {
+          if (response.ok && result.message && result.message.includes('exitosamente')) {
             // Mostrar popup de éxito
             showPopup();
             // Limpiar formulario
             form.reset();
           } else {
-            throw new Error(result.error || 'Error enviando el formulario');
+            throw new Error(result.error || result.message || 'Error enviando el formulario');
           }
 
         } catch (error) {
