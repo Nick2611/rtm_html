@@ -1498,12 +1498,14 @@
           console.log('📤 Enviando datos:', data);
           
           // Enviar datos a la función Lambda
-          const response = await fetch('https://bjzit3ty35.execute-api.us-east-1.amazonaws.com/Prod/send-email', {
+          const response = await fetch('https://2j77uv25gk.execute-api.us-east-1.amazonaws.com/Prod/send-email', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(data),
+            mode: 'cors',
+            credentials: 'omit'
           });
 
           console.log('📡 Response recibida:', response);
@@ -1526,7 +1528,23 @@
           console.error('💥 Error completo:', error);
           console.error('💥 Error message:', error.message);
           console.error('💥 Error stack:', error.stack);
-          alert('Hubo un error al enviar tu consulta: ' + error.message + '. Por favor, inténtalo de nuevo o contáctanos directamente.');
+          console.error('💥 Error name:', error.name);
+          
+          // Detectar tipo específico de error
+          let errorMessage = 'Hubo un error al enviar tu consulta. ';
+          
+          if (error.name === 'TypeError' && error.message.includes('Failed to fetch')) {
+            errorMessage += 'Error de conexión: No se pudo conectar al servidor. Verifica tu conexión a internet.';
+          } else if (error.name === 'TypeError' && error.message.includes('CORS')) {
+            errorMessage += 'Error de CORS: El navegador bloqueó la solicitud por políticas de seguridad.';
+          } else if (error.message.includes('load failed')) {
+            errorMessage += 'Error de carga: La solicitud falló al cargar. Esto puede ser un problema de red o configuración del servidor.';
+          } else {
+            errorMessage += error.message;
+          }
+          
+          errorMessage += ' Por favor, inténtalo de nuevo o contáctanos directamente.';
+          alert(errorMessage);
         } finally {
           // Restaurar botón
           submitBtn.classList.remove('loading');
