@@ -5,8 +5,8 @@ exports.handler = async (event) => {
     // Configurar CORS
     const headers = {
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
-        'Access-Control-Allow-Methods': 'POST,OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
         'Content-Type': 'application/json'
     };
 
@@ -37,43 +37,54 @@ exports.handler = async (event) => {
         }
 
         // Obtener emails desde variables de entorno
-        const recipientEmail = process.env.EMAIL_ADDRESS;
-        const senderEmail = process.env.SENDER_EMAIL || 'mendeznicolas2611@gmail.com';
+        const recipientEmail = process.env.EMAIL_ADDRESS; // Email donde recibes las consultas
+        const senderEmail = process.env.SENDER_EMAIL; // Email que aparece como remitente
         
         if (!recipientEmail) {
             throw new Error('EMAIL_ADDRESS no está configurado');
         }
+        
+        if (!senderEmail) {
+            throw new Error('SENDER_EMAIL no está configurado');
+        }
 
         // Configurar el email
         const params = {
-            Source: `"RTM Pantallas LED" <${senderEmail}>`, // Email verificado en SES con nombre
+            Source: `"RTM Pantallas LED - Consultas" <${senderEmail}>`, // Email verificado en SES con nombre
             Destination: {
                 ToAddresses: [recipientEmail]
             },
             Message: {
                 Subject: {
-                    Data: `Nueva consulta de ${nombre} ${apellido || ''} - RTM Pantallas LED`,
+                    Data: `[RTM Pantallas LED] Nueva consulta de ${nombre} ${apellido || ''}`,
                     Charset: 'UTF-8'
                 },
                 Body: {
                     Html: {
                         Data: `
-                            <h2>Nueva consulta desde RTM Pantallas LED</h2>
-                            <div style="font-family: Arial, sans-serif; line-height: 1.6;">
-                                <p><strong>Nombre:</strong> ${nombre} ${apellido || ''}</p>
-                                <p><strong>Empresa:</strong> ${empresa || 'No especificada'}</p>
-                                <p><strong>Teléfono:</strong> ${telefono}</p>
-                                <p><strong>Consulta:</strong></p>
-                                <div style="background: #f5f5f5; padding: 15px; border-radius: 5px; margin: 10px 0;">
-                                    ${consulta.replace(/\n/g, '<br>')}
+                            <div style="font-family: Arial, sans-serif; line-height: 1.6; max-width: 600px; margin: 0 auto;">
+                                <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; border-left: 4px solid #007bff;">
+                                    <h2 style="color: #007bff; margin-top: 0;">📧 Nueva Consulta - RTM Pantallas LED</h2>
                                 </div>
-                                <hr>
-                                <p style="color: #666; font-size: 12px;">
-                                    <strong>Cliente:</strong> ${nombre} ${apellido || ''} (${telefono})<br>
-                                    <strong>Empresa:</strong> ${empresa || 'No especificada'}<br>
-                                    <strong>Fecha:</strong> ${new Date().toLocaleString('es-ES')}<br>
-                                    <strong>Origen:</strong> Formulario de contacto RTM Pantallas LED
-                                </p>
+                                
+                                <div style="background: white; padding: 20px; border: 1px solid #e9ecef; border-radius: 8px; margin: 20px 0;">
+                                    <h3 style="color: #333; margin-top: 0;">Información del Cliente</h3>
+                                    <p><strong>👤 Nombre:</strong> ${nombre} ${apellido || ''}</p>
+                                    <p><strong>🏢 Empresa:</strong> ${empresa || 'No especificada'}</p>
+                                    <p><strong>📞 Teléfono:</strong> <a href="tel:${telefono}" style="color: #007bff;">${telefono}</a></p>
+                                </div>
+                                
+                                <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                                    <h3 style="color: #333; margin-top: 0;">💬 Consulta</h3>
+                                    <div style="background: white; padding: 15px; border-radius: 5px; border-left: 3px solid #28a745;">
+                                        ${consulta.replace(/\n/g, '<br>')}
+                                    </div>
+                                </div>
+                                
+                                <div style="background: #e9ecef; padding: 15px; border-radius: 8px; font-size: 12px; color: #6c757d;">
+                                    <p style="margin: 0;"><strong>📅 Fecha:</strong> ${new Date().toLocaleString('es-ES')}</p>
+                                    <p style="margin: 5px 0 0 0;"><strong>🌐 Origen:</strong> Formulario de contacto RTM Pantallas LED</p>
+                                </div>
                             </div>
                         `,
                         Charset: 'UTF-8'
