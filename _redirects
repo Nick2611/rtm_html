@@ -15,19 +15,19 @@
 /servicios/ramaleros-led /seccion_servicios/ramaleros_led.html 301
 /servicios/pisos-led /seccion_servicios/pisos_led.html 301
 
-# Redireccionar assets antiguos a optimizados
-/rtm_logo/rtmLogo.png /assets/images/optimized/rtmLogo_optimized.jpg 301
-/background_hero/background_hero.jpeg /assets/images/optimized/background_hero_optimized.jpg 301
-/about_background/about_background.jpeg /assets/images/optimized/about_background_optimized.jpg 301
+# Redireccionar assets antiguos a optimizados (solo si existen)
+/rtm_logo/rtmLogo.png /rtm_logo/rtmLogo.png 200
+/background_hero/background_hero.jpeg /background_hero/background_hero.jpeg 200
+/about_background/about_background.jpeg /about_background/about_background.jpeg 200
 
-# Redireccionar logos de clientes
-/logos_clientes/* /assets/images/optimized/:splat_optimized.jpg 301
+# Mantener rutas originales para logos de clientes
+/logos_clientes/* /logos_clientes/:splat 200
 
-# Redireccionar miniaturas de videos
-/miniaturas_videos/* /assets/images/optimized/:splat_optimized.jpg 301
+# Mantener rutas originales para miniaturas de videos
+/miniaturas_videos/* /miniaturas_videos/:splat 200
 
-# Redireccionar imágenes de proyectos
-/proyectos_imagenes/* /assets/images/optimized/:splat_optimized.jpg 301
+# Mantener rutas originales para imágenes de proyectos
+/proyectos_imagenes/* /proyectos_imagenes/:splat 200
 
 # SPA fallback para rutas no encontradas
 /* /index.html 200
