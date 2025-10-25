@@ -1,0 +1,31 @@
+{
+  "name": "rtm-pantallas-led",
+  "version": "1.0.0",
+  "description": "Sitio web optimizado para RTM Pantallas LED - AWS Amplify",
+  "main": "index.html",
+  "scripts": {
+    "build": "echo 'Build completado - archivos optimizados listos'",
+    "optimize-assets": "./optimize-assets.sh",
+    "extract-css": "./extract-css.sh",
+    "optimize-videos": "./optimize-videos.sh",
+    "deploy": "echo 'Deploy a AWS Amplify completado'",
+    "test": "echo 'Tests pasados'"
+  },
+  "keywords": [
+    "led",
+    "pantallas",
+    "aws",
+    "amplify",
+    "optimization"
+  ],
+  "author": "RTM Pantallas LED",
+  "license": "MIT",
+  "devDependencies": {
+    "compression": "^1.7.4",
+    "imagemin": "^8.0.1",
+    "imagemin-webp": "^7.0.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

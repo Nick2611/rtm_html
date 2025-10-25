@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Servicios — RTM Pantallas LED</title>
+  
+  <!-- Tipografía -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Iconos -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+
+  <style>
+    :root{
+      /* Colores del header */
+      --nav-bg: #141416;
+      --nav-text: #dfe6ee;
+      --nav-text-dim: #aab3bf;
+      --accent: #e84a45;
+      --accent-hover: #cf3d39;
+      --active-underline: #8ea2b5;
+      --shadow: rgba(0,0,0,.25);
+      
+      /* Colores generales */
+      --container: 1200px;
+      --ink: #2b2b2b;
+      --muted: #6b7280;
+      --border: #d3d6da;
+      --field-bg: #fff;
+      --cta: #59631f;
+      --cta-hover: #495119;
+      --footer-bg: #141516;
+      --footer-ink: #f2f3f5;
+      --footer-muted: #cfd4dc;
+      
+      /* Colores servicios */
+      --bg-light: #f3f4fa;
+      --text-dark: #333333;
+      --accent-dark: #1b1e18;
+      --accent-arrow: #ffffff;
+    }
+
+    /* Reset */
+    *{ box-sizing: border-box; }
+    html,body{ margin:0; padding:0; }
+    body{
+      font-family: "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Arial, sans-serif;
+      color: var(--ink);
+      line-height: 1.5;
+      background: #fff;
+    }
+
+    /* ======= HEADER ======= */
+    header.site-header{
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: var(--nav-bg);
+      box-shadow: 0 2px 14px var(--shadow);
+    }
+
+    nav.navbar{
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand{
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 180px;
+    }
+    .brand img{
+      display: block;
+      width: 300px;
+      height: 60px;
+      object-fit: contain;
+    }
+
+    .nav-center{
+      flex: 1 1 auto;
+      display: flex;
+      justify-content: center;
+    }
+
+    .menu{
+      list-style: none;
+      display: flex;
+      gap: 40px;
+      margin: 0;
+      padding: 0;
+      align-items: center;
+    }
+
+    .menu a{
+      text-decoration: none;
+      color: var(--nav-text);
+      font-weight: 500;
+      letter-spacing: .2px;
+      opacity: .95;
+      transition: opacity .2s ease, color .2s ease;
+    }
+
+    .menu a.active{
+      position: relative;
+      color: var(--nav-text);
+    }
+    .menu a.active::after{
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -10px;
+      height: 2px;
+      background: var(--active-underline);
+      border-radius: 2px;
+    }
+
+    .menu a:hover{ opacity: 1; }
+
+    .cta{
+      flex: 0 0 auto;
+    }
+    .btn{
+      appearance: none;
+      border: 0;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 700;
+      padding: 12px 22px;
+      border-radius: 4px;
+      text-decoration: none;
+      display: inline-block;
+      letter-spacing: .3px;
+      transition: transform .06s ease, background .2s ease, box-shadow .2s ease;
+      box-shadow: 0 6px 14px rgba(232,74,69,.22);
+    }
+    .btn:hover{ background: var(--accent-hover); }
+    .btn:active{ transform: translateY(1px); }
+
+    /* Responsive header */
+    .burger-wrap{
+      display: none;
+      align-items: center;
+      gap: 10px;
+    }
+    .burger{
+      width: 28px; height: 22px; position: relative; cursor: pointer;
+    }
+    .burger span,
+    .burger::before,
+    .burger::after{
+      content:"";
+      position:absolute; left:0; right:0;
+      height: 2px; background: var(--nav-text);
+      transition: transform .25s ease, opacity .2s ease;
+    }
+    .burger span{ top: 10px; }
+    .burger::before{ top: 0; }
+    .burger::after{ bottom: 0; }
+
+    #nav-toggle{ display:none; }
+    @media (max-width: 900px){
+      .nav-center{ display:none; }
+      .burger-wrap{ display:flex; }
+      #nav-toggle:checked ~ .drawer{
+        max-height: 260px;
+        opacity: 1;
+        pointer-events: auto;
+      }
+      #nav-toggle:checked + label .burger::before{
+        transform: translateY(10px) rotate(45deg);
+      }
+      #nav-toggle:checked + label .burger::after{
+        transform: translateY(-10px) rotate(-45deg);
+      }
+      #nav-toggle:checked + label .burger span{ opacity:0; }
+    }
+
+    .drawer{
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 0 20px 12px;
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
+      transition: max-height .35s ease, opacity .25s ease;
+    }
+    .drawer ul{
+      list-style:none; margin:12px 0 0; padding:0;
+      display:flex; flex-direction:column; gap:16px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      padding-top: 14px;
+    }
+    .drawer a{
+      color: var(--nav-text); text-decoration:none; font-weight:600;
+    }
+    .drawer a.active{
+      text-decoration: underline; text-decoration-color: var(--active-underline);
+      text-underline-offset: 6px;
+    }
+
+    /* ======= HERO SERVICIOS ======= */
+    section.hero-servicios{
+      background: 
+        linear-gradient(rgba(20, 20, 22, 0.85), rgba(15, 20, 32, 0.9)),
+        url('background_hero/background_hero.jpeg') center/cover no-repeat;
+      padding: 120px 20px 100px;
+      position: relative;
+      overflow: hidden;
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+    }
+
+    section.hero-servicios::before{
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(ellipse at top left, rgba(232, 74, 69, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at bottom right, rgba(89, 99, 31, 0.15) 0%, transparent 50%);
+      z-index: 1;
+    }
+
+    .hero-servicios__wrap{
+      max-width: var(--container);
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+      width: 100%;
+    }
+
+    .hero-servicios__content{
+      color: #ffffff;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+      text-align: center;
+      max-width: 800px;
+    }
+
+    .hero-servicios__title{
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      letter-spacing: -0.02em;
+      text-shadow: 0 3px 6px rgba(0, 0, 0, 0.7);
+    }
+
+    .hero-servicios__subtitle{
+      font-size: clamp(1.1rem, 2vw, 1.3rem);
+      color: #f0f4f8;
+      line-height: 1.6;
+      margin-bottom: 40px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+    }
+
+    /* ======= SERVICIOS GRID ======= */
+    section.servicios-grid{
+      padding: 80px 20px;
+      background: #fff;
+    }
+
+    .servicios-container{
+      max-width: var(--container);
+      margin: 0 auto;
+    }
+
+    .servicios-grid__title{
+      text-align: center;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 60px;
+    }
+
+    .servicios-grid__items{
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 40px;
+      margin-bottom: 80px;
+    }
+
+    .servicio-card{
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid #e5e7eb;
+    }
+
+    .servicio-card:hover{
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .servicio-card__image{
+      width: 100%;
+      height: 250px;
+      background: var(--bg-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      color: var(--accent);
+    }
+
+    .servicio-card__content{
+      padding: 30px;
+    }
+
+    .servicio-card__title{
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 15px;
+    }
+
+    .servicio-card__description{
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .servicio-card__btn{
+      display: inline-flex;
+      align-items: center;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .servicio-card__btn:hover{
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+    }
+
+    .servicio-card__btn::after{
+      content: "→";
+      margin-left: 8px;
+      transition: transform 0.3s ease;
+    }
+
+    .servicio-card__btn:hover::after{
+      transform: translateX(4px);
+    }
+
+    /* ======= FOOTER ======= */
+    footer.site-footer{
+      background: var(--footer-bg);
+      color: var(--footer-ink);
+      padding: 40px 20px 56px;
+    }
+    .footer__wrap{
+      max-width: var(--container);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr;
+      gap: 32px 40px;
+      align-items: start;
+    }
+
+    .footer__brand img{
+      width: 260px;
+      height: 96px;
+      object-fit: contain;
+      display:block;
+    }
+
+    .footer__block h4{
+      font-size: 1.75rem;
+      font-weight: 600;
+      margin: 0 0 10px;
+      color: var(--footer-ink);
+    }
+    .footer__text{
+      color: var(--footer-muted);
+      font-size: 1rem;
+    }
+    .footer__social{
+      display:flex; gap:18px; align-items:center; margin-top: 14px;
+    }
+    .footer__social a{
+      color:#e6e9ee;
+      text-decoration:none;
+      font-size: 1.5rem;
+      transition: opacity .2s ease, transform .06s ease;
+    }
+    .footer__social a:hover{ opacity:.85; transform: translateY(-1px); }
+
+    /* ======= RESPONSIVE ======= */
+    @media (max-width: 960px){
+      .footer__wrap{
+        grid-template-columns: 1fr;
+        text-align:left;
+      }
+      .footer__brand img{ margin: 0; }
+    }
+
+    @media (max-width: 768px){
+      .servicios-grid__items{
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+      .servicio-card__content{
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================== HEADER ================== -->
+  <header class="site-header" role="banner">
+    <nav class="navbar" aria-label="Principal">
+      <!-- Logo -->
+      <a class="brand" href="index.html" aria-label="RTM Pantallas LED - Inicio">
+        <img src="rtm_logo/rtmLogo.png" alt="RTM Pantallas LED - Logo">
+      </a>
+
+      <!-- Navegación centrada (desktop) -->
+      <div class="nav-center">
+        <ul class="menu" role="menubar">
+          <li role="none"><a role="menuitem" href="index.html">Home</a></li>
+          <li role="none"><a role="menuitem" href="index.html#about">About</a></li>
+          <li role="none"><a role="menuitem" class="active" href="servicios.html">Servicios</a></li>
+          <li role="none"><a role="menuitem" href="index.html#clientes">Clientes</a></li>
+          <li role="none"><a role="menuitem" href="index.html#proyectos">Proyectos</a></li>
+        </ul>
+      </div>
+
+      <!-- CTA derecha -->
+      <div class="cta">
+        <a class="btn" href="index.html#contacto" role="button" aria-label="Ir a Contacto">CONTACTANOS</a>
+      </div>
+
+      <!-- Hamburguesa (móvil) -->
+      <input type="checkbox" id="nav-toggle" aria-label="Abrir menú">
+      <label for="nav-toggle" class="burger-wrap" aria-hidden="true">
+        <div class="burger"><span></span></div>
+      </label>
+    </nav>
+
+    <!-- Drawer móvil -->
+    <div class="drawer" aria-label="Menú móvil">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#about">About</a></li>
+        <li><a class="active" href="servicios.html">Servicios</a></li>
+        <li><a href="index.html#clientes">Clientes</a></li>
+        <li><a href="index.html#proyectos">Proyectos</a></li>
+        <li><a href="index.html#contacto">Contactanos</a></li>
+      </ul>
+    </div>
+  </header>
+  <!-- =============== /HEADER =============== -->
+
+  <!-- ================== HERO SERVICIOS ================== -->
+  <section class="hero-servicios">
+    <div class="hero-servicios__wrap">
+      <div class="hero-servicios__content">
+        <h1 class="hero-servicios__title">Nuestros Servicios</h1>
+        <p class="hero-servicios__subtitle">
+          Soluciones LED profesionales para cada necesidad. Desde pantallas LED hasta tótems y pisos interactivos.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================== SERVICIOS GRID ================== -->
+  <section class="servicios-grid">
+    <div class="servicios-container">
+      <h2 class="servicios-grid__title">Soluciones LED Profesionales</h2>
+      
+      <div class="servicios-grid__items">
+        <!-- Pantallas LED -->
+        <div class="servicio-card">
+          <div class="servicio-card__image">
+            <img src="seccion_servicios/serie_re_logo/serie_re_logo.jpg" alt="Pantallas LED Serie RE" style="width: 100%; height: 100%; object-fit: contain;">
+          </div>
+          <div class="servicio-card__content">
+            <h3 class="servicio-card__title">Pantallas LED</h3>
+            <p class="servicio-card__description">
+              Pantallas LED de alta calidad para interior y exterior. Soluciones personalizadas para eventos, publicidad y presentaciones corporativas.
+            </p>
+            <a href="seccion_servicios/pantallas_led.html" class="servicio-card__btn">Ver Detalles</a>
+          </div>
+        </div>
+
+        <!-- Tótems LED -->
+        <div class="servicio-card">
+          <div class="servicio-card__image">
+            <img src="seccion_servicios/totem_logo/TI.mov" alt="Tótems LED" style="width: 100%; height: 100%; object-fit: contain;">
+          </div>
+          <div class="servicio-card__content">
+            <h3 class="servicio-card__title">Tótems LED</h3>
+            <p class="servicio-card__description">
+              Tótems LED interactivos y modernos. Perfectos para centros comerciales, eventos y espacios corporativos.
+            </p>
+            <a href="seccion_servicios/totems_led.html" class="servicio-card__btn">Ver Detalles</a>
+          </div>
+        </div>
+
+        <!-- Pisos LED -->
+        <div class="servicio-card">
+          <div class="servicio-card__image">
+            <img src="seccion_servicios/piso_led_logo/piso_logo.JPG" alt="Pisos LED" style="width: 100%; height: 100%; object-fit: contain;">
+          </div>
+          <div class="servicio-card__content">
+            <h3 class="servicio-card__title">Pisos LED</h3>
+            <p class="servicio-card__description">
+              Pisos LED interactivos y resistentes. Ideales para eventos, shows y experiencias inmersivas.
+            </p>
+            <a href="seccion_servicios/pisos_led.html" class="servicio-card__btn">Ver Detalles</a>
+          </div>
+        </div>
+
+        <!-- Ramaleros LED -->
+        <div class="servicio-card">
+          <div class="servicio-card__image">
+            <img src="seccion_servicios/ramaleros_logo/RAMALEROS.mov" alt="Ramaleros LED" style="width: 100%; height: 100%; object-fit: contain;">
+          </div>
+          <div class="servicio-card__content">
+            <h3 class="servicio-card__title">Ramaleros LED</h3>
+            <p class="servicio-card__description">
+              Sistemas LED para transporte público. Carteles LED resistentes y eficientes para colectivos y vehículos.
+            </p>
+            <a href="seccion_servicios/ramaleros_led.html" class="servicio-card__btn">Ver Detalles</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================== FOOTER ================== -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer__wrap">
+      <section class="footer__brand" aria-label="Marca">
+        <img src="rtm_logo/rtmLogo.png" alt="RTM Pantallas LED">
+      </section>
+
+      <section class="footer__block" aria-labelledby="contactanos-title">
+        <h4 id="contactanos-title">Contactanos</h4>
+        <p class="footer__text">
+          Comunicate al +54 9 11 7373 6308
+        </p>
+        <p class="footer__text" style="margin-top:12px;">
+          Av. Tte. Gral. Juan Domingo Perón 2915,<br>
+          B1888IUY Florencio Varela, Provincia<br>
+          de Buenos Aires
+        </p>
+      </section>
+
+      <section class="footer__block" aria-labelledby="novedades-title">
+        <h4 id="novedades-title">Enterate de las<br>novedades</h4>
+        <nav class="footer__social" aria-label="Redes sociales">
+          <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+        </nav>
+      </section>
+    </div>
+  </footer>
+
+  <!-- JavaScript para navegación suave -->
+  <script>
+    // Navegación suave
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Cerrar menú móvil al hacer clic en un enlace
+    document.querySelectorAll('.drawer a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('nav-toggle').checked = false;
+      });
+    });
+  </script>
+
+</body>
+</html>

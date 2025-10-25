@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RTM Pantallas LED — Soluciones LED Profesionales</title>
+  
+  <!-- Preload critical resources -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" as="style">
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" as="style">
+  <link rel="preload" href="assets/images/optimized/rtmLogo_optimized.jpg" as="image">
+  
+  <!-- Tipografía -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Iconos -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+
+  <!-- CSS optimizado -->
+  <link rel="stylesheet" href="assets/css/main.css">
+  
+  <!-- Critical CSS inline para above-the-fold content -->
+  <style>
+    /* Critical CSS para renderizado inmediato */
+    header.site-header{
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: #141416;
+      box-shadow: 0 2px 14px rgba(0,0,0,.25);
+    }
+    nav.navbar{
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand img{
+      display: block;
+      width: 220px;
+      height: 48px;
+      object-fit: contain;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================== HEADER ================== -->
+  <header class="site-header" role="banner">
+    <nav class="navbar" aria-label="Principal">
+      <!-- Logo -->
+      <a class="brand" href="#" aria-label="RTM Pantallas LED - Inicio">
+        <img src="assets/images/optimized/rtmLogo_optimized.jpg" alt="RTM Pantallas LED - Logo" width="220" height="48">
+      </a>
+
+      <!-- Navegación centrada (desktop) -->
+      <div class="nav-center">
+        <ul class="menu" role="menubar">
+          <li role="none"><a role="menuitem" class="active" href="#home">Home</a></li>
+          <li role="none"><a role="menuitem" href="#about">About</a></li>
+          <li role="none"><a role="menuitem" href="servicios.html">Servicios</a></li>
+          <li role="none"><a role="menuitem" href="#clientes">Clientes</a></li>
+          <li role="none"><a role="menuitem" href="#proyectos">Proyectos</a></li>
+        </ul>
+      </div>
+
+      <!-- CTA derecha -->
+      <div class="cta">
+        <a class="btn" href="#contacto" role="button" aria-label="Ir a Contacto">CONTACTANOS</a>
+      </div>
+
+      <!-- Hamburguesa (móvil) -->
+      <input type="checkbox" id="nav-toggle" aria-label="Abrir menú">
+      <label for="nav-toggle" class="burger-wrap" aria-hidden="true">
+        <div class="burger"><span></span></div>
+      </label>
+    </nav>
+
+    <!-- Drawer móvil -->
+    <div class="drawer" aria-label="Menú móvil">
+      <ul class="drawer-menu" role="menubar">
+        <li role="none"><a role="menuitem" href="#home">Home</a></li>
+        <li role="none"><a role="menuitem" href="#about">About</a></li>
+        <li role="none"><a role="menuitem" href="servicios.html">Servicios</a></li>
+        <li role="none"><a role="menuitem" href="#clientes">Clientes</a></li>
+        <li role="none"><a role="menuitem" href="#proyectos">Proyectos</a></li>
+        <li role="none"><a role="menuitem" href="#contacto" class="btn">CONTACTANOS</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- ================== HERO ================== -->
+  <section class="hero" id="home" aria-labelledby="hero-title">
+    <div class="hero-content">
+      <h1 id="hero-title">Soluciones LED Profesionales</h1>
+      <p class="hero-subtitle">Pantallas LED de alta calidad para eventos, publicidad y entretenimiento</p>
+      <div class="hero-actions">
+        <a href="#proyectos" class="btn btn-primary">Ver Proyectos</a>
+        <a href="#contacto" class="btn btn-secondary">Contactar</a>
+      </div>
+    </div>
+    <div class="hero-background">
+      <img src="assets/images/optimized/background_hero_optimized.jpg" alt="Fondo hero" loading="lazy">
+    </div>
+  </section>
+
+  <!-- ================== ABOUT ================== -->
+  <section class="about" id="about" aria-labelledby="about-title">
+    <div class="about-container">
+      <header class="about-header">
+        <small>About Us</small>
+        <h2 id="about-title">Especialistas en tecnología LED</h2>
+      </header>
+      
+      <div class="about-content">
+        <div class="about-text">
+          <p>Con más de 10 años de experiencia en el mercado, RTM Pantallas LED se ha consolidado como líder en soluciones de iluminación LED de alta calidad.</p>
+          
+          <div class="about-features">
+            <div class="feature">
+              <div class="feature-icon">
+                <i class="fas fa-lightbulb"></i>
+              </div>
+              <div class="feature-content">
+                <h3>Innovación Tecnológica</h3>
+                <p>Utilizamos las últimas tecnologías en LED para garantizar la mejor calidad visual.</p>
+              </div>
+            </div>
+            
+            <div class="feature">
+              <div class="feature-icon">
+                <i class="fas fa-cogs"></i>
+              </div>
+              <div class="feature-content">
+                <h3>Soluciones Personalizadas</h3>
+                <p>Cada proyecto es único. Adaptamos nuestras soluciones a las necesidades específicas de cada cliente.</p>
+              </div>
+            </div>
+            
+            <div class="feature">
+              <div class="feature-icon">
+                <i class="fas fa-headset"></i>
+              </div>
+              <div class="feature-content">
+                <h3>Soporte 24/7</h3>
+                <p>Nuestro equipo de soporte técnico está disponible para resolver cualquier consulta.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="about-image">
+          <img src="assets/images/optimized/about_background_optimized.jpg" alt="Sobre RTM Pantallas LED" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================== SERVICIOS ================== -->
+  <section class="servicios" id="servicios" aria-labelledby="servicios-title">
+    <div class="servicios-container">
+      <header class="servicios-header">
+        <small>Our Services</small>
+        <h2 id="servicios-title">Soluciones LED para cada necesidad</h2>
+        <p>Ofrecemos una amplia gama de productos LED diseñados para diferentes aplicaciones y presupuestos.</p>
+      </header>
+
+      <div class="servicios-grid">
+        <article class="servicio-card">
+          <div class="servicio-image">
+            <img src="assets/images/optimized/serie_re_logo_optimized.jpg" alt="Pantallas LED" loading="lazy">
+          </div>
+          <div class="servicio-content">
+            <h3>Pantallas LED</h3>
+            <p>Pantallas de alta resolución para eventos, publicidad y entretenimiento.</p>
+            <a href="servicios.html" class="servicio-link">Ver detalles <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </article>
+
+        <article class="servicio-card">
+          <div class="servicio-image">
+            <img src="assets/images/optimized/salon_leones_optimized.jpg" alt="Tótems LED" loading="lazy">
+          </div>
+          <div class="servicio-content">
+            <h3>Tótems LED</h3>
+            <p>Sistemas de tótems interactivos para eventos y espacios comerciales.</p>
+            <a href="servicios.html" class="servicio-link">Ver detalles <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </article>
+
+        <article class="servicio-card">
+          <div class="servicio-image">
+            <img src="assets/images/optimized/piso_logo_optimized.jpg" alt="Pisos LED" loading="lazy">
+          </div>
+          <div class="servicio-content">
+            <h3>Pisos LED</h3>
+            <p>Pisos interactivos LED para experiencias inmersivas únicas.</p>
+            <a href="servicios.html" class="servicio-link">Ver detalles <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================== CLIENTES ================== -->
+  <section class="clientes" id="clientes" aria-labelledby="clientes-title">
+    <div class="clientes-container">
+      <header class="clientes-header">
+        <small>Our Clients</small>
+        <h2 id="clientes-title">Empresas que confían en nosotros</h2>
+      </header>
+
+      <div class="carousel-container">
+        <div class="carousel-track" id="carousel-track">
+          <!-- Logos se cargan dinámicamente -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================== PROYECTOS ================== -->
+  <section class="proyectos" id="proyectos">
+    <div class="proyectos-container">
+      <header class="proyectos-header">
+        <small>Recent Projects</small>
+        <h2>Nuestros últimos proyectos</h2>
+        <a href="servicios.html" class="btn-mas-proyectos">Más proyectos</a>
+      </header>
+
+      <div class="proyectos-galeria">
+        <figure class="proyectos-video-item">
+          <video src="proyectos_videos/bruno.mp4" muted loop playsinline preload="metadata" poster="assets/images/optimized/bruno_optimized.jpg" loading="lazy"></video>
+          <div class="play-overlay">
+            <div class="play-button"></div>
+          </div>
+        </figure>
+        <figure class="proyectos-video-item">
+          <video src="proyectos_videos/speed_mini.mp4" muted loop playsinline preload="metadata" poster="assets/images/optimized/speed_mini_optimized.jpg" loading="lazy"></video>
+          <div class="play-overlay">
+            <div class="play-button"></div>
+          </div>
+        </figure>
+        <figure class="proyectos-video-item">
+          <video src="proyectos_videos/salon_leones.mp4" muted loop playsinline preload="metadata" poster="assets/images/optimized/salon_leones_optimized.jpg" loading="lazy"></video>
+          <div class="play-overlay">
+            <div class="play-button"></div>
+          </div>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================== CONTACTO ================== -->
+  <section class="contacto" id="contacto" aria-labelledby="contacto-title">
+    <div class="contacto-container">
+      <header class="contacto-header">
+        <small>Contact Us</small>
+        <h2 id="contacto-title">¿Listo para tu próximo proyecto?</h2>
+        <p>Contáctanos y descubre cómo podemos ayudarte a crear experiencias visuales impactantes.</p>
+      </header>
+
+      <div class="contacto-content">
+        <form class="contact-form" aria-label="Formulario de contacto">
+          <div class="form-group">
+            <label for="nombre">Nombre completo</label>
+            <input type="text" id="nombre" name="nombre" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="telefono">Teléfono</label>
+            <input type="tel" id="telefono" name="telefono">
+          </div>
+          
+          <div class="form-group">
+            <label for="empresa">Empresa</label>
+            <input type="text" id="empresa" name="empresa">
+          </div>
+          
+          <div class="form-group">
+            <label for="mensaje">Mensaje</label>
+            <textarea id="mensaje" name="mensaje" rows="5" required></textarea>
+          </div>
+          
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Enviar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================== FOOTER ================== -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer__wrap">
+      <div class="footer__brand">
+        <img src="assets/images/optimized/rtmLogo_optimized.jpg" alt="RTM Pantallas LED" width="200" height="44">
+        <p>Soluciones LED profesionales para eventos y publicidad.</p>
+      </div>
+      
+      <div class="footer__links">
+        <h3>Enlaces</h3>
+        <ul>
+          <li><a href="#home">Inicio</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="servicios.html">Servicios</a></li>
+          <li><a href="#proyectos">Proyectos</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer__contact">
+        <h3>Contacto</h3>
+        <p><i class="fas fa-phone"></i> +54 11 7373-6208</p>
+        <p><i class="fas fa-envelope"></i> info@rtmpantallas.com</p>
+        <p><i class="fas fa-map-marker-alt"></i> Buenos Aires, Argentina</p>
+      </div>
+    </div>
+    
+    <div class="footer__bottom">
+      <p>&copy; 2024 RTM Pantallas LED. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- JavaScript optimizado -->
+  <script src="assets/js/main.js" defer></script>
+</body>
+</html>

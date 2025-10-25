@@ -1,0 +1,168 @@
+/* ===== PISOS LED ===== */
+    :root {
+      --container: 1200px;
+      --accent: #ef443b;         /* rojo corporativo */
+      --ink: #333333;
+      --muted: #5b5f63;
+      --panel: #f3f6fb;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Montserrat", system-ui, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--ink);
+      background: #fff;
+      line-height: 1.6;
+    }
+
+    /* ====== CONTENEDOR GENERAL ====== */
+    section.pisos {
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 80px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 80px;
+    }
+
+    .pisos__title {
+      font-size: clamp(2.4rem, 4vw, 3.6rem);
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 20px;
+      letter-spacing: .2px;
+    }
+
+    /* ====== BLOQUE PRINCIPAL ====== */
+    .pisos__item {
+      background: var(--panel);
+      border-radius: 6px;
+      padding: 48px 40px;
+      display: flex;
+      align-items: center;
+      gap: 56px;
+    }
+
+    .pisos__media {
+      flex: 1 1 48%;
+      position: relative;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .pisos__media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .pisos__image {
+      flex: 1 1 48%;
+      position: relative;
+      border-radius: 4px;
+      overflow: hidden;
+      aspect-ratio: 16/9;
+    }
+    .pisos__image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Ícono de play */
+    .pisos__media::before {
+      content: "";
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 0; height: 0;
+      border-top: 14px solid transparent;
+      border-bottom: 14px solid transparent;
+      border-left: 22px solid #fff;
+      z-index: 2;
+      filter: drop-shadow(0 2px 3px rgba(0,0,0,.4));
+    }
+    .pisos__media::after {
+      content: "";
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 74px; height: 74px;
+      background: rgba(0,0,0,.45);
+      border-radius: 50%;
+      z-index: 1;
+    }
+
+    .pisos__copy {
+      flex: 1 1 52%;
+    }
+    .pisos__copy h3 {
+      font-size: clamp(2rem, 3vw, 3rem);
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .pisos__copy p {
+      color: var(--muted);
+      font-size: 1.05rem;
+      margin-bottom: 10px;
+    }
+
+    /* ====== BOTÓN FINAL ====== */
+    .btn-final {
+      align-self: flex-start;
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 16px 34px;
+      border-radius: 3px;
+      transition: background .25s ease, transform .06s ease;
+    }
+    .btn-final:hover {
+      background: #da3a32;
+      transform: translateY(-2px);
+    }
+    
+    .btn-final {
+      background: #25D366;
+      color: #fff;
+      border: none;
+      padding: 16px 34px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+    }
+    
+    .btn-final:hover {
+      background: #128C7E;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+    }
+
+    /* ===== NAVEGACIÓN STYLES ===== */
+    .nav-buttons a:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    .nav-buttons a[href="../servicios.html"]:hover {
+      background: #4b5563;
+    }
+    .nav-buttons a[href="../index.html"]:hover {
+      background: #cf3d39;
+    }
+
+    @media (max-width: 900px) {
+      .pisos__item {
+        flex-direction: column;
+        padding: 36px 22px;
+        gap: 32px;
+      }
+      .pisos__copy h3 {
+        font-size: 2rem;
+      }
+    }

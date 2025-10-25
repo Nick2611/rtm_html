@@ -1,0 +1,24 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - echo "🚀 Iniciando build para AWS Amplify..."
+        - echo "📁 Estructura del proyecto:"
+        - ls -la
+        - echo "📊 Tamaño de assets:"
+        - du -sh assets/ || echo "Assets no encontrados"
+    build:
+      commands:
+        - echo "🔧 Ejecutando optimizaciones..."
+        - echo "📦 Copiando archivos optimizados..."
+        - cp index-optimized.html index.html
+        - echo "✅ Build completado"
+  artifacts:
+    baseDirectory: .
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - assets/**/*
+      - node_modules/**/*

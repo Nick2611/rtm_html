@@ -1,0 +1,33 @@
+# Redirects para AWS Amplify
+# Configuración de rutas y redirecciones
+
+# Redireccionar archivos antiguos a optimizados
+/header.html /index.html 301
+/form_and_footer.html /index.html 301
+/latest_projects.html /index.html 301
+/about.html /index.html 301
+/clientes.html /index.html 301
+/services.html /servicios.html 301
+
+# Redireccionar rutas de servicios
+/servicios/pantallas-led /seccion_servicios/pantallas_led.html 301
+/servicios/totems-led /seccion_servicios/totems_led.html 301
+/servicios/ramaleros-led /seccion_servicios/ramaleros_led.html 301
+/servicios/pisos-led /seccion_servicios/pisos_led.html 301
+
+# Redireccionar assets antiguos a optimizados
+/rtm_logo/rtmLogo.png /assets/images/optimized/rtmLogo_optimized.jpg 301
+/background_hero/background_hero.jpeg /assets/images/optimized/background_hero_optimized.jpg 301
+/about_background/about_background.jpeg /assets/images/optimized/about_background_optimized.jpg 301
+
+# Redireccionar logos de clientes
+/logos_clientes/* /assets/images/optimized/:splat_optimized.jpg 301
+
+# Redireccionar miniaturas de videos
+/miniaturas_videos/* /assets/images/optimized/:splat_optimized.jpg 301
+
+# Redireccionar imágenes de proyectos
+/proyectos_imagenes/* /assets/images/optimized/:splat_optimized.jpg 301
+
+# SPA fallback para rutas no encontradas
+/* /index.html 200
