@@ -36,21 +36,23 @@ exports.handler = async (event) => {
             };
         }
 
-        // Obtener email de destino desde variable de entorno
-        const emailAddress = process.env.EMAIL_ADDRESS;
-        if (!emailAddress) {
+        // Obtener emails desde variables de entorno
+        const recipientEmail = process.env.EMAIL_ADDRESS;
+        const senderEmail = process.env.SENDER_EMAIL || 'mendeznicolas2611@gmail.com';
+        
+        if (!recipientEmail) {
             throw new Error('EMAIL_ADDRESS no está configurado');
         }
 
         // Configurar el email
         const params = {
-            Source: emailAddress, // Email verificado en SES
+            Source: `"RTM Pantallas LED" <${senderEmail}>`, // Email verificado en SES con nombre
             Destination: {
-                ToAddresses: [emailAddress]
+                ToAddresses: [recipientEmail]
             },
             Message: {
                 Subject: {
-                    Data: `Nueva consulta de ${nombre} ${apellido || ''}`,
+                    Data: `Nueva consulta de ${nombre} ${apellido || ''} - RTM Pantallas LED`,
                     Charset: 'UTF-8'
                 },
                 Body: {
@@ -67,7 +69,10 @@ exports.handler = async (event) => {
                                 </div>
                                 <hr>
                                 <p style="color: #666; font-size: 12px;">
-                                    Enviado desde el formulario de contacto de RTM Pantallas LED
+                                    <strong>Cliente:</strong> ${nombre} ${apellido || ''} (${telefono})<br>
+                                    <strong>Empresa:</strong> ${empresa || 'No especificada'}<br>
+                                    <strong>Fecha:</strong> ${new Date().toLocaleString('es-ES')}<br>
+                                    <strong>Origen:</strong> Formulario de contacto RTM Pantallas LED
                                 </p>
                             </div>
                         `,
