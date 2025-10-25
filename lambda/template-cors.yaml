@@ -1,0 +1,39 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: 'RTM Pantallas LED - Email Sender Lambda Function with CORS'
+
+Parameters:
+  EmailAddress:
+    Type: String
+    Description: Email address to receive contact form submissions
+    Default: mendeznicolas2611@gmail.com
+
+Resources:
+  SendEmailFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./
+      Handler: send-email.handler
+      Runtime: nodejs18.x
+      Description: 'Send contact form emails via SES'
+      Policies:
+        - SESCrudPolicy:
+            IdentityName: !Ref EmailAddress
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /send-email
+            Method: post
+            Cors:
+              AllowMethods: "'POST,OPTIONS'"
+              AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+              AllowOrigin: "'*'"
+
+Outputs:
+  SendEmailApi:
+    Description: "API Gateway endpoint URL for Send Email function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/send-email"
+  SendEmailFunction:
+    Description: "Send Email Lambda Function ARN"
+    Value: !GetAtt SendEmailFunction.Arn
