@@ -821,6 +821,99 @@
     }
     .btn-submit:active{ transform: translateY(1px); }
 
+    /* ======= POPUP DE CONFIRMACIÓN ======= */
+    .popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .popup-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .popup-content {
+      background: #fff;
+      padding: 40px;
+      border-radius: 12px;
+      text-align: center;
+      max-width: 400px;
+      margin: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      transform: scale(0.8);
+      transition: transform 0.3s ease;
+    }
+
+    .popup-overlay.show .popup-content {
+      transform: scale(1);
+    }
+
+    .popup-icon {
+      width: 60px;
+      height: 60px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      color: #fff;
+      font-size: 24px;
+    }
+
+    .popup-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 10px;
+    }
+
+    .popup-message {
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+
+    .popup-close {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .popup-close:hover {
+      background: var(--accent-hover);
+    }
+
+    /* Estado de carga del botón */
+    .btn-submit.loading .btn-text {
+      display: none;
+    }
+
+    .btn-submit.loading .btn-loading {
+      display: inline;
+    }
+
+    .btn-submit:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
     /* ======= FOOTER ======= */
     footer.site-footer{
       background: var(--footer-bg);
@@ -1147,34 +1240,37 @@
     <div class="contacto__wrap">
       <h3 id="contacto-title">Completá tus datos y hablemos sobre tu próximo proyecto</h3>
 
-      <form class="contact-form" action="#" method="post" novalidate>
+      <form class="contact-form" id="contact-form" novalidate>
         <div class="form-field">
           <label for="nombre">Nombre</label>
-          <input id="nombre" name="nombre" type="text" placeholder="First name" autocomplete="given-name">
+          <input id="nombre" name="nombre" type="text" placeholder="Tu nombre" autocomplete="given-name" required>
         </div>
 
         <div class="form-field">
           <label for="apellido">Apellido</label>
-          <input id="apellido" name="apellido" type="text" placeholder="Last name" autocomplete="family-name">
+          <input id="apellido" name="apellido" type="text" placeholder="Tu apellido" autocomplete="family-name">
         </div>
 
         <div class="form-field">
-          <label for="empresa" class="req">Empresa</label>
-          <input id="empresa" name="empresa" type="text" placeholder="Email">
+          <label for="empresa">Empresa</label>
+          <input id="empresa" name="empresa" type="text" placeholder="Nombre de tu empresa">
         </div>
 
         <div class="form-field">
-          <label for="telefono" class="req">Telefono</label>
-          <input id="telefono" name="telefono" type="tel" placeholder="Phone" inputmode="tel" autocomplete="tel">
+          <label for="telefono" class="req">Teléfono</label>
+          <input id="telefono" name="telefono" type="tel" placeholder="Tu número de teléfono" inputmode="tel" autocomplete="tel" required>
         </div>
 
         <div class="form-field full">
           <label for="consulta" class="req">Consulta</label>
-          <textarea id="consulta" name="consulta" placeholder="Message"></textarea>
+          <textarea id="consulta" name="consulta" placeholder="Cuéntanos sobre tu proyecto..." required></textarea>
         </div>
 
         <div class="form-actions">
-          <button class="btn-submit" type="submit">Enviar</button>
+          <button class="btn-submit" type="submit" id="submit-btn">
+            <span class="btn-text">Enviar</span>
+            <span class="btn-loading" style="display: none;">Enviando...</span>
+          </button>
         </div>
       </form>
     </div>
@@ -1208,6 +1304,20 @@
       </section>
     </div>
   </footer>
+
+  <!-- ================== POPUP DE CONFIRMACIÓN ================== -->
+  <div class="popup-overlay" id="popup-overlay">
+    <div class="popup-content">
+      <div class="popup-icon">
+        <i class="fas fa-check"></i>
+      </div>
+      <h3 class="popup-title">¡Consulta enviada!</h3>
+      <p class="popup-message">
+        Tu consulta ha sido enviada con éxito. Te contactaremos pronto para hablar sobre tu proyecto.
+      </p>
+      <button class="popup-close" onclick="closePopup()">Cerrar</button>
+    </div>
+  </div>
 
   <!-- JavaScript para navegación suave -->
   <script>
@@ -1353,6 +1463,95 @@
 
     // Inicializar videos cuando el DOM esté listo
     document.addEventListener('DOMContentLoaded', initProjectVideos);
+
+    // ===== MANEJO DEL FORMULARIO DE CONTACTO =====
+    function initContactForm() {
+      const form = document.getElementById('contact-form');
+      const submitBtn = document.getElementById('submit-btn');
+      
+      if (!form || !submitBtn) return;
+
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        // Obtener datos del formulario
+        const formData = new FormData(form);
+        const data = {
+          nombre: formData.get('nombre'),
+          apellido: formData.get('apellido'),
+          empresa: formData.get('empresa'),
+          telefono: formData.get('telefono'),
+          consulta: formData.get('consulta')
+        };
+
+        // Validación básica
+        if (!data.nombre || !data.telefono || !data.consulta) {
+          alert('Por favor, completa todos los campos obligatorios.');
+          return;
+        }
+
+        // Mostrar estado de carga
+        submitBtn.classList.add('loading');
+        submitBtn.disabled = true;
+
+        try {
+          // Enviar datos a la función Lambda
+          const response = await fetch('https://bjzit3ty35.execute-api.us-east-1.amazonaws.com/Prod/send-email', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+          });
+
+          const result = await response.json();
+
+          if (response.ok) {
+            // Mostrar popup de éxito
+            showPopup();
+            // Limpiar formulario
+            form.reset();
+          } else {
+            throw new Error(result.error || 'Error enviando el formulario');
+          }
+
+        } catch (error) {
+          console.error('Error:', error);
+          alert('Hubo un error al enviar tu consulta. Por favor, inténtalo de nuevo o contáctanos directamente.');
+        } finally {
+          // Restaurar botón
+          submitBtn.classList.remove('loading');
+          submitBtn.disabled = false;
+        }
+      });
+    }
+
+    // ===== FUNCIONES DEL POPUP =====
+    function showPopup() {
+      const popup = document.getElementById('popup-overlay');
+      if (popup) {
+        popup.classList.add('show');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closePopup() {
+      const popup = document.getElementById('popup-overlay');
+      if (popup) {
+        popup.classList.remove('show');
+        document.body.style.overflow = 'auto';
+      }
+    }
+
+    // Cerrar popup al hacer clic fuera
+    document.getElementById('popup-overlay')?.addEventListener('click', function(e) {
+      if (e.target === this) {
+        closePopup();
+      }
+    });
+
+    // Inicializar formulario cuando el DOM esté listo
+    document.addEventListener('DOMContentLoaded', initContactForm);
   </script>
 
 </body>
