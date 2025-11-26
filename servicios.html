@@ -218,6 +218,245 @@
     }
 
     .menu a:hover{ opacity: 1; }
+    
+    /* Menú desplegable horizontal de productos - Hover-based */
+    .menu-item-dropdown {
+      position: relative;
+    }
+    
+    .menu-item-dropdown > a {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    
+    .menu-item-dropdown > a::after {
+      content: "▼";
+      font-size: 0.7rem;
+      opacity: 0.7;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+    
+    .menu-item-dropdown:hover > a::after {
+      transform: rotate(180deg);
+      opacity: 1;
+    }
+    
+    /* Menú principal horizontal */
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      margin-top: 5px;
+      background: var(--nav-bg);
+      border-radius: 6px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+      transform: translateX(-50%) translateY(-10px);
+      padding: 8px;
+      z-index: 1001;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      white-space: nowrap;
+      display: flex;
+      flex-direction: row;
+      gap: 0;
+    }
+    
+    /* Crear un "puente" invisible para mantener el hover activo */
+    .dropdown-menu::before {
+      content: "";
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200%;
+      height: 10px;
+      background: transparent;
+      pointer-events: auto;
+    }
+    
+    /* Mostrar menú al hover sobre "Productos" o sobre el menú mismo */
+    .menu-item-dropdown:hover .dropdown-menu,
+    .menu-item-dropdown:hover .dropdown-menu::before,
+    .dropdown-menu:hover,
+    .dropdown-menu:hover::before {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+    
+    .menu-item-dropdown:hover .dropdown-menu,
+    .dropdown-menu:hover {
+      transform: translateX(-50%) translateY(0);
+    }
+    
+    /* Items del menú horizontal */
+    .dropdown-menu-item {
+      position: relative;
+    }
+    
+    .dropdown-menu-item > a {
+      display: block;
+      padding: 12px 20px;
+      color: var(--nav-text);
+      text-decoration: none;
+      transition: background 0.2s ease, color 0.2s ease;
+      font-size: 0.95rem;
+      white-space: nowrap;
+      border-radius: 4px;
+    }
+    
+    .dropdown-menu-item > a:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--nav-text);
+    }
+    
+    /* Submenú que aparece al hover sobre cada categoría */
+    .submenu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      margin-top: 5px;
+      background: var(--nav-bg);
+      border-radius: 6px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+      min-width: 180px;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+      transform: translateY(-10px);
+      padding: 8px 0;
+      z-index: 1002;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    /* Crear un "puente" invisible para el submenú */
+    .submenu::before {
+      content: "";
+      position: absolute;
+      bottom: 100%;
+      left: 0;
+      right: 0;
+      height: 10px;
+      background: transparent;
+      pointer-events: auto;
+    }
+    
+    /* Mostrar submenú al hover sobre la categoría o sobre el submenú mismo */
+    .dropdown-menu-item:hover .submenu,
+    .dropdown-menu-item:hover .submenu::before,
+    .submenu:hover,
+    .submenu:hover::before {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+    
+    .dropdown-menu-item:hover .submenu,
+    .submenu:hover {
+      transform: translateY(0);
+    }
+    
+    /* Items del submenú */
+    .submenu a {
+      display: block;
+      padding: 10px 20px;
+      color: var(--nav-text-dim);
+      text-decoration: none;
+      transition: background 0.2s ease, color 0.2s ease;
+      font-size: 0.9rem;
+    }
+    
+    .submenu a:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--nav-text);
+    }
+    
+    /* Estilos para menú móvil con dropdowns */
+    .drawer .menu-item-dropdown {
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .drawer .dropdown-toggle-mobile {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .drawer .dropdown-arrow {
+      font-size: 0.7rem;
+      transition: transform 0.2s ease;
+    }
+    
+    .drawer .menu-item-dropdown.active .dropdown-arrow {
+      transform: rotate(180deg);
+    }
+    
+    /* Responsive para menú desplegable */
+    @media (max-width: 1000px) {
+      .dropdown-menu {
+        position: static;
+        flex-direction: column;
+        transform: none;
+        margin-top: 0;
+        box-shadow: none;
+        border: none;
+        padding: 0;
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        display: none;
+        white-space: normal;
+      }
+      
+      .menu-item-dropdown:hover .dropdown-menu,
+      .menu-item-dropdown.active .dropdown-menu {
+        display: flex;
+      }
+      
+      .dropdown-menu-item > a {
+        padding: 16px 0;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        border-radius: 0;
+      }
+      
+      .dropdown-menu-item:last-child > a {
+        border-bottom: none;
+      }
+      
+      .submenu {
+        position: static;
+        margin-top: 0;
+        margin-left: 20px;
+        box-shadow: none;
+        border: none;
+        transform: none;
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        display: none;
+        padding: 0;
+      }
+      
+      .dropdown-menu-item:hover .submenu,
+      .dropdown-menu-item.active .submenu {
+        display: block;
+      }
+      
+      .submenu a {
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+      }
+      
+      .submenu a:last-child {
+        border-bottom: none;
+      }
+    }
 
     .cta{
       flex: 0 0 auto;
@@ -943,6 +1182,72 @@
         <ul class="menu" role="menubar">
           <li role="none"><a role="menuitem" href="index-fixed.html">Home</a></li>
           <li role="none"><a role="menuitem" href="index-fixed.html#about">About</a></li>
+          <li role="none" class="menu-item-dropdown">
+            <a role="menuitem" href="#productos">Productos</a>
+            <ul class="dropdown-menu" role="menu">
+              <!-- Pantallas LED Outdoor -->
+              <li class="dropdown-menu-item" role="none">
+                <a href="seccion_servicios/pantallas_led.html#outdoor" role="menuitem">Pantallas LED Outdoor</a>
+                <ul class="submenu" role="menu">
+                  <li role="none"><a href="seccion_servicios/pantallas_led.html#vp" role="menuitem">VP</a></li>
+                  <li role="none"><a href="seccion_servicios/pantallas_led.html#re" role="menuitem">RE</a></li>
+                </ul>
+              </li>
+              <!-- Pantallas LED Indoor -->
+              <li class="dropdown-menu-item" role="none">
+                <a href="seccion_servicios/pantallas_led.html#indoor" role="menuitem">Pantallas LED Indoor</a>
+                <ul class="submenu" role="menu">
+                  <li role="none"><a href="seccion_servicios/pantallas_led.html#iri" role="menuitem">IRI</a></li>
+                  <li role="none"><a href="seccion_servicios/pantallas_led.html#ri" role="menuitem">RI</a></li>
+                </ul>
+              </li>
+              <!-- Tótems LED Outdoor -->
+              <li class="dropdown-menu-item" role="none">
+                <a href="seccion_servicios/totems_led.html#outdoor" role="menuitem">Tótems LED Outdoor</a>
+                <ul class="submenu" role="menu">
+                  <li role="none"><a href="seccion_servicios/totems_led.html#te" role="menuitem">TE</a></li>
+                </ul>
+              </li>
+              <!-- Tótems LED Indoor -->
+              <li class="dropdown-menu-item" role="none">
+                <a href="seccion_servicios/totems_led.html#indoor" role="menuitem">Tótems LED Indoor</a>
+                <ul class="submenu" role="menu">
+                  <li role="none"><a href="seccion_servicios/totems_led.html#ti" role="menuitem">TI</a></li>
+                </ul>
+              </li>
+              <!-- Serie Galileo -->
+              <li class="dropdown-menu-item" role="none">
+                <a href="seccion_servicios/pantallas_led.html#galileo" role="menuitem">Serie Galileo</a>
+                <ul class="submenu" role="menu">
+                  <li role="none"><a href="seccion_servicios/pantallas_led.html#gigo" role="menuitem">GIGO</a></li>
+                  <li role="none"><a href="seccion_servicios/pantallas_led.html#gig" role="menuitem">GIG</a></li>
+                </ul>
+              </li>
+              <!-- Iluminación -->
+              <li class="dropdown-menu-item" role="none">
+                <a href="seccion_servicios/pantallas_led.html#iluminacion" role="menuitem">Iluminación</a>
+                <ul class="submenu" role="menu">
+                  <li role="none"><a href="seccion_servicios/pantallas_led.html#ilum1" role="menuitem">Subcategoría 1</a></li>
+                  <li role="none"><a href="seccion_servicios/pantallas_led.html#ilum2" role="menuitem">Subcategoría 2</a></li>
+                  <li role="none"><a href="seccion_servicios/pantallas_led.html#ilum3" role="menuitem">Subcategoría 3</a></li>
+                  <li role="none"><a href="seccion_servicios/pantallas_led.html#ilum4" role="menuitem">Subcategoría 4</a></li>
+                </ul>
+              </li>
+              <!-- LED Trucks -->
+              <li class="dropdown-menu-item" role="none">
+                <a href="seccion_servicios/pantallas_led.html#led-trucks" role="menuitem">LED Trucks</a>
+              </li>
+              <!-- Pisos LED -->
+              <li class="dropdown-menu-item" role="none">
+                <a href="seccion_servicios/pisos_led.html" role="menuitem">Pisos LED</a>
+                <ul class="submenu" role="menu">
+                  <li role="none"><a href="seccion_servicios/pisos_led.html#p-dance" role="menuitem">P Dance</a></li>
+                  <li role="none"><a href="seccion_servicios/pisos_led.html#sfg4" role="menuitem">SFG4</a></li>
+                  <li role="none"><a href="seccion_servicios/pisos_led.html#sfg4i" role="menuitem">SFG4i</a></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
           <li role="none"><a role="menuitem" class="active" href="servicios.html">Servicios</a></li>
           <li role="none"><a role="menuitem" href="index-fixed.html#clientes">Clientes</a></li>
           <li role="none"><a role="menuitem" href="index-fixed.html#proyectos">Proyectos</a></li>
@@ -965,6 +1270,72 @@
         <ul>
           <li><a href="index-fixed.html">Home</a></li>
           <li><a href="index-fixed.html#about">About</a></li>
+          <li class="menu-item-dropdown">
+            <a href="#productos" class="dropdown-toggle-mobile">Productos <span class="dropdown-arrow">▼</span></a>
+            <ul class="dropdown-menu">
+              <!-- Pantallas LED Outdoor -->
+              <li class="dropdown-menu-item">
+                <a href="seccion_servicios/pantallas_led.html#outdoor">Pantallas LED Outdoor <span class="submenu-arrow">›</span></a>
+                <ul class="submenu">
+                  <li><a href="seccion_servicios/pantallas_led.html#vp">VP</a></li>
+                  <li><a href="seccion_servicios/pantallas_led.html#re">RE</a></li>
+                </ul>
+              </li>
+              <!-- Pantallas LED Indoor -->
+              <li class="dropdown-menu-item">
+                <a href="seccion_servicios/pantallas_led.html#indoor">Pantallas LED Indoor <span class="submenu-arrow">›</span></a>
+                <ul class="submenu">
+                  <li><a href="seccion_servicios/pantallas_led.html#iri">IRI</a></li>
+                  <li><a href="seccion_servicios/pantallas_led.html#ri">RI</a></li>
+                </ul>
+              </li>
+              <!-- Tótems LED Outdoor -->
+              <li class="dropdown-menu-item">
+                <a href="seccion_servicios/totems_led.html#outdoor">Tótems LED Outdoor <span class="submenu-arrow">›</span></a>
+                <ul class="submenu">
+                  <li><a href="seccion_servicios/totems_led.html#te">TE</a></li>
+                </ul>
+              </li>
+              <!-- Tótems LED Indoor -->
+              <li class="dropdown-menu-item">
+                <a href="seccion_servicios/totems_led.html#indoor">Tótems LED Indoor <span class="submenu-arrow">›</span></a>
+                <ul class="submenu">
+                  <li><a href="seccion_servicios/totems_led.html#ti">TI</a></li>
+                </ul>
+              </li>
+              <!-- Serie Galileo -->
+              <li class="dropdown-menu-item">
+                <a href="seccion_servicios/pantallas_led.html#galileo">Serie Galileo <span class="submenu-arrow">›</span></a>
+                <ul class="submenu">
+                  <li><a href="seccion_servicios/pantallas_led.html#gigo">GIGO</a></li>
+                  <li><a href="seccion_servicios/pantallas_led.html#gig">GIG</a></li>
+                </ul>
+              </li>
+              <!-- Iluminación -->
+              <li class="dropdown-menu-item">
+                <a href="seccion_servicios/pantallas_led.html#iluminacion">Iluminación <span class="submenu-arrow">›</span></a>
+                <ul class="submenu">
+                  <li><a href="seccion_servicios/pantallas_led.html#ilum1">Subcategoría 1</a></li>
+                  <li><a href="seccion_servicios/pantallas_led.html#ilum2">Subcategoría 2</a></li>
+                  <li><a href="seccion_servicios/pantallas_led.html#ilum3">Subcategoría 3</a></li>
+                  <li><a href="seccion_servicios/pantallas_led.html#ilum4">Subcategoría 4</a></li>
+                </ul>
+              </li>
+              <!-- LED Trucks -->
+              <li class="dropdown-menu-item">
+                <a href="seccion_servicios/pantallas_led.html#led-trucks">LED Trucks</a>
+              </li>
+              <!-- Pisos LED -->
+              <li class="dropdown-menu-item">
+                <a href="seccion_servicios/pisos_led.html">Pisos LED <span class="submenu-arrow">›</span></a>
+                <ul class="submenu">
+                  <li><a href="seccion_servicios/pisos_led.html#p-dance">P Dance</a></li>
+                  <li><a href="seccion_servicios/pisos_led.html#sfg4">SFG4</a></li>
+                  <li><a href="seccion_servicios/pisos_led.html#sfg4i">SFG4i</a></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
           <li><a class="active" href="servicios.html">Servicios</a></li>
           <li><a href="index-fixed.html#clientes">Clientes</a></li>
           <li><a href="index-fixed.html#proyectos">Proyectos</a></li>
@@ -1279,8 +1650,41 @@
       }
     });
 
-    // Inicializar formulario cuando el DOM esté listo
-    document.addEventListener('DOMContentLoaded', initContactForm);
+    // ===== MENÚ DESPLEGABLE DE PRODUCTOS =====
+    // Nota: El menú es completamente hover-based, no requiere JavaScript
+    // Se mantiene esta función por compatibilidad con el menú móvil
+    function initProductosDropdown() {
+      // El menú desktop funciona solo con CSS hover
+      // Esta función solo se usa para el menú móvil
+    }
+    
+    // ===== MENÚ MÓVIL DESPLEGABLE =====
+    function initMobileDropdown() {
+      const dropdownToggles = document.querySelectorAll('.drawer .dropdown-toggle-mobile');
+      
+      dropdownToggles.forEach(toggle => {
+        toggle.addEventListener('click', function(e) {
+          e.preventDefault();
+          const menuItem = this.closest('.menu-item-dropdown');
+          if (menuItem) {
+            // Cerrar otros menús abiertos
+            document.querySelectorAll('.drawer .menu-item-dropdown').forEach(item => {
+              if (item !== menuItem) {
+                item.classList.remove('active');
+              }
+            });
+            menuItem.classList.toggle('active');
+          }
+        });
+      });
+    }
+    
+    // Inicializar todo cuando el DOM esté listo
+    document.addEventListener('DOMContentLoaded', function() {
+      initProductosDropdown();
+      initMobileDropdown();
+      initContactForm();
+    });
   </script>
 
   <style>
