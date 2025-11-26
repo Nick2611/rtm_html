@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://rtmpantallasled.com/sitemap.xml
+
+# Disallow admin and private areas (if any)
+Disallow: /lambda/
+Disallow: /amplify.yml
+Disallow: /_headers
+Disallow: /_redirects
+
+
+

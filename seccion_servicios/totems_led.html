@@ -231,7 +231,7 @@
     .nav-buttons a[href="../servicios.html"]:hover {
       background: #4b5563;
     }
-    .nav-buttons a[href="../index.html"]:hover {
+    .nav-buttons a[href="../index-fixed.html"]:hover {
       background: #cf3d39;
     }
 
@@ -247,14 +247,14 @@
   <!-- ===== HEADER ===== -->
   <header style="background: #141416; padding: 20px 0; box-shadow: 0 2px 14px rgba(0,0,0,.25);">
     <div style="max-width: var(--container); margin: 0 auto; padding: 0 20px; display: flex; align-items: center; justify-content: space-between;">
-      <a href="../index.html" style="text-decoration: none;">
+      <a href="../index-fixed.html" style="text-decoration: none;">
         <img src="../rtm_logo/rtmLogo.png" alt="RTM Pantallas LED - Logo" style="height: 50px; width: auto;">
       </a>
       <div style="display: flex; gap: 15px; align-items: center;">
         <a href="../servicios.html" style="display: inline-flex; align-items: center; background: #6b7280; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; transition: all 0.3s ease;">
           ← Servicios
         </a>
-        <a href="../index.html" style="display: inline-flex; align-items: center; background: var(--accent); color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; transition: all 0.3s ease;">
+        <a href="../index-fixed.html" style="display: inline-flex; align-items: center; background: var(--accent); color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; transition: all 0.3s ease;">
           🏠 Home
         </a>
       </div>
@@ -265,8 +265,11 @@
   <section class="totems" id="totems-led" aria-labelledby="totems-title">
     <h1 id="totems-title" class="totems__title">Totems LED</h1>
 
+    <!-- ===== TÓTEMS LED INDOOR ===== -->
+    <div id="indoor"></div>
+    
     <!-- Interior Serie TI -->
-    <article class="to-item" aria-labelledby="ti-title">
+    <article class="to-item" id="ti" aria-labelledby="ti-title">
       <figure class="to-media">
         <div class="video-container">
           <video src="totem_logo/TI.mov" muted loop playsinline preload="metadata" poster="totem_logo/TI.mov" controls="false"></video>
@@ -283,8 +286,11 @@
       </div>
     </article>
 
+    <!-- ===== TÓTEMS LED OUTDOOR ===== -->
+    <div id="outdoor"></div>
+    
     <!-- Exterior Serie TE (panel de fondo suave como en la captura) -->
-    <article class="to-item panel" aria-labelledby="te-title">
+    <article class="to-item panel" id="te" aria-labelledby="te-title">
       <figure class="to-media">
         <div class="video-container">
           <video src="totem_logo/te.mov" muted loop playsinline preload="metadata" poster="totem_logo/te.mov" controls="false"></video>

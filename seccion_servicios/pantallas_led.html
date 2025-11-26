@@ -248,7 +248,7 @@
     .nav-buttons a[href="../servicios.html"]:hover {
       background: #4b5563;
     }
-    .nav-buttons a[href="../index.html"]:hover {
+    .nav-buttons a[href="../index-fixed.html"]:hover {
       background: #cf3d39;
     }
 
@@ -274,14 +274,14 @@
   <!-- ===== HEADER ===== -->
   <header style="background: #141416; padding: 20px 0; box-shadow: 0 2px 14px rgba(0,0,0,.25);">
     <div style="max-width: var(--container); margin: 0 auto; padding: 0 20px; display: flex; align-items: center; justify-content: space-between;">
-      <a href="../index.html" style="text-decoration: none;">
+      <a href="../index-fixed.html" style="text-decoration: none;">
         <img src="../rtm_logo/rtmLogo.png" alt="RTM Pantallas LED - Logo" style="height: 50px; width: auto;">
       </a>
       <div style="display: flex; gap: 15px; align-items: center;">
         <a href="../servicios.html" style="display: inline-flex; align-items: center; background: #6b7280; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; transition: all 0.3s ease;">
           ← Servicios
         </a>
-        <a href="../index.html" style="display: inline-flex; align-items: center; background: var(--accent); color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; transition: all 0.3s ease;">
+        <a href="../index-fixed.html" style="display: inline-flex; align-items: center; background: var(--accent); color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; transition: all 0.3s ease;">
           🏠 Home
         </a>
       </div>
@@ -291,8 +291,11 @@
   <section class="modelos" id="pantallas">
     <h1 class="modelos__titulo">Pantallas LED</h1>
 
+    <!-- ===== PANTALLAS LED OUTDOOR ===== -->
+    <div id="outdoor"></div>
+    
     <!-- ===== SERIE VP ===== -->
-    <article class="modelo">
+    <article class="modelo" id="vp">
       <figure class="modelo__video">
         <div class="video-container">
           <video src="serie_vp_logo/VP.mov" muted loop playsinline preload="metadata" poster="serie_vp_logo/VP.mov" controls="false"></video>
@@ -308,8 +311,11 @@
       </div>
     </article>
 
+    <!-- ===== PANTALLAS LED INDOOR ===== -->
+    <div id="indoor"></div>
+    
     <!-- ===== SERIE IFI ===== -->
-    <article class="modelo">
+    <article class="modelo" id="iri">
       <figure class="modelo__image">
         <img src="serie_ifi_logo/salon_leones.png" alt="Pantalla LED Serie IFI">
       </figure>
@@ -323,7 +329,7 @@
     </article>
 
     <!-- ===== SERIE RI ===== -->
-    <article class="modelo" style="background-color: var(--bg-light); padding: 50px 40px; border-radius: 6px;">
+    <article class="modelo" id="ri" style="background-color: var(--bg-light); padding: 50px 40px; border-radius: 6px;">
       <figure class="modelo__video">
         <div class="video-container">
           <video src="serie_ri_logo/RI.mov" muted loop playsinline preload="metadata" poster="serie_ri_logo/RI.mov" controls="false"></video>
@@ -342,7 +348,7 @@
     </article>
 
     <!-- ===== SERIE RE ===== -->
-    <article class="modelo" style="background-color: var(--bg-light); padding: 50px 40px; border-radius: 6px;">
+    <article class="modelo" id="re" style="background-color: var(--bg-light); padding: 50px 40px; border-radius: 6px;">
       <figure class="modelo__image">
         <img src="serie_re_logo/serie_re_logo.jpg" alt="Pantalla LED Serie RE">
       </figure>
@@ -353,6 +359,66 @@
       </div>
     </article>
 
+    <!-- ===== SERIE GALILEO ===== -->
+    <div id="galileo"></div>
+    
+    <!-- ===== SERIE GIGO ===== -->
+    <article class="modelo" id="gigo" style="background-color: var(--bg-light); padding: 50px 40px; border-radius: 6px;">
+      <figure class="modelo__image">
+        <img src="serie_re_logo/serie_re_logo.jpg" alt="Pantalla LED Serie GIGO">
+      </figure>
+      <div class="modelo__contenido">
+        <h3>Serie GIGO</h3>
+        <p>Serie Galileo GIGO: Solución LED de alto rendimiento diseñada para aplicaciones profesionales que requieren máxima calidad visual y durabilidad.</p>
+      </div>
+    </article>
+    
+    <!-- ===== SERIE GIG ===== -->
+    <article class="modelo" id="gig" style="background-color: var(--bg-light); padding: 50px 40px; border-radius: 6px;">
+      <figure class="modelo__image">
+        <img src="serie_re_logo/serie_re_logo.jpg" alt="Pantalla LED Serie GIG">
+      </figure>
+      <div class="modelo__contenido">
+        <h3>Serie GIG</h3>
+        <p>Serie Galileo GIG: Tecnología LED avanzada para instalaciones que demandan precisión y rendimiento constante.</p>
+      </div>
+    </article>
+    
+    <!-- ===== ILUMINACIÓN ===== -->
+    <div id="iluminacion"></div>
+    
+    <!-- ===== ILUMINACIÓN SUBCATEGORÍA 1 ===== -->
+    <article class="modelo" id="ilum1" style="background-color: var(--bg-light); padding: 50px 40px; border-radius: 6px;">
+      <div class="modelo__contenido">
+        <h3>Iluminación - Subcategoría 1</h3>
+        <p>Soluciones de iluminación LED profesionales para diversos espacios y aplicaciones.</p>
+      </div>
+    </article>
+    
+    <!-- ===== ILUMINACIÓN SUBCATEGORÍA 2 ===== -->
+    <article class="modelo" id="ilum2" style="background-color: var(--bg-light); padding: 50px 40px; border-radius: 6px;">
+      <div class="modelo__contenido">
+        <h3>Iluminación - Subcategoría 2</h3>
+        <p>Soluciones de iluminación LED profesionales para diversos espacios y aplicaciones.</p>
+      </div>
+    </article>
+    
+    <!-- ===== ILUMINACIÓN SUBCATEGORÍA 3 ===== -->
+    <article class="modelo" id="ilum3" style="background-color: var(--bg-light); padding: 50px 40px; border-radius: 6px;">
+      <div class="modelo__contenido">
+        <h3>Iluminación - Subcategoría 3</h3>
+        <p>Soluciones de iluminación LED profesionales para diversos espacios y aplicaciones.</p>
+      </div>
+    </article>
+    
+    <!-- ===== ILUMINACIÓN SUBCATEGORÍA 4 ===== -->
+    <article class="modelo" id="ilum4" style="background-color: var(--bg-light); padding: 50px 40px; border-radius: 6px;">
+      <div class="modelo__contenido">
+        <h3>Iluminación - Subcategoría 4</h3>
+        <p>Soluciones de iluminación LED profesionales para diversos espacios y aplicaciones.</p>
+      </div>
+    </article>
+    
     <!-- ===== SERIE SHELL ===== -->
     <article class="modelo" style="background-color: var(--bg-light); padding: 50px 40px; border-radius: 6px;">
       <figure class="modelo__video">

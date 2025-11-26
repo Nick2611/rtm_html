@@ -5,10 +5,95 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>RTM Pantallas LED — Soluciones LED Profesionales</title>
   
+  <!-- Meta Description -->
+  <meta name="description" content="Especialistas en desarrollo, fabricación e instalación de pantallas LED para interior y exterior. Soluciones profesionales y a medida.">
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://rtmpantallasled.com/index.html">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://rtmpantallasled.com/index.html">
+  <meta property="og:title" content="RTM Pantallas LED — Soluciones LED Profesionales">
+  <meta property="og:description" content="Especialistas en desarrollo, fabricación e instalación de pantallas LED para interior y exterior. Soluciones profesionales y a medida.">
+  <meta property="og:image" content="https://rtmpantallasled.com/rtm_logo/rtmLogo.png">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://rtmpantallasled.com/index.html">
+  <meta name="twitter:title" content="RTM Pantallas LED — Soluciones LED Profesionales">
+  <meta name="twitter:description" content="Especialistas en desarrollo, fabricación e instalación de pantallas LED para interior y exterior. Soluciones profesionales y a medida.">
+  <meta name="twitter:image" content="https://rtmpantallasled.com/rtm_logo/rtmLogo.png">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/rtm_logo/rtmLogo.png">
+  
+  <!-- Preconnect para Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
   <!-- Tipografía -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
   <!-- Iconos -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  
+  <!-- Datos Estructurados (Schema.org) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "RTM Pantallas LED",
+    "description": "Especialistas en desarrollo, fabricación e instalación de pantallas LED para interior y exterior. Soluciones profesionales y a medida.",
+    "url": "https://rtmpantallasled.com",
+    "logo": "https://rtmpantallasled.com/rtm_logo/rtmLogo.png",
+    "telephone": "+54 9 11 7373 6308",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Av. Tte. Gral. Juan Domingo Perón 2915",
+      "addressLocality": "Florencio Varela",
+      "postalCode": "B1888IUY",
+      "addressRegion": "Provincia de Buenos Aires",
+      "addressCountry": "AR"
+    },
+    "sameAs": [
+      "https://www.instagram.com/pantallasledrtm/",
+      "https://www.linkedin.com/in/rtmpantallasled/"
+    ]
+  }
+  </script>
+  
+  <!-- Sitemap -->
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml">
+  
+  <!-- Google Analytics (reemplazar con tu ID real) -->
+  <!--
+  <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'GA_MEASUREMENT_ID');
+  </script>
+  -->
+  
+  <!-- Facebook Pixel (reemplazar con tu ID real) -->
+  <!--
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', 'FACEBOOK_PIXEL_ID');
+    fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=FACEBOOK_PIXEL_ID&ev=PageView&noscript=1"
+  /></noscript>
+  -->
 
     <style>
       /* Reset CSS para eliminar bordes blancos */
@@ -83,6 +168,18 @@
       z-index: 1000;
       background: var(--nav-bg);
       box-shadow: 0 2px 14px var(--shadow);
+      overflow: visible;
+    }
+
+    .header-container {
+      position: relative;
+      z-index: 10;
+      background: var(--nav-bg);
+      padding-top: 20px;
+      max-width: var(--container);
+      margin: 0 auto;
+      width: 100%;
+      overflow: visible;
     }
 
     nav.navbar{
@@ -94,6 +191,7 @@
       justify-content: space-between;
       gap: 16px;
       position: relative;
+      z-index: 1000;
       width: 100%;
       min-height: 70px;
       flex-wrap: nowrap;
@@ -101,6 +199,9 @@
 
     /* Sistema adaptativo dinámico del header */
     @media (max-width: 1200px) {
+      .header-container {
+        padding-top: 18px;
+      }
       nav.navbar {
         padding: 16px 20px;
         min-height: 70px;
@@ -112,6 +213,9 @@
     }
 
     @media (max-width: 1024px) {
+      .header-container {
+        padding-top: 16px;
+      }
       nav.navbar {
         padding: 14px 20px;
         min-height: 65px;
@@ -123,6 +227,9 @@
     }
 
     @media (max-width: 950px) {
+      .header-container {
+        padding-top: 14px;
+      }
       nav.navbar {
         padding: 12px 20px;
         min-height: 60px;
@@ -138,6 +245,9 @@
     }
 
     @media (max-width: 900px) {
+      .header-container {
+        padding-top: 12px;
+      }
       nav.navbar {
         padding: 10px 15px;
         min-height: 60px;
@@ -164,7 +274,7 @@
 
     /* Ajustar brand en móvil */
     @media (max-width: 900px) {
-      .brand {
+      nav.navbar .brand {
         min-width: auto;
         flex: 1;
         justify-content: flex-start;
@@ -196,7 +306,7 @@
       list-style: none;
       display: flex;
       gap: 40px;
-      margin: 0;
+      margin: 20;
       padding: 0;
       align-items: center;
     }
@@ -226,6 +336,227 @@
     }
 
     .menu a:hover{ opacity: 1; }
+    
+    /* Menú desplegable horizontal de productos - Hover-based */
+    .menu-item-dropdown {
+      position: relative;
+    }
+    
+    .menu-item-dropdown > a {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    
+    .menu-item-dropdown > a::after {
+      content: "▼";
+      font-size: 0.7rem;
+      opacity: 0.7;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+    
+    .menu-item-dropdown:hover > a::after {
+      transform: rotate(180deg);
+      opacity: 1;
+    }
+    
+    /* Menú principal horizontal */
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(calc(-50% + 20px));
+      margin-top: 35px;
+      background: var(--nav-bg);
+      border-radius: 6px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+      padding: 8px;
+      z-index: 9999;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      white-space: nowrap;
+      display: flex;
+      flex-direction: row;
+      gap: 0;
+    }
+    
+    /* Crear un "puente" invisible para mantener el hover activo */
+    .dropdown-menu::before {
+      content: "";
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(calc(-50% + 20px));
+      width: 200%;
+      height: 10px;
+      background: transparent;
+      pointer-events: auto;
+    }
+    
+    /* Mostrar menú al hover sobre "Productos" o sobre el menú mismo */
+    .menu-item-dropdown:hover .dropdown-menu,
+    .menu-item-dropdown:hover .dropdown-menu::before,
+    .dropdown-menu:hover,
+    .dropdown-menu:hover::before {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+    
+    .menu-item-dropdown:hover .dropdown-menu,
+    .dropdown-menu:hover {
+      transform: translateX(calc(-50% + 20px));
+    }
+    
+    /* Items del menú horizontal */
+    .dropdown-menu-item {
+      position: relative;
+    }
+    
+    .dropdown-menu-item > a {
+      display: block;
+      padding: 12px 20px;
+      color: var(--nav-text);
+      text-decoration: none;
+      transition: background 0.2s ease, color 0.2s ease;
+      font-size: 0.95rem;
+      white-space: nowrap;
+      border-radius: 4px;
+    }
+    
+    .dropdown-menu-item > a:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--nav-text);
+    }
+    
+    /* Submenú que aparece al hover sobre cada categoría */
+    .submenu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      margin-top: 5px;
+      background: var(--nav-bg);
+      border-radius: 6px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+      min-width: 180px;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+      transform: translateY(0);
+      padding: 8px 0;
+      z-index: 10000;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    /* Crear un "puente" invisible para el submenú */
+    .submenu::before {
+      content: "";
+      position: absolute;
+      bottom: 100%;
+      left: 0;
+      right: 0;
+      height: 10px;
+      background: transparent;
+      pointer-events: auto;
+    }
+    
+    /* Mostrar submenú al hover sobre la categoría o sobre el submenú mismo */
+    .dropdown-menu-item:hover .submenu,
+    .dropdown-menu-item:hover .submenu::before,
+    .submenu:hover,
+    .submenu:hover::before {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+    
+    .dropdown-menu-item:hover .submenu,
+    .submenu:hover {
+      transform: translateY(0);
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+    
+    /* Items del submenú */
+    .submenu a {
+      display: block;
+      padding: 10px 20px;
+      color: var(--nav-text-dim);
+      text-decoration: none;
+      transition: background 0.2s ease, color 0.2s ease;
+      font-size: 0.9rem;
+    }
+    
+    .submenu a:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--nav-text);
+    }
+    
+    /* Responsive para menú desplegable */
+    @media (max-width: 1000px) {
+      .dropdown-menu {
+        position: static;
+        flex-direction: column;
+        transform: none;
+        margin-top: 0;
+        box-shadow: none;
+        border: none;
+        padding: 0;
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        display: none;
+        white-space: normal;
+      }
+      
+      .menu-item-dropdown:hover .dropdown-menu,
+      .menu-item-dropdown.active .dropdown-menu {
+        display: flex;
+      }
+      
+      .dropdown-menu-item > a {
+        padding: 16px 0;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        border-radius: 0;
+      }
+      
+      .dropdown-menu-item:last-child > a {
+        border-bottom: none;
+      }
+      
+      .submenu {
+        position: static;
+        margin-top: 0;
+        margin-left: 20px;
+        box-shadow: none;
+        border: none;
+        transform: none;
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        display: none;
+        padding: 0;
+      }
+      
+      .dropdown-menu-item:hover .submenu,
+      .dropdown-menu-item.active .submenu {
+        display: block;
+      }
+      
+      .submenu a {
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+      }
+      
+      .submenu a:last-child {
+        border-bottom: none;
+      }
+    }
 
     .cta{
       flex: 0 0 auto;
@@ -250,6 +581,7 @@
       color: #fff;
       font-weight: 700;
       padding: 12px 22px;
+      min-height: 44px;
       border-radius: 4px;
       text-decoration: none;
       display: inline-block;
@@ -381,6 +713,7 @@
       transition: max-height .35s ease, opacity .25s ease;
       z-index: 1002;
       border-top: 1px solid rgba(255,255,255,0.1);
+      margin-top: 0;
     }
     .drawer ul{
       list-style:none; margin:0; padding:24px 20px;
@@ -403,6 +736,35 @@
     }
     .drawer a:hover{
       color: var(--accent);
+    }
+    
+    /* Estilos para menú móvil con dropdowns */
+    .drawer .menu-item-dropdown {
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .drawer .dropdown-toggle-mobile {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .drawer .dropdown-arrow {
+      font-size: 0.7rem;
+      transition: transform 0.2s ease;
+    }
+    
+    .drawer .menu-item-dropdown.active .dropdown-arrow {
+      transform: rotate(180deg);
+    }
+    
+    .drawer .submenu-arrow {
+      font-size: 1.2rem;
+      opacity: 0.5;
+    }
+    
+    .drawer .dropdown-menu-item.active .submenu-arrow {
+      transform: rotate(90deg);
     }
 
     /* ======= HERO SECTION ======= */
@@ -494,6 +856,7 @@
       background: var(--accent);
       color: #fff;
       padding: 16px 32px;
+      min-height: 44px;
       font-weight: 600;
       font-size: 1.1rem;
       border-radius: 6px;
@@ -513,6 +876,7 @@
       color: #ffffff;
       border: 2px solid #ffffff;
       padding: 14px 30px;
+      min-height: 44px;
       font-weight: 600;
       font-size: 1.1rem;
       border-radius: 6px;
@@ -649,6 +1013,7 @@
       color: var(--accent-arrow);
       text-decoration: none;
       padding: 14px 26px;
+      min-height: 44px;
       font-weight: 600;
       font-size: 1rem;
       border-radius: 3px;
@@ -818,6 +1183,7 @@
       color: #fff;
       text-decoration: none;
       padding: 14px 26px;
+      min-height: 44px;
       font-weight: 600;
       font-size: 1rem;
       border-radius: 3px;
@@ -857,6 +1223,13 @@
     }
 
     .proyectos-video-item video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    
+    .proyectos-video-item .video-thumbnail {
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -911,24 +1284,66 @@
 
     /* ======= CONTACTO SECTION ======= */
     section.contacto{
-      padding: 36px 20px 48px;
+      padding: 80px 20px;
       background:#ffffff;
     }
     .contacto__wrap{
       max-width: var(--container);
       margin: 0 auto;
     }
+    
+    .contacto__layout {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 60px;
+      align-items: start;
+    }
+    
+    .contacto__intro {
+      padding-top: 20px;
+    }
+    
+    .contacto__intro h2 {
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 24px;
+      line-height: 1.2;
+    }
+    
+    .contacto__intro p {
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    
     .contacto h3{
       font-size: 1.25rem;
       font-weight: 600;
       margin: 0 0 22px;
       color: var(--ink);
+      display: none;
     }
 
     form.contact-form{
       display:grid;
       grid-template-columns: 1fr 1fr;
       gap: 20px 24px;
+    }
+    
+    @media (max-width: 900px) {
+      .contacto__layout {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      
+      .contacto h3 {
+        display: block;
+      }
+      
+      .contacto__intro h2 {
+        font-size: 1.75rem;
+      }
     }
     .form-field{
       display:flex;
@@ -950,22 +1365,38 @@
     input[type="text"],
     input[type="email"],
     input[type="tel"],
+    select,
     textarea{
       width:100%;
       padding: 14px 14px;
       background: var(--field-bg);
       border: 1px solid var(--border);
-      border-radius: 2px;
+      border-radius: 6px;
       font: inherit;
       color: var(--ink);
       outline: none;
       transition: border-color .2s ease, box-shadow .2s ease;
     }
-    textarea{ min-height: 140px; resize: vertical; }
+    
+    select {
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 40px;
+    }
+    
+    textarea{ 
+      min-height: 140px; 
+      resize: vertical; 
+    }
 
     input::placeholder, textarea::placeholder{ color:#9aa1aa; }
 
-    input:focus, textarea:focus{
+    input:focus, 
+    select:focus,
+    textarea:focus{
       border-color:#9aa7b2;
       box-shadow: 0 0 0 3px rgba(100,116,139,.15);
     }
@@ -979,6 +1410,7 @@
     .btn-submit{
       width: auto;
       min-width: 200px;
+      min-height: 44px;
       background: var(--accent);
       color: #fff;
       border: 0;
@@ -1178,6 +1610,7 @@
 
     @media (max-width: 768px){
       /* Usar todo el ancho en móviles */
+      .header-container,
       nav.navbar,
       .hero__wrap,
       .about__wrap,
@@ -1191,9 +1624,12 @@
       }
       
       /* Asegurar que el header use todo el ancho */
+      .header-container {
+        max-width: 100%;
+      }
       nav.navbar {
         max-width: 100%;
-        padding: 10px 15px;
+        padding: 0 15px 10px;
       }
       
       /* Eliminar padding lateral en secciones para usar todo el ancho */
@@ -1277,6 +1713,9 @@
 
     /* Pantallas muy pequeñas (móviles pequeños) */
     @media (max-width: 480px){
+      .header-container {
+        padding-top: 10px;
+      }
       nav.navbar {
         padding: 8px 15px;
       }
@@ -1358,22 +1797,325 @@
       }
     }
   </style>
+  
+  <style>
+    /* Skip Link para accesibilidad */
+    .skip-link {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background: var(--accent);
+      color: #fff;
+      padding: 8px 16px;
+      text-decoration: none;
+      z-index: 10000;
+      border-radius: 0 0 4px 0;
+      font-weight: 600;
+    }
+    .skip-link:focus {
+      top: 0;
+    }
+    
+    /* Botones flotantes */
+    .floating-buttons {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .floating-btn {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-decoration: none;
+      color: #fff;
+      font-size: 24px;
+      min-width: 56px;
+      min-height: 56px;
+    }
+    
+    .floating-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    }
+    
+    .floating-btn--contact {
+      background: var(--accent);
+    }
+    
+    .floating-btn--whatsapp {
+      background: #25D366;
+    }
+    
+    @media (max-width: 768px) {
+      .floating-buttons {
+        bottom: 15px;
+        right: 15px;
+        gap: 10px;
+      }
+      .floating-btn {
+        width: 50px;
+        height: 50px;
+        min-width: 50px;
+        min-height: 50px;
+        font-size: 20px;
+      }
+    }
+    
+    /* Popup de lead capture */
+    .lead-popup {
+      position: fixed;
+      bottom: 100px;
+      right: 20px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      padding: 24px;
+      max-width: 320px;
+      z-index: 9998;
+      opacity: 0;
+      transform: translateY(20px);
+      visibility: hidden;
+      transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+    }
+    
+    .lead-popup.show {
+      opacity: 1;
+      transform: translateY(0);
+      visibility: visible;
+    }
+    
+    .lead-popup__close {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: var(--muted);
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: background 0.2s ease;
+    }
+    
+    .lead-popup__close:hover {
+      background: #f0f0f0;
+    }
+    
+    .lead-popup__title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--ink);
+    }
+    
+    .lead-popup__text {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+    
+    .lead-popup__btn {
+      width: 100%;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 12px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      min-height: 44px;
+    }
+    
+    .lead-popup__btn:hover {
+      background: var(--accent-hover);
+    }
+    
+    @media (max-width: 768px) {
+      .lead-popup {
+        bottom: 80px;
+        right: 15px;
+        left: 15px;
+        max-width: none;
+      }
+    }
+    
+    /* Mensajes de error en formulario */
+    .form-field {
+      position: relative;
+    }
+    
+    .error-message {
+      color: #dc2626;
+      font-size: 0.875rem;
+      margin-top: 4px;
+      display: none;
+    }
+    
+    .form-field.error input,
+    .form-field.error select,
+    .form-field.error textarea {
+      border-color: #dc2626;
+    }
+    
+    .form-field.error .error-message {
+      display: block;
+    }
+    
+    /* Campos opcionales colapsables */
+    .optional-fields {
+      margin-top: 8px;
+    }
+    
+    .optional-toggle {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-decoration: underline;
+      padding: 0;
+      margin-bottom: 12px;
+    }
+    
+    .optional-toggle:hover {
+      color: var(--ink);
+    }
+    
+    .optional-fields-content {
+      display: none;
+      grid-column: 1 / -1;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px 24px;
+    }
+    
+    .optional-fields-content.show {
+      display: grid;
+    }
+    
+    @media (max-width: 900px) {
+      .optional-fields-content {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    /* Aviso de privacidad */
+    .privacy-notice {
+      grid-column: 1 / -1;
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+    
+    .privacy-notice a {
+      color: var(--accent);
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
 
+  <!-- Skip Link -->
+  <a href="#contenido" class="skip-link">Saltar al contenido</a>
+
   <!-- ================== HEADER ================== -->
   <header class="site-header" role="banner">
-    <nav class="navbar" aria-label="Principal">
-      <!-- Logo -->
-      <a class="brand" href="index-fixed.html" aria-label="RTM Pantallas LED - Inicio">
-        <img src="rtm_logo/rtmLogo.png" alt="RTM Pantallas LED - Logo">
-      </a>
+    <div class="header-container">
+      <!-- Barra de navegación -->
+      <nav class="navbar" aria-label="Principal">
+        <!-- Logo -->
+        <a class="brand" href="index-fixed.html" aria-label="RTM Pantallas LED - Inicio">
+          <img src="rtm_logo/rtmLogo.png" alt="RTM Pantallas LED - Logo" loading="eager" width="300" height="60">
+        </a>
 
-      <!-- Navegación centrada (desktop) -->
-      <div class="nav-center">
+        <!-- Navegación centrada (desktop) -->
+        <div class="nav-center">
         <ul class="menu" role="menubar">
           <li role="none"><a role="menuitem" class="active" href="#home">Home</a></li>
-          <li role="none"><a role="menuitem" href="#about">About</a></li>
+          <li role="none"><a role="menuitem" href="#about">Nosotros</a></li>
+          <li role="none" class="menu-item-dropdown">
+            <a role="menuitem" href="#productos">Productos</a>
+            <ul class="dropdown-menu" role="menu">
+              <!-- Pantallas LED Outdoor -->
+              <li class="dropdown-menu-item" role="none">
+                <a href="seccion_servicios/pantallas_led.html#outdoor" role="menuitem">Pantallas LED Outdoor</a>
+                <ul class="submenu" role="menu">
+                  <li role="none"><a href="seccion_servicios/pantallas_led.html#vp" role="menuitem">VP</a></li>
+                  <li role="none"><a href="seccion_servicios/pantallas_led.html#re" role="menuitem">RE</a></li>
+                </ul>
+              </li>
+              <!-- Pantallas LED Indoor -->
+              <li class="dropdown-menu-item" role="none">
+                <a href="seccion_servicios/pantallas_led.html#indoor" role="menuitem">Pantallas LED Indoor</a>
+                <ul class="submenu" role="menu">
+                  <li role="none"><a href="seccion_servicios/pantallas_led.html#iri" role="menuitem">IRI</a></li>
+                  <li role="none"><a href="seccion_servicios/pantallas_led.html#ri" role="menuitem">RI</a></li>
+                </ul>
+              </li>
+              <!-- Tótems LED Outdoor -->
+              <li class="dropdown-menu-item" role="none">
+                <a href="seccion_servicios/totems_led.html#outdoor" role="menuitem">Tótems LED Outdoor</a>
+                <ul class="submenu" role="menu">
+                  <li role="none"><a href="seccion_servicios/totems_led.html#te" role="menuitem">TE</a></li>
+                </ul>
+              </li>
+              <!-- Tótems LED Indoor -->
+              <li class="dropdown-menu-item" role="none">
+                <a href="seccion_servicios/totems_led.html#indoor" role="menuitem">Tótems LED Indoor</a>
+                <ul class="submenu" role="menu">
+                  <li role="none"><a href="seccion_servicios/totems_led.html#ti" role="menuitem">TI</a></li>
+                </ul>
+              </li>
+              <!-- Serie Galileo -->
+              <li class="dropdown-menu-item" role="none">
+                <a href="seccion_servicios/pantallas_led.html#galileo" role="menuitem">Serie Galileo</a>
+                <ul class="submenu" role="menu">
+                  <li role="none"><a href="seccion_servicios/pantallas_led.html#gigo" role="menuitem">GIGO</a></li>
+                  <li role="none"><a href="seccion_servicios/pantallas_led.html#gig" role="menuitem">GIG</a></li>
+                </ul>
+              </li>
+              <!-- Iluminación -->
+              <li class="dropdown-menu-item" role="none">
+                <a href="seccion_servicios/pantallas_led.html#iluminacion" role="menuitem">Iluminación</a>
+                <ul class="submenu" role="menu">
+                  <li role="none"><a href="seccion_servicios/pantallas_led.html#ilum1" role="menuitem">Subcategoría 1</a></li>
+                  <li role="none"><a href="seccion_servicios/pantallas_led.html#ilum2" role="menuitem">Subcategoría 2</a></li>
+                  <li role="none"><a href="seccion_servicios/pantallas_led.html#ilum3" role="menuitem">Subcategoría 3</a></li>
+                  <li role="none"><a href="seccion_servicios/pantallas_led.html#ilum4" role="menuitem">Subcategoría 4</a></li>
+                </ul>
+              </li>
+              <!-- LED Trucks -->
+              <li class="dropdown-menu-item" role="none">
+                <a href="seccion_servicios/serie_re.html" role="menuitem">LED Trucks</a>
+              </li>
+              <!-- Pisos LED -->
+              <li class="dropdown-menu-item" role="none">
+                <a href="seccion_servicios/pisos_led.html" role="menuitem">Pisos LED</a>
+                <ul class="submenu" role="menu">
+                  <li role="none"><a href="seccion_servicios/pisos_led.html#p-dance" role="menuitem">P Dance</a></li>
+                  <li role="none"><a href="seccion_servicios/pisos_led.html#sfg4" role="menuitem">SFG4</a></li>
+                  <li role="none"><a href="seccion_servicios/pisos_led.html#sfg4i" role="menuitem">SFG4i</a></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
           <li role="none"><a role="menuitem" href="servicios.html">Servicios</a></li>
           <li role="none"><a role="menuitem" href="#clientes">Clientes</a></li>
           <li role="none"><a role="menuitem" href="#proyectos">Proyectos</a></li>
@@ -1395,21 +2137,88 @@
       <div class="drawer" aria-label="Menú móvil">
         <ul>
           <li><a class="active" href="#home">Home</a></li>
-          <li><a href="#about">About</a></li>
+          <li><a href="#about">Nosotros</a></li>
+          <li class="menu-item-dropdown">
+            <a href="#productos" class="dropdown-toggle-mobile">Productos <span class="dropdown-arrow">▼</span></a>
+            <ul class="dropdown-menu">
+              <!-- Pantallas LED Outdoor -->
+              <li class="dropdown-menu-item">
+                <a href="seccion_servicios/pantallas_led.html#outdoor">Pantallas LED Outdoor <span class="submenu-arrow">›</span></a>
+                <ul class="submenu">
+                  <li><a href="seccion_servicios/pantallas_led.html#vp">VP</a></li>
+                  <li><a href="seccion_servicios/pantallas_led.html#re">RE</a></li>
+                </ul>
+              </li>
+              <!-- Pantallas LED Indoor -->
+              <li class="dropdown-menu-item">
+                <a href="seccion_servicios/pantallas_led.html#indoor">Pantallas LED Indoor <span class="submenu-arrow">›</span></a>
+                <ul class="submenu">
+                  <li><a href="seccion_servicios/pantallas_led.html#iri">IRI</a></li>
+                  <li><a href="seccion_servicios/pantallas_led.html#ri">RI</a></li>
+                </ul>
+              </li>
+              <!-- Tótems LED Outdoor -->
+              <li class="dropdown-menu-item">
+                <a href="seccion_servicios/totems_led.html#outdoor">Tótems LED Outdoor <span class="submenu-arrow">›</span></a>
+                <ul class="submenu">
+                  <li><a href="seccion_servicios/totems_led.html#te">TE</a></li>
+                </ul>
+              </li>
+              <!-- Tótems LED Indoor -->
+              <li class="dropdown-menu-item">
+                <a href="seccion_servicios/totems_led.html#indoor">Tótems LED Indoor <span class="submenu-arrow">›</span></a>
+                <ul class="submenu">
+                  <li><a href="seccion_servicios/totems_led.html#ti">TI</a></li>
+                </ul>
+              </li>
+              <!-- Serie Galileo -->
+              <li class="dropdown-menu-item">
+                <a href="seccion_servicios/pantallas_led.html#galileo">Serie Galileo <span class="submenu-arrow">›</span></a>
+                <ul class="submenu">
+                  <li><a href="seccion_servicios/pantallas_led.html#gigo">GIGO</a></li>
+                  <li><a href="seccion_servicios/pantallas_led.html#gig">GIG</a></li>
+                </ul>
+              </li>
+              <!-- Iluminación -->
+              <li class="dropdown-menu-item">
+                <a href="seccion_servicios/pantallas_led.html#iluminacion">Iluminación <span class="submenu-arrow">›</span></a>
+                <ul class="submenu">
+                  <li><a href="seccion_servicios/pantallas_led.html#ilum1">Subcategoría 1</a></li>
+                  <li><a href="seccion_servicios/pantallas_led.html#ilum2">Subcategoría 2</a></li>
+                  <li><a href="seccion_servicios/pantallas_led.html#ilum3">Subcategoría 3</a></li>
+                  <li><a href="seccion_servicios/pantallas_led.html#ilum4">Subcategoría 4</a></li>
+                </ul>
+              </li>
+              <!-- LED Trucks -->
+              <li class="dropdown-menu-item">
+                <a href="seccion_servicios/serie_re.html">LED Trucks</a>
+              </li>
+              <!-- Pisos LED -->
+              <li class="dropdown-menu-item">
+                <a href="seccion_servicios/pisos_led.html">Pisos LED <span class="submenu-arrow">›</span></a>
+                <ul class="submenu">
+                  <li><a href="seccion_servicios/pisos_led.html#p-dance">P Dance</a></li>
+                  <li><a href="seccion_servicios/pisos_led.html#sfg4">SFG4</a></li>
+                  <li><a href="seccion_servicios/pisos_led.html#sfg4i">SFG4i</a></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
           <li><a href="servicios.html">Servicios</a></li>
           <li><a href="#clientes">Clientes</a></li>
           <li><a href="#proyectos">Proyectos</a></li>
           <li><a href="#contacto">Contactanos</a></li>
         </ul>
       </div>
-    </nav>
+      </nav>
+    </div>
   </header>
   <!-- =============== /HEADER =============== -->
 
   <!-- ================== HERO SECTION ================== -->
   <section class="hero" id="home">
     <div class="hero__wrap">
-      <div class="hero__content">
+      <div class="hero__content" id="contenido">
         <h1 class="hero__title">
           Soluciones LED<br>
           <span class="hero__highlight">Profesionales</span>
@@ -1474,13 +2283,13 @@
 
       <div class="servicios-galeria">
         <figure>
-          <img src="proyectos_imagenes/proyecto_1.jpg" alt="Proyecto LED 1">
+          <img src="proyectos_imagenes/proyecto_1.jpg" alt="Pantalla LED para evento corporativo" loading="lazy">
         </figure>
         <figure>
-          <img src="proyectos_imagenes/proyecto_2.jpg" alt="Proyecto LED 2">
+          <img src="proyectos_imagenes/proyecto_2.jpg" alt="Instalación de pantalla LED exterior" loading="lazy">
         </figure>
         <figure>
-          <img src="proyectos_imagenes/proyecto_3.jpeg" alt="Proyecto LED 3">
+          <img src="proyectos_imagenes/proyecto_3.jpeg" alt="Sistema LED para transmisión en vivo" loading="lazy">
         </figure>
       </div>
     </div>
@@ -1510,19 +2319,22 @@
 
       <div class="proyectos-galeria">
         <figure class="proyectos-video-item">
-          <video src="proyectos_videos/bruno.mp4" muted loop playsinline preload="metadata" poster="miniaturas_videos/bruno.png"></video>
+          <img src="miniaturas_videos/bruno.png" alt="Proyecto LED Bruno - Pantalla para evento" class="video-thumbnail" loading="lazy">
+          <video src="proyectos_videos/bruno.mp4" muted loop playsinline preload="none" poster="miniaturas_videos/bruno.png" style="display: none;"></video>
           <div class="play-overlay">
             <div class="play-button"></div>
           </div>
         </figure>
         <figure class="proyectos-video-item">
-          <video src="proyectos_videos/speed_mini.mp4" muted loop playsinline preload="metadata" poster="miniaturas_videos/speed_mini.png"></video>
+          <img src="miniaturas_videos/speed_mini.png" alt="Proyecto LED Speed - Instalación profesional" class="video-thumbnail" loading="lazy">
+          <video src="proyectos_videos/speed_mini.mp4" muted loop playsinline preload="none" poster="miniaturas_videos/speed_mini.png" style="display: none;"></video>
           <div class="play-overlay">
             <div class="play-button"></div>
           </div>
         </figure>
         <figure class="proyectos-video-item">
-          <video src="proyectos_videos/salon_leones.mp4" muted loop playsinline preload="metadata" poster="miniaturas_videos/salon_leones.png"></video>
+          <img src="miniaturas_videos/salon_leones.png" alt="Proyecto LED Salón de Leones - Sistema de visualización" class="video-thumbnail" loading="lazy">
+          <video src="proyectos_videos/salon_leones.mp4" muted loop playsinline preload="none" poster="miniaturas_videos/salon_leones.png" style="display: none;"></video>
           <div class="play-overlay">
             <div class="play-button"></div>
           </div>
@@ -1535,40 +2347,68 @@
   <section class="contacto" id="contacto" aria-labelledby="contacto-title">
     <div class="contacto__wrap">
       <h3 id="contacto-title">Completá tus datos y hablemos sobre tu próximo proyecto</h3>
-
-      <form class="contact-form" id="contact-form" novalidate>
-        <div class="form-field">
-          <label for="nombre">Nombre</label>
-          <input id="nombre" name="nombre" type="text" placeholder="Tu nombre" autocomplete="given-name" required>
+      
+      <div class="contacto__layout">
+        <!-- Texto introductorio (lado izquierdo) -->
+        <div class="contacto__intro">
+          <h2>Agendá asesoramiento</h2>
+          <p>
+            Completá el formulario y nuestro equipo se pondrá en contacto para responder tus preguntas y ofrecerte la mejor asistencia para elegir una solución que se adapte a tu negocio. ¡Estamos listos para ayudarte a llevar tu proyecto al siguiente nivel!
+          </p>
         </div>
 
-        <div class="form-field">
-          <label for="apellido">Apellido</label>
-          <input id="apellido" name="apellido" type="text" placeholder="Tu apellido" autocomplete="family-name">
-        </div>
+        <!-- Formulario (lado derecho) -->
+        <form class="contact-form" id="contact-form" novalidate>
+          <div class="form-field">
+            <label for="nombre" class="req">Nombre</label>
+            <input id="nombre" name="nombre" type="text" placeholder="Tu nombre" autocomplete="given-name" required>
+            <span class="error-message">Por favor, ingresa tu nombre</span>
+          </div>
 
-        <div class="form-field">
-          <label for="empresa">Empresa</label>
-          <input id="empresa" name="empresa" type="text" placeholder="Nombre de tu empresa">
-        </div>
+          <div class="form-field">
+            <label for="apellido" class="req">Apellido</label>
+            <input id="apellido" name="apellido" type="text" placeholder="Tu apellido" autocomplete="family-name" required>
+            <span class="error-message">Por favor, ingresa tu apellido</span>
+          </div>
 
-        <div class="form-field">
-          <label for="telefono" class="req">Teléfono</label>
-          <input id="telefono" name="telefono" type="tel" placeholder="Tu número de teléfono" inputmode="tel" autocomplete="tel" required>
-        </div>
+          <div class="form-field full">
+            <label for="telefono" class="req">Número de teléfono</label>
+            <input id="telefono" name="telefono" type="tel" placeholder="+54 9 11 1234-5678" inputmode="tel" autocomplete="tel" required>
+            <span class="error-message">Por favor, ingresa tu número de teléfono</span>
+          </div>
 
-        <div class="form-field full">
-          <label for="consulta" class="req">Consulta</label>
-          <textarea id="consulta" name="consulta" placeholder="Cuéntanos sobre tu proyecto..." required></textarea>
-        </div>
+          <div class="form-field full">
+            <label for="tipo-solucion" class="req">Tipo de solución</label>
+            <select id="tipo-solucion" name="tipo-solucion" required>
+              <option value="">Seleccionar tipo de solución</option>
+              <option value="totems-led">Tótems LED</option>
+              <option value="pantallas-indoor">Pantallas LED Indoor</option>
+              <option value="pantallas-outdoor">Pantallas LED Outdoor</option>
+              <option value="led-truck">LED Truck</option>
+              <option value="carteleria-colectivos">Cartelería para colectivos</option>
+            </select>
+            <span class="error-message">Por favor, selecciona un tipo de solución</span>
+          </div>
 
-        <div class="form-actions">
-          <button class="btn-submit" type="submit" id="submit-btn">
-            <span class="btn-text">Enviar</span>
-            <span class="btn-loading" style="display: none;">Enviando...</span>
-          </button>
-        </div>
-      </form>
+          <div class="form-field full">
+            <label for="mensaje" class="req">Mensaje</label>
+            <textarea id="mensaje" name="mensaje" placeholder="Cuéntanos sobre tu proyecto..." rows="6" required></textarea>
+            <span class="error-message">Por favor, describe tu consulta</span>
+          </div>
+
+          <div class="form-actions">
+            <button class="btn-submit" type="submit" id="submit-btn" aria-label="Enviar formulario de contacto">
+              <span class="btn-text">Enviar</span>
+              <span class="btn-loading" style="display: none;">Enviando...</span>
+            </button>
+          </div>
+
+          <div class="privacy-notice">
+            Al enviar este formulario, aceptas que RTM Pantallas LED procese tus datos de contacto para responder a tu consulta. 
+            <a href="#privacidad">Ver política de privacidad</a>
+          </div>
+        </form>
+      </div>
     </div>
   </section>
 
@@ -1576,13 +2416,13 @@
   <footer class="site-footer" role="contentinfo">
     <div class="footer__wrap">
       <section class="footer__brand" aria-label="Marca">
-        <img src="rtm_logo/rtmLogo.png" alt="RTM Pantallas LED">
+        <img src="rtm_logo/rtmLogo.png" alt="RTM Pantallas LED" loading="lazy">
       </section>
 
       <section class="footer__block" aria-labelledby="contactanos-title">
         <h4 id="contactanos-title">Contactanos</h4>
         <p class="footer__text">
-          Comunicate al +54 9 11 7373 6308
+          <a href="tel:+5491173736308" style="color: var(--footer-ink); text-decoration: none;">+54 9 11 7373 6308</a>
         </p>
         <p class="footer__text" style="margin-top:12px;">
           Av. Tte. Gral. Juan Domingo Perón 2915,<br>
@@ -1615,8 +2455,37 @@
     </div>
   </div>
 
+  <!-- ================== POPUP DE LEAD CAPTURE ================== -->
+  <div class="lead-popup" id="lead-popup">
+    <button class="lead-popup__close" id="lead-popup-close" aria-label="Cerrar popup">
+      <i class="fas fa-times"></i>
+    </button>
+    <h3 class="lead-popup__title">¿Necesitas más información?</h3>
+    <p class="lead-popup__text">
+      Descarga nuestra guía gratuita sobre pantallas LED y descubre cómo elegir la mejor solución para tu proyecto.
+    </p>
+    <button class="lead-popup__btn" onclick="window.location.href='#contacto'">
+      Solicitar guía
+    </button>
+  </div>
+
+  <!-- ================== BOTONES FLOTANTES ================== -->
+  <div class="floating-buttons" aria-label="Accesos rápidos">
+    <a href="#contacto" class="floating-btn floating-btn--contact" aria-label="Ir a formulario de contacto" title="Contactanos">
+      <i class="fas fa-envelope"></i>
+    </a>
+    <a href="https://wa.me/5491173736308?text=Hola,%20me%20interesa%20conocer%20más%20sobre%20sus%20soluciones%20LED" 
+       target="_blank" 
+       rel="noopener noreferrer" 
+       class="floating-btn floating-btn--whatsapp" 
+       aria-label="Contactar por WhatsApp" 
+       title="WhatsApp">
+      <i class="fab fa-whatsapp"></i>
+    </a>
+  </div>
+
   <!-- JavaScript para navegación suave -->
-  <script>
+  <script defer>
     // Navegación suave
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
@@ -1697,6 +2566,7 @@
         const img = document.createElement('img');
         img.src = logo.src;
         img.alt = logo.alt;
+        img.loading = 'lazy';
         
         // Manejar error de carga de imagen
         img.onerror = function() {
@@ -1722,23 +2592,28 @@
     // Cargar logos cuando el DOM esté listo
     document.addEventListener('DOMContentLoaded', loadClientLogos);
 
-    // Funcionalidad de videos de proyectos
+    // Funcionalidad de videos de proyectos con miniaturas
     function initProjectVideos() {
       const videoItems = document.querySelectorAll('.proyectos-video-item');
       
       videoItems.forEach(item => {
         const video = item.querySelector('video');
+        const thumbnail = item.querySelector('.video-thumbnail');
         const overlay = item.querySelector('.play-overlay');
         
-        if (!video || !overlay) return;
+        if (!video || !thumbnail || !overlay) return;
         
-        // Click para play/pause
+        // Click para mostrar y reproducir video
         item.addEventListener('click', function() {
-          if (video.paused) {
+          if (thumbnail.style.display !== 'none') {
+            // Mostrar video y ocultar miniatura
+            thumbnail.style.display = 'none';
+            video.style.display = 'block';
             video.play();
             overlay.style.opacity = '0';
             overlay.style.pointerEvents = 'none';
           } else {
+            // Pausar video
             video.pause();
             overlay.style.opacity = '1';
             overlay.style.pointerEvents = 'auto';
@@ -1747,12 +2622,21 @@
         
         // Pausar otros videos cuando se reproduce uno
         video.addEventListener('play', function() {
-          document.querySelectorAll('.proyectos-video-item video').forEach(otherVideo => {
-            if (otherVideo !== video && !otherVideo.paused) {
+          document.querySelectorAll('.proyectos-video-item').forEach(otherItem => {
+            const otherVideo = otherItem.querySelector('video');
+            const otherThumbnail = otherItem.querySelector('.video-thumbnail');
+            const otherOverlay = otherItem.querySelector('.play-overlay');
+            
+            if (otherItem !== item && otherVideo && !otherVideo.paused) {
               otherVideo.pause();
-              const otherOverlay = otherVideo.closest('.proyectos-video-item').querySelector('.play-overlay');
-              otherOverlay.style.opacity = '1';
-              otherOverlay.style.pointerEvents = 'auto';
+              if (otherThumbnail) {
+                otherThumbnail.style.display = 'block';
+                otherVideo.style.display = 'none';
+              }
+              if (otherOverlay) {
+                otherOverlay.style.opacity = '1';
+                otherOverlay.style.pointerEvents = 'auto';
+              }
             }
           });
         });
@@ -1762,6 +2646,35 @@
     // Inicializar videos cuando el DOM esté listo
     document.addEventListener('DOMContentLoaded', initProjectVideos);
 
+    // ===== MENÚ DESPLEGABLE DE PRODUCTOS =====
+    // Nota: El menú es completamente hover-based, no requiere JavaScript
+    // Se mantiene esta función por compatibilidad con el menú móvil
+    function initProductosDropdown() {
+      // El menú desktop funciona solo con CSS hover
+      // Esta función solo se usa para el menú móvil
+    }
+    
+    // ===== MENÚ MÓVIL DESPLEGABLE =====
+    function initMobileDropdown() {
+      const dropdownToggles = document.querySelectorAll('.drawer .dropdown-toggle-mobile');
+      
+      dropdownToggles.forEach(toggle => {
+        toggle.addEventListener('click', function(e) {
+          e.preventDefault();
+          const menuItem = this.closest('.menu-item-dropdown');
+          if (menuItem) {
+            // Cerrar otros menús abiertos
+            document.querySelectorAll('.drawer .menu-item-dropdown').forEach(item => {
+              if (item !== menuItem) {
+                item.classList.remove('active');
+              }
+            });
+            menuItem.classList.toggle('active');
+          }
+        });
+      });
+    }
+
     // ===== MANEJO DEL FORMULARIO DE CONTACTO =====
     function initContactForm() {
       const form = document.getElementById('contact-form');
@@ -1769,24 +2682,82 @@
       
       if (!form || !submitBtn) return;
 
+      // Limpiar errores al escribir o cambiar
+      form.querySelectorAll('input, select, textarea').forEach(field => {
+        field.addEventListener('input', function() {
+          const fieldContainer = this.closest('.form-field');
+          if (fieldContainer) {
+            fieldContainer.classList.remove('error');
+          }
+        });
+        field.addEventListener('change', function() {
+          const fieldContainer = this.closest('.form-field');
+          if (fieldContainer) {
+            fieldContainer.classList.remove('error');
+          }
+        });
+      });
+
       form.addEventListener('submit', async function(e) {
         e.preventDefault();
+        
+        // Limpiar errores previos
+        form.querySelectorAll('.form-field').forEach(field => {
+          field.classList.remove('error');
+        });
+        
+        // Validar campos obligatorios
+        let isValid = true;
+        const nombre = form.querySelector('#nombre');
+        const apellido = form.querySelector('#apellido');
+        const telefono = form.querySelector('#telefono');
+        const tipoSolucion = form.querySelector('#tipo-solucion');
+        const mensaje = form.querySelector('#mensaje');
+        
+        if (!nombre.value.trim()) {
+          nombre.closest('.form-field').classList.add('error');
+          isValid = false;
+        }
+        
+        if (!apellido.value.trim()) {
+          apellido.closest('.form-field').classList.add('error');
+          isValid = false;
+        }
+        
+        if (!telefono.value.trim()) {
+          telefono.closest('.form-field').classList.add('error');
+          isValid = false;
+        }
+        
+        if (!tipoSolucion.value) {
+          tipoSolucion.closest('.form-field').classList.add('error');
+          isValid = false;
+        }
+        
+        if (!mensaje.value.trim()) {
+          mensaje.closest('.form-field').classList.add('error');
+          isValid = false;
+        }
+        
+        if (!isValid) {
+          // Scroll al primer error
+          const firstError = form.querySelector('.form-field.error');
+          if (firstError) {
+            firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            firstError.querySelector('input, select, textarea')?.focus();
+          }
+          return;
+        }
         
         // Obtener datos del formulario
         const formData = new FormData(form);
         const data = {
           nombre: formData.get('nombre'),
           apellido: formData.get('apellido'),
-          empresa: formData.get('empresa'),
           telefono: formData.get('telefono'),
-          consulta: formData.get('consulta')
+          tipoSolucion: formData.get('tipo-solucion'),
+          mensaje: formData.get('mensaje')
         };
-
-        // Validación básica
-        if (!data.nombre || !data.telefono || !data.consulta) {
-          alert('Por favor, completa todos los campos obligatorios.');
-          return;
-        }
 
         // Mostrar estado de carga
         submitBtn.classList.add('loading');
@@ -1875,8 +2846,54 @@
       }
     });
 
-    // Inicializar formulario cuando el DOM esté listo
-    document.addEventListener('DOMContentLoaded', initContactForm);
+    // ===== POPUP DE LEAD CAPTURE =====
+    function initLeadPopup() {
+      const popup = document.getElementById('lead-popup');
+      const closeBtn = document.getElementById('lead-popup-close');
+      
+      if (!popup) return;
+      
+      // Verificar si ya se mostró (usando sessionStorage)
+      if (sessionStorage.getItem('leadPopupShown')) {
+        return;
+      }
+      
+      // Mostrar popup al 50% de scroll
+      let scrollTriggered = false;
+      window.addEventListener('scroll', function() {
+        if (scrollTriggered) return;
+        
+        const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+        
+        if (scrollPercent >= 50) {
+          popup.classList.add('show');
+          scrollTriggered = true;
+          sessionStorage.setItem('leadPopupShown', 'true');
+        }
+      }, { passive: true });
+      
+      // Cerrar popup
+      if (closeBtn) {
+        closeBtn.addEventListener('click', function() {
+          popup.classList.remove('show');
+        });
+      }
+      
+      // Cerrar al hacer clic fuera
+      popup.addEventListener('click', function(e) {
+        if (e.target === popup) {
+          popup.classList.remove('show');
+        }
+      });
+    }
+
+    // Inicializar todo cuando el DOM esté listo
+    document.addEventListener('DOMContentLoaded', function() {
+      initProductosDropdown();
+      initContactForm();
+      initMobileDropdown();
+      initLeadPopup();
+    });
   </script>
 
 </body>
