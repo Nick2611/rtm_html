@@ -11,8 +11,6 @@ frontend:
     build:
       commands:
         - echo "🔧 Ejecutando optimizaciones..."
-        - echo "📦 Copiando archivos corregidos..."
-        - cp index-fixed.html index.html
         - echo "✅ Build completado"
   artifacts:
     baseDirectory: .

@@ -26,7 +26,10 @@
   <meta name="twitter:image" content="https://rtmpantallasled.com/rtm_logo/rtmLogo.png">
   
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="/rtm_logo/rtmLogo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="rtm_logo/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="rtm_logo/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="rtm_logo/apple-touch-icon.png">
+  <link rel="shortcut icon" href="rtm_logo/favicon-32x32.png">
   
   <!-- Preconnect para Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -36,6 +39,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
   <!-- Iconos -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  
+  <!-- CSS Principal -->
+  <link rel="stylesheet" href="css/main.css">
   
   <!-- Datos Estructurados (Schema.org) -->
   <script type="application/ld+json">
@@ -300,13 +306,14 @@
       flex: 1 1 auto;
       display: flex;
       justify-content: center;
+      padding-right: 40px;
     }
 
     .menu{
       list-style: none;
       display: flex;
-      gap: 40px;
-      margin: 20;
+      gap: 32px;
+      margin: 0;
       padding: 0;
       align-items: center;
     }
@@ -556,6 +563,325 @@
       .submenu a:last-child {
         border-bottom: none;
       }
+    }
+
+    /* ============================================
+       MEGA MENU STYLES
+       ============================================ */
+    .mega-menu-trigger {
+      position: relative;
+    }
+
+    .mega-menu-wrapper {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 95vw;
+      max-width: 1100px;
+      padding-top: 15px;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.2s ease, visibility 0.2s ease;
+      z-index: 9999;
+    }
+
+    .mega-menu-trigger:hover .mega-menu-wrapper,
+    .mega-menu-wrapper:hover {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+    
+    /* Puente invisible para mantener el hover */
+    .mega-menu-wrapper::before {
+      content: '';
+      position: absolute;
+      top: -15px;
+      left: 0;
+      right: 0;
+      height: 15px;
+      background: transparent;
+    }
+
+    .mega-menu {
+      background: var(--nav-bg);
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      padding: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .mega-menu-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 25px;
+    }
+
+    .mega-menu-category {
+      padding: 0;
+    }
+
+    .mega-menu-category-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--nav-text);
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      padding: 8px 0;
+      margin-bottom: 10px;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s ease;
+    }
+
+    .mega-menu-category-title:hover {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    .mega-menu-category-title i {
+      font-size: 1rem;
+      color: var(--accent);
+    }
+
+    .mega-menu-subcategories {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .mega-menu-subcategories li {
+      margin: 0;
+    }
+
+    .mega-menu-subcategories a {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 0;
+      color: rgba(255, 255, 255, 0.65);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: all 0.2s ease;
+    }
+
+    .mega-menu-subcategories a:hover {
+      color: #fff;
+      padding-left: 6px;
+    }
+
+    .mega-menu-special-tag {
+      display: inline-block;
+      padding: 4px 10px;
+      background: rgba(232, 74, 69, 0.15);
+      color: var(--accent);
+      border-radius: 4px;
+      font-size: 0.75rem;
+      margin-top: 5px;
+    }
+
+    /* Environment badges in menu */
+    .env-badge {
+      font-size: 0.65rem;
+      padding: 2px 6px;
+      border-radius: 3px;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-left: auto;
+    }
+
+    .env-badge.env-indoor {
+      background: rgba(52, 152, 219, 0.2);
+      color: #3498db;
+    }
+
+    .env-badge.env-outdoor {
+      background: rgba(230, 126, 34, 0.2);
+      color: #e67e22;
+    }
+
+    /* Mega Menu Search */
+    .mega-menu-search {
+      margin-top: 25px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+    }
+
+    .mega-menu-search .search-input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .mega-menu-search .search-input-wrapper i {
+      display: none;
+    }
+
+    .mega-menu-search input {
+      width: 100%;
+      padding: 12px 14px;
+      background: #1e1e20 !important;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+      color: #fff !important;
+      font-size: 0.9rem;
+      font-family: inherit;
+      outline: none;
+      transition: all 0.25s ease;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .mega-menu-search input::placeholder {
+      color: rgba(255, 255, 255, 0.5) !important;
+      opacity: 1;
+    }
+
+    .mega-menu-search input::-webkit-input-placeholder {
+      color: rgba(255, 255, 255, 0.5) !important;
+    }
+
+    .mega-menu-search input::-moz-placeholder {
+      color: rgba(255, 255, 255, 0.5) !important;
+    }
+
+    .mega-menu-search input:-ms-input-placeholder {
+      color: rgba(255, 255, 255, 0.5) !important;
+    }
+
+    .mega-menu-search input:focus {
+      background: #252527 !important;
+      border-color: rgba(232, 74, 69, 0.5);
+    }
+
+    .search-results-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      margin-top: 8px;
+      background: #1a1a1c;
+      border-radius: 8px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      max-height: 300px;
+      overflow-y: auto;
+      display: none;
+      z-index: 10001;
+    }
+
+    .search-results-dropdown.active {
+      display: block;
+    }
+
+    .search-result-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 16px;
+      text-decoration: none;
+      transition: background 0.2s ease;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .search-result-item:last-child {
+      border-bottom: none;
+    }
+
+    .search-result-item:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .search-result-type {
+      font-size: 0.65rem;
+      padding: 3px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .search-type-category {
+      background: rgba(232, 74, 69, 0.2);
+      color: var(--accent);
+    }
+
+    .search-type-subcategory {
+      background: rgba(52, 152, 219, 0.2);
+      color: #3498db;
+    }
+
+    .search-type-model {
+      background: rgba(46, 204, 113, 0.2);
+      color: #2ecc71;
+    }
+
+    .search-result-content {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .search-result-name {
+      color: #fff;
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+
+    .search-result-name mark {
+      background: rgba(232, 74, 69, 0.3);
+      color: inherit;
+      padding: 0 2px;
+      border-radius: 2px;
+    }
+
+    .search-result-path {
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.75rem;
+    }
+
+    .search-no-results {
+      padding: 20px;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    /* Responsive mega menu */
+    @media (max-width: 1200px) {
+      .mega-menu-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 1000px) {
+      .mega-menu-wrapper {
+        display: none;
+      }
+    }
+
+    /* Mobile dropdown improvements */
+    .mobile-dropdown .dropdown-menu {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .mobile-dropdown.active .dropdown-menu {
+      max-height: 600px;
+    }
+
+    .mobile-cat-item .submenu {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .mobile-cat-item.active .submenu {
+      max-height: 300px;
     }
 
     .cta{
@@ -1874,8 +2200,8 @@
     /* Popup de lead capture */
     .lead-popup {
       position: fixed;
-      bottom: 100px;
-      right: 20px;
+      top: 20px;
+      right: 50px;
       background: #fff;
       border-radius: 12px;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
@@ -1883,7 +2209,7 @@
       max-width: 320px;
       z-index: 9998;
       opacity: 0;
-      transform: translateY(20px);
+      transform: translateY(-20px);
       visibility: hidden;
       transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
     }
@@ -1949,9 +2275,9 @@
     
     @media (max-width: 768px) {
       .lead-popup {
-        bottom: 80px;
-        right: 15px;
-        left: 15px;
+        top: 15px;
+        right: 20px;
+        left: 20px;
         max-width: none;
       }
     }
@@ -2041,7 +2367,7 @@
       <!-- Barra de navegación -->
       <nav class="navbar" aria-label="Principal">
         <!-- Logo -->
-        <a class="brand" href="index-fixed.html" aria-label="RTM Pantallas LED - Inicio">
+        <a class="brand" href="index.html" aria-label="RTM Pantallas LED - Inicio">
           <img src="rtm_logo/rtmLogo.png" alt="RTM Pantallas LED - Logo" loading="eager" width="300" height="60">
         </a>
 
@@ -2050,71 +2376,102 @@
         <ul class="menu" role="menubar">
           <li role="none"><a role="menuitem" class="active" href="#home">Home</a></li>
           <li role="none"><a role="menuitem" href="#about">Nosotros</a></li>
-          <li role="none" class="menu-item-dropdown">
-            <a role="menuitem" href="#productos">Productos</a>
-            <ul class="dropdown-menu" role="menu">
-              <!-- Pantallas LED Outdoor -->
-              <li class="dropdown-menu-item" role="none">
-                <a href="seccion_servicios/pantallas_led.html#outdoor" role="menuitem">Pantallas LED Outdoor</a>
-                <ul class="submenu" role="menu">
-                  <li role="none"><a href="seccion_servicios/pantallas_led.html#vp" role="menuitem">VP</a></li>
-                  <li role="none"><a href="seccion_servicios/pantallas_led.html#re" role="menuitem">RE</a></li>
-                </ul>
-              </li>
-              <!-- Pantallas LED Indoor -->
-              <li class="dropdown-menu-item" role="none">
-                <a href="seccion_servicios/pantallas_led.html#indoor" role="menuitem">Pantallas LED Indoor</a>
-                <ul class="submenu" role="menu">
-                  <li role="none"><a href="seccion_servicios/pantallas_led.html#iri" role="menuitem">IRI</a></li>
-                  <li role="none"><a href="seccion_servicios/pantallas_led.html#ri" role="menuitem">RI</a></li>
-                </ul>
-              </li>
-              <!-- Tótems LED Outdoor -->
-              <li class="dropdown-menu-item" role="none">
-                <a href="seccion_servicios/totems_led.html#outdoor" role="menuitem">Tótems LED Outdoor</a>
-                <ul class="submenu" role="menu">
-                  <li role="none"><a href="seccion_servicios/totems_led.html#te" role="menuitem">TE</a></li>
-                </ul>
-              </li>
-              <!-- Tótems LED Indoor -->
-              <li class="dropdown-menu-item" role="none">
-                <a href="seccion_servicios/totems_led.html#indoor" role="menuitem">Tótems LED Indoor</a>
-                <ul class="submenu" role="menu">
-                  <li role="none"><a href="seccion_servicios/totems_led.html#ti" role="menuitem">TI</a></li>
-                </ul>
-              </li>
-              <!-- Serie Galileo -->
-              <li class="dropdown-menu-item" role="none">
-                <a href="seccion_servicios/pantallas_led.html#galileo" role="menuitem">Serie Galileo</a>
-                <ul class="submenu" role="menu">
-                  <li role="none"><a href="seccion_servicios/pantallas_led.html#gigo" role="menuitem">GIGO</a></li>
-                  <li role="none"><a href="seccion_servicios/pantallas_led.html#gig" role="menuitem">GIG</a></li>
-                </ul>
-              </li>
-              <!-- Iluminación -->
-              <li class="dropdown-menu-item" role="none">
-                <a href="seccion_servicios/pantallas_led.html#iluminacion" role="menuitem">Iluminación</a>
-                <ul class="submenu" role="menu">
-                  <li role="none"><a href="seccion_servicios/pantallas_led.html#ilum1" role="menuitem">Subcategoría 1</a></li>
-                  <li role="none"><a href="seccion_servicios/pantallas_led.html#ilum2" role="menuitem">Subcategoría 2</a></li>
-                  <li role="none"><a href="seccion_servicios/pantallas_led.html#ilum3" role="menuitem">Subcategoría 3</a></li>
-                  <li role="none"><a href="seccion_servicios/pantallas_led.html#ilum4" role="menuitem">Subcategoría 4</a></li>
-                </ul>
-              </li>
-              <!-- LED Trucks -->
-              <li class="dropdown-menu-item" role="none">
-                <a href="seccion_servicios/serie_re.html" role="menuitem">LED Trucks</a>
-              </li>
-              <!-- Pisos LED -->
-              <li class="dropdown-menu-item" role="none">
-                <a href="seccion_servicios/pisos_led.html" role="menuitem">Pisos LED</a>
-                <ul class="submenu" role="menu">
-                  <li role="none"><a href="seccion_servicios/pisos_led.html#p-dance" role="menuitem">P Dance</a></li>
-                  <li role="none"><a href="seccion_servicios/pisos_led.html#sfg4" role="menuitem">SFG4</a></li>
-                  <li role="none"><a href="seccion_servicios/pisos_led.html#sfg4i" role="menuitem">SFG4i</a></li>
-                </ul>
-              </li>
-            </ul>
+          <li role="none" class="menu-item-dropdown mega-menu-trigger">
+            <a role="menuitem" href="productos.html">Productos</a>
+            <!-- Mega Menu -->
+            <div class="mega-menu-wrapper">
+              <div class="mega-menu">
+                <div class="mega-menu-grid">
+                  <!-- Pantallas LED -->
+                  <div class="mega-menu-category">
+                    <a href="productos.html?cat=pantallas-led" class="mega-menu-category-title">
+                      <i class="fas fa-tv"></i>
+                      <span>Pantallas LED</span>
+                    </a>
+                    <ul class="mega-menu-subcategories">
+                      <li><a href="productos.html?cat=pantallas-led&sub=indoor">Indoor <span class="env-badge env-indoor">Indoor</span></a></li>
+                      <li><a href="productos.html?cat=pantallas-led&sub=outdoor">Outdoor <span class="env-badge env-outdoor">Outdoor</span></a></li>
+                    </ul>
+                  </div>
+                  <!-- Tour Series -->
+                  <div class="mega-menu-category">
+                    <a href="productos.html?cat=tour-series" class="mega-menu-category-title">
+                      <i class="fas fa-truck-loading"></i>
+                      <span>Tour Series</span>
+                    </a>
+                    <ul class="mega-menu-subcategories">
+                      <li><a href="productos.html?cat=tour-series&sub=indoor">Indoor <span class="env-badge env-indoor">Indoor</span></a></li>
+                      <li><a href="productos.html?cat=tour-series&sub=outdoor">Outdoor <span class="env-badge env-outdoor">Outdoor</span></a></li>
+                    </ul>
+                  </div>
+                  <!-- Totems -->
+                  <div class="mega-menu-category">
+                    <a href="productos.html?cat=totems" class="mega-menu-category-title">
+                      <i class="fas fa-columns"></i>
+                      <span>Totems</span>
+                    </a>
+                    <ul class="mega-menu-subcategories">
+                      <li><a href="productos.html?cat=totems&sub=indoor">Indoor <span class="env-badge env-indoor">Indoor</span></a></li>
+                      <li><a href="productos.html?cat=totems&sub=outdoor">Outdoor <span class="env-badge env-outdoor">Outdoor</span></a></li>
+                    </ul>
+                  </div>
+                  <!-- Pisos LED -->
+                  <div class="mega-menu-category">
+                    <a href="productos.html?cat=pisos-led" class="mega-menu-category-title">
+                      <i class="fas fa-th"></i>
+                      <span>Pisos LED</span>
+                    </a>
+                    <ul class="mega-menu-subcategories">
+                      <li><a href="productos.html?cat=pisos-led&sub=modelos">PDANCE</a></li>
+                      <li><a href="productos.html?cat=pisos-led&sub=modelos">P-60 DISCO</a></li>
+                      <li><a href="productos.html?cat=pisos-led&sub=modelos">PI-RGB</a></li>
+                    </ul>
+                  </div>
+                  <!-- Soluciones -->
+                  <div class="mega-menu-category">
+                    <a href="productos.html?cat=soluciones" class="mega-menu-category-title">
+                      <i class="fas fa-lightbulb"></i>
+                      <span>Soluciones</span>
+                    </a>
+                    <ul class="mega-menu-subcategories">
+                      <li><a href="productos.html?cat=soluciones&sub=unidades-colectivos">Unidades de Colectivos</a></li>
+                      <li><a href="productos.html?cat=soluciones&sub=unidades-comercios">Unidades para Comercios</a></li>
+                      <li><a href="productos.html?cat=soluciones&sub=porticos">Pórticos</a></li>
+                      <li><a href="productos.html?cat=soluciones&sub=disenos-especiales">Diseños Especiales</a></li>
+                    </ul>
+                  </div>
+                  <!-- LED Trucks -->
+                  <div class="mega-menu-category">
+                    <a href="productos.html?cat=led-trucks" class="mega-menu-category-title">
+                      <i class="fas fa-truck"></i>
+                      <span>LED Trucks</span>
+                    </a>
+                    <span class="mega-menu-special-tag">Página especial</span>
+                  </div>
+                  <!-- Iluminación Profesional -->
+                  <div class="mega-menu-category">
+                    <a href="productos.html?cat=iluminacion-profesional" class="mega-menu-category-title">
+                      <i class="fas fa-lightbulb"></i>
+                      <span>Iluminación Profesional</span>
+                    </a>
+                    <ul class="mega-menu-subcategories">
+                      <li><a href="productos.html?cat=iluminacion-profesional&sub=beam">Cabezales Beam</a></li>
+                      <li><a href="productos.html?cat=iluminacion-profesional&sub=3en1">Cabezales 3 en 1</a></li>
+                      <li><a href="productos.html?cat=iluminacion-profesional&sub=barras-moviles">Barras Móviles</a></li>
+                      <li><a href="productos.html?cat=iluminacion-profesional&sub=flashes">Flashes</a></li>
+                    </ul>
+                  </div>
+                </div>
+                <!-- Buscador en mega menu -->
+                <div class="mega-menu-search">
+                  <div class="search-input-wrapper">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="mega-menu-search" placeholder="Buscar productos, modelos...">
+                  </div>
+                  <div id="mega-menu-search-results" class="search-results-dropdown"></div>
+                </div>
+              </div>
+            </div>
           </li>
           <li role="none"><a role="menuitem" href="servicios.html">Servicios</a></li>
           <li role="none"><a role="menuitem" href="#clientes">Clientes</a></li>
@@ -2138,68 +2495,52 @@
         <ul>
           <li><a class="active" href="#home">Home</a></li>
           <li><a href="#about">Nosotros</a></li>
-          <li class="menu-item-dropdown">
-            <a href="#productos" class="dropdown-toggle-mobile">Productos <span class="dropdown-arrow">▼</span></a>
-            <ul class="dropdown-menu">
-              <!-- Pantallas LED Outdoor -->
-              <li class="dropdown-menu-item">
-                <a href="seccion_servicios/pantallas_led.html#outdoor">Pantallas LED Outdoor <span class="submenu-arrow">›</span></a>
+          <li class="menu-item-dropdown mobile-dropdown">
+            <a href="productos.html" class="dropdown-toggle-mobile">Productos <span class="dropdown-arrow">▼</span></a>
+            <ul class="dropdown-menu mobile-submenu-list">
+              <li class="dropdown-menu-item mobile-cat-item">
+                <a href="productos.html?cat=pantallas-led">Pantallas LED <span class="submenu-arrow">›</span></a>
                 <ul class="submenu">
-                  <li><a href="seccion_servicios/pantallas_led.html#vp">VP</a></li>
-                  <li><a href="seccion_servicios/pantallas_led.html#re">RE</a></li>
+                  <li><a href="productos.html?cat=pantallas-led&sub=indoor">Indoor</a></li>
+                  <li><a href="productos.html?cat=pantallas-led&sub=outdoor">Outdoor</a></li>
                 </ul>
               </li>
-              <!-- Pantallas LED Indoor -->
-              <li class="dropdown-menu-item">
-                <a href="seccion_servicios/pantallas_led.html#indoor">Pantallas LED Indoor <span class="submenu-arrow">›</span></a>
+              <li class="dropdown-menu-item mobile-cat-item">
+                <a href="productos.html?cat=tour-series">Tour Series <span class="submenu-arrow">›</span></a>
                 <ul class="submenu">
-                  <li><a href="seccion_servicios/pantallas_led.html#iri">IRI</a></li>
-                  <li><a href="seccion_servicios/pantallas_led.html#ri">RI</a></li>
+                  <li><a href="productos.html?cat=tour-series&sub=indoor">Indoor</a></li>
+                  <li><a href="productos.html?cat=tour-series&sub=outdoor">Outdoor</a></li>
                 </ul>
               </li>
-              <!-- Tótems LED Outdoor -->
-              <li class="dropdown-menu-item">
-                <a href="seccion_servicios/totems_led.html#outdoor">Tótems LED Outdoor <span class="submenu-arrow">›</span></a>
+              <li class="dropdown-menu-item mobile-cat-item">
+                <a href="productos.html?cat=totems">Totems <span class="submenu-arrow">›</span></a>
                 <ul class="submenu">
-                  <li><a href="seccion_servicios/totems_led.html#te">TE</a></li>
+                  <li><a href="productos.html?cat=totems&sub=indoor">Indoor</a></li>
+                  <li><a href="productos.html?cat=totems&sub=outdoor">Outdoor</a></li>
                 </ul>
               </li>
-              <!-- Tótems LED Indoor -->
-              <li class="dropdown-menu-item">
-                <a href="seccion_servicios/totems_led.html#indoor">Tótems LED Indoor <span class="submenu-arrow">›</span></a>
+              <li class="dropdown-menu-item mobile-cat-item">
+                <a href="productos.html?cat=pisos-led">Pisos LED</a>
+              </li>
+              <li class="dropdown-menu-item mobile-cat-item">
+                <a href="productos.html?cat=soluciones">Soluciones <span class="submenu-arrow">›</span></a>
                 <ul class="submenu">
-                  <li><a href="seccion_servicios/totems_led.html#ti">TI</a></li>
+                  <li><a href="productos.html?cat=soluciones&sub=unidades-colectivos">Colectivos</a></li>
+                  <li><a href="productos.html?cat=soluciones&sub=unidades-comercios">Comercios</a></li>
+                  <li><a href="productos.html?cat=soluciones&sub=porticos">Pórticos</a></li>
+                  <li><a href="productos.html?cat=soluciones&sub=disenos-especiales">Especiales</a></li>
                 </ul>
               </li>
-              <!-- Serie Galileo -->
-              <li class="dropdown-menu-item">
-                <a href="seccion_servicios/pantallas_led.html#galileo">Serie Galileo <span class="submenu-arrow">›</span></a>
-                <ul class="submenu">
-                  <li><a href="seccion_servicios/pantallas_led.html#gigo">GIGO</a></li>
-                  <li><a href="seccion_servicios/pantallas_led.html#gig">GIG</a></li>
-                </ul>
+              <li class="dropdown-menu-item mobile-cat-item">
+                <a href="productos.html?cat=led-trucks">LED Trucks</a>
               </li>
-              <!-- Iluminación -->
-              <li class="dropdown-menu-item">
-                <a href="seccion_servicios/pantallas_led.html#iluminacion">Iluminación <span class="submenu-arrow">›</span></a>
+              <li class="dropdown-menu-item mobile-cat-item">
+                <a href="productos.html?cat=iluminacion-profesional">Iluminación <span class="submenu-arrow">›</span></a>
                 <ul class="submenu">
-                  <li><a href="seccion_servicios/pantallas_led.html#ilum1">Subcategoría 1</a></li>
-                  <li><a href="seccion_servicios/pantallas_led.html#ilum2">Subcategoría 2</a></li>
-                  <li><a href="seccion_servicios/pantallas_led.html#ilum3">Subcategoría 3</a></li>
-                  <li><a href="seccion_servicios/pantallas_led.html#ilum4">Subcategoría 4</a></li>
-                </ul>
-              </li>
-              <!-- LED Trucks -->
-              <li class="dropdown-menu-item">
-                <a href="seccion_servicios/serie_re.html">LED Trucks</a>
-              </li>
-              <!-- Pisos LED -->
-              <li class="dropdown-menu-item">
-                <a href="seccion_servicios/pisos_led.html">Pisos LED <span class="submenu-arrow">›</span></a>
-                <ul class="submenu">
-                  <li><a href="seccion_servicios/pisos_led.html#p-dance">P Dance</a></li>
-                  <li><a href="seccion_servicios/pisos_led.html#sfg4">SFG4</a></li>
-                  <li><a href="seccion_servicios/pisos_led.html#sfg4i">SFG4i</a></li>
+                  <li><a href="productos.html?cat=iluminacion-profesional&sub=beam">Beam</a></li>
+                  <li><a href="productos.html?cat=iluminacion-profesional&sub=3en1">3 en 1</a></li>
+                  <li><a href="productos.html?cat=iluminacion-profesional&sub=barras-moviles">Barras</a></li>
+                  <li><a href="productos.html?cat=iluminacion-profesional&sub=flashes">Flashes</a></li>
                 </ul>
               </li>
             </ul>
@@ -2319,22 +2660,22 @@
 
       <div class="proyectos-galeria">
         <figure class="proyectos-video-item">
-          <img src="miniaturas_videos/bruno.png" alt="Proyecto LED Bruno - Pantalla para evento" class="video-thumbnail" loading="lazy">
-          <video src="proyectos_videos/bruno.mp4" muted loop playsinline preload="none" poster="miniaturas_videos/bruno.png" style="display: none;"></video>
+          <img src="miniaturas_videos/bruno.jpg" alt="Proyecto LED Bruno - Pantalla para evento" class="video-thumbnail" loading="lazy">
+          <video src="proyectos_videos/bruno.mp4" muted loop playsinline preload="none" poster="miniaturas_videos/bruno.jpg" style="display: none;"></video>
           <div class="play-overlay">
             <div class="play-button"></div>
           </div>
         </figure>
         <figure class="proyectos-video-item">
-          <img src="miniaturas_videos/speed_mini.png" alt="Proyecto LED Speed - Instalación profesional" class="video-thumbnail" loading="lazy">
-          <video src="proyectos_videos/speed_mini.mp4" muted loop playsinline preload="none" poster="miniaturas_videos/speed_mini.png" style="display: none;"></video>
+          <img src="miniaturas_videos/speed_mini.jpg" alt="Proyecto LED Speed - Instalación profesional" class="video-thumbnail" loading="lazy">
+          <video src="proyectos_videos/speed_mini.mp4" muted loop playsinline preload="none" poster="miniaturas_videos/speed_mini.jpg" style="display: none;"></video>
           <div class="play-overlay">
             <div class="play-button"></div>
           </div>
         </figure>
         <figure class="proyectos-video-item">
-          <img src="miniaturas_videos/salon_leones.png" alt="Proyecto LED Salón de Leones - Sistema de visualización" class="video-thumbnail" loading="lazy">
-          <video src="proyectos_videos/salon_leones.mp4" muted loop playsinline preload="none" poster="miniaturas_videos/salon_leones.png" style="display: none;"></video>
+          <img src="miniaturas_videos/salon_leones.jpg" alt="Proyecto LED Salón de Leones - Sistema de visualización" class="video-thumbnail" loading="lazy">
+          <video src="proyectos_videos/salon_leones.mp4" muted loop playsinline preload="none" poster="miniaturas_videos/salon_leones.jpg" style="display: none;"></video>
           <div class="play-overlay">
             <div class="play-button"></div>
           </div>
@@ -2887,12 +3228,162 @@
       });
     }
 
+    // ===== MEGA MENU SEARCH =====
+    let productsData = null;
+    let searchIndex = [];
+
+    async function loadProductsData() {
+      try {
+        const response = await fetch('data/products.json');
+        if (!response.ok) throw new Error('Could not load products data');
+        productsData = await response.json();
+        buildSearchIndex();
+      } catch (error) {
+        console.log('Products data will be loaded when visiting products page');
+      }
+    }
+
+    function buildSearchIndex() {
+      if (!productsData) return;
+      searchIndex = [];
+      
+      productsData.categories.forEach(category => {
+        searchIndex.push({
+          type: 'category',
+          name: category.name,
+          slug: category.slug,
+          description: category.description,
+          url: `productos.html?cat=${category.slug}`
+        });
+
+        if (category.subcategories) {
+          category.subcategories.forEach(subcategory => {
+            if (subcategory.models && subcategory.models.length > 0) {
+              searchIndex.push({
+                type: 'subcategory',
+                name: subcategory.name,
+                categoryName: category.name,
+                slug: subcategory.slug,
+                description: subcategory.description,
+                url: `productos.html?cat=${category.slug}&sub=${subcategory.slug}`
+              });
+
+              subcategory.models.forEach(model => {
+                searchIndex.push({
+                  type: 'model',
+                  name: model.name,
+                  categoryName: category.name,
+                  subcategoryName: subcategory.name,
+                  description: model.description,
+                  url: `productos.html?cat=${category.slug}&sub=${subcategory.slug}&model=${model.slug}`
+                });
+              });
+            }
+          });
+        }
+      });
+    }
+
+    function initMegaMenuSearch() {
+      const searchInput = document.getElementById('mega-menu-search');
+      const resultsContainer = document.getElementById('mega-menu-search-results');
+      
+      if (!searchInput || !resultsContainer) return;
+
+      let debounceTimer;
+      
+      searchInput.addEventListener('input', function(e) {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+          performSearch(e.target.value, resultsContainer);
+        }, 200);
+      });
+
+      searchInput.addEventListener('focus', function() {
+        if (this.value.length >= 2) {
+          resultsContainer.classList.add('active');
+        }
+      });
+
+      document.addEventListener('click', function(e) {
+        if (!e.target.closest('.mega-menu-search')) {
+          resultsContainer.classList.remove('active');
+        }
+      });
+    }
+
+    function performSearch(query, resultsContainer) {
+      if (query.length < 2 || searchIndex.length === 0) {
+        resultsContainer.classList.remove('active');
+        resultsContainer.innerHTML = '';
+        return;
+      }
+
+      const normalizedQuery = query.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      
+      const results = searchIndex.filter(item => {
+        const normalizedName = item.name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        const normalizedDesc = (item.description || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        const normalizedCategory = (item.categoryName || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        
+        return normalizedName.includes(normalizedQuery) || 
+               normalizedDesc.includes(normalizedQuery) ||
+               normalizedCategory.includes(normalizedQuery);
+      }).slice(0, 8);
+
+      if (results.length === 0) {
+        resultsContainer.innerHTML = '<div class="search-no-results">No se encontraron resultados</div>';
+      } else {
+        resultsContainer.innerHTML = results.map(result => {
+          const typeLabels = { category: 'Categoría', subcategory: 'Familia', model: 'Modelo' };
+          return `
+            <a href="${result.url}" class="search-result-item">
+              <span class="search-result-type search-type-${result.type}">${typeLabels[result.type]}</span>
+              <div class="search-result-content">
+                <span class="search-result-name">${highlightMatch(result.name, query)}</span>
+                ${result.categoryName ? `<span class="search-result-path">${result.categoryName}${result.subcategoryName ? ' > ' + result.subcategoryName : ''}</span>` : ''}
+              </div>
+            </a>
+          `;
+        }).join('');
+      }
+
+      resultsContainer.classList.add('active');
+    }
+
+    function highlightMatch(text, query) {
+      const regex = new RegExp(`(${query})`, 'gi');
+      return text.replace(regex, '<mark>$1</mark>');
+    }
+
+    // ===== MOBILE CATEGORY DROPDOWNS =====
+    function initMobileCategoryDropdowns() {
+      const catItems = document.querySelectorAll('.mobile-cat-item');
+      
+      catItems.forEach(item => {
+        const link = item.querySelector('a');
+        const submenu = item.querySelector('.submenu');
+        
+        if (link && submenu) {
+          link.addEventListener('click', function(e) {
+            if (submenu) {
+              e.preventDefault();
+              item.classList.toggle('active');
+            }
+          });
+        }
+      });
+    }
+
     // Inicializar todo cuando el DOM esté listo
     document.addEventListener('DOMContentLoaded', function() {
       initProductosDropdown();
       initContactForm();
       initMobileDropdown();
       initLeadPopup();
+      loadProductsData();
+      initMegaMenuSearch();
+      initMobileCategoryDropdowns();
     });
   </script>
 
