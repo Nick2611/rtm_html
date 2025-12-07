@@ -195,6 +195,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      justify-content: space-between;
       gap: 16px;
       position: relative;
       z-index: 1000;
@@ -203,21 +204,7 @@
       flex-wrap: nowrap;
     }
 
-    /* Sistema adaptativo dinámico del header */
-    @media (max-width: 1200px) {
-      .header-container {
-        padding-top: 18px;
-      }
-      nav.navbar {
-        padding: 16px 20px;
-        min-height: 70px;
-      }
-      .brand img {
-        width: 250px;
-        height: 50px;
-      }
-    }
-
+    /* Sistema adaptativo del header - simplificado */
     @media (max-width: 1024px) {
       .header-container {
         padding-top: 16px;
@@ -225,28 +212,6 @@
       nav.navbar {
         padding: 14px 20px;
         min-height: 65px;
-      }
-      .brand img {
-        width: 220px;
-        height: 45px;
-      }
-    }
-
-    @media (max-width: 950px) {
-      .header-container {
-        padding-top: 14px;
-      }
-      nav.navbar {
-        padding: 12px 20px;
-        min-height: 60px;
-      }
-      .brand img {
-        width: 200px;
-        height: 40px;
-      }
-      .btn {
-        padding: 10px 16px;
-        font-size: 0.9rem;
       }
     }
 
@@ -257,65 +222,76 @@
       nav.navbar {
         padding: 10px 15px;
         min-height: 60px;
-        align-items: center;
         gap: 10px;
       }
-      .brand img {
-        width: 180px;
-        height: 36px;
-      }
       .btn {
-        padding: 8px 12px;
-        font-size: 0.8rem;
+        padding: 8px 14px;
+        font-size: 0.85rem;
       }
     }
 
     .brand{
       display: flex;
       align-items: center;
-      gap: 14px;
-      min-width: 180px;
-      flex: 0 0 auto;
+      flex: 1;
+      min-width: 0;
     }
 
-    /* Ajustar brand en móvil */
-    @media (max-width: 900px) {
-      nav.navbar .brand {
-        min-width: auto;
-        flex: 1;
-        justify-content: flex-start;
-        order: 1;
-      }
-    }
     .brand img{
       display: block;
-      width: 300px;
-      height: 60px;
+      width: 180px;
+      height: auto;
+      max-height: 50px;
       object-fit: contain;
     }
 
-    /* Reducir tamaño del logo en móvil */
-    @media (max-width: 900px) {
-      .brand img {
-        width: 220px;
-        height: 45px;
-      }
-    }
-
     .nav-center{
-      flex: 1 1 auto;
+      flex: 0 0 auto;
       display: flex;
       justify-content: center;
-      padding-right: 40px;
     }
 
     .menu{
       list-style: none;
       display: flex;
-      gap: 32px;
+      gap: 28px;
       margin: 0;
       padding: 0;
       align-items: center;
+    }
+
+    .cta {
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    /* Ajustes responsive del header */
+    @media (max-width: 1100px) {
+      .brand img {
+        width: 160px;
+      }
+      .menu {
+        gap: 20px;
+      }
+    }
+
+    @media (max-width: 900px) {
+      nav.navbar .brand {
+        flex: 1;
+      }
+      .brand img {
+        width: 150px;
+        max-height: 40px;
+      }
+      .nav-center {
+        display: none;
+      }
+      .cta {
+        flex: 0 0 auto;
+        order: 2;
+      }
     }
 
     .menu a{
@@ -353,6 +329,8 @@
       display: flex;
       align-items: center;
       gap: 6px;
+      position: relative;
+      z-index: 10001;
     }
     
     .menu-item-dropdown > a::after {
@@ -594,7 +572,7 @@
       pointer-events: auto;
     }
     
-    /* Puente invisible para mantener el hover */
+    /* Puente invisible para mantener el hover - NO captura clics */
     .mega-menu-wrapper::before {
       content: '';
       position: absolute;
@@ -603,6 +581,7 @@
       right: 0;
       height: 15px;
       background: transparent;
+      pointer-events: none;
     }
 
     .mega-menu {
@@ -884,22 +863,6 @@
       max-height: 300px;
     }
 
-    .cta{
-      flex: 0 0 auto;
-    }
-
-    /* Ajustar CTA en móvil */
-    @media (max-width: 900px) {
-      .cta {
-        display: flex;
-        flex: 0 0 auto;
-        order: 2;
-      }
-      .btn {
-        padding: 8px 14px;
-        font-size: 0.85rem;
-      }
-    }
     .btn{
       appearance: none;
       border: 0;
@@ -2473,7 +2436,6 @@
               </div>
             </div>
           </li>
-          <li role="none"><a role="menuitem" href="servicios.html">Servicios</a></li>
           <li role="none"><a role="menuitem" href="#clientes">Clientes</a></li>
           <li role="none"><a role="menuitem" href="#proyectos">Proyectos</a></li>
         </ul>
@@ -2545,7 +2507,6 @@
               </li>
             </ul>
           </li>
-          <li><a href="servicios.html">Servicios</a></li>
           <li><a href="#clientes">Clientes</a></li>
           <li><a href="#proyectos">Proyectos</a></li>
           <li><a href="#contacto">Contactanos</a></li>
@@ -2655,7 +2616,7 @@
       <header class="proyectos-header">
         <small>Recent Projects</small>
         <h2>Nuestros últimos proyectos</h2>
-        <a href="servicios.html" class="btn-mas-proyectos">Más proyectos</a>
+        <a href="productos.html" class="btn-mas-proyectos">Más proyectos</a>
       </header>
 
       <div class="proyectos-galeria">
@@ -2827,6 +2788,13 @@
 
   <!-- JavaScript para navegación suave -->
   <script defer>
+    // Hacer que el enlace "Productos" del mega-menu navegue al hacer clic
+    document.querySelectorAll('.mega-menu-trigger > a[href="productos.html"]').forEach(link => {
+      link.addEventListener('click', function(e) {
+        window.location.href = this.getAttribute('href');
+      });
+    });
+
     // Navegación suave
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {

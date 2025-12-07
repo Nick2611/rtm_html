@@ -80,27 +80,60 @@
     .brand {
       display: flex;
       align-items: center;
+      flex: 1;
+      min-width: 0;
     }
     
     .brand img {
-      height: 50px;
-      width: auto;
+      width: 180px;
+      height: auto;
+      max-height: 50px;
+      object-fit: contain;
     }
     
     .nav-center {
-      flex: 1;
+      flex: 0 0 auto;
       display: flex;
       justify-content: center;
-      padding-right: 40px;
     }
     
     .menu {
       list-style: none;
       display: flex;
-      gap: 32px;
+      gap: 28px;
       margin: 0;
       padding: 0;
       align-items: center;
+    }
+    
+    .cta-wrapper {
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    @media (max-width: 1100px) {
+      .brand img {
+        width: 160px;
+      }
+      .menu {
+        gap: 20px;
+      }
+    }
+    
+    @media (max-width: 900px) {
+      .brand img {
+        width: 150px;
+        max-height: 40px;
+      }
+      .nav-center {
+        display: none;
+      }
+      .cta-wrapper {
+        flex: 0 0 auto;
+      }
     }
     
     .menu a {
@@ -518,7 +551,6 @@
           <li>
             <a href="productos.html" class="active">Productos</a>
           </li>
-          <li><a href="servicios.html">Servicios</a></li>
           <li><a href="index.html#clientes">Clientes</a></li>
           <li><a href="index.html#proyectos">Proyectos</a></li>
         </ul>
@@ -548,7 +580,6 @@
           <li><a href="index.html">Home</a></li>
           <li><a href="index.html#about">Nosotros</a></li>
           <li><a href="productos.html" class="active">Productos</a></li>
-          <li><a href="servicios.html">Servicios</a></li>
           <li><a href="index.html#clientes">Clientes</a></li>
           <li><a href="index.html#proyectos">Proyectos</a></li>
           <li><a href="index.html#contacto">Contacto</a></li>
@@ -603,7 +634,6 @@
           <li><a href="index.html#about">Nosotros</a></li>
           <li><a href="index.html#clientes">Clientes</a></li>
           <li><a href="index.html#proyectos">Proyectos</a></li>
-          <li><a href="servicios.html">Servicios</a></li>
         </ul>
       </div>
       
