@@ -1,0 +1,785 @@
+{
+  "categories": [
+    {
+      "id": "pantallas-led",
+      "name": "Pantallas LED",
+      "slug": "pantallas-led",
+      "icon": "fa-tv",
+      "description": "Pantallas LED de alta resolución para interior y exterior",
+      "hasEnvironmentFilter": true,
+      "subcategories": [
+        {
+          "id": "pantallas-indoor",
+          "name": "Indoor",
+          "slug": "indoor",
+          "environment": "indoor",
+          "description": "Pantallas LED para interior con alta definición",
+          "models": [
+            {
+              "id": "ifi960",
+              "name": "IFI960",
+              "slug": "ifi960",
+              "description": "Pantalla LED Indoor de alta resolución",
+              "pixelPitch": "9.6mm",
+              "environment": "indoor",
+              "image": "productos/pantallas-led/ifi960.jpg",
+              "specs": {
+                "resolution": "Alta definición",
+                "brightness": "1000 nits",
+                "refreshRate": "3840Hz"
+              }
+            },
+            {
+              "id": "ri640",
+              "name": "RI640",
+              "slug": "ri640",
+              "description": "Pantalla LED Indoor serie RI",
+              "pixelPitch": "6.4mm",
+              "environment": "indoor",
+              "image": "productos/pantallas-led/ri640.jpg",
+              "specs": {
+                "resolution": "Alta definición",
+                "brightness": "1200 nits",
+                "refreshRate": "3840Hz"
+              }
+            },
+            {
+              "id": "ri960",
+              "name": "RI960",
+              "slug": "ri960",
+              "description": "Pantalla LED Indoor serie RI",
+              "pixelPitch": "9.6mm",
+              "environment": "indoor",
+              "image": "productos/pantallas-led/ri960.jpg",
+              "specs": {
+                "resolution": "Alta definición",
+                "brightness": "1000 nits",
+                "refreshRate": "3840Hz"
+              }
+            }
+          ]
+        },
+        {
+          "id": "pantallas-outdoor",
+          "name": "Outdoor",
+          "slug": "outdoor",
+          "environment": "outdoor",
+          "description": "Pantallas LED para exterior resistentes a la intemperie",
+          "models": [
+            {
+              "id": "vp960",
+              "name": "VP960",
+              "slug": "vp960",
+              "description": "Pantalla LED Outdoor serie VP",
+              "pixelPitch": "9.6mm",
+              "environment": "outdoor",
+              "image": "productos/pantallas-led/vp960.jpg",
+              "specs": {
+                "resolution": "Alta definición",
+                "brightness": "6000 nits",
+                "protection": "IP65"
+              }
+            },
+            {
+              "id": "re640",
+              "name": "RE640",
+              "slug": "re640",
+              "description": "Pantalla LED Outdoor serie RE",
+              "pixelPitch": "6.4mm",
+              "environment": "outdoor",
+              "image": "productos/pantallas-led/re640.jpg",
+              "specs": {
+                "resolution": "Alta definición",
+                "brightness": "6500 nits",
+                "protection": "IP65"
+              }
+            },
+            {
+              "id": "re960",
+              "name": "RE960",
+              "slug": "re960",
+              "description": "Pantalla LED Outdoor serie RE",
+              "pixelPitch": "9.6mm",
+              "environment": "outdoor",
+              "image": "productos/pantallas-led/re960.jpg",
+              "specs": {
+                "resolution": "Alta definición",
+                "brightness": "6000 nits",
+                "protection": "IP65"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tour-series",
+      "name": "Tour Series",
+      "slug": "tour-series",
+      "icon": "fa-truck-loading",
+      "description": "Pantallas LED portátiles para eventos y giras",
+      "hasEnvironmentFilter": true,
+      "subcategories": [
+        {
+          "id": "tour-indoor",
+          "name": "Indoor",
+          "slug": "indoor",
+          "environment": "indoor",
+          "description": "Serie Tour para eventos en interiores",
+          "models": [
+            {
+              "id": "ri500",
+              "name": "RI500",
+              "slug": "ri500",
+              "description": "Pantalla Tour Indoor RI500",
+              "pixelPitch": "5.0mm",
+              "environment": "indoor",
+              "image": "productos/tour-series/ri500.jpg",
+              "specs": {
+                "weight": "Ultraliviano",
+                "setup": "Montaje rápido"
+              }
+            },
+            {
+              "id": "ric500",
+              "name": "RIC500",
+              "slug": "ric500",
+              "description": "Pantalla Tour Indoor RIC500 curva",
+              "pixelPitch": "5.0mm",
+              "environment": "indoor",
+              "image": "productos/tour-series/ric500.jpg",
+              "specs": {
+                "weight": "Ultraliviano",
+                "setup": "Montaje rápido",
+                "feature": "Curva"
+              }
+            },
+            {
+              "id": "rif500",
+              "name": "RIF500",
+              "slug": "rif500",
+              "description": "Pantalla Tour Indoor RIF500 flexible",
+              "pixelPitch": "5.0mm",
+              "environment": "indoor",
+              "image": "productos/tour-series/rif500.jpg",
+              "specs": {
+                "weight": "Ultraliviano",
+                "setup": "Montaje rápido",
+                "feature": "Flexible"
+              }
+            },
+            {
+              "id": "ri1000",
+              "name": "RI1000",
+              "slug": "ri1000",
+              "description": "Pantalla Tour Indoor RI1000",
+              "pixelPitch": "10.0mm",
+              "environment": "indoor",
+              "image": "productos/tour-series/ri1000.jpg",
+              "specs": {
+                "weight": "Ultraliviano",
+                "setup": "Montaje rápido"
+              }
+            },
+            {
+              "id": "ric1000",
+              "name": "RIC1000",
+              "slug": "ric1000",
+              "description": "Pantalla Tour Indoor RIC1000 curva",
+              "pixelPitch": "10.0mm",
+              "environment": "indoor",
+              "image": "productos/tour-series/ric1000.jpg",
+              "specs": {
+                "weight": "Ultraliviano",
+                "setup": "Montaje rápido",
+                "feature": "Curva"
+              }
+            },
+            {
+              "id": "rif1000",
+              "name": "RIF1000",
+              "slug": "rif1000",
+              "description": "Pantalla Tour Indoor RIF1000 flexible",
+              "pixelPitch": "10.0mm",
+              "environment": "indoor",
+              "image": "productos/tour-series/rif1000.jpg",
+              "specs": {
+                "weight": "Ultraliviano",
+                "setup": "Montaje rápido",
+                "feature": "Flexible"
+              }
+            }
+          ]
+        },
+        {
+          "id": "tour-outdoor",
+          "name": "Outdoor",
+          "slug": "outdoor",
+          "environment": "outdoor",
+          "description": "Serie Tour para eventos al aire libre",
+          "models": [
+            {
+              "id": "re500",
+              "name": "RE500",
+              "slug": "re500",
+              "description": "Pantalla Tour Outdoor RE500",
+              "pixelPitch": "5.0mm",
+              "environment": "outdoor",
+              "image": "productos/tour-series/re500.jpg",
+              "specs": {
+                "weight": "Liviano",
+                "setup": "Montaje rápido",
+                "protection": "IP65"
+              }
+            },
+            {
+              "id": "rec500",
+              "name": "REC500",
+              "slug": "rec500",
+              "description": "Pantalla Tour Outdoor REC500 curva",
+              "pixelPitch": "5.0mm",
+              "environment": "outdoor",
+              "image": "productos/tour-series/rec500.jpg",
+              "specs": {
+                "weight": "Liviano",
+                "setup": "Montaje rápido",
+                "protection": "IP65",
+                "feature": "Curva"
+              }
+            },
+            {
+              "id": "ref500",
+              "name": "REF500",
+              "slug": "ref500",
+              "description": "Pantalla Tour Outdoor REF500 flexible",
+              "pixelPitch": "5.0mm",
+              "environment": "outdoor",
+              "image": "productos/tour-series/ref500.jpg",
+              "specs": {
+                "weight": "Liviano",
+                "setup": "Montaje rápido",
+                "protection": "IP65",
+                "feature": "Flexible"
+              }
+            },
+            {
+              "id": "re1000",
+              "name": "RE1000",
+              "slug": "re1000",
+              "description": "Pantalla Tour Outdoor RE1000",
+              "pixelPitch": "10.0mm",
+              "environment": "outdoor",
+              "image": "productos/tour-series/re1000.jpg",
+              "specs": {
+                "weight": "Liviano",
+                "setup": "Montaje rápido",
+                "protection": "IP65"
+              }
+            },
+            {
+              "id": "rec1000",
+              "name": "REC1000",
+              "slug": "rec1000",
+              "description": "Pantalla Tour Outdoor REC1000 curva",
+              "pixelPitch": "10.0mm",
+              "environment": "outdoor",
+              "image": "productos/tour-series/rec1000.jpg",
+              "specs": {
+                "weight": "Liviano",
+                "setup": "Montaje rápido",
+                "protection": "IP65",
+                "feature": "Curva"
+              }
+            },
+            {
+              "id": "ref1000",
+              "name": "REF1000",
+              "slug": "ref1000",
+              "description": "Pantalla Tour Outdoor REF1000 flexible",
+              "pixelPitch": "10.0mm",
+              "environment": "outdoor",
+              "image": "productos/tour-series/ref1000.jpg",
+              "specs": {
+                "weight": "Liviano",
+                "setup": "Montaje rápido",
+                "protection": "IP65",
+                "feature": "Flexible"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "totems",
+      "name": "Totems",
+      "slug": "totems",
+      "icon": "fa-rectangle-vertical-history",
+      "description": "Tótems LED publicitarios para interior y exterior",
+      "hasEnvironmentFilter": true,
+      "subcategories": [
+        {
+          "id": "totems-indoor",
+          "name": "Indoor",
+          "slug": "indoor",
+          "environment": "indoor",
+          "description": "Tótems LED para espacios interiores",
+          "models": [
+            {
+              "id": "ti520",
+              "name": "TI520",
+              "slug": "ti520",
+              "description": "Tótem LED Indoor TI520",
+              "pixelPitch": "5.2mm",
+              "environment": "indoor",
+              "image": "productos/totems/ti520.jpg",
+              "specs": {
+                "brightness": "1500 nits",
+                "format": "Vertical"
+              }
+            },
+            {
+              "id": "ti640",
+              "name": "TI640",
+              "slug": "ti640",
+              "description": "Tótem LED Indoor TI640",
+              "pixelPitch": "6.4mm",
+              "environment": "indoor",
+              "image": "productos/totems/ti640.jpg",
+              "specs": {
+                "brightness": "1500 nits",
+                "format": "Vertical"
+              }
+            },
+            {
+              "id": "ti960",
+              "name": "TI960",
+              "slug": "ti960",
+              "description": "Tótem LED Indoor TI960",
+              "pixelPitch": "9.6mm",
+              "environment": "indoor",
+              "image": "productos/totems/ti960.jpg",
+              "specs": {
+                "brightness": "1200 nits",
+                "format": "Vertical"
+              }
+            }
+          ]
+        },
+        {
+          "id": "totems-outdoor",
+          "name": "Outdoor",
+          "slug": "outdoor",
+          "environment": "outdoor",
+          "description": "Tótems LED resistentes para exteriores",
+          "models": [
+            {
+              "id": "te960-s",
+              "name": "TE960-S",
+              "slug": "te960-s",
+              "description": "Tótem LED Outdoor TE960 Simple cara",
+              "pixelPitch": "9.6mm",
+              "environment": "outdoor",
+              "image": "productos/totems/te960-s.jpg",
+              "specs": {
+                "brightness": "6000 nits",
+                "format": "Vertical",
+                "type": "Simple cara",
+                "protection": "IP65"
+              }
+            },
+            {
+              "id": "te960-d",
+              "name": "TE960-D",
+              "slug": "te960-d",
+              "description": "Tótem LED Outdoor TE960 Doble cara",
+              "pixelPitch": "9.6mm",
+              "environment": "outdoor",
+              "image": "productos/totems/te960-d.jpg",
+              "specs": {
+                "brightness": "6000 nits",
+                "format": "Vertical",
+                "type": "Doble cara",
+                "protection": "IP65"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pisos-led",
+      "name": "Pisos LED",
+      "slug": "pisos-led",
+      "icon": "fa-square",
+      "description": "Pisos LED interactivos para eventos y espectáculos",
+      "hasEnvironmentFilter": false,
+      "subcategories": [
+        {
+          "id": "pisos-modelos",
+          "name": "Modelos",
+          "slug": "modelos",
+          "description": "Todos los modelos de pisos LED",
+          "models": [
+            {
+              "id": "pdance",
+              "name": "PDANCE",
+              "slug": "pdance",
+              "description": "Piso LED PDANCE para pistas de baile",
+              "image": "productos/pisos-led/pdance.jpg",
+              "specs": {
+                "type": "Pista de baile",
+                "resistance": "Alta resistencia",
+                "interactive": true
+              }
+            },
+            {
+              "id": "p60-disco",
+              "name": "P-60 DISCO",
+              "slug": "p60-disco",
+              "description": "Piso LED P-60 DISCO efecto discoteca",
+              "image": "productos/pisos-led/p60-disco.jpg",
+              "specs": {
+                "type": "Discoteca",
+                "resistance": "Alta resistencia",
+                "effects": "Efectos de luz"
+              }
+            },
+            {
+              "id": "pi-rgb",
+              "name": "PI-RGB",
+              "slug": "pi-rgb",
+              "description": "Piso LED PI-RGB interactivo full color",
+              "image": "productos/pisos-led/pi-rgb.jpg",
+              "specs": {
+                "type": "Interactivo",
+                "resistance": "Alta resistencia",
+                "colors": "Full RGB"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "soluciones",
+      "name": "Soluciones",
+      "slug": "soluciones",
+      "icon": "fa-lightbulb",
+      "description": "Soluciones LED especializadas para diferentes aplicaciones",
+      "hasEnvironmentFilter": false,
+      "subcategories": [
+        {
+          "id": "unidades-colectivos",
+          "name": "Unidades de Colectivos",
+          "slug": "unidades-colectivos",
+          "description": "Sistemas LED para transporte público",
+          "models": [
+            {
+              "id": "cartelera",
+              "name": "Cartelera",
+              "slug": "cartelera",
+              "description": "Cartelera LED para colectivos",
+              "image": "productos/soluciones/cartelera.jpg",
+              "specs": {
+                "application": "Transporte público",
+                "visibility": "Alta visibilidad"
+              }
+            },
+            {
+              "id": "ramalera",
+              "name": "Ramalera",
+              "slug": "ramalera",
+              "description": "Ramalera LED indicadora de recorrido",
+              "image": "productos/soluciones/ramalera.jpg",
+              "specs": {
+                "application": "Transporte público",
+                "type": "Indicador de recorrido"
+              }
+            },
+            {
+              "id": "luneta-led",
+              "name": "Luneta de LED",
+              "slug": "luneta-led",
+              "description": "Luneta LED trasera para colectivos",
+              "image": "productos/soluciones/luneta-led.jpg",
+              "specs": {
+                "application": "Transporte público",
+                "position": "Trasera"
+              }
+            }
+          ]
+        },
+        {
+          "id": "unidades-comercios",
+          "name": "Unidades para Comercios",
+          "slug": "unidades-comercios",
+          "description": "Soluciones LED para locales comerciales",
+          "models": [
+            {
+              "id": "m-642",
+              "name": "M-642",
+              "slug": "m-642",
+              "description": "Módulo LED M-642 para comercios",
+              "image": "productos/soluciones/m-642.jpg",
+              "specs": {
+                "application": "Comercios",
+                "size": "Compacto"
+              }
+            },
+            {
+              "id": "m-962",
+              "name": "M-962",
+              "slug": "m-962",
+              "description": "Módulo LED M-962 para comercios",
+              "image": "productos/soluciones/m-962.jpg",
+              "specs": {
+                "application": "Comercios",
+                "size": "Mediano"
+              }
+            },
+            {
+              "id": "m-320-3d",
+              "name": "M-320-3D",
+              "slug": "m-320-3d",
+              "description": "Módulo LED M-320-3D efecto tridimensional",
+              "image": "productos/soluciones/m-320-3d.jpg",
+              "specs": {
+                "application": "Comercios",
+                "feature": "Efecto 3D"
+              }
+            }
+          ]
+        },
+        {
+          "id": "porticos",
+          "name": "Pórticos",
+          "slug": "porticos",
+          "description": "Pórticos LED para control vehicular",
+          "models": [
+            {
+              "id": "lpr-9648",
+              "name": "LPR-9648",
+              "slug": "lpr-9648",
+              "description": "Pórtico LED LPR-9648",
+              "image": "productos/soluciones/lpr-9648.jpg",
+              "specs": {
+                "application": "Control vehicular",
+                "type": "Pórtico"
+              }
+            },
+            {
+              "id": "lpr-1248",
+              "name": "LPR-1248",
+              "slug": "lpr-1248",
+              "description": "Pórtico LED LPR-1248",
+              "image": "productos/soluciones/lpr-1248.jpg",
+              "specs": {
+                "application": "Control vehicular",
+                "type": "Pórtico"
+              }
+            },
+            {
+              "id": "lpr-1264",
+              "name": "LPR-1264",
+              "slug": "lpr-1264",
+              "description": "Pórtico LED LPR-1264",
+              "image": "productos/soluciones/lpr-1264.jpg",
+              "specs": {
+                "application": "Control vehicular",
+                "type": "Pórtico"
+              }
+            }
+          ]
+        },
+        {
+          "id": "disenos-especiales",
+          "name": "Diseños Especiales",
+          "slug": "disenos-especiales",
+          "description": "Soluciones LED personalizadas",
+          "models": [
+            {
+              "id": "sh-1696",
+              "name": "SH-1696",
+              "slug": "sh-1696",
+              "description": "Diseño especial SH-1696",
+              "image": "productos/soluciones/sh-1696.jpg",
+              "specs": {
+                "application": "Personalizado",
+                "type": "Diseño especial"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "led-trucks",
+      "name": "LED Trucks",
+      "slug": "led-trucks",
+      "icon": "fa-truck",
+      "description": "Camiones equipados con pantallas LED móviles para publicidad y eventos",
+      "hasEnvironmentFilter": false,
+      "isSpecialPage": true,
+      "content": {
+        "title": "LED Trucks - Publicidad Móvil",
+        "subtitle": "Impacto visual en movimiento",
+        "description": "Nuestros LED Trucks son la solución perfecta para campañas publicitarias móviles, eventos especiales y activaciones de marca. Equipados con pantallas LED de alta resolución, ofrecen máxima visibilidad y flexibilidad.",
+        "features": [
+          "Pantallas LED de alta resolución",
+          "Cobertura amplia en eventos y ciudades",
+          "Ideal para lanzamientos, campañas y activaciones",
+          "Sonido profesional integrado",
+          "Operadores especializados incluidos"
+        ],
+        "gallery": [
+          {
+            "image": "productos/led-trucks/truck-1.jpg",
+            "caption": "LED Truck en evento corporativo"
+          },
+          {
+            "image": "productos/led-trucks/truck-2.jpg",
+            "caption": "Publicidad móvil en zona céntrica"
+          },
+          {
+            "image": "productos/led-trucks/truck-3.jpg",
+            "caption": "Activación de marca en estadio"
+          },
+          {
+            "image": "productos/led-trucks/truck-4.jpg",
+            "caption": "Cobertura de evento masivo"
+          }
+        ]
+      },
+      "subcategories": []
+    },
+    {
+      "id": "iluminacion-profesional",
+      "name": "Iluminación Profesional",
+      "slug": "iluminacion-profesional",
+      "icon": "fa-lightbulb",
+      "description": "Equipos de iluminación profesional para espectáculos y eventos",
+      "hasEnvironmentFilter": false,
+      "subcategories": [
+        {
+          "id": "cabezales-moviles",
+          "name": "Cabezales Móviles",
+          "slug": "cabezales-moviles",
+          "description": "Cabezales móviles para iluminación escénica",
+          "models": []
+        },
+        {
+          "id": "cabezales-beam",
+          "name": "Beam",
+          "slug": "beam",
+          "parentSubcategory": "cabezales-moviles",
+          "description": "Cabezales móviles tipo Beam",
+          "models": [
+            {
+              "id": "cmb-7r",
+              "name": "CMB-7R",
+              "slug": "cmb-7r",
+              "description": "Cabezal móvil Beam CMB-7R",
+              "image": "productos/iluminacion/cmb-7r.jpg",
+              "specs": {
+                "type": "Beam",
+                "power": "7R"
+              }
+            },
+            {
+              "id": "cmb-20r",
+              "name": "CMB-20R",
+              "slug": "cmb-20r",
+              "description": "Cabezal móvil Beam CMB-20R",
+              "image": "productos/iluminacion/cmb-20r.jpg",
+              "specs": {
+                "type": "Beam",
+                "power": "20R"
+              }
+            }
+          ]
+        },
+        {
+          "id": "cabezales-3en1",
+          "name": "3 en 1",
+          "slug": "3en1",
+          "parentSubcategory": "cabezales-moviles",
+          "description": "Cabezales móviles 3 en 1 (Spot, Beam, Wash)",
+          "models": [
+            {
+              "id": "cmr-250-led",
+              "name": "CMR-250-LED",
+              "slug": "cmr-250-led",
+              "description": "Cabezal móvil 3 en 1 CMR-250-LED",
+              "image": "productos/iluminacion/cmr-250-led.jpg",
+              "specs": {
+                "type": "3 en 1",
+                "power": "250W LED"
+              }
+            },
+            {
+              "id": "cmr-400-led",
+              "name": "CMR-400-LED",
+              "slug": "cmr-400-led",
+              "description": "Cabezal móvil 3 en 1 CMR-400-LED",
+              "image": "productos/iluminacion/cmr-400-led.jpg",
+              "specs": {
+                "type": "3 en 1",
+                "power": "400W LED"
+              }
+            }
+          ]
+        },
+        {
+          "id": "barras-moviles",
+          "name": "Barras Móviles",
+          "slug": "barras-moviles",
+          "description": "Barras LED móviles para efectos escénicos",
+          "models": [
+            {
+              "id": "lb-1040-led",
+              "name": "LB-1040-LED",
+              "slug": "lb-1040-led",
+              "description": "Barra móvil LED LB-1040-LED",
+              "image": "productos/iluminacion/lb-1040-led.jpg",
+              "specs": {
+                "type": "Barra móvil",
+                "leds": "10x40W"
+              }
+            }
+          ]
+        },
+        {
+          "id": "flashes",
+          "name": "Flashes",
+          "slug": "flashes",
+          "description": "Flashes LED estroboscópicos",
+          "models": [
+            {
+              "id": "st-960-led",
+              "name": "ST-960-LED",
+              "slug": "st-960-led",
+              "description": "Flash LED ST-960-LED",
+              "image": "productos/iluminacion/st-960-led.jpg",
+              "specs": {
+                "type": "Flash estroboscópico",
+                "power": "960W LED"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "version": "1.0.0",
+    "lastUpdated": "2024-12-07",
+    "company": "RTM Pantallas LED",
+    "contact": {
+      "phone": "+54 9 11 7373 6308",
+      "email": "info@rtmpantallasled.com",
+      "address": "Av. Tte. Gral. Juan Domingo Perón 2915, Florencio Varela"
+    }
+  }
+}
+
