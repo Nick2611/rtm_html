@@ -289,8 +289,7 @@
         display: none;
       }
       .cta {
-        flex: 0 0 auto;
-        order: 2;
+        display: none;
       }
     }
 
@@ -842,26 +841,7 @@
       }
     }
 
-    /* Mobile dropdown improvements */
-    .mobile-dropdown .dropdown-menu {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease;
-    }
 
-    .mobile-dropdown.active .dropdown-menu {
-      max-height: 600px;
-    }
-
-    .mobile-cat-item .submenu {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease;
-    }
-
-    .mobile-cat-item.active .submenu {
-      max-height: 300px;
-    }
 
     .btn{
       appearance: none;
@@ -932,6 +912,7 @@
     /* Breakpoints adaptativos para el menú hamburguesa */
     @media (max-width: 1000px){
       .nav-center{ display:none; }
+      .cta { display: none; }
       .burger-wrap{ 
         display: flex;
         z-index: 1001;
@@ -1027,34 +1008,7 @@
       color: var(--accent);
     }
     
-    /* Estilos para menú móvil con dropdowns */
-    .drawer .menu-item-dropdown {
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-    }
     
-    .drawer .dropdown-toggle-mobile {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    
-    .drawer .dropdown-arrow {
-      font-size: 0.7rem;
-      transition: transform 0.2s ease;
-    }
-    
-    .drawer .menu-item-dropdown.active .dropdown-arrow {
-      transform: rotate(180deg);
-    }
-    
-    .drawer .submenu-arrow {
-      font-size: 1.2rem;
-      opacity: 0.5;
-    }
-    
-    .drawer .dropdown-menu-item.active .submenu-arrow {
-      transform: rotate(90deg);
-    }
 
     /* ======= HERO SECTION ======= */
     section.hero{
@@ -2452,61 +2406,12 @@
         <div class="burger"><span></span></div>
       </label>
 
-      <!-- Drawer móvil -->
+      <!-- Drawer móvil simplificado -->
       <div class="drawer" aria-label="Menú móvil">
         <ul>
           <li><a class="active" href="#home">Home</a></li>
           <li><a href="#about">Nosotros</a></li>
-          <li class="menu-item-dropdown mobile-dropdown">
-            <a href="productos.html" class="dropdown-toggle-mobile">Productos <span class="dropdown-arrow">▼</span></a>
-            <ul class="dropdown-menu mobile-submenu-list">
-              <li class="dropdown-menu-item mobile-cat-item">
-                <a href="productos.html?cat=pantallas-led">Pantallas LED <span class="submenu-arrow">›</span></a>
-                <ul class="submenu">
-                  <li><a href="productos.html?cat=pantallas-led&sub=indoor">Indoor</a></li>
-                  <li><a href="productos.html?cat=pantallas-led&sub=outdoor">Outdoor</a></li>
-                </ul>
-              </li>
-              <li class="dropdown-menu-item mobile-cat-item">
-                <a href="productos.html?cat=tour-series">Tour Series <span class="submenu-arrow">›</span></a>
-                <ul class="submenu">
-                  <li><a href="productos.html?cat=tour-series&sub=indoor">Indoor</a></li>
-                  <li><a href="productos.html?cat=tour-series&sub=outdoor">Outdoor</a></li>
-                </ul>
-              </li>
-              <li class="dropdown-menu-item mobile-cat-item">
-                <a href="productos.html?cat=totems">Totems <span class="submenu-arrow">›</span></a>
-                <ul class="submenu">
-                  <li><a href="productos.html?cat=totems&sub=indoor">Indoor</a></li>
-                  <li><a href="productos.html?cat=totems&sub=outdoor">Outdoor</a></li>
-                </ul>
-              </li>
-              <li class="dropdown-menu-item mobile-cat-item">
-                <a href="productos.html?cat=pisos-led">Pisos LED</a>
-              </li>
-              <li class="dropdown-menu-item mobile-cat-item">
-                <a href="productos.html?cat=soluciones">Soluciones <span class="submenu-arrow">›</span></a>
-                <ul class="submenu">
-                  <li><a href="productos.html?cat=soluciones&sub=unidades-colectivos">Colectivos</a></li>
-                  <li><a href="productos.html?cat=soluciones&sub=unidades-comercios">Comercios</a></li>
-                  <li><a href="productos.html?cat=soluciones&sub=porticos">Pórticos</a></li>
-                  <li><a href="productos.html?cat=soluciones&sub=disenos-especiales">Especiales</a></li>
-                </ul>
-              </li>
-              <li class="dropdown-menu-item mobile-cat-item">
-                <a href="productos.html?cat=led-trucks">LED Trucks</a>
-              </li>
-              <li class="dropdown-menu-item mobile-cat-item">
-                <a href="productos.html?cat=iluminacion-profesional">Iluminación <span class="submenu-arrow">›</span></a>
-                <ul class="submenu">
-                  <li><a href="productos.html?cat=iluminacion-profesional&sub=beam">Beam</a></li>
-                  <li><a href="productos.html?cat=iluminacion-profesional&sub=3en1">3 en 1</a></li>
-                  <li><a href="productos.html?cat=iluminacion-profesional&sub=barras-moviles">Barras</a></li>
-                  <li><a href="productos.html?cat=iluminacion-profesional&sub=flashes">Flashes</a></li>
-                </ul>
-              </li>
-            </ul>
-          </li>
+          <li><a href="productos.html">Productos</a></li>
           <li><a href="#clientes">Clientes</a></li>
           <li><a href="#proyectos">Proyectos</a></li>
           <li><a href="#contacto">Contactanos</a></li>
@@ -2955,35 +2860,6 @@
     // Inicializar videos cuando el DOM esté listo
     document.addEventListener('DOMContentLoaded', initProjectVideos);
 
-    // ===== MENÚ DESPLEGABLE DE PRODUCTOS =====
-    // Nota: El menú es completamente hover-based, no requiere JavaScript
-    // Se mantiene esta función por compatibilidad con el menú móvil
-    function initProductosDropdown() {
-      // El menú desktop funciona solo con CSS hover
-      // Esta función solo se usa para el menú móvil
-    }
-    
-    // ===== MENÚ MÓVIL DESPLEGABLE =====
-    function initMobileDropdown() {
-      const dropdownToggles = document.querySelectorAll('.drawer .dropdown-toggle-mobile');
-      
-      dropdownToggles.forEach(toggle => {
-        toggle.addEventListener('click', function(e) {
-          e.preventDefault();
-          const menuItem = this.closest('.menu-item-dropdown');
-          if (menuItem) {
-            // Cerrar otros menús abiertos
-            document.querySelectorAll('.drawer .menu-item-dropdown').forEach(item => {
-              if (item !== menuItem) {
-                item.classList.remove('active');
-              }
-            });
-            menuItem.classList.toggle('active');
-          }
-        });
-      });
-    }
-
     // ===== MANEJO DEL FORMULARIO DE CONTACTO =====
     function initContactForm() {
       const form = document.getElementById('contact-form');
@@ -3324,34 +3200,12 @@
       return text.replace(regex, '<mark>$1</mark>');
     }
 
-    // ===== MOBILE CATEGORY DROPDOWNS =====
-    function initMobileCategoryDropdowns() {
-      const catItems = document.querySelectorAll('.mobile-cat-item');
-      
-      catItems.forEach(item => {
-        const link = item.querySelector('a');
-        const submenu = item.querySelector('.submenu');
-        
-        if (link && submenu) {
-          link.addEventListener('click', function(e) {
-            if (submenu) {
-              e.preventDefault();
-              item.classList.toggle('active');
-            }
-          });
-        }
-      });
-    }
-
     // Inicializar todo cuando el DOM esté listo
     document.addEventListener('DOMContentLoaded', function() {
-      initProductosDropdown();
       initContactForm();
-      initMobileDropdown();
       initLeadPopup();
       loadProductsData();
       initMegaMenuSearch();
-      initMobileCategoryDropdowns();
     });
   </script>
 
