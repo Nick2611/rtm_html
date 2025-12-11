@@ -9,27 +9,29 @@
   <meta name="description" content="Especialistas en desarrollo, fabricación e instalación de pantallas LED para interior y exterior. Soluciones profesionales y a medida.">
   
   <!-- Canonical URL -->
-  <link rel="canonical" href="https://rtmpantallasled.com/index.html">
+  <link rel="canonical" href="https://pantallasledrtm.com/">
   
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://rtmpantallasled.com/index.html">
+  <meta property="og:url" content="https://pantallasledrtm.com/">
   <meta property="og:title" content="RTM Pantallas LED — Soluciones LED Profesionales">
   <meta property="og:description" content="Especialistas en desarrollo, fabricación e instalación de pantallas LED para interior y exterior. Soluciones profesionales y a medida.">
-  <meta property="og:image" content="https://rtmpantallasled.com/rtm_logo/rtmLogo.png">
+  <meta property="og:image" content="https://pantallasledrtm.com/rtm_logo/rtmLogo.png">
   
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:url" content="https://rtmpantallasled.com/index.html">
+  <meta name="twitter:url" content="https://pantallasledrtm.com/">
   <meta name="twitter:title" content="RTM Pantallas LED — Soluciones LED Profesionales">
   <meta name="twitter:description" content="Especialistas en desarrollo, fabricación e instalación de pantallas LED para interior y exterior. Soluciones profesionales y a medida.">
-  <meta name="twitter:image" content="https://rtmpantallasled.com/rtm_logo/rtmLogo.png">
+  <meta name="twitter:image" content="https://pantallasledrtm.com/rtm_logo/rtmLogo.png">
   
   <!-- Favicon -->
-  <link rel="icon" type="image/png" sizes="32x32" href="rtm_logo/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="rtm_logo/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="rtm_logo/apple-touch-icon.png">
-  <link rel="shortcut icon" href="rtm_logo/favicon-32x32.png">
+  <!-- Favicon completo para máxima compatibilidad -->
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" type="image/png" sizes="32x32" href="/rtm_logo/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/rtm_logo/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/rtm_logo/apple-touch-icon.png">
   
   <!-- Preconnect para Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -43,15 +45,15 @@
   <!-- CSS Principal -->
   <link rel="stylesheet" href="css/main.css">
   
-  <!-- Datos Estructurados (Schema.org) -->
+  <!-- Datos Estructurados - Organization (Schema.org) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
+    "@type": "Organization",
     "name": "RTM Pantallas LED",
+    "url": "https://pantallasledrtm.com",
+    "logo": "https://pantallasledrtm.com/rtm_logo/rtmLogo.png",
     "description": "Especialistas en desarrollo, fabricación e instalación de pantallas LED para interior y exterior. Soluciones profesionales y a medida.",
-    "url": "https://rtmpantallasled.com",
-    "logo": "https://rtmpantallasled.com/rtm_logo/rtmLogo.png",
     "telephone": "+54 9 11 7373 6308",
     "address": {
       "@type": "PostalAddress",
@@ -64,7 +66,28 @@
     "sameAs": [
       "https://www.instagram.com/pantallasledrtm/",
       "https://www.linkedin.com/in/rtmpantallasled/"
-    ]
+    ],
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+54 9 11 7373 6308",
+      "contactType": "sales",
+      "availableLanguage": "Spanish"
+    }
+  }
+  </script>
+  
+  <!-- Datos Estructurados - WebSite (Schema.org) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "RTM Pantallas LED",
+    "url": "https://pantallasledrtm.com",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://pantallasledrtm.com/productos.html?search={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
   }
   </script>
   
@@ -233,9 +256,9 @@
     .brand{
       display: flex;
       align-items: center;
-      flex: 1;
+        flex: 1;
       min-width: 0;
-    }
+      }
 
     .brand img{
       display: block;
@@ -570,7 +593,7 @@
       visibility: visible;
       pointer-events: auto;
     }
-    
+
     /* Puente invisible para mantener el hover - NO captura clics */
     .mega-menu-wrapper::before {
       content: '';
@@ -602,7 +625,7 @@
     }
 
     .mega-menu-category-title {
-      display: flex;
+        display: flex;
       align-items: center;
       gap: 10px;
       color: var(--nav-text);
@@ -613,7 +636,7 @@
       margin-bottom: 10px;
       border-bottom: 2px solid transparent;
       transition: all 0.2s ease;
-    }
+      }
 
     .mega-menu-category-title:hover {
       color: var(--accent);
@@ -642,7 +665,7 @@
       padding: 6px 0;
       color: rgba(255, 255, 255, 0.65);
       text-decoration: none;
-      font-size: 0.85rem;
+        font-size: 0.85rem;
       transition: all 0.2s ease;
     }
 
@@ -2308,7 +2331,7 @@
                     <ul class="mega-menu-subcategories">
                       <li><a href="productos.html?cat=pantallas-led&sub=indoor">Indoor <span class="env-badge env-indoor">Indoor</span></a></li>
                       <li><a href="productos.html?cat=pantallas-led&sub=outdoor">Outdoor <span class="env-badge env-outdoor">Outdoor</span></a></li>
-                    </ul>
+                </ul>
                   </div>
                   <!-- Tour Series -->
                   <div class="mega-menu-category">
@@ -2319,7 +2342,7 @@
                     <ul class="mega-menu-subcategories">
                       <li><a href="productos.html?cat=tour-series&sub=indoor">Indoor <span class="env-badge env-indoor">Indoor</span></a></li>
                       <li><a href="productos.html?cat=tour-series&sub=outdoor">Outdoor <span class="env-badge env-outdoor">Outdoor</span></a></li>
-                    </ul>
+                </ul>
                   </div>
                   <!-- Totems -->
                   <div class="mega-menu-category">
@@ -2330,7 +2353,7 @@
                     <ul class="mega-menu-subcategories">
                       <li><a href="productos.html?cat=totems&sub=indoor">Indoor <span class="env-badge env-indoor">Indoor</span></a></li>
                       <li><a href="productos.html?cat=totems&sub=outdoor">Outdoor <span class="env-badge env-outdoor">Outdoor</span></a></li>
-                    </ul>
+                </ul>
                   </div>
                   <!-- Pisos LED -->
                   <div class="mega-menu-category">
@@ -2342,7 +2365,7 @@
                       <li><a href="productos.html?cat=pisos-led&sub=modelos">PDANCE</a></li>
                       <li><a href="productos.html?cat=pisos-led&sub=modelos">P-60 DISCO</a></li>
                       <li><a href="productos.html?cat=pisos-led&sub=modelos">PI-RGB</a></li>
-                    </ul>
+                </ul>
                   </div>
                   <!-- Soluciones -->
                   <div class="mega-menu-category">
@@ -2355,9 +2378,9 @@
                       <li><a href="productos.html?cat=soluciones&sub=unidades-comercios">Unidades para Comercios</a></li>
                       <li><a href="productos.html?cat=soluciones&sub=porticos">Pórticos</a></li>
                       <li><a href="productos.html?cat=soluciones&sub=disenos-especiales">Diseños Especiales</a></li>
-                    </ul>
+                </ul>
                   </div>
-                  <!-- LED Trucks -->
+              <!-- LED Trucks -->
                   <div class="mega-menu-category">
                     <a href="productos.html?cat=led-trucks" class="mega-menu-category-title">
                       <i class="fas fa-truck"></i>
@@ -2376,7 +2399,7 @@
                       <li><a href="productos.html?cat=iluminacion-profesional&sub=3en1">Cabezales 3 en 1</a></li>
                       <li><a href="productos.html?cat=iluminacion-profesional&sub=barras-moviles">Barras Móviles</a></li>
                       <li><a href="productos.html?cat=iluminacion-profesional&sub=flashes">Flashes</a></li>
-                    </ul>
+                </ul>
                   </div>
                 </div>
                 <!-- Buscador en mega menu -->
@@ -2389,7 +2412,7 @@
                 </div>
               </div>
             </div>
-          </li>
+              </li>
           <li role="none"><a role="menuitem" href="#clientes">Clientes</a></li>
           <li role="none"><a role="menuitem" href="#proyectos">Proyectos</a></li>
         </ul>
