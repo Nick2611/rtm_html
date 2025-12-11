@@ -1,5 +1,11 @@
 # Headers para optimización en AWS Amplify
-# Configuración de cache y compresión
+# Configuración de cache, compresión y SEO
+
+# ========================================
+# SEO - Evitar indexación del dominio Amplify
+# ========================================
+# Nota: La redirección 301 en _redirects es la principal protección
+# Este header es una capa adicional de seguridad
 
 # Cache para assets estáticos
 /assets/*

@@ -1,14 +1,18 @@
+# Robots.txt para RTM Pantallas LED
+# https://pantallasledrtm.com
+
 User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://rtmpantallasled.com/sitemap.xml
+Sitemap: https://pantallasledrtm.com/sitemap.xml
 
-# Disallow admin and private areas (if any)
+# Disallow admin and private areas
 Disallow: /lambda/
 Disallow: /amplify.yml
 Disallow: /_headers
 Disallow: /_redirects
+Disallow: /.git/
 
-
-
+# Bloquear URL de Amplify (no debería indexarse)
+# Las redirecciones 301 en _redirects se encargan de esto
