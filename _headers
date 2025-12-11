@@ -1,46 +1,64 @@
-# Headers para optimización en AWS Amplify
-# Configuración de cache, compresión y SEO
+# Headers para AWS Amplify
+# https://pantallasledrtm.com
 
-# ========================================
-# SEO - Evitar indexación del dominio Amplify
-# ========================================
-# Nota: La redirección 301 en _redirects es la principal protección
-# Este header es una capa adicional de seguridad
-
-# Cache para assets estáticos
-/assets/*
+# Favicon - CRÍTICO para SEO
+/favicon.ico
+  Content-Type: image/x-icon
   Cache-Control: public, max-age=31536000, immutable
-  Content-Encoding: gzip
+  X-Content-Type-Options: nosniff
 
-# Cache para CSS
-/assets/css/*
+# Logo para Schema.org
+/logo.png
+  Content-Type: image/png
   Cache-Control: public, max-age=31536000, immutable
-  Content-Type: text/css
 
-# Cache para JavaScript
-/assets/js/*
-  Cache-Control: public, max-age=31536000, immutable
-  Content-Type: application/javascript
+# Archivos SEO
+/robots.txt
+  Content-Type: text/plain
+  Cache-Control: public, max-age=86400
 
-# Cache para imágenes
-/assets/images/*
-  Cache-Control: public, max-age=31536000, immutable
-  Content-Type: image/jpeg
+/sitemap.xml
+  Content-Type: application/xml
+  Cache-Control: public, max-age=86400
 
-# Cache para videos
-/assets/videos/*
-  Cache-Control: public, max-age=31536000, immutable
-  Content-Type: video/mp4
-
-# Headers para HTML
+# HTML - No cachear agresivamente
 /*.html
   Cache-Control: public, max-age=3600
-  Content-Type: text/html
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
   X-XSS-Protection: 1; mode=block
 
-# Headers de seguridad
+# CSS y JavaScript
+/css/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/js/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Imágenes
+/rtm_logo/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/logos_clientes/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/miniaturas_videos/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/proyectos_imagenes/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/background_hero/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/about_background/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Videos
+/proyectos_videos/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Headers de seguridad globales
 /*
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
