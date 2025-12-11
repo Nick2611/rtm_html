@@ -4,19 +4,73 @@ frontend:
     preBuild:
       commands:
         - echo "🚀 Iniciando build para AWS Amplify..."
+        - echo "📁 Verificando archivos críticos:"
+        - ls -la favicon.ico logo.png robots.txt sitemap.xml || echo "⚠️ Algunos archivos no encontrados"
         - echo "📁 Estructura del proyecto:"
         - ls -la
-        - echo "📊 Tamaño de assets:"
-        - du -sh assets/ || echo "Assets no encontrados"
     build:
       commands:
-        - echo "🔧 Ejecutando optimizaciones..."
-        - echo "✅ Build completado"
+        - echo "🔧 Build completado - sitio estático"
   artifacts:
     baseDirectory: .
     files:
-      - '**/*'
-  cache:
-    paths:
-      - assets/**/*
-      - node_modules/**/*
+      # Archivos raíz críticos para SEO
+      - favicon.ico
+      - logo.png
+      - robots.txt
+      - sitemap.xml
+      - _redirects
+      - _headers
+      - customHttp.yml
+      # Páginas HTML
+      - index.html
+      - productos.html
+      - servicios.html
+      - 404.html
+      # Assets y carpetas
+      - 'rtm_logo/**/*'
+      - 'css/**/*'
+      - 'js/**/*'
+      - 'data/**/*'
+      - 'background_hero/**/*'
+      - 'about_background/**/*'
+      - 'logos_clientes/**/*'
+      - 'miniaturas_videos/**/*'
+      - 'proyectos_imagenes/**/*'
+      - 'proyectos_videos/**/*'
+      - 'seccion_servicios/**/*'
+  customHeaders:
+    - pattern: 'favicon.ico'
+      headers:
+        - key: 'Content-Type'
+          value: 'image/x-icon'
+        - key: 'Cache-Control'
+          value: 'public, max-age=31536000'
+    - pattern: '*.html'
+      headers:
+        - key: 'Cache-Control'
+          value: 'no-cache'
+    - pattern: '**/*.css'
+      headers:
+        - key: 'Cache-Control'
+          value: 'public, max-age=31536000'
+    - pattern: '**/*.js'
+      headers:
+        - key: 'Cache-Control'
+          value: 'public, max-age=31536000'
+    - pattern: '**/*.png'
+      headers:
+        - key: 'Cache-Control'
+          value: 'public, max-age=31536000'
+    - pattern: '**/*.jpg'
+      headers:
+        - key: 'Cache-Control'
+          value: 'public, max-age=31536000'
+    - pattern: '**/*.jpeg'
+      headers:
+        - key: 'Cache-Control'
+          value: 'public, max-age=31536000'
+    - pattern: '**/*.mp4'
+      headers:
+        - key: 'Cache-Control'
+          value: 'public, max-age=31536000'

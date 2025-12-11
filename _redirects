@@ -1,65 +1,41 @@
-# Redirects para AWS Amplify
-# Configuración de rutas y redirecciones
+# AWS Amplify Redirects
+# https://pantallasledrtm.com
 
-# ========================================
-# REDIRECCIÓN DE DOMINIO AMPLIFY → CUSTOM
-# ========================================
-# Redirigir todas las URLs del dominio por defecto de Amplify al dominio personalizado
-https://main.d2vrohccb0jjnk.amplifyapp.com/* https://pantallasledrtm.com/:splat 301!
-https://:branch.d2vrohccb0jjnk.amplifyapp.com/* https://pantallasledrtm.com/:splat 301!
+# ============================================
+# ARCHIVOS ESTÁTICOS - Servir directamente
+# ============================================
+# Estos archivos DEBEN servirse con 200, no redirigir
+/favicon.ico /favicon.ico 200
+/logo.png /logo.png 200
+/robots.txt /robots.txt 200
+/sitemap.xml /sitemap.xml 200
 
-# ========================================
-# REDIRECCIÓN DE RUTAS ANTIGUAS
-# ========================================
-# Redirigir páginas antiguas que ya no existen
+# ============================================
+# REDIRECCIONES 301 - Rutas antiguas
+# ============================================
 /servicios.html /productos.html 301
 /servicios /productos.html 301
 /services.html /productos.html 301
+/header.html / 301
+/form_and_footer.html / 301
+/latest_projects.html / 301
+/about.html / 301
+/clientes.html / 301
 
-# Redirigir archivos HTML antiguos a la página principal
-/header.html /index.html 301
-/form_and_footer.html /index.html 301
-/latest_projects.html /index.html 301
-/about.html /index.html 301
-/clientes.html /index.html 301
-
-# Redirigir rutas de servicios antiguos a productos
+# Rutas de servicios antiguos
 /servicios/pantallas-led /productos.html?cat=pantallas-led 301
 /servicios/totems-led /productos.html?cat=totems 301
-/servicios/ramaleros-led /productos.html?cat=soluciones&sub=unidades-colectivos 301
+/servicios/ramaleros-led /productos.html?cat=soluciones 301
 /servicios/pisos-led /productos.html?cat=pisos-led 301
 
-# ========================================
-# SERVIR ASSETS ESTÁTICOS
-# ========================================
-# Mantener rutas originales para assets
-/rtm_logo/* /rtm_logo/:splat 200
-/background_hero/* /background_hero/:splat 200
-/about_background/* /about_background/:splat 200
-/logos_clientes/* /logos_clientes/:splat 200
-/miniaturas_videos/* /miniaturas_videos/:splat 200
-/proyectos_imagenes/* /proyectos_imagenes/:splat 200
-/proyectos_videos/* /proyectos_videos/:splat 200
-/seccion_servicios/* /seccion_servicios/:splat 200
-/css/* /css/:splat 200
-/js/* /js/:splat 200
-/data/* /data/:splat 200
-
-# Archivos de configuración y SEO
-/robots.txt /robots.txt 200
-/sitemap.xml /sitemap.xml 200
-/favicon.ico /rtm_logo/favicon-32x32.png 200
-
-# ========================================
-# PÁGINAS EXISTENTES
-# ========================================
+# ============================================
+# PÁGINAS HTML - Servir directamente
+# ============================================
 /index.html /index.html 200
 /productos.html /productos.html 200
-/ /index.html 200
+/404.html /404.html 200
 
-# ========================================
-# 404 PARA RUTAS NO ENCONTRADAS
-# ========================================
-# IMPORTANTE: Esta regla debe ir AL FINAL
-# Cualquier ruta no encontrada devuelve 404
+# ============================================
+# 404 - Rutas no encontradas (DEBE IR AL FINAL)
+# ============================================
 /* /404.html 404
