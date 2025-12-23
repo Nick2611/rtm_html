@@ -25,6 +25,19 @@ class RTMProducts {
     }
   }
 
+  // Normalizar rutas de imágenes para que sean absolutas desde la raíz del sitio
+  normalizeImagePath(imagePath) {
+    if (!imagePath) return '';
+    // Si la ruta ya empieza con /, devolverla tal cual
+    if (imagePath.startsWith('/')) return imagePath;
+    // Si la ruta empieza con http:// o https://, devolverla tal cual
+    if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) return imagePath;
+    // Si la ruta es un data URI, devolverla tal cual
+    if (imagePath.startsWith('data:')) return imagePath;
+    // Normalizar: agregar / al inicio para hacerla absoluta desde la raíz
+    return '/' + imagePath.replace(/^\.\//, '');
+  }
+
   async loadData() {
     const response = await fetch('data/products.json');
     if (!response.ok) {
@@ -438,6 +451,9 @@ class RTMProducts {
     const hasMultipleImages = model.images && model.images.length > 1;
     const images = model.images || (model.image ? [model.image] : []);
     
+    // Normalizar todas las rutas de imágenes
+    const normalizedImages = images.map(img => this.normalizeImagePath(img));
+    
     // Generar HTML del carrusel o imagen única
     let imageHTML = '';
     if (hasMultipleImages) {
@@ -445,7 +461,7 @@ class RTMProducts {
       imageHTML = `
         <div class="product-carousel" data-carousel-id="${model.id}">
           <div class="carousel-container">
-            ${images.map((img, index) => `
+            ${normalizedImages.map((img, index) => `
               <div class="carousel-slide ${index === 0 ? 'active' : ''}" data-slide="${index}">
                 <img src="${img}" 
                      alt="${model.name} - Imagen ${index + 1}" 
@@ -455,7 +471,7 @@ class RTMProducts {
             `).join('')}
           </div>
           <div class="carousel-indicators">
-            ${images.map((_, index) => `
+            ${normalizedImages.map((_, index) => `
               <button class="carousel-indicator ${index === 0 ? 'active' : ''}" 
                       data-slide-to="${index}" 
                       aria-label="Ir a imagen ${index + 1}"></button>
@@ -472,7 +488,7 @@ class RTMProducts {
     } else {
       // Imagen única
       imageHTML = `
-        <img src="${images[0] || placeholderImage}" 
+        <img src="${this.normalizeImagePath(normalizedImages[0] || placeholderImage)}" 
              alt="${model.name}" 
              loading="lazy"
              onerror="this.src='${placeholderImage}'">
@@ -516,6 +532,9 @@ class RTMProducts {
     const hasMultipleImages = model.images && model.images.length > 1;
     const images = model.images || (model.image ? [model.image] : []);
 
+    // Normalizar todas las rutas de imágenes
+    const normalizedImages = images.map(img => this.normalizeImagePath(img));
+
     // Generar HTML del carrusel o imagen única
     let imageHTML = '';
     if (hasMultipleImages) {
@@ -523,7 +542,7 @@ class RTMProducts {
       imageHTML = `
         <div class="model-carousel" data-carousel-id="${model.id}-detail">
           <div class="carousel-container">
-            ${images.map((img, index) => `
+            ${normalizedImages.map((img, index) => `
               <div class="carousel-slide ${index === 0 ? 'active' : ''}" data-slide="${index}">
                 <img src="${img}" 
                      alt="${model.name} - Imagen ${index + 1}"
@@ -532,7 +551,7 @@ class RTMProducts {
             `).join('')}
           </div>
           <div class="carousel-indicators">
-            ${images.map((_, index) => `
+            ${normalizedImages.map((_, index) => `
               <button class="carousel-indicator ${index === 0 ? 'active' : ''}" 
                       data-slide-to="${index}" 
                       aria-label="Ir a imagen ${index + 1}"></button>
@@ -549,7 +568,7 @@ class RTMProducts {
     } else {
       // Imagen única
       imageHTML = `
-        <img src="${images[0] || placeholderImage}" 
+        <img src="${this.normalizeImagePath(normalizedImages[0] || placeholderImage)}" 
              alt="${model.name}"
              onerror="this.src='${placeholderImage}'">
       `;
