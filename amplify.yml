@@ -32,6 +32,7 @@ frontend:
       - 'css/**/*'
       - 'js/**/*'
       - 'data/**/*'
+      - 'imagenes_productos/**/*'
       - 'background_hero/**/*'
       - 'about_background/**/*'
       - 'logos_clientes/**/*'
