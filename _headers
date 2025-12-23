@@ -39,6 +39,9 @@
 /rtm_logo/*
   Cache-Control: public, max-age=31536000, immutable
 
+/imagenes_productos/*
+  Cache-Control: public, max-age=31536000, immutable
+
 /logos_clientes/*
   Cache-Control: public, max-age=31536000, immutable
 

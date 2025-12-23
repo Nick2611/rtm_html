@@ -28,14 +28,21 @@ class RTMProducts {
   // Normalizar rutas de imágenes para que sean absolutas desde la raíz del sitio
   normalizeImagePath(imagePath) {
     if (!imagePath) return '';
-    // Si la ruta ya empieza con /, devolverla tal cual
-    if (imagePath.startsWith('/')) return imagePath;
+    // Si la ruta ya empieza con /, devolverla tal cual (pero limpiar dobles barras)
+    if (imagePath.startsWith('/')) {
+      return imagePath.replace(/\/+/g, '/');
+    }
     // Si la ruta empieza con http:// o https://, devolverla tal cual
-    if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) return imagePath;
+    if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
+      return imagePath;
+    }
     // Si la ruta es un data URI, devolverla tal cual
-    if (imagePath.startsWith('data:')) return imagePath;
-    // Normalizar: agregar / al inicio para hacerla absoluta desde la raíz
-    return '/' + imagePath.replace(/^\.\//, '');
+    if (imagePath.startsWith('data:')) {
+      return imagePath;
+    }
+    // Normalizar: limpiar rutas relativas y agregar / al inicio
+    const cleanedPath = imagePath.replace(/^\.\//, '').replace(/\/+/g, '/');
+    return '/' + cleanedPath;
   }
 
   async loadData() {
