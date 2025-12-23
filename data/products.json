@@ -36,12 +36,18 @@
               "description": "Pantalla LED Indoor serie RI",
               "pixelPitch": "6.4mm",
               "environment": "indoor",
-              "image": "productos/pantallas-led/ri640.jpg",
+              "image": "imagenes_productos/pantallas_led/indoor/ri640/ri640-1.jpeg",
               "specs": {
                 "resolution": "Alta definición",
                 "brightness": "1200 nits",
                 "refreshRate": "3840Hz"
-              }
+              },
+              "images": [
+                "imagenes_productos/pantallas_led/indoor/ri640/ri640-1.jpeg",
+                "imagenes_productos/pantallas_led/indoor/ri640/ri640-2.jpeg",
+                "imagenes_productos/pantallas_led/indoor/ri640/ri640-3.jpeg",
+                "imagenes_productos/pantallas_led/indoor/ri640/ri640-4.jpeg"
+              ]
             },
             {
               "id": "ri960",
@@ -50,12 +56,16 @@
               "description": "Pantalla LED Indoor serie RI",
               "pixelPitch": "9.6mm",
               "environment": "indoor",
-              "image": "productos/pantallas-led/ri960.jpg",
+              "image": "imagenes_productos/pantallas_led/indoor/ri960/ri960-1.jpeg",
               "specs": {
                 "resolution": "Alta definición",
                 "brightness": "1000 nits",
                 "refreshRate": "3840Hz"
-              }
+              },
+              "images": [
+                "imagenes_productos/pantallas_led/indoor/ri960/ri960-1.jpeg",
+                "imagenes_productos/pantallas_led/indoor/ri960/ri960-2.jpeg"
+              ]
             }
           ]
         },
@@ -87,12 +97,18 @@
               "description": "Pantalla LED Outdoor serie RE",
               "pixelPitch": "6.4mm",
               "environment": "outdoor",
-              "image": "productos/pantallas-led/re640.jpg",
+              "image": "imagenes_productos/pantallas_led/outdoor/re640/re640-1.jpeg",
               "specs": {
                 "resolution": "Alta definición",
                 "brightness": "6500 nits",
                 "protection": "IP65"
-              }
+              },
+              "images": [
+                "imagenes_productos/pantallas_led/outdoor/re640/re640-1.jpeg",
+                "imagenes_productos/pantallas_led/outdoor/re640/re640-2.jpeg",
+                "imagenes_productos/pantallas_led/outdoor/re640/re640-3.jpeg",
+                "imagenes_productos/pantallas_led/outdoor/re640/re640-4.jpeg"
+              ]
             },
             {
               "id": "re960",
@@ -101,12 +117,16 @@
               "description": "Pantalla LED Outdoor serie RE",
               "pixelPitch": "9.6mm",
               "environment": "outdoor",
-              "image": "productos/pantallas-led/re960.jpg",
+              "image": "imagenes_productos/pantallas_led/outdoor/re960/re960-1.jpeg",
               "specs": {
                 "resolution": "Alta definición",
                 "brightness": "6000 nits",
                 "protection": "IP65"
-              }
+              },
+              "images": [
+                "imagenes_productos/pantallas_led/outdoor/re960/re960-1.jpeg",
+                "imagenes_productos/pantallas_led/outdoor/re960/re960-2.jpeg"
+              ]
             }
           ]
         }
@@ -134,11 +154,15 @@
               "description": "Pantalla Tour Indoor RI500",
               "pixelPitch": "5.0mm",
               "environment": "indoor",
-              "image": "productos/tour-series/ri500.jpg",
+              "image": "imagenes_productos/tour_series/indoor/ri500/ri500-1.jpeg",
               "specs": {
                 "weight": "Ultraliviano",
                 "setup": "Montaje rápido"
-              }
+              },
+              "images": [
+                "imagenes_productos/tour_series/indoor/ri500/ri500-1.jpeg",
+                "imagenes_productos/tour_series/indoor/ri500/ri500-2.jpeg"
+              ]
             },
             {
               "id": "ric500",
@@ -161,12 +185,18 @@
               "description": "Pantalla Tour Indoor RIF500 flexible",
               "pixelPitch": "5.0mm",
               "environment": "indoor",
-              "image": "productos/tour-series/rif500.jpg",
+              "image": "imagenes_productos/tour_series/indoor/rif500/rif500-1.jpeg",
               "specs": {
                 "weight": "Ultraliviano",
                 "setup": "Montaje rápido",
                 "feature": "Flexible"
-              }
+              },
+              "images": [
+                "imagenes_productos/tour_series/indoor/rif500/rif500-1.jpeg",
+                "imagenes_productos/tour_series/indoor/rif500/rif500-2.jpeg",
+                "imagenes_productos/tour_series/indoor/rif500/rif500-3.jpeg",
+                "imagenes_productos/tour_series/indoor/rif500/rif500-4.jpeg"
+              ]
             },
             {
               "id": "ri1000",
@@ -175,11 +205,15 @@
               "description": "Pantalla Tour Indoor RI1000",
               "pixelPitch": "10.0mm",
               "environment": "indoor",
-              "image": "productos/tour-series/ri1000.jpg",
+              "image": "imagenes_productos/tour_series/indoor/ri1000/ri1000-1.jpeg",
               "specs": {
                 "weight": "Ultraliviano",
                 "setup": "Montaje rápido"
-              }
+              },
+              "images": [
+                "imagenes_productos/tour_series/indoor/ri1000/ri1000-1.jpeg",
+                "imagenes_productos/tour_series/indoor/ri1000/ri1000-2.jpeg"
+              ]
             },
             {
               "id": "ric1000",
@@ -225,12 +259,16 @@
               "description": "Pantalla Tour Outdoor RE500",
               "pixelPitch": "5.0mm",
               "environment": "outdoor",
-              "image": "productos/tour-series/re500.jpg",
+              "image": "imagenes_productos/tour_series/outdoor/re500/re500-1.jpeg",
               "specs": {
                 "weight": "Liviano",
                 "setup": "Montaje rápido",
                 "protection": "IP65"
-              }
+              },
+              "images": [
+                "imagenes_productos/tour_series/outdoor/re500/re500-1.jpeg",
+                "imagenes_productos/tour_series/outdoor/re500/re500-2.jpeg"
+              ]
             },
             {
               "id": "rec500",
@@ -269,12 +307,16 @@
               "description": "Pantalla Tour Outdoor RE1000",
               "pixelPitch": "10.0mm",
               "environment": "outdoor",
-              "image": "productos/tour-series/re1000.jpg",
+              "image": "imagenes_productos/tour_series/outdoor/re1000/re1000-1.jpeg",
               "specs": {
                 "weight": "Liviano",
                 "setup": "Montaje rápido",
                 "protection": "IP65"
-              }
+              },
+              "images": [
+                "imagenes_productos/tour_series/outdoor/re1000/re1000-1.jpeg",
+                "imagenes_productos/tour_series/outdoor/re1000/re1000-2.jpeg"
+              ]
             },
             {
               "id": "rec1000",
@@ -314,7 +356,7 @@
       "id": "totems",
       "name": "Totems",
       "slug": "totems",
-      "icon": "fa-rectangle-vertical-history",
+      "icon": "fa-columns",
       "description": "Tótems LED publicitarios para interior y exterior",
       "hasEnvironmentFilter": true,
       "subcategories": [
@@ -680,22 +722,35 @@
               "name": "CMB-7R",
               "slug": "cmb-7r",
               "description": "Cabezal móvil Beam CMB-7R",
-              "image": "productos/iluminacion/cmb-7r.jpg",
+              "image": "imagenes_productos/iluminacion_profesional/beam/cmb_7_r/cbm7r-1.jpeg",
               "specs": {
                 "type": "Beam",
                 "power": "7R"
-              }
+              },
+              "images": [
+                "imagenes_productos/iluminacion_profesional/beam/cmb_7_r/cbm7r-1.jpeg",
+                "imagenes_productos/iluminacion_profesional/beam/cmb_7_r/cmb7r-2.jpeg",
+                "imagenes_productos/iluminacion_profesional/beam/cmb_7_r/cmb7r-3.jpeg",
+                "imagenes_productos/iluminacion_profesional/beam/cmb_7_r/cmb7r-4.jpeg",
+                "imagenes_productos/iluminacion_profesional/beam/cmb_7_r/cmb7r-5.jpeg"
+              ]
             },
             {
               "id": "cmb-20r",
               "name": "CMB-20R",
               "slug": "cmb-20r",
               "description": "Cabezal móvil Beam CMB-20R",
-              "image": "productos/iluminacion/cmb-20r.jpg",
+              "image": "imagenes_productos/iluminacion_profesional/beam/cmb_20_r/cmb20r-1.jpeg",
               "specs": {
                 "type": "Beam",
                 "power": "20R"
-              }
+              },
+              "images": [
+                "imagenes_productos/iluminacion_profesional/beam/cmb_20_r/cmb20r-1.jpeg",
+                "imagenes_productos/iluminacion_profesional/beam/cmb_20_r/cmb20r-2.jpeg",
+                "imagenes_productos/iluminacion_profesional/beam/cmb_20_r/cmb20r-3.jpeg",
+                "imagenes_productos/iluminacion_profesional/beam/cmb_20_r/cmb20r-4.jpeg"
+              ]
             }
           ]
         },
@@ -711,22 +766,32 @@
               "name": "CMR-250-LED",
               "slug": "cmr-250-led",
               "description": "Cabezal móvil 3 en 1 CMR-250-LED",
-              "image": "productos/iluminacion/cmr-250-led.jpg",
+              "image": "imagenes_productos/iluminacion_profesional/3_en_1/cmr_250_led/cmr250-1.jpeg",
               "specs": {
                 "type": "3 en 1",
                 "power": "250W LED"
-              }
+              },
+              "images": [
+                "imagenes_productos/iluminacion_profesional/3_en_1/cmr_250_led/cmr250-1.jpeg",
+                "imagenes_productos/iluminacion_profesional/3_en_1/cmr_250_led/cmr250-2.jpeg",
+                "imagenes_productos/iluminacion_profesional/3_en_1/cmr_250_led/cmr250-3.jpeg",
+                "imagenes_productos/iluminacion_profesional/3_en_1/cmr_250_led/cmr250-4.jpeg"
+              ]
             },
             {
               "id": "cmr-400-led",
               "name": "CMR-400-LED",
               "slug": "cmr-400-led",
               "description": "Cabezal móvil 3 en 1 CMR-400-LED",
-              "image": "productos/iluminacion/cmr-400-led.jpg",
+              "image": "imagenes_productos/iluminacion_profesional/3_en_1/cmr_400_led/ cmr400-2.jpeg",
               "specs": {
                 "type": "3 en 1",
                 "power": "400W LED"
-              }
+              },
+              "images": [
+                "imagenes_productos/iluminacion_profesional/3_en_1/cmr_400_led/ cmr400-2.jpeg",
+                "imagenes_productos/iluminacion_profesional/3_en_1/cmr_400_led/cmr400-1.jpeg"
+              ]
             }
           ]
         },
@@ -741,7 +806,11 @@
               "name": "LB-1040-LED",
               "slug": "lb-1040-led",
               "description": "Barra móvil LED LB-1040-LED",
-              "image": "productos/iluminacion/lb-1040-led.jpg",
+              "images": [
+                "imagenes_productos/iluminacion_profesional/barra_movil/barramovil-1.jpeg",
+                "imagenes_productos/iluminacion_profesional/barra_movil/barramovil-2.jpeg"
+              ],
+              "image": "imagenes_productos/iluminacion_profesional/barra_movil/barramovil-1.jpeg",
               "specs": {
                 "type": "Barra móvil",
                 "leds": "10x40W"
@@ -760,11 +829,17 @@
               "name": "ST-960-LED",
               "slug": "st-960-led",
               "description": "Flash LED ST-960-LED",
-              "image": "productos/iluminacion/st-960-led.jpg",
+              "image": "imagenes_productos/iluminacion_profesional/flashes/st_960_led/st960-1.jpeg",
               "specs": {
                 "type": "Flash estroboscópico",
                 "power": "960W LED"
-              }
+              },
+              "images": [
+                "imagenes_productos/iluminacion_profesional/flashes/st_960_led/st960-2.jpeg",
+                "imagenes_productos/iluminacion_profesional/flashes/st_960_led/st960-3.jpeg",
+                "imagenes_productos/iluminacion_profesional/flashes/st_960_led/st960-4.jpeg",
+                "imagenes_productos/iluminacion_profesional/flashes/st_960_led/st960-5.jpeg"
+              ]
             }
           ]
         }
@@ -782,5 +857,3 @@
     }
   }
 }
-
-
