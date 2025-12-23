@@ -251,8 +251,11 @@
    ============================================ */
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 320px));
   gap: 30px;
+  align-items: stretch;
+  width: 100%;
+  justify-content: start;
 }
 
 .product-card {
@@ -262,6 +265,11 @@
   box-shadow: var(--product-card-shadow);
   transition: all 0.3s ease;
   border: 1px solid rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  max-width: 320px;
 }
 
 .product-card:hover {
@@ -272,18 +280,23 @@
 .product-card-image {
   position: relative;
   height: 200px;
-  background: linear-gradient(135deg, #141416 0%, #2a2a2e 100%);
+  min-height: 200px;
+  max-height: 200px;
+  background: #ffffff;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .product-card-image img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
   transition: transform 0.4s ease;
+  display: block;
 }
 
 .product-card:hover .product-card-image img {
@@ -313,6 +326,10 @@
 
 .product-card-content {
   padding: 25px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between;
 }
 
 .product-card-title {
@@ -327,6 +344,7 @@
   color: #666;
   line-height: 1.5;
   margin: 0 0 12px 0;
+  flex-grow: 1;
 }
 
 .product-spec {
@@ -746,6 +764,166 @@
     justify-content: center;
     padding: 10px 12px;
     font-size: 0.85rem;
+  }
+}
+
+/* ============================================
+   Product Carousel (Instagram Style)
+   ============================================ */
+.product-carousel,
+.model-carousel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.carousel-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.carousel-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-slide.active {
+  opacity: 1;
+  position: relative;
+}
+
+.carousel-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+}
+
+.carousel-indicators {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+}
+
+.carousel-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+
+.carousel-indicator:hover {
+  background: rgba(255, 255, 255, 0.8);
+  transform: scale(1.2);
+}
+
+.carousel-indicator.active {
+  background: #fff;
+  width: 24px;
+  border-radius: 4px;
+}
+
+.carousel-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
+  color: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.3s ease;
+  opacity: 0;
+}
+
+.product-carousel:hover .carousel-nav,
+.model-carousel:hover .carousel-nav {
+  opacity: 1;
+}
+
+.carousel-nav:hover {
+  background: rgba(0, 0, 0, 0.8);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-prev {
+  left: 15px;
+}
+
+.carousel-next {
+  right: 15px;
+}
+
+.carousel-nav i {
+  font-size: 1rem;
+}
+
+/* Ajustes para product-card-image con carrusel */
+.product-card-image .product-carousel {
+  height: 200px;
+  min-height: 200px;
+  max-height: 200px;
+  width: 100%;
+}
+
+.product-card-image .product-carousel .carousel-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+/* Ajustes para model-detail-image con carrusel */
+.model-detail-image .model-carousel {
+  min-height: 300px;
+  height: 100%;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .carousel-nav {
+    opacity: 1;
+    width: 35px;
+    height: 35px;
+  }
+  
+  .carousel-prev {
+    left: 10px;
+  }
+  
+  .carousel-next {
+    right: 10px;
+  }
+  
+  .carousel-indicators {
+    bottom: 10px;
   }
 }
 

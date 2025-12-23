@@ -420,18 +420,69 @@ class RTMProducts {
 
     html += '</div>';
     container.innerHTML = html;
+    
+    // Inicializar carruseles para productos con múltiples imágenes
+    if (subcategory.models && subcategory.models.length > 0) {
+      subcategory.models.forEach(model => {
+        if (model.images && model.images.length > 1) {
+          this.initCarousel(model.id);
+        }
+      });
+    }
   }
 
   renderProductCard(model, category, subcategory) {
     const placeholderImage = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"%3E%3Crect fill="%23141416" width="300" height="200"/%3E%3Ctext fill="%23e84a45" font-family="Montserrat,sans-serif" font-size="14" text-anchor="middle" x="150" y="100"%3E' + encodeURIComponent(model.name) + '%3C/text%3E%3C/svg%3E';
     
+    // Verificar si hay múltiples imágenes
+    const hasMultipleImages = model.images && model.images.length > 1;
+    const images = model.images || (model.image ? [model.image] : []);
+    
+    // Generar HTML del carrusel o imagen única
+    let imageHTML = '';
+    if (hasMultipleImages) {
+      // Carrusel con múltiples imágenes
+      imageHTML = `
+        <div class="product-carousel" data-carousel-id="${model.id}">
+          <div class="carousel-container">
+            ${images.map((img, index) => `
+              <div class="carousel-slide ${index === 0 ? 'active' : ''}" data-slide="${index}">
+                <img src="${img}" 
+                     alt="${model.name} - Imagen ${index + 1}" 
+                     loading="lazy"
+                     onerror="this.src='${placeholderImage}'">
+              </div>
+            `).join('')}
+          </div>
+          <div class="carousel-indicators">
+            ${images.map((_, index) => `
+              <button class="carousel-indicator ${index === 0 ? 'active' : ''}" 
+                      data-slide-to="${index}" 
+                      aria-label="Ir a imagen ${index + 1}"></button>
+            `).join('')}
+          </div>
+          <button class="carousel-nav carousel-prev" aria-label="Imagen anterior">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <button class="carousel-nav carousel-next" aria-label="Imagen siguiente">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      `;
+    } else {
+      // Imagen única
+      imageHTML = `
+        <img src="${images[0] || placeholderImage}" 
+             alt="${model.name}" 
+             loading="lazy"
+             onerror="this.src='${placeholderImage}'">
+      `;
+    }
+    
     return `
       <div class="product-card" data-model="${model.slug}">
         <div class="product-card-image">
-          <img src="${model.image || placeholderImage}" 
-               alt="${model.name}" 
-               loading="lazy"
-               onerror="this.src='${placeholderImage}'">
+          ${imageHTML}
           ${model.environment ? `<span class="product-env-badge env-${model.environment}">${model.environment}</span>` : ''}
         </div>
         <div class="product-card-content">
@@ -461,6 +512,49 @@ class RTMProducts {
 
     const placeholderImage = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400"%3E%3Crect fill="%23141416" width="600" height="400"/%3E%3Ctext fill="%23e84a45" font-family="Montserrat,sans-serif" font-size="24" text-anchor="middle" x="300" y="200"%3E' + encodeURIComponent(model.name) + '%3C/text%3E%3C/svg%3E';
 
+    // Verificar si hay múltiples imágenes
+    const hasMultipleImages = model.images && model.images.length > 1;
+    const images = model.images || (model.image ? [model.image] : []);
+
+    // Generar HTML del carrusel o imagen única
+    let imageHTML = '';
+    if (hasMultipleImages) {
+      // Carrusel con múltiples imágenes
+      imageHTML = `
+        <div class="model-carousel" data-carousel-id="${model.id}-detail">
+          <div class="carousel-container">
+            ${images.map((img, index) => `
+              <div class="carousel-slide ${index === 0 ? 'active' : ''}" data-slide="${index}">
+                <img src="${img}" 
+                     alt="${model.name} - Imagen ${index + 1}"
+                     onerror="this.src='${placeholderImage}'">
+              </div>
+            `).join('')}
+          </div>
+          <div class="carousel-indicators">
+            ${images.map((_, index) => `
+              <button class="carousel-indicator ${index === 0 ? 'active' : ''}" 
+                      data-slide-to="${index}" 
+                      aria-label="Ir a imagen ${index + 1}"></button>
+            `).join('')}
+          </div>
+          <button class="carousel-nav carousel-prev" aria-label="Imagen anterior">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <button class="carousel-nav carousel-next" aria-label="Imagen siguiente">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      `;
+    } else {
+      // Imagen única
+      imageHTML = `
+        <img src="${images[0] || placeholderImage}" 
+             alt="${model.name}"
+             onerror="this.src='${placeholderImage}'">
+      `;
+    }
+
     let specsHTML = '';
     if (model.specs) {
       specsHTML = '<div class="model-specs"><h3>Especificaciones</h3><ul>';
@@ -487,9 +581,7 @@ class RTMProducts {
       </div>
       <div class="model-detail">
         <div class="model-detail-image">
-          <img src="${model.image || placeholderImage}" 
-               alt="${model.name}"
-               onerror="this.src='${placeholderImage}'">
+          ${imageHTML}
         </div>
         <div class="model-detail-info">
           <h1 class="model-detail-title">${model.name}</h1>
@@ -511,6 +603,11 @@ class RTMProducts {
     `;
 
     container.innerHTML = html;
+    
+    // Inicializar carrusel si hay múltiples imágenes
+    if (hasMultipleImages) {
+      this.initCarousel(`${model.id}-detail`);
+    }
   }
 
   renderSpecialPage(category) {
@@ -636,6 +733,72 @@ class RTMProducts {
         <a href="productos.html" class="btn btn-primary">Ver todos los productos</a>
       </div>
     `;
+  }
+
+  initCarousel(carouselId) {
+    const carousel = document.querySelector(`[data-carousel-id="${carouselId}"]`);
+    if (!carousel) return;
+
+    const slides = carousel.querySelectorAll('.carousel-slide');
+    const indicators = carousel.querySelectorAll('.carousel-indicator');
+    const prevBtn = carousel.querySelector('.carousel-prev');
+    const nextBtn = carousel.querySelector('.carousel-next');
+    
+    let currentSlide = 0;
+    const totalSlides = slides.length;
+
+    const showSlide = (index) => {
+      // Asegurar que el índice esté en rango
+      if (index < 0) index = totalSlides - 1;
+      if (index >= totalSlides) index = 0;
+      
+      currentSlide = index;
+      
+      // Actualizar slides
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === currentSlide);
+      });
+      
+      // Actualizar indicadores
+      indicators.forEach((indicator, i) => {
+        indicator.classList.toggle('active', i === currentSlide);
+      });
+    };
+
+    // Event listeners
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => showSlide(currentSlide - 1));
+    }
+    
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => showSlide(currentSlide + 1));
+    }
+    
+    indicators.forEach((indicator, index) => {
+      indicator.addEventListener('click', () => showSlide(index));
+    });
+
+    // Touch/swipe support
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    carousel.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    });
+    
+    carousel.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    });
+    
+    const handleSwipe = () => {
+      if (touchEndX < touchStartX - 50) {
+        showSlide(currentSlide + 1); // Swipe left - next
+      }
+      if (touchEndX > touchStartX + 50) {
+        showSlide(currentSlide - 1); // Swipe right - prev
+      }
+    };
   }
 
   // Public method to get all categories for external use
