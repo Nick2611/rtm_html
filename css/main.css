@@ -140,8 +140,8 @@ nav.navbar {
 
 .brand img {
   display: block;
-  width: 300px;
-  height: 60px;
+  width: 260px;
+  height: 96px;
   object-fit: contain;
 }
 
@@ -421,7 +421,7 @@ footer {
   }
   .brand img {
     width: 250px;
-    height: 50px;
+    height: 92px;
   }
 }
 
@@ -435,7 +435,7 @@ footer {
   }
   .brand img {
     width: 220px;
-    height: 45px;
+    height: 81px;
   }
 }
 
@@ -467,7 +467,7 @@ footer {
   }
   .brand img {
     width: 200px;
-    height: 40px;
+    height: 74px;
   }
   .btn {
     padding: 10px 16px;
@@ -493,7 +493,7 @@ footer {
   }
   .brand img {
     width: 180px;
-    height: 36px;
+    height: 66px;
   }
   .btn {
     padding: 8px 12px;
@@ -508,7 +508,7 @@ footer {
   }
   .brand img {
     width: 150px;
-    height: 30px;
+    height: 55px;
   }
   .cta-wrapper .btn {
     padding: 8px 12px;

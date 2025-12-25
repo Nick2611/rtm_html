@@ -6,7 +6,7 @@
 # ============================================
 # Estos archivos DEBEN servirse con 200, no redirigir
 /favicon.ico /favicon.ico 200
-/logo.png /logo.png 200
+/rtm_logo/rtmLogo.png /rtm_logo/rtmLogo.png 200
 /robots.txt /robots.txt 200
 /sitemap.xml /sitemap.xml 200
 
