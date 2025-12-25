@@ -120,7 +120,7 @@ nav.navbar {
   padding: 18px 20px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 16px;
   position: relative;
   z-index: 1000;
@@ -135,7 +135,8 @@ nav.navbar {
   align-items: center;
   gap: 14px;
   min-width: 180px;
-  flex: 0 0 auto;
+  flex: 1 1 0;
+  justify-content: flex-start;
 }
 
 .brand img {
@@ -147,10 +148,10 @@ nav.navbar {
 
 /* Navigation Center */
 .nav-center {
-  flex: 1 1 auto;
+  flex: 1 1 0;
   display: flex;
   justify-content: center;
-  padding-right: 40px;
+  padding: 0 20px;
 }
 
 .menu {
@@ -196,7 +197,8 @@ nav.navbar {
   display: flex;
   align-items: center;
   gap: 10px;
-  flex: 0 0 auto;
+  flex: 1 1 0;
+  justify-content: flex-end;
 }
 
 .btn {

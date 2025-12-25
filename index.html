@@ -217,8 +217,7 @@
       padding: 18px 20px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      justify-content: space-between;
+      justify-content: center;
       gap: 16px;
       position: relative;
       z-index: 1000;
@@ -256,8 +255,9 @@
     .brand{
       display: flex;
       align-items: center;
-        flex: 1;
-      min-width: 0;
+      flex: 1 1 0;
+      justify-content: flex-start;
+      min-width: 180px;
       }
 
     .brand img{
@@ -268,9 +268,10 @@
     }
 
     .nav-center{
-      flex: 0 0 auto;
+      flex: 1 1 0;
       display: flex;
       justify-content: center;
+      padding: 0 20px;
     }
 
     .menu{
@@ -283,7 +284,7 @@
     }
 
     .cta {
-      flex: 1;
+      flex: 1 1 0;
       display: flex;
       justify-content: flex-end;
       align-items: center;
@@ -2196,8 +2197,8 @@
       background: #fff;
       border-radius: 12px;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-      padding: 24px;
-      max-width: 320px;
+      padding: 32px 28px;
+      max-width: 380px;
       z-index: 9998;
       opacity: 0;
       transform: translateY(-20px);
@@ -2213,15 +2214,15 @@
     
     .lead-popup__close {
       position: absolute;
-      top: 8px;
-      right: 8px;
+      top: 10px;
+      right: 10px;
       background: none;
       border: none;
-      font-size: 20px;
+      font-size: 16px;
       cursor: pointer;
       color: var(--muted);
-      width: 32px;
-      height: 32px;
+      width: 24px;
+      height: 24px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -2236,8 +2237,10 @@
     .lead-popup__title {
       font-size: 1.1rem;
       font-weight: 600;
-      margin-bottom: 8px;
+      margin-bottom: 12px;
+      margin-right: 20px;
       color: var(--ink);
+      text-align: center;
     }
     
     .lead-popup__text {
@@ -2245,6 +2248,8 @@
       color: var(--muted);
       margin-bottom: 16px;
       line-height: 1.5;
+      padding-right: 4px;
+      text-align: center;
     }
     
     .lead-popup__btn {
@@ -2255,6 +2260,7 @@
       padding: 12px;
       border-radius: 6px;
       font-weight: 600;
+      font-size: 1rem;
       cursor: pointer;
       transition: background 0.3s ease;
       min-height: 44px;
@@ -2760,7 +2766,7 @@
     <p class="lead-popup__text">
       Descarga nuestra guía gratuita sobre pantallas LED y descubre cómo elegir la mejor solución para tu proyecto.
     </p>
-    <button class="lead-popup__btn" onclick="window.location.href='#contacto'">
+    <button class="lead-popup__btn" id="lead-popup-btn">
       Solicitar guía
     </button>
   </div>
@@ -3150,6 +3156,18 @@
       if (closeBtn) {
         closeBtn.addEventListener('click', function() {
           popup.classList.remove('show');
+        });
+      }
+      
+      // Cerrar popup al hacer clic en el botón y redirigir
+      const popupBtn = document.getElementById('lead-popup-btn');
+      if (popupBtn) {
+        popupBtn.addEventListener('click', function() {
+          popup.classList.remove('show');
+          // Redirigir a contacto después de un pequeño delay para que se vea la animación de cierre
+          setTimeout(function() {
+            window.location.href = '#contacto';
+          }, 300);
         });
       }
       
