@@ -16,14 +16,14 @@
   <meta property="og:url" content="https://pantallasledrtm.com/">
   <meta property="og:title" content="RTM Pantallas LED — Soluciones LED Profesionales">
   <meta property="og:description" content="Especialistas en desarrollo, fabricación e instalación de pantallas LED para interior y exterior. Soluciones profesionales y a medida.">
-  <meta property="og:image" content="https://pantallasledrtm.com/logo.png">
+  <meta property="og:image" content="https://pantallasledrtm.com/rtm_logo/rtmLogo.png">
   
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://pantallasledrtm.com/">
   <meta name="twitter:title" content="RTM Pantallas LED — Soluciones LED Profesionales">
   <meta name="twitter:description" content="Especialistas en desarrollo, fabricación e instalación de pantallas LED para interior y exterior. Soluciones profesionales y a medida.">
-  <meta name="twitter:image" content="https://pantallasledrtm.com/logo.png">
+  <meta name="twitter:image" content="https://pantallasledrtm.com/rtm_logo/rtmLogo.png">
   
   <!-- Favicon -->
   <!-- Favicon completo para máxima compatibilidad -->
@@ -52,7 +52,7 @@
     "@type": "Organization",
     "name": "RTM Pantallas LED",
     "url": "https://pantallasledrtm.com",
-    "logo": "https://pantallasledrtm.com/logo.png",
+    "logo": "https://pantallasledrtm.com/rtm_logo/rtmLogo.png",
     "description": "Especialistas en desarrollo, fabricación e instalación de pantallas LED para interior y exterior. Soluciones profesionales y a medida.",
     "telephone": "+54 9 11 7373 6308",
     "address": {
@@ -262,9 +262,8 @@
 
     .brand img{
       display: block;
-      width: 180px;
-      height: auto;
-      max-height: 50px;
+      width: 260px;
+      height: 96px;
       object-fit: contain;
     }
 
@@ -294,6 +293,7 @@
     @media (max-width: 1100px) {
       .brand img {
         width: 160px;
+        height: 59px;
       }
       .menu {
         gap: 20px;
@@ -306,7 +306,7 @@
       }
       .brand img {
         width: 150px;
-        max-height: 40px;
+        height: 55px;
       }
       .nav-center {
         display: none;
@@ -1035,9 +1035,6 @@
 
     /* ======= HERO SECTION ======= */
     section.hero{
-      background: 
-        linear-gradient(rgba(20, 20, 22, 0.85), rgba(15, 20, 32, 0.9)),
-        url('background_hero/background_hero.jpeg') center/cover no-repeat;
       padding: 120px 20px 100px;
       position: relative;
       overflow: hidden;
@@ -1045,7 +1042,60 @@
       display: flex;
       align-items: center;
     }
+    
+    /* Video Background Container */
+    .hero__video-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      overflow: hidden;
+    }
 
+    /* Video elements - all hidden by default, shown when active */
+    .hero__video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      transform: translate(-50%, -50%);
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      z-index: 0;
+    }
+
+    /* Active video is visible */
+    .hero__video.active {
+      opacity: 1;
+      z-index: 1;
+    }
+
+    /* Black fade overlay for transitions */
+    .hero__fade-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #000000;
+      opacity: 0;
+      z-index: 2;
+      pointer-events: none;
+      transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    /* Overlay visible during transitions - fully black */
+    .hero__fade-overlay.fade-out {
+      opacity: 1;
+    }
+
+    /* Gradient overlay for text readability - above videos but below text */
     section.hero::before{
       content: "";
       position: absolute;
@@ -1054,9 +1104,10 @@
       right: 0;
       bottom: 0;
       background: 
+        linear-gradient(rgba(20, 20, 22, 0.85), rgba(15, 20, 32, 0.9)),
         radial-gradient(ellipse at top left, rgba(232, 74, 69, 0.15) 0%, transparent 50%),
         radial-gradient(ellipse at bottom right, rgba(89, 99, 31, 0.15) 0%, transparent 50%);
-      z-index: 1;
+      z-index: 3;
     }
 
     .hero__wrap{
@@ -1066,7 +1117,7 @@
       justify-content: center;
       align-items: center;
       position: relative;
-      z-index: 2;
+      z-index: 4;
       width: 100%;
     }
 
@@ -1838,7 +1889,7 @@
       }
       .brand img {
         width: 250px;
-        height: 50px;
+        height: 92px;
       }
     }
 
@@ -1851,7 +1902,7 @@
       }
       .brand img {
         width: 220px;
-        height: 45px;
+        height: 81px;
       }
     }
 
@@ -1861,7 +1912,7 @@
       }
       .brand img {
         width: 200px;
-        height: 40px;
+        height: 74px;
       }
       .btn {
         padding: 10px 16px;
@@ -1988,7 +2039,7 @@
       
       .brand img {
         width: 180px;
-        height: 36px;
+        height: 66px;
       }
       
       .btn {
@@ -2308,7 +2359,7 @@
       <nav class="navbar" aria-label="Principal">
         <!-- Logo -->
         <a class="brand" href="index.html" aria-label="RTM Pantallas LED - Inicio">
-          <img src="rtm_logo/rtmLogo.png" alt="RTM Pantallas LED - Logo" loading="eager" width="300" height="60">
+          <img src="rtm_logo/rtmLogo.png" alt="RTM Pantallas LED - Logo" loading="eager" width="260" height="96">
         </a>
 
         <!-- Navegación centrada (desktop) -->
@@ -2447,6 +2498,21 @@
 
   <!-- ================== HERO SECTION ================== -->
   <section class="hero" id="home">
+    <!-- Video Background Container -->
+    <div class="hero__video-container">
+      <video class="hero__video" id="hero-video-1" muted playsinline preload="auto">
+        <source src="background_hero/video_1.mp4" type="video/mp4">
+      </video>
+      <video class="hero__video" id="hero-video-2" muted playsinline preload="auto">
+        <source src="background_hero/video_2.mp4" type="video/mp4">
+      </video>
+      <video class="hero__video" id="hero-video-3" muted playsinline preload="auto">
+        <source src="background_hero/video_3.mp4" type="video/mp4">
+      </video>
+      <!-- Black overlay for fade transitions -->
+      <div class="hero__fade-overlay" id="hero-fade-overlay"></div>
+    </div>
+    
     <div class="hero__wrap">
       <div class="hero__content" id="contenido">
         <h1 class="hero__title">
@@ -3229,7 +3295,152 @@
       initLeadPopup();
       loadProductsData();
       initMegaMenuSearch();
+      initHeroVideoSequence();
     });
+
+    /**
+     * Hero Video Sequence Controller
+     * Manages sequential playback of three videos with fade transitions
+     */
+    function initHeroVideoSequence() {
+      // Get video elements and overlay
+      const video1 = document.getElementById('hero-video-1');
+      const video2 = document.getElementById('hero-video-2');
+      const video3 = document.getElementById('hero-video-3');
+      const fadeOverlay = document.getElementById('hero-fade-overlay');
+      
+      // Validate elements exist
+      if (!video1 || !video2 || !video3 || !fadeOverlay) {
+        console.warn('Hero video elements not found');
+        return;
+      }
+
+      // Array of videos in playback order
+      const videos = [video1, video2, video3];
+      let currentVideoIndex = 0;
+      
+      // Fade duration in milliseconds (800ms for seamless smooth transition)
+      const FADE_DURATION = 800;
+      // Time before video ends to start fade-out (in seconds) - shorter for seamless transition
+      const FADE_START_BEFORE_END = 0.8;
+
+      /**
+       * Start fade-out transition
+       */
+      function startFadeOut() {
+        fadeOverlay.classList.add('fade-out');
+      }
+
+      /**
+       * Start fade-in transition
+       */
+      function startFadeIn() {
+        fadeOverlay.classList.remove('fade-out');
+      }
+
+      /**
+       * Switch to next video in sequence
+       */
+      function switchToNextVideo() {
+        const currentVideo = videos[currentVideoIndex];
+        const nextVideoIndex = (currentVideoIndex + 1) % videos.length;
+        const nextVideo = videos[nextVideoIndex];
+
+        // Force fade-out overlay to be visible immediately
+        // This ensures fade-out happens even if the timeupdate handler didn't trigger
+        fadeOverlay.classList.add('fade-out');
+
+        // Remove active class from current video (fade out)
+        currentVideo.classList.remove('active');
+        currentVideo.pause();
+        currentVideo.currentTime = 0;
+
+        // Minimal delay for seamless transition - just enough to ensure fade-out starts
+        setTimeout(() => {
+          // Add active class to next video (will fade in)
+          nextVideo.classList.add('active');
+          nextVideo.currentTime = 0;
+          
+          // Start fade-in from black immediately
+          startFadeIn();
+          
+          // Play next video
+          nextVideo.play().catch(err => {
+            console.warn('Error playing video:', err);
+          });
+          
+          // Update current index
+          currentVideoIndex = nextVideoIndex;
+        }, 200); // Very short delay for seamless transition
+      }
+
+      /**
+       * Setup video end handler with fade-out timing
+       */
+      function setupVideoEndHandler(video) {
+        // Setup fade handler function
+        const setupFadeHandler = function() {
+          const duration = video.duration;
+          if (!duration || isNaN(duration)) return;
+          
+          const fadeStartTime = duration - FADE_START_BEFORE_END;
+
+          // Remove previous timeupdate listeners to avoid duplicates
+          if (video._fadeHandler) {
+            video.removeEventListener('timeupdate', video._fadeHandler);
+          }
+          
+          // Create fade handler
+          video._fadeHandler = function() {
+            if (video.currentTime >= fadeStartTime && !fadeOverlay.classList.contains('fade-out')) {
+              startFadeOut();
+            }
+          };
+          
+          // Add timeupdate listener for fade-out
+          video.addEventListener('timeupdate', video._fadeHandler);
+        };
+
+        // Setup when metadata is loaded
+        if (video.readyState >= 1) {
+          // Metadata already loaded
+          setupFadeHandler();
+        } else {
+          video.addEventListener('loadedmetadata', setupFadeHandler);
+        }
+
+        // Handle video end - switch to next
+        // Remove previous ended listeners to avoid duplicates
+        if (video._endedHandler) {
+          video.removeEventListener('ended', video._endedHandler);
+        }
+        video._endedHandler = function() {
+          switchToNextVideo();
+        };
+        video.addEventListener('ended', video._endedHandler);
+      }
+
+      // Setup handlers for all videos
+      videos.forEach(video => {
+        setupVideoEndHandler(video);
+      });
+
+      // Initialize: Start with first video
+      // Ensure overlay starts transparent
+      fadeOverlay.classList.remove('fade-out');
+      video1.classList.add('active');
+      
+      // Load and play first video
+      video1.load();
+      video1.play().catch(err => {
+        console.warn('Error playing first video:', err);
+      });
+      
+      // Setup fade handler for first video after it starts playing
+      video1.addEventListener('loadedmetadata', function() {
+        setupVideoEndHandler(video1);
+      });
+    }
   </script>
 
 </body>

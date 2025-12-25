@@ -5,7 +5,7 @@ frontend:
       commands:
         - echo "🚀 Iniciando build para AWS Amplify..."
         - echo "📁 Verificando archivos críticos:"
-        - ls -la favicon.ico logo.png robots.txt sitemap.xml || echo "⚠️ Algunos archivos no encontrados"
+        - ls -la favicon.ico rtm_logo/rtmLogo.png robots.txt sitemap.xml || echo "⚠️ Algunos archivos no encontrados"
         - echo "📁 Estructura del proyecto:"
         - ls -la
     build:
@@ -16,12 +16,10 @@ frontend:
     files:
       # Archivos raíz críticos para SEO
       - favicon.ico
-      - logo.png
       - robots.txt
       - sitemap.xml
       - _redirects
       - _headers
-      - customHttp.yml
       # Páginas HTML
       - index.html
       - productos.html
