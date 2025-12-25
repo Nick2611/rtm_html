@@ -1053,6 +1053,7 @@
       height: 100%;
       z-index: 0;
       overflow: hidden;
+      background: var(--nav-bg);
     }
 
     /* Video elements - all hidden by default, shown when active */
@@ -1061,14 +1062,28 @@
       top: 50%;
       left: 50%;
       min-width: 100%;
-      min-height: 100%;
+      min-height: 120%;
       width: auto;
       height: auto;
       transform: translate(-50%, -50%);
       object-fit: cover;
+      object-position: center 50%;
       opacity: 0;
       transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       z-index: 0;
+      clip-path: inset(0 0 6% 0);
+      -webkit-mask-image: linear-gradient(to bottom, 
+        black 0%, 
+        black 92%, 
+        rgba(0, 0, 0, 0.8) 95%,
+        rgba(0, 0, 0, 0.4) 98%,
+        transparent 100%);
+      mask-image: linear-gradient(to bottom, 
+        black 0%, 
+        black 92%, 
+        rgba(0, 0, 0, 0.8) 95%,
+        rgba(0, 0, 0, 0.4) 98%,
+        transparent 100%);
     }
 
     /* Active video is visible */
@@ -1105,7 +1120,12 @@
       right: 0;
       bottom: 0;
       background: 
-        linear-gradient(rgba(20, 20, 22, 0.85), rgba(15, 20, 32, 0.9)),
+        linear-gradient(to bottom, 
+          rgba(20, 20, 22, 0.85) 0%,
+          rgba(20, 20, 22, 0.85) 85%,
+          rgba(20, 20, 22, 0.9) 92%,
+          var(--nav-bg) 94%,
+          var(--nav-bg) 100%),
         radial-gradient(ellipse at top left, rgba(232, 74, 69, 0.15) 0%, transparent 50%),
         radial-gradient(ellipse at bottom right, rgba(89, 99, 31, 0.15) 0%, transparent 50%);
       z-index: 3;
@@ -2515,6 +2535,12 @@
       <video class="hero__video" id="hero-video-3" muted playsinline preload="auto">
         <source src="background_hero/video_3.mp4" type="video/mp4">
       </video>
+      <video class="hero__video" id="hero-video-4" muted playsinline preload="auto">
+        <source src="background_hero/video_4.mp4" type="video/mp4">
+      </video>
+      <video class="hero__video" id="hero-video-5" muted playsinline preload="auto">
+        <source src="background_hero/video_5.mp4" type="video/mp4">
+      </video>
       <!-- Black overlay for fade transitions -->
       <div class="hero__fade-overlay" id="hero-fade-overlay"></div>
     </div>
@@ -2854,17 +2880,17 @@
       const carouselTrack = document.getElementById('carousel-track');
       if (!carouselTrack) return;
 
-      // Lista de imágenes reales encontradas en la carpeta
+      // Lista de logos - se genera automáticamente desde los archivos en logos_clientes/
       const logoImages = [
-        { src: 'logos_clientes/BCRA_logo.svg.png', alt: 'Banco Central de la República Argentina' },
-        { src: 'logos_clientes/Mincienciaarg.png', alt: 'Ministerio de Ciencia, Tecnología e Innovación' },
-        { src: 'logos_clientes/Logo-Shell.png', alt: 'Shell' },
-        { src: 'logos_clientes/logo_ee_v2-01.png', alt: 'Municipio de Esteban Echeverría' },
-        { src: 'logos_clientes/TyCSp.png', alt: 'TyC Sports' },
         { src: 'logos_clientes/2560px-Aerop_arg_2000_logo.svg.png', alt: 'Aeropuertos Argentina 2000' },
+        { src: 'logos_clientes/BCRA_logo.svg.png', alt: 'Banco Central de la República Argentina' },
+        { src: 'logos_clientes/logo_ee_v2-01.png', alt: 'Municipio de Esteban Echeverría' },
+        { src: 'logos_clientes/Logo-Shell.png', alt: 'Shell' },
         { src: 'logos_clientes/Logotipo_de_la_Ciudad_de_Buenos_Aires.svg.png', alt: 'Ciudad de Buenos Aires' },
-        { src: 'logos_clientes/speed-lider-png-blanco-e1707416060742.webp', alt: 'Speed Lider' },
-        { src: 'logos_clientes/Olympic_rings_without_rims.svg.png', alt: 'Comité Olímpico' }
+        { src: 'logos_clientes/Mincienciaarg.png', alt: 'Ministerio de Ciencia, Tecnología e Innovación' },
+        { src: 'logos_clientes/Olympic_rings_without_rims.svg.png', alt: 'Comité Olímpico' },
+        { src: 'logos_clientes/speed-min.png', alt: 'Speed Lider' },
+        { src: 'logos_clientes/TyCSp.png', alt: 'TyC Sports' }
       ];
 
       // Crear elementos de logo
@@ -2879,14 +2905,8 @@
         
         // Manejar error de carga de imagen
         img.onerror = function() {
-          console.log('Error cargando imagen:', logo.src);
-          // Si la imagen no existe, crear un placeholder
-          this.src = `https://via.placeholder.com/180x80/cccccc/666666?text=${encodeURIComponent(logo.alt)}`;
-        };
-        
-        // Confirmar que la imagen se cargó correctamente
-        img.onload = function() {
-          console.log('Imagen cargada correctamente:', logo.src);
+          console.warn('Error cargando imagen:', logo.src);
+          logoElement.style.display = 'none';
         };
         
         logoElement.appendChild(img);
@@ -3325,6 +3345,8 @@
       const video1 = document.getElementById('hero-video-1');
       const video2 = document.getElementById('hero-video-2');
       const video3 = document.getElementById('hero-video-3');
+      const video4 = document.getElementById('hero-video-4');
+      const video5 = document.getElementById('hero-video-5');
       const fadeOverlay = document.getElementById('hero-fade-overlay');
       
       // Validate elements exist
@@ -3333,8 +3355,10 @@
         return;
       }
 
-      // Array of videos in playback order
+      // Array of videos in playback order (only include videos that exist)
       const videos = [video1, video2, video3];
+      if (video4) videos.push(video4);
+      if (video5) videos.push(video5);
       let currentVideoIndex = 0;
       
       // Fade duration in milliseconds (800ms for seamless smooth transition)
