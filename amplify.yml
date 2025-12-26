@@ -71,5 +71,9 @@ frontend:
           value: 'public, max-age=31536000'
     - pattern: '**/*.mp4'
       headers:
+        - key: 'Content-Type'
+          value: 'video/mp4'
         - key: 'Cache-Control'
-          value: 'public, max-age=31536000'
+          value: 'public, max-age=31536000, immutable'
+        - key: 'Accept-Ranges'
+          value: 'bytes'
