@@ -51,15 +51,19 @@
 /proyectos_imagenes/*
   Cache-Control: public, max-age=31536000, immutable
 
-/background_hero/*
+/background_hero/*.mp4
+  Content-Type: video/mp4
   Cache-Control: public, max-age=31536000, immutable
+  Accept-Ranges: bytes
 
 /about_background/*
   Cache-Control: public, max-age=31536000, immutable
 
 # Videos
-/proyectos_videos/*
+/proyectos_videos/*.mp4
+  Content-Type: video/mp4
   Cache-Control: public, max-age=31536000, immutable
+  Accept-Ranges: bytes
 
 # Headers de seguridad globales
 /*
