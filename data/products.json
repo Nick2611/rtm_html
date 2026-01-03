@@ -228,20 +228,6 @@
                 "setup": "Montaje rápido",
                 "feature": "Curva"
               }
-            },
-            {
-              "id": "rif1000",
-              "name": "RIF1000",
-              "slug": "rif1000",
-              "description": "Pantalla Tour Indoor RIF1000 flexible",
-              "pixelPitch": "10.0mm",
-              "environment": "indoor",
-              "image": "productos/tour-series/rif1000.jpg",
-              "specs": {
-                "weight": "Ultraliviano",
-                "setup": "Montaje rápido",
-                "feature": "Flexible"
-              }
             }
           ]
         },
@@ -259,15 +245,15 @@
               "description": "Pantalla Tour Outdoor RE500",
               "pixelPitch": "5.0mm",
               "environment": "outdoor",
-              "image": "imagenes_productos/tour_series/outdoor/re500/re500-1.jpeg",
+              "image": "imagenes_productos/tour_series/outdoor/re500/re500-2.jpeg",
               "specs": {
                 "weight": "Liviano",
                 "setup": "Montaje rápido",
                 "protection": "IP65"
               },
               "images": [
-                "imagenes_productos/tour_series/outdoor/re500/re500-1.jpeg",
-                "imagenes_productos/tour_series/outdoor/re500/re500-2.jpeg"
+                "imagenes_productos/tour_series/outdoor/re500/re500-2.jpeg",
+                "imagenes_productos/tour_series/outdoor/re500/re500-1.jpeg"
               ]
             },
             {
@@ -307,15 +293,15 @@
               "description": "Pantalla Tour Outdoor RE1000",
               "pixelPitch": "10.0mm",
               "environment": "outdoor",
-              "image": "imagenes_productos/tour_series/outdoor/re1000/re1000-1.jpeg",
+              "image": "imagenes_productos/tour_series/outdoor/re1000/re1000-2.jpeg",
               "specs": {
                 "weight": "Liviano",
                 "setup": "Montaje rápido",
                 "protection": "IP65"
               },
               "images": [
-                "imagenes_productos/tour_series/outdoor/re1000/re1000-1.jpeg",
-                "imagenes_productos/tour_series/outdoor/re1000/re1000-2.jpeg"
+                "imagenes_productos/tour_series/outdoor/re1000/re1000-2.jpeg",
+                "imagenes_productos/tour_series/outdoor/re1000/re1000-1.jpeg"
               ]
             },
             {
@@ -331,21 +317,6 @@
                 "setup": "Montaje rápido",
                 "protection": "IP65",
                 "feature": "Curva"
-              }
-            },
-            {
-              "id": "ref1000",
-              "name": "REF1000",
-              "slug": "ref1000",
-              "description": "Pantalla Tour Outdoor REF1000 flexible",
-              "pixelPitch": "10.0mm",
-              "environment": "outdoor",
-              "image": "productos/tour-series/ref1000.jpg",
-              "specs": {
-                "weight": "Liviano",
-                "setup": "Montaje rápido",
-                "protection": "IP65",
-                "feature": "Flexible"
               }
             }
           ]
@@ -766,13 +737,12 @@
               "name": "CMR-250-LED",
               "slug": "cmr-250-led",
               "description": "Cabezal móvil 3 en 1 CMR-250-LED",
-              "image": "imagenes_productos/iluminacion_profesional/3_en_1/cmr_250_led/cmr250-1.jpeg",
+              "image": "imagenes_productos/iluminacion_profesional/3_en_1/cmr_250_led/cmr250-2.jpeg",
               "specs": {
                 "type": "3 en 1",
                 "power": "250W LED"
               },
               "images": [
-                "imagenes_productos/iluminacion_profesional/3_en_1/cmr_250_led/cmr250-1.jpeg",
                 "imagenes_productos/iluminacion_profesional/3_en_1/cmr_250_led/cmr250-2.jpeg",
                 "imagenes_productos/iluminacion_profesional/3_en_1/cmr_250_led/cmr250-3.jpeg",
                 "imagenes_productos/iluminacion_profesional/3_en_1/cmr_250_led/cmr250-4.jpeg"
