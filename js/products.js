@@ -71,8 +71,25 @@ class RTMProducts {
         url: `productos.html?cat=${category.slug}`
       });
 
+      // Add direct models (if category has models but no subcategories)
+      if (category.models && category.models.length > 0 && 
+          (!category.subcategories || category.subcategories.length === 0)) {
+        category.models.forEach(model => {
+          this.searchIndex.push({
+            type: 'model',
+            id: model.id,
+            name: model.name,
+            slug: model.slug,
+            categoryName: category.name,
+            categorySlug: category.slug,
+            description: model.description,
+            url: `productos.html?cat=${category.slug}&model=${model.slug}`
+          });
+        });
+      }
+      
       // Add subcategories and models
-      if (category.subcategories) {
+      if (category.subcategories && category.subcategories.length > 0) {
         category.subcategories.forEach(subcategory => {
           this.searchIndex.push({
             type: 'subcategory',
@@ -336,7 +353,26 @@ class RTMProducts {
       return;
     }
 
-    if (subcategorySlug) {
+    // Check if category has direct models (no subcategories or empty subcategories)
+    const hasDirectModels = category.models && category.models.length > 0 && 
+                            (!category.subcategories || category.subcategories.length === 0);
+    
+    if (hasDirectModels) {
+      // Create a virtual subcategory for routing purposes
+      const virtualSubcategory = {
+        id: category.id + '-direct',
+        name: category.name,
+        slug: '',
+        models: category.models
+      };
+      this.currentSubcategory = virtualSubcategory;
+      
+      if (modelSlug) {
+        this.renderModelDetail(category, virtualSubcategory, modelSlug);
+      } else {
+        this.renderCategoryPageWithModels(category);
+      }
+    } else if (subcategorySlug) {
       const subcategory = category.subcategories.find(s => s.slug === subcategorySlug);
       if (subcategory) {
         this.currentSubcategory = subcategory;
@@ -407,6 +443,58 @@ class RTMProducts {
     }
   }
 
+  renderCategoryPageWithModels(category) {
+    const container = document.getElementById('product-content');
+    if (!container) return;
+
+    document.title = `${category.name} — RTM Pantallas LED`;
+
+    let html = `
+      <div class="category-header">
+        <nav class="breadcrumb">
+          <a href="index.html">Inicio</a>
+          <span class="separator">/</span>
+          <a href="productos.html">Productos</a>
+          <span class="separator">/</span>
+          <span class="current">${category.name}</span>
+        </nav>
+        <h1 class="category-title">${category.name}</h1>
+        <p class="category-description">${category.description}</p>
+      </div>
+      <div class="products-grid" id="products-container">
+    `;
+
+    if (category.models && category.models.length > 0) {
+      // Create virtual subcategory for renderProductCard
+      const virtualSubcategory = {
+        id: category.id + '-direct',
+        name: category.name,
+        slug: ''
+      };
+      
+      category.models.forEach(model => {
+        html += this.renderProductCard(model, category, virtualSubcategory);
+      });
+    } else {
+      html += '<p class="no-products">No hay modelos disponibles en esta categoría.</p>';
+    }
+
+    html += '</div>';
+    container.innerHTML = html;
+    
+    // Inicializar carruseles para productos con múltiples imágenes
+    if (category.models && category.models.length > 0) {
+      category.models.forEach(model => {
+        if (model.images && model.images.length > 1) {
+          this.initCarousel(model.id);
+        }
+      });
+    }
+    
+    // Agregar event listeners para hacer las cards clickeables
+    this.attachProductCardEvents();
+  }
+
   renderSubcategoryPage(category, subcategory) {
     const container = document.getElementById('product-content');
     if (!container) return;
@@ -449,6 +537,9 @@ class RTMProducts {
         }
       });
     }
+    
+    // Agregar event listeners para hacer las cards clickeables
+    this.attachProductCardEvents();
   }
 
   renderProductCard(model, category, subcategory) {
@@ -502,8 +593,12 @@ class RTMProducts {
       `;
     }
     
+    const productUrl = subcategory.slug 
+      ? `productos.html?cat=${category.slug}&sub=${subcategory.slug}&model=${model.slug}`
+      : `productos.html?cat=${category.slug}&model=${model.slug}`;
+    
     return `
-      <div class="product-card" data-model="${model.slug}">
+      <div class="product-card" data-model="${model.slug}" data-href="${productUrl}">
         <div class="product-card-image">
           ${imageHTML}
           ${model.environment ? `<span class="product-env-badge env-${model.environment}">${model.environment}</span>` : ''}
@@ -512,7 +607,7 @@ class RTMProducts {
           <h3 class="product-card-title">${model.name}</h3>
           <p class="product-card-description">${model.description}</p>
           ${model.pixelPitch ? `<span class="product-spec">Pixel Pitch: ${model.pixelPitch}</span>` : ''}
-          <a href="productos.html?cat=${category.slug}&sub=${subcategory.slug}&model=${model.slug}" 
+          <a href="${productUrl}" 
              class="product-card-link">
             Ver detalles <i class="fas fa-arrow-right"></i>
           </a>
@@ -591,6 +686,11 @@ class RTMProducts {
       specsHTML += '</ul></div>';
     }
 
+    const breadcrumbSubcategoryLink = subcategory.slug
+      ? `<span class="separator">/</span>
+          <a href="productos.html?cat=${category.slug}&sub=${subcategory.slug}">${subcategory.name}</a>`
+      : '';
+    
     const html = `
       <div class="category-header">
         <nav class="breadcrumb">
@@ -599,8 +699,7 @@ class RTMProducts {
           <a href="productos.html">Productos</a>
           <span class="separator">/</span>
           <a href="productos.html?cat=${category.slug}">${category.name}</a>
-          <span class="separator">/</span>
-          <a href="productos.html?cat=${category.slug}&sub=${subcategory.slug}">${subcategory.name}</a>
+          ${breadcrumbSubcategoryLink}
           <span class="separator">/</span>
           <span class="current">${model.name}</span>
         </nav>
@@ -825,6 +924,31 @@ class RTMProducts {
         showSlide(currentSlide - 1); // Swipe right - prev
       }
     };
+  }
+
+  attachProductCardEvents() {
+    const productCards = document.querySelectorAll('.product-card[data-href]');
+    
+    productCards.forEach(card => {
+      card.addEventListener('click', (e) => {
+        // Prevenir la navegación si el click es en elementos interactivos
+        const isInteractiveElement = 
+          e.target.closest('a') ||           // Enlaces (incluye el botón "Ver detalles")
+          e.target.closest('button') ||      // Botones (carrusel, etc.)
+          e.target.closest('.carousel-nav') || // Navegación del carrusel
+          e.target.closest('.carousel-indicator'); // Indicadores del carrusel
+        
+        if (isInteractiveElement) {
+          return; // Permitir que el elemento interactivo maneje el evento
+        }
+        
+        // Navegar a la URL del producto
+        const href = card.getAttribute('data-href');
+        if (href) {
+          window.location.href = href;
+        }
+      });
+    });
   }
 
   // Public method to get all categories for external use

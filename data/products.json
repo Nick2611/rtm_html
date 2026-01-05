@@ -427,52 +427,49 @@
       "icon": "fa-square",
       "description": "Pisos LED interactivos para eventos y espectáculos",
       "hasEnvironmentFilter": false,
-      "subcategories": [
+      "models": [
         {
-          "id": "pisos-modelos",
-          "name": "Modelos",
-          "slug": "modelos",
-          "description": "Todos los modelos de pisos LED",
-          "models": [
-            {
-              "id": "pdance",
-              "name": "PDANCE",
-              "slug": "pdance",
-              "description": "Piso LED PDANCE para pistas de baile",
-              "image": "productos/pisos-led/pdance.jpg",
-              "specs": {
-                "type": "Pista de baile",
-                "resistance": "Alta resistencia",
-                "interactive": true
-              }
-            },
-            {
-              "id": "p60-disco",
-              "name": "P-60 DISCO",
-              "slug": "p60-disco",
-              "description": "Piso LED P-60 DISCO efecto discoteca",
-              "image": "productos/pisos-led/p60-disco.jpg",
-              "specs": {
-                "type": "Discoteca",
-                "resistance": "Alta resistencia",
-                "effects": "Efectos de luz"
-              }
-            },
-            {
-              "id": "pi-rgb",
-              "name": "PI-RGB",
-              "slug": "pi-rgb",
-              "description": "Piso LED PI-RGB interactivo full color",
-              "image": "productos/pisos-led/pi-rgb.jpg",
-              "specs": {
-                "type": "Interactivo",
-                "resistance": "Alta resistencia",
-                "colors": "Full RGB"
-              }
-            }
+          "id": "pdance",
+          "name": "PDANCE",
+          "slug": "pdance",
+          "description": "Piso LED PDANCE para pistas de baile",
+          "image": "productos/pisos-led/pdance.jpg",
+          "specs": {
+            "type": "Pista de baile",
+            "resistance": "Alta resistencia",
+            "interactive": true
+          }
+        },
+        {
+          "id": "p60-disco",
+          "name": "P-60 DISCO",
+          "slug": "p60-disco",
+          "description": "Piso LED P-60 DISCO efecto discoteca",
+          "image": "productos/pisos-led/p60-disco.jpg",
+          "specs": {
+            "type": "Discoteca",
+            "resistance": "Alta resistencia",
+            "effects": "Efectos de luz"
+          }
+        },
+        {
+          "id": "pi-rgb",
+          "name": "PI-RGB",
+          "slug": "pi-rgb",
+          "description": "Piso LED PI-RGB interactivo full color",
+          "image": "imagenes_productos/pisos_led/pi_rgb/pi_rgb1.png",
+          "specs": {
+            "type": "Interactivo",
+            "resistance": "Alta resistencia",
+            "colors": "Full RGB"
+          },
+          "images": [
+            "imagenes_productos/pisos_led/pi_rgb/pi_rgb1.png",
+            "imagenes_productos/pisos_led/pi_rgb/pi_rgb2.png"
           ]
         }
-      ]
+      ],
+      "subcategories": []
     },
     {
       "id": "soluciones",

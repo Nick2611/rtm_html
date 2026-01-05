@@ -270,6 +270,7 @@
   height: 100%;
   width: 100%;
   max-width: 320px;
+  cursor: pointer;
 }
 
 .product-card:hover {
