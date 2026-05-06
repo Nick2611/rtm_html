@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Guía de Productos — RTM Pantallas LED</title>
+
+  <meta name="description" content="Guía completa de productos RTM Pantallas LED. Conocé cada solución, sus modelos y cómo elegir la mejor opción para tu proyecto.">
+
+  <!-- Favicons -->
+  <link rel="icon"             href="favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon"    href="favicon.ico" type="image/x-icon">
+  <link rel="icon"             type="image/png" sizes="32x32" href="rtm_logo/favicon-32x32.png">
+  <link rel="icon"             type="image/png" sizes="16x16" href="rtm_logo/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180"               href="rtm_logo/apple-touch-icon.png">
+
+  <!-- Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Tipografía e Iconos -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <!-- CSS compartido -->
+  <link rel="stylesheet" href="css/main.css">
+
+  <style>
+    /* ── Hero ── */
+    .guia-hero {
+      background:
+        linear-gradient(rgba(20,20,22,.88), rgba(15,20,32,.93)),
+        url('background_hero/background_hero.jpeg') center/cover no-repeat;
+      padding: 80px 20px 70px;
+      text-align: center;
+      position: relative;
+    }
+    .guia-hero h1 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 14px;
+    }
+    .guia-hero p {
+      font-size: clamp(1rem, 2vw, 1.15rem);
+      color: #cbd5e1;
+      max-width: 620px;
+      margin: 0 auto 32px;
+      line-height: 1.7;
+    }
+    .guia-hero-btns {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .guia-hero-btns a {
+      padding: 12px 24px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: .95rem;
+      text-decoration: none;
+      transition: all .2s ease;
+    }
+    .guia-hero-btns .btn-solid {
+      background: var(--accent);
+      color: #fff;
+    }
+    .guia-hero-btns .btn-solid:hover { background: var(--accent-hover); transform: translateY(-2px); }
+    .guia-hero-btns .btn-outline {
+      border: 2px solid #fff;
+      color: #fff;
+    }
+    .guia-hero-btns .btn-outline:hover { background: #fff; color: #141416; }
+
+    /* ── Índice rápido ── */
+    .guia-index {
+      background: #f3f4fa;
+      padding: 28px 20px;
+      border-bottom: 1px solid #e2e4ea;
+    }
+    .guia-index__inner {
+      max-width: var(--container);
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+    .guia-index__label {
+      font-weight: 600;
+      font-size: .85rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      margin-right: 6px;
+    }
+    .guia-index a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: .85rem;
+      font-weight: 500;
+      color: var(--ink);
+      text-decoration: none;
+      transition: all .2s ease;
+    }
+    .guia-index a:hover {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+    .guia-index a i { font-size: .8rem; }
+
+    /* ── Layout general ── */
+    .guia-body {
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 60px 20px 80px;
+    }
+
+    /* ── Sección de categoría ── */
+    .guia-cat {
+      margin-bottom: 72px;
+      scroll-margin-top: 90px;
+    }
+
+    .guia-cat__header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 10px;
+      padding-bottom: 16px;
+      border-bottom: 3px solid var(--accent);
+    }
+    .guia-cat__icon {
+      width: 52px;
+      height: 52px;
+      background: var(--accent);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+    .guia-cat__header h2 {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .guia-cat__header p {
+      font-size: .95rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* ── Descripción general de categoría ── */
+    .guia-cat__desc {
+      background: #f8f9fc;
+      border-left: 4px solid var(--accent);
+      border-radius: 0 8px 8px 0;
+      padding: 18px 22px;
+      margin: 20px 0 32px;
+      font-size: .97rem;
+      color: #444;
+      line-height: 1.8;
+    }
+
+    /* ── Subcategoría (indoor/outdoor) ── */
+    .guia-subcat {
+      margin-bottom: 36px;
+    }
+    .guia-subcat__title {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 16px;
+      padding: 6px 14px;
+      border-radius: 20px;
+    }
+    .guia-subcat__title.indoor  { background: rgba(52,152,219,.12); color: #1a6fa5; }
+    .guia-subcat__title.outdoor { background: rgba(230,126,34,.12); color: #a85c00; }
+
+    /* ── Grid de modelos ── */
+    .guia-models {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 14px;
+    }
+
+    .guia-model-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 16px;
+      transition: all .25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .guia-model-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .25s ease;
+    }
+    .guia-model-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,.1); transform: translateY(-3px); }
+    .guia-model-card:hover::before { transform: scaleX(1); }
+
+    .guia-model-name {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+    .guia-model-desc {
+      font-size: .82rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .guia-model-tag {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: .7rem;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 10px;
+      text-transform: uppercase;
+    }
+    .tag-indoor  { background: rgba(52,152,219,.12); color: #1a6fa5; }
+    .tag-outdoor { background: rgba(230,126,34,.12); color: #a85c00; }
+    .tag-general { background: rgba(232,74,69,.1); color: var(--accent); }
+
+    /* ── Casos de uso ── */
+    .guia-usos {
+      margin-top: 28px;
+    }
+    .guia-usos__title {
+      font-size: .9rem;
+      font-weight: 700;
+      color: var(--ink);
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      margin-bottom: 12px;
+    }
+    .guia-usos__list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .guia-uso-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: #f3f4fa;
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-size: .85rem;
+      color: var(--ink);
+    }
+    .guia-uso-item i { color: var(--accent); font-size: .8rem; }
+
+    /* ── Cómo elegir ── */
+    .guia-elegir {
+      background: var(--nav-bg);
+      border-radius: 14px;
+      padding: 44px 40px;
+      margin-top: 20px;
+      color: #fff;
+    }
+    .guia-elegir h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: #fff;
+    }
+    .guia-elegir > p {
+      color: #aab3bf;
+      margin-bottom: 32px;
+      font-size: .95rem;
+      line-height: 1.7;
+    }
+    .guia-elegir-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-bottom: 36px;
+    }
+    .guia-elegir-item {
+      background: rgba(255,255,255,.06);
+      border-radius: 10px;
+      padding: 20px;
+      border: 1px solid rgba(255,255,255,.1);
+    }
+    .guia-elegir-item i {
+      font-size: 1.4rem;
+      color: var(--accent);
+      margin-bottom: 12px;
+      display: block;
+    }
+    .guia-elegir-item h4 {
+      font-size: .95rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .guia-elegir-item p {
+      font-size: .85rem;
+      color: #aab3bf;
+      line-height: 1.6;
+    }
+    .guia-elegir-cta {
+      text-align: center;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,.1);
+    }
+    .guia-elegir-cta p {
+      color: #aab3bf;
+      margin-bottom: 16px;
+      font-size: .95rem;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .guia-hero { padding: 60px 16px 50px; }
+      .guia-body { padding: 40px 16px 60px; }
+      .guia-elegir { padding: 30px 20px; }
+      .guia-elegir h2 { font-size: 1.3rem; }
+      .guia-models { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+      .guia-cat__header { flex-direction: column; align-items: flex-start; gap: 10px; }
+    }
+
+    @media (max-width: 480px) {
+      .guia-index__inner { gap: 8px; }
+      .guia-models { grid-template-columns: 1fr 1fr; }
+      .guia-hero-btns { flex-direction: column; align-items: center; }
+      .guia-hero-btns a { width: 100%; max-width: 280px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================== HEADER ================== -->
+  <header class="site-header" role="banner">
+    <nav class="navbar" aria-label="Principal">
+      <!-- Botón volver (mobile) -->
+      <button class="btn-back" onclick="history.back()" aria-label="Volver atrás">
+        <i class="fas fa-arrow-left"></i>
+      </button>
+      <a class="brand" href="index.html" aria-label="RTM Pantallas LED - Inicio">
+        <img src="rtm_logo/rtmLogo.png" alt="RTM Pantallas LED - Logo" loading="eager">
+      </a>
+      <div class="nav-center">
+        <ul class="menu" role="menubar">
+          <li role="none"><a role="menuitem" href="index.html">Home</a></li>
+          <li role="none"><a role="menuitem" href="index.html#about">Nosotros</a></li>
+          <li role="none"><a role="menuitem" href="productos.html">Productos</a></li>
+          <li role="none"><a role="menuitem" href="index.html#clientes">Clientes</a></li>
+          <li role="none"><a role="menuitem" href="index.html#proyectos">Proyectos</a></li>
+        </ul>
+      </div>
+      <div class="cta">
+        <a class="btn" href="index.html#contacto">CONTACTANOS</a>
+      </div>
+      <input type="checkbox" id="nav-toggle" aria-label="Abrir menú">
+      <label for="nav-toggle" class="burger-wrap" aria-hidden="true">
+        <div class="burger"><span></span></div>
+      </label>
+      <div class="drawer" aria-label="Menú móvil">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#about">Nosotros</a></li>
+          <li><a href="productos.html">Productos</a></li>
+          <li><a href="index.html#clientes">Clientes</a></li>
+          <li><a href="index.html#proyectos">Proyectos</a></li>
+          <li><a href="index.html#contacto">Contactanos</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ================== HERO ================== -->
+  <div class="guia-hero">
+    <h1>Guía de Productos RTM</h1>
+    <p>Todo lo que necesitás saber sobre nuestra línea de soluciones LED. Modelos, usos y cómo elegir la opción ideal para tu proyecto.</p>
+    <div class="guia-hero-btns">
+      <a href="#pantallas-led" class="btn-solid">Ver productos</a>
+      <a href="index.html#contacto" class="btn-outline">Hablar con un asesor</a>
+    </div>
+  </div>
+
+  <!-- ================== ÍNDICE RÁPIDO ================== -->
+  <nav class="guia-index" aria-label="Índice de productos">
+    <div class="guia-index__inner">
+      <span class="guia-index__label">Ir a:</span>
+      <a href="#pantallas-led"><i class="fas fa-tv"></i> Pantallas LED</a>
+      <a href="#tour-series"><i class="fas fa-truck-loading"></i> Tour Series</a>
+      <a href="#totems"><i class="fas fa-columns"></i> Tótems</a>
+      <a href="#pisos-led"><i class="fas fa-th"></i> Pisos LED</a>
+      <a href="#led-trucks"><i class="fas fa-truck"></i> LED Trucks</a>
+      <a href="#iluminacion"><i class="fas fa-lightbulb"></i> Iluminación</a>
+      <a href="#soluciones"><i class="fas fa-puzzle-piece"></i> Soluciones</a>
+      <a href="#como-elegir"><i class="fas fa-compass"></i> Cómo elegir</a>
+    </div>
+  </nav>
+
+  <!-- ================== CONTENIDO ================== -->
+  <main class="guia-body">
+
+    <!-- ── PANTALLAS LED ── -->
+    <section class="guia-cat" id="pantallas-led">
+      <div class="guia-cat__header">
+        <div class="guia-cat__icon"><i class="fas fa-tv"></i></div>
+        <div>
+          <h2>Pantallas LED</h2>
+          <p>Soluciones de visualización de alto impacto para interiores y exteriores</p>
+        </div>
+      </div>
+      <div class="guia-cat__desc">
+        Las pantallas LED de RTM están diseñadas para ofrecer imágenes de alta resolución con consumo energético eficiente. Disponibles en configuraciones para ambientes interiores y exteriores, se adaptan a eventos, publicidad, presentaciones corporativas y señalización permanente.
+      </div>
+
+      <div class="guia-subcat">
+        <div class="guia-subcat__title indoor"><i class="fas fa-building"></i> Indoor</div>
+        <div class="guia-models">
+          <div class="guia-model-card">
+            <div class="guia-model-name">IFI960</div>
+            <div class="guia-model-desc">Pantalla indoor de alta definición. Ideal para auditorios, salas de conferencia y espacios corporativos con distancias de visualización medias.</div>
+            <span class="guia-model-tag tag-indoor">Indoor</span>
+          </div>
+          <div class="guia-model-card">
+            <div class="guia-model-name">RI640</div>
+            <div class="guia-model-desc">Pantalla indoor compacta con pitch fino. Perfecta para espacios reducidos donde se requiere alta resolución a corta distancia.</div>
+            <span class="guia-model-tag tag-indoor">Indoor</span>
+          </div>
+          <div class="guia-model-card">
+            <div class="guia-model-name">RI960</div>
+            <div class="guia-model-desc">Versión de mayor tamaño de la línea RI. Recomendada para lobbies, centros comerciales y eventos donde se necesita mayor superficie de imagen.</div>
+            <span class="guia-model-tag tag-indoor">Indoor</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="guia-subcat">
+        <div class="guia-subcat__title outdoor"><i class="fas fa-sun"></i> Outdoor</div>
+        <div class="guia-models">
+          <div class="guia-model-card">
+            <div class="guia-model-name">VP960</div>
+            <div class="guia-model-desc">Pantalla outdoor de alta luminosidad. Diseñada para visibilidad plena bajo la luz solar directa, ideal para fachadas y espacios abiertos.</div>
+            <span class="guia-model-tag tag-outdoor">Outdoor</span>
+          </div>
+          <div class="guia-model-card">
+            <div class="guia-model-name">RE640</div>
+            <div class="guia-model-desc">Pantalla outdoor robusta con pitch de 6.4mm. Equilibrio entre resolución y distancia de visualización para vallas y publicidad exterior.</div>
+            <span class="guia-model-tag tag-outdoor">Outdoor</span>
+          </div>
+          <div class="guia-model-card">
+            <div class="guia-model-name">RE960</div>
+            <div class="guia-model-desc">Pantalla outdoor de mayor pitch, pensada para grandes superficies y distancias de visualización largas como autopistas o estadios.</div>
+            <span class="guia-model-tag tag-outdoor">Outdoor</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="guia-usos">
+        <div class="guia-usos__title">Casos de uso frecuentes</div>
+        <div class="guia-usos__list">
+          <div class="guia-uso-item"><i class="fas fa-check"></i> Eventos corporativos</div>
+          <div class="guia-uso-item"><i class="fas fa-check"></i> Publicidad exterior</div>
+          <div class="guia-uso-item"><i class="fas fa-check"></i> Auditorios y teatros</div>
+          <div class="guia-uso-item"><i class="fas fa-check"></i> Centros comerciales</div>
+          <div class="guia-uso-item"><i class="fas fa-check"></i> Estadios y deportes</div>
+          <div class="guia-uso-item"><i class="fas fa-check"></i> Fachadas de edificios</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── TOUR SERIES ── -->
+    <section class="guia-cat" id="tour-series">
+      <div class="guia-cat__header">
+        <div class="guia-cat__icon"><i class="fas fa-truck-loading"></i></div>
+        <div>
+          <h2>Tour Series</h2>
+          <p>Pantallas modulares diseñadas para montaje y desmontaje rápido en eventos</p>
+        </div>
+      </div>
+      <div class="guia-cat__desc">
+        La línea Tour Series está pensada para el mundo del espectáculo y los eventos en vivo. Sus paneles modulares permiten armar y desarmar estructuras de cualquier tamaño en poco tiempo, sin perder calidad de imagen. Son la elección de productoras, empresas de sonido y luz, y organizadores de eventos.
+      </div>
+
+      <div class="guia-subcat">
+        <div class="guia-subcat__title indoor"><i class="fas fa-building"></i> Indoor</div>
+        <div class="guia-models">
+          <div class="guia-model-card">
+            <div class="guia-model-name">RI500</div>
+            <div class="guia-model-desc">Panel tour indoor estándar de 500mm. El más versátil de la línea para escenarios y eventos en espacios cerrados.</div>
+            <span class="guia-model-tag tag-indoor">Indoor</span>
+          </div>
+          <div class="guia-model-card">
+            <div class="guia-model-name">RIC500</div>
+            <div class="guia-model-desc">Variante curva del RI500. Permite crear pantallas cóncavas o convexas para diseños de escenario creativos.</div>
+            <span class="guia-model-tag tag-indoor">Indoor</span>
+          </div>
+          <div class="guia-model-card">
+            <div class="guia-model-name">RIF500</div>
+            <div class="guia-model-desc">Versión front service del RI500. El mantenimiento se realiza por el frente, ideal cuando no hay acceso por detrás del panel.</div>
+            <span class="guia-model-tag tag-indoor">Indoor</span>
+          </div>
+          <div class="guia-model-card">
+            <div class="guia-model-name">RI1000</div>
+            <div class="guia-model-desc">Panel tour indoor de 1000mm. Mayor superficie por panel, reduce la cantidad de piezas necesarias para pantallas grandes.</div>
+            <span class="guia-model-tag tag-indoor">Indoor</span>
+          </div>
+          <div class="guia-model-card">
+            <div class="guia-model-name">RIC1000</div>
+            <div class="guia-model-desc">Versión curva del RI1000 para pantallas de gran escala con diseño no lineal.</div>
+            <span class="guia-model-tag tag-indoor">Indoor</span>
+          </div>
+          <div class="guia-model-card">
+            <div class="guia-model-name">RIF1000</div>
+            <div class="guia-model-desc">Versión front service del RI1000 para instalaciones permanentes o semipermanentes en grandes escenarios.</div>
+            <span class="guia-model-tag tag-indoor">Indoor</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="guia-subcat">
+        <div class="guia-subcat__title outdoor"><i class="fas fa-sun"></i> Outdoor</div>
+        <div class="guia-models">
+          <div class="guia-model-card">
+            <div class="guia-model-name">RE500</div>
+            <div class="guia-model-desc">Panel tour outdoor de 500mm. Resistente a lluvia y sol, para festivales, recitales y eventos al aire libre.</div>
+            <span class="guia-model-tag tag-outdoor">Outdoor</span>
+          </div>
+          <div class="guia-model-card">
+            <div class="guia-model-name">REC500</div>
+            <div class="guia-model-desc">Variante curva outdoor para diseños creativos de escenario en exteriores.</div>
+            <span class="guia-model-tag tag-outdoor">Outdoor</span>
+          </div>
+          <div class="guia-model-card">
+            <div class="guia-model-name">REF500</div>
+            <div class="guia-model-desc">Front service outdoor de 500mm. Mantenimiento por el frente en instalaciones donde el acceso trasero es limitado.</div>
+            <span class="guia-model-tag tag-outdoor">Outdoor</span>
+          </div>
+          <div class="guia-model-card">
+            <div class="guia-model-name">RE1000</div>
+            <div class="guia-model-desc">Panel outdoor de 1000mm para cubrir grandes superficies en exteriores con menor cantidad de módulos.</div>
+            <span class="guia-model-tag tag-outdoor">Outdoor</span>
+          </div>
+          <div class="guia-model-card">
+            <div class="guia-model-name">REC1000</div>
+            <div class="guia-model-desc">Versión curva outdoor de 1000mm para pantallas de gran formato con diseño no rectangular.</div>
+            <span class="guia-model-tag tag-outdoor">Outdoor</span>
+          </div>
+          <div class="guia-model-card">
+            <div class="guia-model-name">REF1000</div>
+            <div class="guia-model-desc">Front service outdoor de 1000mm para instalaciones permanentes en exteriores de difícil acceso posterior.</div>
+            <span class="guia-model-tag tag-outdoor">Outdoor</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="guia-usos">
+        <div class="guia-usos__title">Casos de uso frecuentes</div>
+        <div class="guia-usos__list">
+          <div class="guia-uso-item"><i class="fas fa-check"></i> Recitales y festivales</div>
+          <div class="guia-uso-item"><i class="fas fa-check"></i> Shows y espectáculos</div>
+          <div class="guia-uso-item"><i class="fas fa-check"></i> Eventos deportivos</div>
+          <div class="guia-uso-item"><i class="fas fa-check"></i> Conferencias y congresos</div>
+          <div class="guia-uso-item"><i class="fas fa-check"></i> Lanzamientos de productos</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── TÓTEMS LED ── -->
+    <section class="guia-cat" id="totems">
+      <div class="guia-cat__header">
+        <div class="guia-cat__icon"><i class="fas fa-columns"></i></div>
+        <div>
+          <h2>Tótems LED</h2>
+          <p>Estructuras verticales autoportantes con pantalla integrada</p>
+        </div>
+      </div>
+      <div class="guia-cat__desc">
+        Los tótems LED son estructuras independientes que combinan soporte y pantalla en una sola unidad. No requieren instalación en pared ni estructura externa. Son ideales para señalización en espacios de tránsito, puntos de venta y stands de exhibición. Su diseño compacto y elegante los hace perfectos tanto para ambientes corporativos como para uso comercial.
+      </div>
+
+      <div class="guia-subcat">
+        <div class="guia-subcat__title indoor"><i class="fas fa-building"></i> Indoor</div>
+        <div class="guia-models">
+          <div class="guia-model-card">
+            <div class="guia-model-name">TI520</div>
+            <div class="guia-model-desc">Tótem indoor compacto. Ideal para locales comerciales, recepciones y puntos de información en espacios reducidos.</div>
+            <span class="guia-model-tag tag-indoor">Indoor</span>
+          </div>
+          <div class="guia-model-card">
+            <div class="guia-model-name">TI640</div>
+            <div class="guia-model-desc">Tótem indoor de tamaño medio. Equilibrio entre presencia visual e impacto sin ocupar demasiado espacio.</div>
+            <span class="guia-model-tag tag-indoor">Indoor</span>
+          </div>
+          <div class="guia-model-card">
+            <div class="guia-model-name">TI960</div>
+            <div class="guia-model-desc">Tótem indoor de mayor impacto visual. Para lobbies, aeropuertos, centros comerciales y espacios de gran circulación.</div>
+            <span class="guia-model-tag tag-indoor">Indoor</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="guia-subcat">
+        <div class="guia-subcat__title outdoor"><i class="fas fa-sun"></i> Outdoor</div>
+        <div class="guia-models">
+          <div class="guia-model-card">
+            <div class="guia-model-name">TE960-S</div>
+            <div class="guia-model-desc">Tótem outdoor simple. Una pantalla de alta luminosidad resistente a la intemperie, para veredas, plazas y accesos.</div>
+            <span class="guia-model-tag tag-outdoor">Outdoor</span>
+          </div>
+          <div class="guia-model-card">
+            <div class="guia-model-name">TE960-D</div>
+            <div class="guia-model-desc">Tótem outdoor doble cara. Permite mostrar contenido en ambas direcciones, maximizando el impacto en zonas de alto tránsito.</div>
+            <span class="guia-model-tag tag-outdoor">Outdoor</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="guia-usos">
+        <div class="guia-usos__title">Casos de uso frecuentes</div>
+        <div class="guia-usos__list">
+          <div class="guia-uso-item"><i class="fas fa-check"></i> Centros comerciales</div>
+          <div class="guia-uso-item"><i class="fas fa-check"></i> Aeropuertos y terminales</div>
+          <div class="guia-uso-item"><i class="fas fa-check"></i> Stands y exhibiciones</div>
+          <div class="guia-uso-item"><i class="fas fa-check"></i> Hoteles y restaurantes</div>
+          <div class="guia-uso-item"><i class="fas fa-check"></i> Señalización vial</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── PISOS LED ── -->
+    <section class="guia-cat" id="pisos-led">
+      <div class="guia-cat__header">
+        <div class="guia-cat__icon"><i class="fas fa-th"></i></div>
+        <div>
+          <h2>Pisos LED</h2>
+          <p>Superficies LED transitables para experiencias inmersivas</p>
+        </div>
+      </div>
+      <div class="guia-cat__desc">
+        Los pisos LED de RTM están construidos para soportar el tránsito de personas y equipos, mientras proyectan imágenes y animaciones bajo los pies. Son la solución perfecta para discotecas, eventos de moda, shows artísticos y experiencias interactivas. Su construcción robusta garantiza durabilidad sin sacrificar calidad visual.
+      </div>
+
+      <div class="guia-models">
+        <div class="guia-model-card">
+          <div class="guia-model-name">PDANCE</div>
+          <div class="guia-model-desc">Piso LED para pistas de baile. Alta resistencia al impacto y al agua, con imágenes vibrantes que se sincronizan con la música.</div>
+          <span class="guia-model-tag tag-general">Piso LED</span>
+        </div>
+        <div class="guia-model-card">
+          <div class="guia-model-name">P-60 DISCO</div>
+          <div class="guia-model-desc">Piso LED con pitch de 6mm. Mayor resolución para espacios donde los espectadores están cerca del piso y la imagen debe ser nítida.</div>
+          <span class="guia-model-tag tag-general">Piso LED</span>
+        </div>
+        <div class="guia-model-card">
+          <div class="guia-model-name">PI-RGB</div>
+          <div class="guia-model-desc">Piso LED RGB de alta personalización. Control independiente por zona para efectos de iluminación dinámicos e interactivos.</div>
+          <span class="guia-model-tag tag-general">Piso LED</span>
+        </div>
+      </div>
+
+      <div class="guia-usos">
+        <div class="guia-usos__title">Casos de uso frecuentes</div>
+        <div class="guia-usos__list">
+          <div class="guia-uso-item"><i class="fas fa-check"></i> Discotecas y boliches</div>
+          <div class="guia-uso-item"><i class="fas fa-check"></i> Shows artísticos</div>
+          <div class="guia-uso-item"><i class="fas fa-check"></i> Desfiles de moda</div>
+          <div class="guia-uso-item"><i class="fas fa-check"></i> Eventos corporativos</div>
+          <div class="guia-uso-item"><i class="fas fa-check"></i> Experiencias inmersivas</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── LED TRUCKS ── -->
+    <section class="guia-cat" id="led-trucks">
+      <div class="guia-cat__header">
+        <div class="guia-cat__icon"><i class="fas fa-truck"></i></div>
+        <div>
+          <h2>LED Trucks</h2>
+          <p>Camiones con pantalla LED integrada, llave en mano</p>
+        </div>
+      </div>
+      <div class="guia-cat__desc">
+        Los LED Trucks de RTM son vehículos completamente equipados con pantallas LED de alta luminosidad. Representan la solución ideal para publicidad móvil, campañas políticas, eventos itinerantes y activaciones de marca. RTM entrega el proyecto llave en mano: diseño, fabricación, instalación y puesta en marcha incluidos.
+      </div>
+
+      <div class="guia-usos">
+        <div class="guia-usos__title">Casos de uso frecuentes</div>
+        <div class="guia-usos__list">
+          <div class="guia-uso-item"><i class="fas fa-check"></i> Publicidad móvil</div>
+          <div class="guia-uso-item"><i class="fas fa-check"></i> Campañas electorales</div>
+          <div class="guia-uso-item"><i class="fas fa-check"></i> Activaciones de marca</div>
+          <div class="guia-uso-item"><i class="fas fa-check"></i> Transmisiones en vivo</div>
+          <div class="guia-uso-item"><i class="fas fa-check"></i> Eventos itinerantes</div>
+          <div class="guia-uso-item"><i class="fas fa-check"></i> Comunicados gubernamentales</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── ILUMINACIÓN PROFESIONAL ── -->
+    <section class="guia-cat" id="iluminacion">
+      <div class="guia-cat__header">
+        <div class="guia-cat__icon"><i class="fas fa-lightbulb"></i></div>
+        <div>
+          <h2>Iluminación Profesional</h2>
+          <p>Equipos de iluminación escénica de alto rendimiento</p>
+        </div>
+      </div>
+      <div class="guia-cat__desc">
+        La línea de iluminación profesional de RTM complementa las soluciones LED con equipos de escena de última generación. Desde cabezales móviles hasta flashes, todos los productos están pensados para el mundo del espectáculo, la televisión y los eventos en vivo.
+      </div>
+
+      <div class="guia-subcat">
+        <div class="guia-subcat__title" style="background:rgba(232,74,69,.1);color:var(--accent)"><i class="fas fa-dot-circle"></i> Cabezales Beam</div>
+        <div class="guia-models">
+          <div class="guia-model-card">
+            <div class="guia-model-name">CMB-7R</div>
+            <div class="guia-model-desc">Cabezal beam de 7R. Compacto y potente, ideal para escenarios medianos y eventos donde se prioriza la movilidad del equipo.</div>
+            <span class="guia-model-tag tag-general">Beam</span>
+          </div>
+          <div class="guia-model-card">
+            <div class="guia-model-name">CMB-20R</div>
+            <div class="guia-model-desc">Cabezal beam de 20R. Mayor potencia lumínica para grandes escenarios, estadios y espectáculos de alto impacto visual.</div>
+            <span class="guia-model-tag tag-general">Beam</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="guia-subcat">
+        <div class="guia-subcat__title" style="background:rgba(232,74,69,.1);color:var(--accent)"><i class="fas fa-sun"></i> Cabezales 3 en 1</div>
+        <div class="guia-models">
+          <div class="guia-model-card">
+            <div class="guia-model-name">CMR-250-LED</div>
+            <div class="guia-model-desc">Cabezal 3 en 1 de 250W LED. Combina beam, spot y wash en un solo equipo. Eficiencia energética máxima.</div>
+            <span class="guia-model-tag tag-general">3 en 1</span>
+          </div>
+          <div class="guia-model-card">
+            <div class="guia-model-name">CMR-400-LED</div>
+            <div class="guia-model-desc">Cabezal 3 en 1 de 400W LED. Mayor potencia para producciones exigentes donde se necesitan los tres efectos en un solo equipo de alta gama.</div>
+            <span class="guia-model-tag tag-general">3 en 1</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="guia-subcat">
+        <div class="guia-subcat__title" style="background:rgba(232,74,69,.1);color:var(--accent)"><i class="fas fa-bars"></i> Barras Móviles</div>
+        <div class="guia-models">
+          <div class="guia-model-card">
+            <div class="guia-model-name">LB-1040-LED</div>
+            <div class="guia-model-desc">Barra móvil LED de 10 cabezas. Efectos de barrido y chase para shows, discotecas y eventos de entretenimiento.</div>
+            <span class="guia-model-tag tag-general">Barra</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="guia-subcat">
+        <div class="guia-subcat__title" style="background:rgba(232,74,69,.1);color:var(--accent)"><i class="fas fa-bolt"></i> Flashes</div>
+        <div class="guia-models">
+          <div class="guia-model-card">
+            <div class="guia-model-name">ST-960-LED</div>
+            <div class="guia-model-desc">Estroboscópico LED de alta potencia. Efectos de flash programables para espectáculos, discotecas y producciones audiovisuales.</div>
+            <span class="guia-model-tag tag-general">Flash</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="guia-usos">
+        <div class="guia-usos__title">Casos de uso frecuentes</div>
+        <div class="guia-usos__list">
+          <div class="guia-uso-item"><i class="fas fa-check"></i> Shows y espectáculos</div>
+          <div class="guia-uso-item"><i class="fas fa-check"></i> Televisión y cine</div>
+          <div class="guia-uso-item"><i class="fas fa-check"></i> Discotecas y boliches</div>
+          <div class="guia-uso-item"><i class="fas fa-check"></i> Teatros y óperas</div>
+          <div class="guia-uso-item"><i class="fas fa-check"></i> Festivales</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SOLUCIONES ── -->
+    <section class="guia-cat" id="soluciones">
+      <div class="guia-cat__header">
+        <div class="guia-cat__icon"><i class="fas fa-puzzle-piece"></i></div>
+        <div>
+          <h2>Soluciones</h2>
+          <p>Productos LED adaptados a necesidades específicas de cada industria</p>
+        </div>
+      </div>
+      <div class="guia-cat__desc">
+        La línea Soluciones de RTM agrupa productos diseñados para sectores específicos: transporte público, comercios, control de tránsito y proyectos a medida. Cada producto está desarrollado para responder a los requerimientos técnicos y operativos de su aplicación.
+      </div>
+
+      <div class="guia-subcat">
+        <div class="guia-subcat__title" style="background:rgba(232,74,69,.1);color:var(--accent)"><i class="fas fa-bus"></i> Unidades de Colectivos</div>
+        <div class="guia-models">
+          <div class="guia-model-card">
+            <div class="guia-model-name">Cartelera</div>
+            <div class="guia-model-desc">Pantalla LED frontal para colectivos. Muestra el número de línea y el destino de manera clara y visible a gran distancia.</div>
+            <span class="guia-model-tag tag-general">Transporte</span>
+          </div>
+          <div class="guia-model-card">
+            <div class="guia-model-name">Ramalera</div>
+            <div class="guia-model-desc">Pantalla LED lateral para colectivos. Indica el ramal o recorrido en tiempo real para pasajeros en la vereda.</div>
+            <span class="guia-model-tag tag-general">Transporte</span>
+          </div>
+          <div class="guia-model-card">
+            <div class="guia-model-name">Luneta de LED</div>
+            <div class="guia-model-desc">Pantalla LED trasera integrada en la luneta del colectivo. Complementa la señalización del vehículo con información adicional.</div>
+            <span class="guia-model-tag tag-general">Transporte</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="guia-subcat">
+        <div class="guia-subcat__title" style="background:rgba(232,74,69,.1);color:var(--accent)"><i class="fas fa-store"></i> Unidades para Comercios</div>
+        <div class="guia-models">
+          <div class="guia-model-card">
+            <div class="guia-model-name">M-642</div>
+            <div class="guia-model-desc">Módulo LED para vidriera y fachada de comercios. Atrae clientes con contenido dinámico desde el exterior del local.</div>
+            <span class="guia-model-tag tag-general">Comercio</span>
+          </div>
+          <div class="guia-model-card">
+            <div class="guia-model-name">M-962</div>
+            <div class="guia-model-desc">Módulo LED de mayor tamaño para comercios con vidrieras amplias o locales en zonas de alto tránsito peatonal.</div>
+            <span class="guia-model-tag tag-general">Comercio</span>
+          </div>
+          <div class="guia-model-card">
+            <div class="guia-model-name">M-320-3D</div>
+            <div class="guia-model-desc">Módulo LED con efecto 3D. Genera ilusiones ópticas llamativas para destacar el local y captar la atención en zonas competitivas.</div>
+            <span class="guia-model-tag tag-general">Comercio</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="guia-subcat">
+        <div class="guia-subcat__title" style="background:rgba(232,74,69,.1);color:var(--accent)"><i class="fas fa-road"></i> Pórticos</div>
+        <div class="guia-models">
+          <div class="guia-model-card">
+            <div class="guia-model-name">LPR-9648</div>
+            <div class="guia-model-desc">Pórtico LED para rutas y autopistas. Señalización de gran formato visible desde largas distancias para información vial.</div>
+            <span class="guia-model-tag tag-general">Pórtico</span>
+          </div>
+          <div class="guia-model-card">
+            <div class="guia-model-name">LPR-1248</div>
+            <div class="guia-model-desc">Pórtico LED compacto para accesos, parkings y zonas urbanas donde el espacio disponible es más limitado.</div>
+            <span class="guia-model-tag tag-general">Pórtico</span>
+          </div>
+          <div class="guia-model-card">
+            <div class="guia-model-name">LPR-1264</div>
+            <div class="guia-model-desc">Pórtico LED de formato vertical extendido. Ideal para señalización de túneles, playones y accesos con altura disponible.</div>
+            <span class="guia-model-tag tag-general">Pórtico</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="guia-subcat">
+        <div class="guia-subcat__title" style="background:rgba(232,74,69,.1);color:var(--accent)"><i class="fas fa-star"></i> Diseños Especiales</div>
+        <div class="guia-models">
+          <div class="guia-model-card">
+            <div class="guia-model-name">SH-1696</div>
+            <div class="guia-model-desc">Pantalla LED de formato especial para proyectos a medida. RTM diseña y fabrica soluciones personalizadas para requerimientos únicos que no se adaptan a formatos estándar.</div>
+            <span class="guia-model-tag tag-general">A medida</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="guia-usos">
+        <div class="guia-usos__title">Casos de uso frecuentes</div>
+        <div class="guia-usos__list">
+          <div class="guia-uso-item"><i class="fas fa-check"></i> Transporte público</div>
+          <div class="guia-uso-item"><i class="fas fa-check"></i> Señalización vial</div>
+          <div class="guia-uso-item"><i class="fas fa-check"></i> Retail y comercios</div>
+          <div class="guia-uso-item"><i class="fas fa-check"></i> Municipios y gobierno</div>
+          <div class="guia-uso-item"><i class="fas fa-check"></i> Proyectos a medida</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CÓMO ELEGIR ── -->
+    <section class="guia-elegir" id="como-elegir">
+      <h2>¿Cómo elegir la solución correcta?</h2>
+      <p>Antes de decidir qué producto es el ideal para tu proyecto, tené en cuenta estos factores clave. Si tenés dudas, nuestro equipo te asesora sin cargo.</p>
+
+      <div class="guia-elegir-grid">
+        <div class="guia-elegir-item">
+          <i class="fas fa-map-marker-alt"></i>
+          <h4>¿Interior o exterior?</h4>
+          <p>Los productos outdoor tienen mayor luminosidad y resistencia a la intemperie (lluvia, polvo, temperatura). Los indoor son más finos y livianos.</p>
+        </div>
+        <div class="guia-elegir-item">
+          <i class="fas fa-ruler"></i>
+          <h4>Distancia de visualización</h4>
+          <p>A mayor distancia del espectador, mayor puede ser el pitch (mm entre LEDs). A menor distancia, se necesita menor pitch para una imagen nítida.</p>
+        </div>
+        <div class="guia-elegir-item">
+          <i class="fas fa-expand-arrows-alt"></i>
+          <h4>Tamaño de la pantalla</h4>
+          <p>Depende del espacio disponible y del impacto visual deseado. Te ayudamos a calcular el tamaño ideal según tu ubicación.</p>
+        </div>
+        <div class="guia-elegir-item">
+          <i class="fas fa-tools"></i>
+          <h4>¿Fijo o itinerante?</h4>
+          <p>Si el equipo se monta y desmonta frecuentemente, la línea Tour Series es la indicada. Para instalaciones permanentes, las pantallas estándar son más convenientes.</p>
+        </div>
+        <div class="guia-elegir-item">
+          <i class="fas fa-calendar-alt"></i>
+          <h4>Frecuencia de uso</h4>
+          <p>Equipos de uso diario requieren mayor robustez y facilidad de mantenimiento. Considerá modelos con acceso frontal (Front Service) para instalaciones de difícil acceso.</p>
+        </div>
+        <div class="guia-elegir-item">
+          <i class="fas fa-dollar-sign"></i>
+          <h4>Presupuesto disponible</h4>
+          <p>Tenemos opciones para distintos rangos de inversión. Contanos tu presupuesto y te presentamos las alternativas más convenientes para tu caso.</p>
+        </div>
+      </div>
+
+      <div class="guia-elegir-cta">
+        <p>¿Necesitás asesoramiento personalizado? Nuestro equipo te ayuda a elegir la mejor solución.</p>
+        <a href="index.html#contacto" class="btn">Hablar con un asesor</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================== FOOTER ================== -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer__wrap">
+      <section class="footer__brand" aria-label="Marca">
+        <img src="rtm_logo/rtmLogo.png" alt="RTM Pantallas LED" loading="lazy">
+      </section>
+      <section class="footer__block" aria-labelledby="contactanos-title">
+        <h4 id="contactanos-title">Contactanos</h4>
+        <p class="footer__text">
+          <a href="tel:+5491173736308" style="color:var(--footer-ink);text-decoration:none">+54 9 11 7373 6308</a>
+        </p>
+        <p class="footer__text" style="margin-top:12px">
+          Av. Tte. Gral. Juan Domingo Perón 2915,<br>
+          B1888IUY Florencio Varela, Provincia<br>
+          de Buenos Aires
+        </p>
+      </section>
+      <section class="footer__block" aria-labelledby="novedades-title">
+        <h4 id="novedades-title">Enterate de las<br>novedades</h4>
+        <nav class="footer__social" aria-label="Redes sociales">
+          <a href="https://www.instagram.com/pantallasledrtm/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://www.linkedin.com/in/rtmpantallasled/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+        </nav>
+      </section>
+    </div>
+  </footer>
+
+  <script src="js/main.js" defer></script>
+
+</body>
+</html>
