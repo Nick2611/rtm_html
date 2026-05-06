@@ -4,28 +4,25 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Productos — RTM Pantallas LED</title>
-  
-  <!-- Meta Description -->
+
   <meta name="description" content="Catálogo completo de productos RTM: Pantallas LED, Tour Series, Totems, Pisos LED, Soluciones especiales, LED Trucks e Iluminación Profesional.">
-  
-  <!-- Canonical URL -->
   <link rel="canonical" href="https://pantallasledrtm.com/productos.html">
-  
+
   <!-- Open Graph -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://pantallasledrtm.com/productos.html">
-  <meta property="og:title" content="Productos — RTM Pantallas LED">
+  <meta property="og:type"        content="website">
+  <meta property="og:url"         content="https://pantallasledrtm.com/productos.html">
+  <meta property="og:title"       content="Productos — RTM Pantallas LED">
   <meta property="og:description" content="Catálogo completo de productos RTM: Pantallas LED, Tour Series, Totems, Pisos LED, Soluciones especiales e Iluminación Profesional.">
-  <meta property="og:image" content="https://pantallasledrtm.com/logo.png">
-  
-  <!-- Favicon completo para máxima compatibilidad -->
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
-  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-  <link rel="icon" type="image/png" sizes="32x32" href="rtm_logo/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="rtm_logo/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="rtm_logo/apple-touch-icon.png">
-  
-  <!-- Datos Estructurados - Organization (Schema.org) -->
+  <meta property="og:image"       content="https://pantallasledrtm.com/logo.png">
+
+  <!-- Favicons -->
+  <link rel="icon"             href="favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon"    href="favicon.ico" type="image/x-icon">
+  <link rel="icon"             type="image/png" sizes="32x32" href="rtm_logo/favicon-32x32.png">
+  <link rel="icon"             type="image/png" sizes="16x16" href="rtm_logo/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180"               href="rtm_logo/apple-touch-icon.png">
+
+  <!-- Schema.org -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -35,541 +32,44 @@
     "logo": "https://pantallasledrtm.com/logo.png"
   }
   </script>
-  
+
   <!-- Preconnect -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  
-  <!-- Fonts & Icons -->
+
+  <!-- Tipografía e Iconos -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-  
-  <!-- CSS Principal -->
+
+  <!-- CSS -->
   <link rel="stylesheet" href="css/main.css">
-  
-  <!-- Page-specific Styles -->
   <link rel="stylesheet" href="css/products.css">
-  
-  <style>
-    /* Reset & Base */
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    
-    body {
-      font-family: "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color: #2b2b2b;
-      line-height: 1.5;
-      background: #f8f9fc;
-    }
-    
-    :root {
-      --nav-bg: #141416;
-      --nav-text: #dfe6ee;
-      --nav-text-dim: #aab3bf;
-      --accent: #e84a45;
-      --accent-hover: #cf3d39;
-      --container: 1200px;
-    }
-    
-    /* Header */
-    header.site-header {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      background: var(--nav-bg);
-      box-shadow: 0 2px 14px rgba(0,0,0,0.25);
-    }
-    
-    nav.navbar {
-      max-width: var(--container);
-      margin: 0 auto;
-      padding: 18px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-    }
-    
-    .brand {
-      display: flex;
-      align-items: center;
-      flex: 1;
-      min-width: 0;
-    }
-    
-    .brand img {
-      width: 180px;
-      height: auto;
-      max-height: 50px;
-      object-fit: contain;
-    }
-    
-    .nav-center {
-      flex: 0 0 auto;
-      display: flex;
-      justify-content: center;
-    }
-    
-    .menu {
-      list-style: none;
-      display: flex;
-      gap: 28px;
-      margin: 0;
-      padding: 0;
-      align-items: center;
-    }
-    
-    .cta-wrapper {
-      flex: 1;
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      gap: 15px;
-    }
-    
-    @media (max-width: 1100px) {
-      .brand img {
-        width: 160px;
-      }
-      .menu {
-        gap: 20px;
-      }
-    }
-    
-    @media (max-width: 900px) {
-      .brand img {
-        width: 150px;
-        max-height: 40px;
-      }
-      .nav-center {
-        display: none;
-      }
-      .cta-wrapper {
-        display: none;
-      }
-    }
-    
-    .menu a {
-      text-decoration: none;
-      color: var(--nav-text);
-      font-weight: 500;
-      transition: color 0.2s ease;
-    }
-    
-    .menu a:hover,
-    .menu a.active {
-      color: var(--accent);
-    }
-    
-    /* Mega Menu Trigger */
-    .menu-item-dropdown {
-      position: relative;
-    }
-    
-    .menu-item-dropdown > a {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    
-    .menu-item-dropdown > a::after {
-      content: "▼";
-      font-size: 0.65rem;
-      opacity: 0.7;
-      transition: transform 0.2s ease;
-    }
-    
-    .menu-item-dropdown:hover > a::after {
-      transform: rotate(180deg);
-    }
-    
-    /* CTA */
-    .cta-wrapper {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
-    
-    /* Search container */
-    .search-container {
-      position: relative;
-    }
-    
-    .search-input-wrapper {
-      position: relative;
-      display: flex;
-      align-items: center;
-    }
-    
-    .search-input-wrapper i {
-      position: absolute;
-      left: 14px;
-      color: rgba(255, 255, 255, 0.6);
-      font-size: 0.9rem;
-      pointer-events: none;
-      z-index: 1;
-    }
-    
-    #global-search {
-      width: 200px;
-      padding: 10px 14px 10px 42px;
-      background: #1e1e20 !important;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 8px;
-      color: #fff !important;
-      font-size: 0.9rem;
-      font-family: inherit;
-      outline: none;
-      transition: all 0.25s ease;
-      -webkit-appearance: none;
-      appearance: none;
-    }
-    
-    #global-search::placeholder {
-      color: rgba(255, 255, 255, 0.5) !important;
-      opacity: 1;
-    }
-    
-    #global-search:focus {
-      width: 280px;
-      background: #252527 !important;
-      border-color: rgba(232, 74, 69, 0.5);
-    }
-    
-    #search-results {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      margin-top: 8px;
-      background: var(--nav-bg);
-      border-radius: 8px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      max-height: 400px;
-      overflow-y: auto;
-      display: none;
-      z-index: 10000;
-    }
-    
-    #search-results.active {
-      display: block;
-    }
-    
-    .btn {
-      display: inline-block;
-      padding: 12px 22px;
-      background: var(--accent);
-      color: #fff;
-      text-decoration: none;
-      font-weight: 700;
-      border-radius: 4px;
-      transition: all 0.2s ease;
-    }
-    
-    .btn:hover {
-      background: var(--accent-hover);
-      transform: translateY(-2px);
-    }
-    
-    /* Mobile menu toggle */
-    .burger-wrap {
-      display: none;
-      cursor: pointer;
-    }
-    
-    .burger {
-      width: 26px;
-      height: 20px;
-      position: relative;
-    }
-    
-    .burger span,
-    .burger::before,
-    .burger::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: var(--nav-text);
-      border-radius: 2px;
-      transition: all 0.25s ease;
-    }
-    
-    .burger::before { top: 0; }
-    .burger span { top: 50%; transform: translateY(-50%); }
-    .burger::after { bottom: 0; }
-    
-    #nav-toggle { display: none; }
-    
-    /* Drawer */
-    .drawer {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      background: var(--nav-bg);
-      padding: 20px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    }
-    
-    .drawer ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    
-    .drawer a {
-      display: block;
-      padding: 15px 0;
-      color: var(--nav-text);
-      text-decoration: none;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-    }
-    
-    #nav-toggle:checked ~ .drawer {
-      display: block;
-    }
-    
-    #nav-toggle:checked + label .burger::before {
-      transform: translateY(8px) rotate(45deg);
-    }
-    
-    #nav-toggle:checked + label .burger::after {
-      transform: translateY(-9px) rotate(-45deg);
-    }
-    
-    #nav-toggle:checked + label .burger span {
-      opacity: 0;
-    }
-    
-    /* Main Content */
-    main {
-      min-height: calc(100vh - 200px);
-    }
-    
-    /* Products Overview (when no category selected) */
-    .products-overview {
-      padding: 60px 20px;
-      max-width: var(--container);
-      margin: 0 auto;
-    }
-    
-    .products-overview-header {
-      text-align: center;
-      margin-bottom: 50px;
-    }
-    
-    .products-overview-header h1 {
-      font-size: 2.8rem;
-      font-weight: 700;
-      color: #1a1a1a;
-      margin: 0 0 15px 0;
-    }
-    
-    .products-overview-header p {
-      font-size: 1.15rem;
-      color: #666;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-    
-    .categories-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 30px;
-    }
-    
-    .category-overview-card {
-      background: #fff;
-      border-radius: 16px;
-      padding: 35px;
-      text-decoration: none;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-      border: 1px solid rgba(0,0,0,0.05);
-    }
-    
-    .category-overview-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 5px;
-      background: linear-gradient(90deg, var(--accent), #ff6b6b);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.3s ease;
-    }
-    
-    .category-overview-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 12px 40px rgba(0,0,0,0.15);
-    }
-    
-    .category-overview-card:hover::before {
-      transform: scaleX(1);
-    }
-    
-    .category-overview-icon {
-      width: 60px;
-      height: 60px;
-      background: rgba(232, 74, 69, 0.1);
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 20px;
-    }
-    
-    .category-overview-icon i {
-      font-size: 1.6rem;
-      color: var(--accent);
-    }
-    
-    .category-overview-card h3 {
-      font-size: 1.4rem;
-      font-weight: 600;
-      color: #1a1a1a;
-      margin: 0 0 10px 0;
-    }
-    
-    .category-overview-card p {
-      font-size: 0.95rem;
-      color: #666;
-      line-height: 1.6;
-      margin: 0 0 15px 0;
-    }
-    
-    .category-overview-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--accent);
-      font-weight: 600;
-      font-size: 0.95rem;
-    }
-    
-    .category-overview-link i {
-      transition: transform 0.2s ease;
-    }
-    
-    .category-overview-card:hover .category-overview-link i {
-      transform: translateX(4px);
-    }
-    
-    /* Footer */
-    footer {
-      background: #141516;
-      color: #f2f3f5;
-      padding: 60px 20px 30px;
-    }
-    
-    .footer-content {
-      max-width: var(--container);
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 40px;
-    }
-    
-    .footer-brand img {
-      height: 50px;
-      margin-bottom: 15px;
-    }
-    
-    .footer-brand p {
-      color: #cfd4dc;
-      font-size: 0.9rem;
-      line-height: 1.6;
-    }
-    
-    .footer-links h4 {
-      font-size: 1rem;
-      font-weight: 600;
-      margin: 0 0 15px 0;
-    }
-    
-    .footer-links ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    
-    .footer-links a {
-      color: #cfd4dc;
-      text-decoration: none;
-      font-size: 0.9rem;
-      display: block;
-      padding: 5px 0;
-      transition: color 0.2s ease;
-    }
-    
-    .footer-links a:hover {
-      color: var(--accent);
-    }
-    
-    .footer-bottom {
-      max-width: var(--container);
-      margin: 40px auto 0;
-      padding-top: 20px;
-      border-top: 1px solid rgba(255,255,255,0.1);
-      text-align: center;
-      font-size: 0.85rem;
-      color: #999;
-    }
-    
-    /* Responsive */
-    @media (max-width: 900px) {
-      .nav-center,
-      .search-container {
-        display: none;
-      }
-      
-      .burger-wrap {
-        display: block;
-      }
-      
-      .brand img {
-        height: 40px;
-      }
-      
-      .products-overview-header h1 {
-        font-size: 2rem;
-      }
-      
-      .categories-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
 </head>
 <body>
+
   <!-- Header -->
   <header class="site-header">
     <nav class="navbar">
+      <!-- Botón volver (mobile) -->
+      <button class="btn-back" onclick="history.back()" aria-label="Volver atrás">
+        <i class="fas fa-arrow-left"></i>
+      </button>
+
       <a class="brand" href="index.html">
         <img src="rtm_logo/rtmLogo.png" alt="RTM Pantallas LED">
       </a>
-      
+
       <div class="nav-center">
         <ul class="menu">
           <li><a href="index.html">Home</a></li>
           <li><a href="index.html#about">Nosotros</a></li>
-          <li>
-            <a href="productos.html" class="active">Productos</a>
-          </li>
+          <li><a href="productos.html" class="active">Productos</a></li>
           <li><a href="index.html#clientes">Clientes</a></li>
           <li><a href="index.html#proyectos">Proyectos</a></li>
         </ul>
       </div>
-      
+
       <div class="cta-wrapper">
-        <!-- Search -->
         <div class="search-container">
           <div class="search-input-wrapper">
             <i class="fas fa-search"></i>
@@ -577,16 +77,14 @@
           </div>
           <div id="search-results"></div>
         </div>
-        
         <a class="btn" href="index.html#contacto">CONTACTANOS</a>
       </div>
-      
-      <!-- Mobile -->
+
       <input type="checkbox" id="nav-toggle">
       <label for="nav-toggle" class="burger-wrap">
         <div class="burger"><span></span></div>
       </label>
-      
+
       <div class="drawer">
         <ul>
           <li><a href="index.html">Home</a></li>
@@ -599,12 +97,10 @@
       </div>
     </nav>
   </header>
-  
+
   <!-- Main Content -->
   <main class="products-page">
     <div class="products-container" id="product-content">
-      <!-- El contenido se genera dinámicamente basado en la URL -->
-      <!-- Si no hay parámetros, muestra la vista general de categorías -->
       <div class="products-overview" id="products-overview">
         <div class="products-overview-header">
           <h1>Nuestros Productos</h1>
@@ -616,7 +112,7 @@
       </div>
     </div>
   </main>
-  
+
   <!-- Footer -->
   <footer>
     <div class="footer-content">
@@ -624,7 +120,6 @@
         <img src="rtm_logo/rtmLogo.png" alt="RTM Pantallas LED">
         <p>Especialistas en desarrollo, fabricación e instalación de pantallas LED profesionales.</p>
       </div>
-      
       <div class="footer-links">
         <h4>Productos</h4>
         <ul>
@@ -636,7 +131,6 @@
           <li><a href="productos.html?cat=iluminacion-profesional">Iluminación</a></li>
         </ul>
       </div>
-      
       <div class="footer-links">
         <h4>Empresa</h4>
         <ul>
@@ -645,7 +139,6 @@
           <li><a href="index.html#proyectos">Proyectos</a></li>
         </ul>
       </div>
-      
       <div class="footer-links">
         <h4>Contacto</h4>
         <ul>
@@ -655,22 +148,20 @@
         </ul>
       </div>
     </div>
-    
     <div class="footer-bottom">
       <p>© 2024 RTM Pantallas LED. Todos los derechos reservados.</p>
     </div>
   </footer>
-  
+
   <!-- Scripts -->
   <script src="js/products.js"></script>
+  <script src="js/main.js" defer></script>
+
+
   <script>
-    // Render overview page if no category parameter
     document.addEventListener('DOMContentLoaded', function() {
       const params = new URLSearchParams(window.location.search);
-      const categorySlug = params.get('cat');
-      
-      if (!categorySlug) {
-        // Wait for product data to load
+      if (!params.get('cat')) {
         const checkData = setInterval(function() {
           if (window.rtmProducts && window.rtmProducts.data) {
             clearInterval(checkData);
@@ -679,30 +170,19 @@
         }, 100);
       }
     });
-    
+
     function renderCategoriesOverview() {
-      const container = document.getElementById('categories-grid');
-      const categories = window.rtmProducts.getCategories();
-      
-      let html = '';
-      categories.forEach(function(category) {
-        html += `
-          <a href="productos.html?cat=${category.slug}" class="category-overview-card">
-            <div class="category-overview-icon">
-              <i class="fas ${category.icon || 'fa-cube'}"></i>
-            </div>
-            <h3>${category.name}</h3>
-            <p>${category.description}</p>
-            <span class="category-overview-link">
-              Ver productos <i class="fas fa-arrow-right"></i>
-            </span>
-          </a>
-        `;
-      });
-      
-      container.innerHTML = html;
+      const container   = document.getElementById('categories-grid');
+      const categories  = window.rtmProducts.getCategories();
+      container.innerHTML = categories.map(cat => `
+        <a href="productos.html?cat=${cat.slug}" class="category-overview-card">
+          <div class="category-overview-icon"><i class="fas ${cat.icon || 'fa-cube'}"></i></div>
+          <h3>${cat.name}</h3>
+          <p>${cat.description}</p>
+          <span class="category-overview-link">Ver productos <i class="fas fa-arrow-right"></i></span>
+        </a>`).join('');
     }
   </script>
+
 </body>
 </html>
-
