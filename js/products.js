@@ -297,18 +297,22 @@ class RTMProducts {
   }
 
   renderCategoryPage(category) {
-    // ── CAMBIO ──
+    const subcatsConModelos = (category.subcategories || []).filter(s =>
+      s.models && s.models.length > 0 && !s.parentSubcategory
+    );
+
+    // Si la categoría se divide por entorno, "Todos" debe mostrar todos los modelos.
+    if (category.hasEnvironmentFilter && subcatsConModelos.length > 0) {
+      this.renderEnvironmentCategoryPage(category, subcatsConModelos);
+      return;
+    }
+
     // Si la categoría tiene una sola subcategoría con modelos (caso Pisos LED),
     // saltear esa carpeta y mostrar directamente los productos.
-    if (category.subcategories) {
-      const subcatsConModelos = category.subcategories.filter(s =>
-        s.models && s.models.length > 0 && !s.parentSubcategory
-      );
-      if (subcatsConModelos.length === 1) {
-        this.currentSubcategory = subcatsConModelos[0];
-        this.renderSubcategoryPage(category, subcatsConModelos[0]);
-        return;
-      }
+    if (subcatsConModelos.length === 1) {
+      this.currentSubcategory = subcatsConModelos[0];
+      this.renderSubcategoryPage(category, subcatsConModelos[0]);
+      return;
     }
 
     const container = document.getElementById('product-content');
@@ -328,10 +332,10 @@ class RTMProducts {
           ${category.name}
         </h1>
         <p class="category-description">${category.description}</p>
-        ${category.hasEnvironmentFilter ? this.renderEnvironmentFilter() : ''}
       </div>
       <div class="subcategories-grid" id="subcategories-container">
     `;
+
     category.subcategories.forEach(subcategory => {
       if (subcategory.models && subcategory.models.length === 0 && !subcategory.parentSubcategory) return;
       html += `
@@ -350,7 +354,50 @@ class RTMProducts {
     });
     html += '</div>';
     container.innerHTML = html;
-    if (category.hasEnvironmentFilter) this.attachFilterEvents();
+  }
+
+  renderEnvironmentCategoryPage(category, subcategories) {
+    const container = document.getElementById('product-content');
+    if (!container) return;
+
+    document.title = `${category.name} — RTM Pantallas LED`;
+
+    let html = `
+      <div class="category-header">
+        <nav class="breadcrumb">
+          <a href="index.html">Inicio</a>
+          <span class="separator">/</span>
+          <a href="productos.html">Productos</a>
+          <span class="separator">/</span>
+          <span class="current">${category.name}</span>
+        </nav>
+        <h1 class="category-title">
+          <i class="fas ${category.icon || 'fa-cube'}"></i>
+          ${category.name}
+        </h1>
+        <p class="category-description">${category.description}</p>
+        ${this.renderEnvironmentFilter()}
+      </div>
+      <div class="products-grid" id="products-container">
+    `;
+
+    subcategories.forEach(subcategory => {
+      subcategory.models.forEach(model => {
+        html += this.renderProductCard(model, category, subcategory);
+      });
+    });
+
+    html += '</div>';
+    container.innerHTML = html;
+
+    subcategories.forEach(subcategory => {
+      subcategory.models.forEach(model => {
+        if (model.images && model.images.length > 1) this.initCarousel(model.id);
+      });
+    });
+
+    this.attachImageLinkEvents(container);
+    this.attachFilterEvents();
   }
 
   renderSubcategoryPage(category, subcategory) {
@@ -442,15 +489,17 @@ class RTMProducts {
     // URL al detalle del modelo + atributos para que la imagen sea clickeable.
     const modelUrl = `productos.html?cat=${category.slug}&sub=${subcategory.slug}&model=${model.slug}`;
 
+    const modelEnvironment = model.environment || subcategory.environment || 'all';
+
     return `
-      <div class="product-card" data-model="${model.slug}">
+      <div class="product-card" data-model="${model.slug}" data-environment="${modelEnvironment}">
         <div class="product-card-image"
              data-link="${modelUrl}"
              role="link"
              tabindex="0"
              aria-label="Ver detalles de ${model.name}">
           ${imageHTML}
-          ${model.environment ? `<span class="product-env-badge env-${model.environment}">${model.environment}</span>` : ''}
+          ${modelEnvironment !== 'all' ? `<span class="product-env-badge env-${modelEnvironment}">${modelEnvironment}</span>` : ''}
         </div>
         <div class="product-card-content">
           <h3 class="product-card-title">${model.name}</h3>

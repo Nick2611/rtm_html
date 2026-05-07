@@ -5,7 +5,7 @@ frontend:
       commands:
         - echo "🚀 Iniciando build para AWS Amplify..."
         - echo "📁 Verificando archivos críticos:"
-        - ls -la favicon.ico logo.png robots.txt sitemap.xml || echo "⚠️ Algunos archivos no encontrados"
+        - ls -la favicon.ico rtm_logo/rtmLogo.png robots.txt sitemap.xml || echo "⚠️ Algunos archivos no encontrados"
         - echo "📁 Estructura del proyecto:"
         - ls -la
     build:
@@ -16,16 +16,16 @@ frontend:
     files:
       # Archivos raíz críticos para SEO
       - favicon.ico
-      - logo.png
       - robots.txt
       - sitemap.xml
       - _redirects
       - _headers
-      - customHttp.yml
       # Páginas HTML
       - index.html
       - productos.html
-      - servicios.html
+      - guia.html
+      - privacidad.html
+      - proyectos.html
       - 404.html
       # Assets y carpetas
       - 'rtm_logo/**/*'
@@ -39,7 +39,6 @@ frontend:
       - 'miniaturas_videos/**/*'
       - 'proyectos_imagenes/**/*'
       - 'proyectos_videos/**/*'
-      - 'seccion_servicios/**/*'
   customHeaders:
     - pattern: 'favicon.ico'
       headers:
@@ -59,6 +58,10 @@ frontend:
       headers:
         - key: 'Cache-Control'
           value: 'public, max-age=31536000'
+    - pattern: '**/*.json'
+      headers:
+        - key: 'Cache-Control'
+          value: 'public, max-age=3600'
     - pattern: '**/*.png'
       headers:
         - key: 'Cache-Control'
@@ -73,5 +76,9 @@ frontend:
           value: 'public, max-age=31536000'
     - pattern: '**/*.mp4'
       headers:
+        - key: 'Content-Type'
+          value: 'video/mp4'
         - key: 'Cache-Control'
-          value: 'public, max-age=31536000'
+          value: 'public, max-age=31536000, immutable'
+        - key: 'Accept-Ranges'
+          value: 'bytes'
