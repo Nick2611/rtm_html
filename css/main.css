@@ -17,17 +17,27 @@ html, body {
   overflow-x: hidden;
 }
 
+html {
+  /* Evita que los anchors (#about, #contacto, etc.) queden tapados por el header fijo */
+  scroll-padding-top: var(--header-h, 100px);
+}
+
 body {
   font-family: "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Arial, sans-serif;
   color: #2b2b2b;
   line-height: 1.5;
   background: #fff;
+  /* Compensa la altura del header fijo para que el contenido no quede tapado */
+  padding-top: var(--header-h, 100px);
 }
 
 /* ============================================
    CSS VARIABLES
    ============================================ */
 :root {
+  /* Altura del header fijo (cambia por breakpoint) */
+  --header-h: 100px;
+
   /* Header/Nav */
   --nav-bg: #141416;
   --nav-text: #dfe6ee;
@@ -96,8 +106,11 @@ body {
    HEADER
    ============================================ */
 header.site-header {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
   z-index: 1000;
   background: var(--nav-bg);
   box-shadow: 0 2px 14px var(--shadow);
@@ -1733,6 +1746,7 @@ footer:not(.site-footer) {
 
 /* ── Tablet grande ── */
 @media (max-width: 1200px) {
+  :root { --header-h: 95px; }
   .header-container { padding-top: 18px; }
   nav.navbar { padding: 16px 20px; }
   .brand img { width: 250px; height: 50px; }
@@ -1740,6 +1754,7 @@ footer:not(.site-footer) {
 }
 
 @media (max-width: 1024px) {
+  :root { --header-h: 90px; }
   .header-container { padding-top: 16px; }
   nav.navbar { padding: 14px 20px; min-height: 65px; }
   .brand img { width: 220px; height: 45px; }
@@ -1747,6 +1762,7 @@ footer:not(.site-footer) {
 
 /* ── Ocultar menú desktop, mostrar hamburguesa ── */
 @media (max-width: 1000px) {
+  :root { --header-h: 80px; }
   .nav-center,
   .search-container { display: none; }
   .mega-menu-wrapper { display: none; }
@@ -1815,6 +1831,7 @@ footer:not(.site-footer) {
 }
 
 @media (max-width: 950px) {
+  :root { --header-h: 75px; }
   nav.navbar { padding: 12px 20px; min-height: 60px; }
   .brand img { width: 200px; height: 40px; }
   .btn { padding: 10px 16px; font-size: .9rem; }
@@ -1822,6 +1839,7 @@ footer:not(.site-footer) {
 
 /* ── Tablet / mobile grande ── */
 @media (max-width: 900px) {
+  :root { --header-h: 70px; }
   nav.navbar { padding: 10px 15px; min-height: 60px; gap: 10px; }
   .brand { min-width: auto; flex: 1; justify-content: flex-start; order: 1; }
   .brand img { width: 180px; height: 36px; }
@@ -1850,6 +1868,7 @@ footer:not(.site-footer) {
 
 /* ── Mobile ── */
 @media (max-width: 768px) {
+  :root { --header-h: 65px; }
   .header-container { padding-top: 10px; }
   nav.navbar { padding: 8px 15px 10px; }
   .burger-wrap { padding: 6px; min-width: 40px; min-height: 40px; }
@@ -1914,6 +1933,7 @@ footer:not(.site-footer) {
 
 /* ── Mobile chico (iPhone SE, Galaxy A, etc.) ── */
 @media (max-width: 480px) {
+  :root { --header-h: 60px; }
   nav.navbar { padding: 8px 12px; }
   .brand img { width: 150px; height: auto; }
   .burger-wrap { padding: 4px; min-width: 36px; min-height: 36px; }

@@ -359,6 +359,14 @@
   line-height: 1.5;
   margin: 0 0 12px 0;
   flex-grow: 1;
+  /* Truncar a 3 líneas con "..." al final para que las cards queden parejas.
+     La descripción completa se ve en el detalle del producto. */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .product-spec {
