@@ -290,6 +290,20 @@
   flex-shrink: 0;
 }
 
+/* Imagen clickeable: lleva al detalle del producto */
+.product-card-image[data-link] {
+  cursor: pointer;
+}
+
+.product-card-image[data-link]:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.product-card-image[data-link]:focus:not(:focus-visible) {
+  outline: none;
+}
+
 .product-card-image img {
   width: 100%;
   height: 100%;
