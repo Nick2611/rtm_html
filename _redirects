@@ -6,7 +6,7 @@
 # ============================================
 # Estos archivos DEBEN servirse con 200, no redirigir
 /favicon.ico /favicon.ico 200
-/logo.png /logo.png 200
+/rtm_logo/rtmLogo.png /rtm_logo/rtmLogo.png 200
 /robots.txt /robots.txt 200
 /sitemap.xml /sitemap.xml 200
 
@@ -27,12 +27,20 @@
 /servicios/totems-led /productos.html?cat=totems 301
 /servicios/ramaleros-led /productos.html?cat=soluciones 301
 /servicios/pisos-led /productos.html?cat=pisos-led 301
+/seccion_servicios/pantallas_led.html /productos.html?cat=pantallas-led 301
+/seccion_servicios/totems_led.html /productos.html?cat=totems 301
+/seccion_servicios/pisos_led.html /productos.html?cat=pisos-led 301
+/seccion_servicios/ramaleros_led.html /productos.html?cat=soluciones 301
+/seccion_servicios/formulario_productos.html /productos.html 301
 
 # ============================================
 # PÁGINAS HTML - Servir directamente
 # ============================================
 /index.html /index.html 200
 /productos.html /productos.html 200
+/guia.html /guia.html 200
+/privacidad.html /privacidad.html 200
+/proyectos.html /proyectos.html 200
 /404.html /404.html 200
 
 # ============================================

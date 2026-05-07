@@ -8,7 +8,7 @@ Allow: /
 Sitemap: https://pantallasledrtm.com/sitemap.xml
 
 # Disallow admin and private areas
-Disallow: /lambda/
+Disallow: /backend/
 Disallow: /amplify.yml
 Disallow: /_headers
 Disallow: /_redirects

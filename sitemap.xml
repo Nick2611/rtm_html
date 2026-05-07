@@ -3,7 +3,7 @@
   <!-- Página principal -->
   <url>
     <loc>https://pantallasledrtm.com/</loc>
-    <lastmod>2025-01-01</lastmod>
+    <lastmod>2026-05-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -11,51 +11,71 @@
   <!-- Productos -->
   <url>
     <loc>https://pantallasledrtm.com/productos.html</loc>
-    <lastmod>2025-01-01</lastmod>
+    <lastmod>2026-05-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+  </url>
+
+  <!-- Páginas complementarias -->
+  <url>
+    <loc>https://pantallasledrtm.com/guia.html</loc>
+    <lastmod>2026-05-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://pantallasledrtm.com/privacidad.html</loc>
+    <lastmod>2026-05-07</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://pantallasledrtm.com/proyectos.html</loc>
+    <lastmod>2026-05-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
   
   <!-- Categorías de productos -->
   <url>
     <loc>https://pantallasledrtm.com/productos.html?cat=pantallas-led</loc>
-    <lastmod>2025-01-01</lastmod>
+    <lastmod>2026-05-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://pantallasledrtm.com/productos.html?cat=tour-series</loc>
-    <lastmod>2025-01-01</lastmod>
+    <lastmod>2026-05-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://pantallasledrtm.com/productos.html?cat=totems</loc>
-    <lastmod>2025-01-01</lastmod>
+    <lastmod>2026-05-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://pantallasledrtm.com/productos.html?cat=pisos-led</loc>
-    <lastmod>2025-01-01</lastmod>
+    <lastmod>2026-05-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://pantallasledrtm.com/productos.html?cat=soluciones</loc>
-    <lastmod>2025-01-01</lastmod>
+    <lastmod>2026-05-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://pantallasledrtm.com/productos.html?cat=led-trucks</loc>
-    <lastmod>2025-01-01</lastmod>
+    <lastmod>2026-05-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://pantallasledrtm.com/productos.html?cat=iluminacion-profesional</loc>
-    <lastmod>2025-01-01</lastmod>
+    <lastmod>2026-05-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

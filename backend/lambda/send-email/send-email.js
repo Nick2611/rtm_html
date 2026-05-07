@@ -21,8 +21,13 @@ exports.handler = async (event) => {
 
     try {
         // Parsear el body del request
-        const body = JSON.parse(event.body);
-        const { nombre, apellido, empresa, telefono, consulta } = body;
+        const body = JSON.parse(event.body || '{}');
+        const nombre = body.nombre?.trim();
+        const apellido = body.apellido?.trim();
+        const empresa = body.empresa?.trim();
+        const telefono = body.telefono?.trim();
+        const tipoSolucion = body.tipoSolucion?.trim() || body['tipo-solucion']?.trim();
+        const consulta = body.consulta?.trim() || body.mensaje?.trim();
 
         // Validar campos requeridos
         if (!nombre || !telefono || !consulta) {
@@ -71,6 +76,7 @@ exports.handler = async (event) => {
                                     <h3 style="color: #333; margin-top: 0;">Información del Cliente</h3>
                                     <p><strong>👤 Nombre:</strong> ${nombre} ${apellido || ''}</p>
                                     <p><strong>🏢 Empresa:</strong> ${empresa || 'No especificada'}</p>
+                                    <p><strong>💡 Solución:</strong> ${tipoSolucion || 'No especificada'}</p>
                                     <p><strong>📞 Teléfono:</strong> <a href="tel:${telefono}" style="color: #007bff;">${telefono}</a></p>
                                 </div>
                                 
@@ -95,6 +101,7 @@ Nueva consulta desde RTM Pantallas LED
 
 Nombre: ${nombre} ${apellido || ''}
 Empresa: ${empresa || 'No especificada'}
+Tipo de solución: ${tipoSolucion || 'No especificada'}
 Teléfono: ${telefono}
 
 Consulta:
