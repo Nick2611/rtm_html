@@ -337,23 +337,6 @@
                 "horasDeVida": "100.000 hs",
                 "garantia": "2 años contra vicio o defecto de fabricación"
               }
-            },
-            {
-              "id": "rif1000",
-              "name": "RIF1000",
-              "slug": "rif1000",
-              "description": "Versión Front Service del RI1000. Mantenimiento por el frente para grandes pantallas instaladas contra estructuras donde no hay acceso trasero. Pitch P2.84 / P3.91.",
-              "pixelPitch": "P2.84 / P3.91",
-              "environment": "indoor",
-              "image": "productos/tour-series/rif1000.jpg",
-              "specs": {
-                "tamañoDelPanel": "500 x 1000 x 85 mm",
-                "brilloPorM2": "1200 nits",
-                "feature": "Front Service (mantenimiento frontal)",
-                "quickLock": "Sí",
-                "horasDeVida": "100.000 hs",
-                "garantia": "2 años contra vicio o defecto de fabricación"
-              }
             }
           ]
         },
@@ -414,24 +397,6 @@
               }
             },
             {
-              "id": "ref500",
-              "name": "REF500",
-              "slug": "ref500",
-              "description": "Versión Front Service del RE500 outdoor. Mantenimiento por el frente para instalaciones permanentes en exteriores donde no hay acceso por detrás del panel (fachadas, monumentos, estructuras fijas).",
-              "pixelPitch": "P4.81 / P5.95",
-              "environment": "outdoor",
-              "image": "productos/tour-series/ref500.jpg",
-              "specs": {
-                "tamañoDelPanel": "500 x 500 x 70 mm",
-                "brilloPorM2": "4500 nits",
-                "gradoIpFrontal": "IP65",
-                "feature": "Front Service (mantenimiento frontal)",
-                "quickLock": "Sí",
-                "horasDeVida": "100.000 hs",
-                "garantia": "2 años contra vicio o defecto de fabricación"
-              }
-            },
-            {
               "id": "re1000",
               "name": "RE1000",
               "slug": "re1000",
@@ -471,24 +436,6 @@
                 "brilloPorM2": "4500 nits",
                 "gradoIpFrontal": "IP65",
                 "feature": "Sistema curvo (cóncavo / convexo)",
-                "quickLock": "Sí",
-                "horasDeVida": "100.000 hs",
-                "garantia": "2 años contra vicio o defecto de fabricación"
-              }
-            },
-            {
-              "id": "ref1000",
-              "name": "REF1000",
-              "slug": "ref1000",
-              "description": "Versión Front Service del RE1000 outdoor. Para instalaciones fijas en exteriores donde el acceso trasero no es posible.",
-              "pixelPitch": "P4.81 / P5.95",
-              "environment": "outdoor",
-              "image": "productos/tour-series/ref1000.jpg",
-              "specs": {
-                "tamañoDelPanel": "500 x 1000 x 85 mm",
-                "brilloPorM2": "4500 nits",
-                "gradoIpFrontal": "IP65",
-                "feature": "Front Service (mantenimiento frontal)",
                 "quickLock": "Sí",
                 "horasDeVida": "100.000 hs",
                 "garantia": "2 años contra vicio o defecto de fabricación"
@@ -729,47 +676,6 @@
               "specs": {
                 "aplicacion": "Transporte público",
                 "ubicacion": "Trasera del vehículo (luneta)"
-              }
-            }
-          ]
-        },
-        {
-          "id": "unidades-comercios",
-          "name": "Unidades para Comercios",
-          "slug": "unidades-comercios",
-          "description": "Soluciones LED para locales comerciales",
-          "models": [
-            {
-              "id": "m-642",
-              "name": "M-642",
-              "slug": "m-642",
-              "description": "Módulo LED para vidriera y fachada de comercios. Atrae clientes con contenido dinámico desde el exterior del local. Tamaño compacto, ideal para vidrieras chicas o medianas.",
-              "image": "productos/soluciones/m-642.jpg",
-              "specs": {
-                "aplicacion": "Comercios y vidrieras",
-                "tamaño": "Compacto"
-              }
-            },
-            {
-              "id": "m-962",
-              "name": "M-962",
-              "slug": "m-962",
-              "description": "Módulo LED de mayor tamaño para comercios con vidrieras amplias o locales en zonas de alto tránsito peatonal. Mayor impacto visual.",
-              "image": "productos/soluciones/m-962.jpg",
-              "specs": {
-                "aplicacion": "Comercios con vidrieras amplias",
-                "tamaño": "Mediano - grande"
-              }
-            },
-            {
-              "id": "m-320-3d",
-              "name": "M-320-3D",
-              "slug": "m-320-3d",
-              "description": "Módulo LED con efecto 3D. Genera ilusiones ópticas llamativas para destacar el local en zonas competitivas y captar la atención de los transeúntes.",
-              "image": "productos/soluciones/m-320-3d.jpg",
-              "specs": {
-                "aplicacion": "Comercios en zonas competitivas",
-                "feature": "Efecto 3D"
               }
             }
           ]
