@@ -171,27 +171,30 @@ nav.navbar {
 .menu {
   list-style: none;
   display: flex;
-  gap: 32px;
+  gap: 34px;
   margin: 0;
   padding: 0;
   align-items: center;
 }
 
-.menu a {
+.menu > li > a {
   text-decoration: none;
   color: var(--nav-text);
-  font-weight: 500;
-  letter-spacing: .2px;
+  font-size: 1.08rem;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: .25px;
   opacity: .95;
+  padding: 10px 0;
   transition: opacity .2s ease, color .2s ease;
 }
-.menu a:hover { opacity: 1; }
+.menu > li > a:hover { opacity: 1; }
 
-.menu a.active {
+.menu > li > a.active {
   position: relative;
   color: var(--nav-text);
 }
-.menu a.active::after {
+.menu > li > a.active::after {
   content: "";
   position: absolute;
   left: 0; right: 0; bottom: -10px;
@@ -1166,8 +1169,8 @@ section.clientes {
   animation: scroll 20s linear infinite;
   gap: 60px;
   align-items: center;
+  will-change: transform;
 }
-.carousel-track:hover { animation-play-state: paused; }
 
 .carousel-logo {
   flex-shrink: 0;
@@ -1784,6 +1787,8 @@ footer:not(.site-footer) {
   .header-container { padding-top: 18px; }
   nav.navbar { padding: 16px 20px; }
   .brand img { width: 250px; height: 50px; }
+  .menu { gap: 28px; }
+  .menu > li > a { font-size: 1rem; }
   .mega-menu-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
