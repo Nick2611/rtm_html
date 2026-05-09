@@ -179,8 +179,24 @@ function initLeadPopup() {
 /* ===== CARRUSEL (index.html) ===== */
 function initCarousel() {
   const track = document.getElementById('carousel-track');
-  if (!track) return;
-  track.innerHTML += track.innerHTML;
+  if (!track || track.dataset.carouselReady === 'true') return;
+
+  const logos = Array.from(track.children);
+  if (!logos.length) return;
+
+  logos.forEach(logo => {
+    logo.querySelectorAll('img[loading="lazy"]').forEach(img => {
+      img.loading = 'eager';
+    });
+  });
+
+  logos.forEach(logo => {
+    const clone = logo.cloneNode(true);
+    clone.setAttribute('aria-hidden', 'true');
+    track.appendChild(clone);
+  });
+
+  track.dataset.carouselReady = 'true';
 }
 
 /* ===== VIDEOS DE PROYECTOS (index.html) ===== */

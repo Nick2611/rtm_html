@@ -10,6 +10,7 @@ class RTMProducts {
     this.currentSubcategory = null;
     this.currentFilter = 'all'; // 'all', 'indoor', 'outdoor'
     this.searchIndex = [];
+    this.productImageBaseUrl = this.resolveProductImageBaseUrl();
     this.init();
   }
 
@@ -25,13 +26,46 @@ class RTMProducts {
     }
   }
 
+  resolveProductImageBaseUrl() {
+    const metaBaseUrl = document
+      .querySelector('meta[name="rtm-product-image-base-url"]')
+      ?.getAttribute('content');
+    const configuredBaseUrl = window.RTM_PRODUCT_IMAGE_BASE_URL || metaBaseUrl || '';
+    return configuredBaseUrl.trim().replace(/\/+$/, '');
+  }
+
+  isRemoteImagePath(imagePath) {
+    return /^(https?:)?\/\//.test(imagePath);
+  }
+
+  normalizeLocalImagePath(imagePath) {
+    if (!imagePath) return '';
+    if (this.isRemoteImagePath(imagePath)) return imagePath;
+    if (imagePath.startsWith('data:')) return imagePath;
+    const cleanedPath = imagePath.replace(/^\.\//, '').replace(/^\/+/, '').replace(/\/+/g, '/');
+    return '/' + cleanedPath;
+  }
+
   normalizeImagePath(imagePath) {
     if (!imagePath) return '';
-    if (imagePath.startsWith('/')) return imagePath.replace(/\/+/g, '/');
-    if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) return imagePath;
+    if (this.isRemoteImagePath(imagePath)) return imagePath;
     if (imagePath.startsWith('data:')) return imagePath;
-    const cleanedPath = imagePath.replace(/^\.\//, '').replace(/\/+/g, '/');
+
+    const cleanedPath = imagePath.replace(/^\.\//, '').replace(/^\/+/, '').replace(/\/+/g, '/');
+    if (this.productImageBaseUrl) return `${this.productImageBaseUrl}/${cleanedPath}`;
     return '/' + cleanedPath;
+  }
+
+  getImageFallbackHandler(imagePath, placeholderImage) {
+    if (!imagePath || this.isRemoteImagePath(imagePath) || imagePath.startsWith('data:')) {
+      return `this.onerror=null;this.src='${placeholderImage}'`;
+    }
+
+    const localFallback = this.normalizeLocalImagePath(imagePath);
+    if (this.productImageBaseUrl && localFallback && localFallback !== placeholderImage) {
+      return `this.onerror=function(){this.onerror=null;this.src='${placeholderImage}';};this.src='${localFallback}'`;
+    }
+    return `this.onerror=null;this.src='${placeholderImage}'`;
   }
 
   async loadData() {
@@ -461,6 +495,7 @@ class RTMProducts {
     const hasMultipleImages = model.images && model.images.length > 1;
     const images = model.images || (model.image ? [model.image] : []);
     const normalizedImages = images.map(img => this.normalizeImagePath(img));
+    const imageErrorHandlers = images.map(img => this.getImageFallbackHandler(img, placeholderImage));
     let imageHTML = '';
     if (hasMultipleImages) {
       imageHTML = `
@@ -468,7 +503,7 @@ class RTMProducts {
           <div class="carousel-container">
             ${normalizedImages.map((img, index) => `
               <div class="carousel-slide ${index === 0 ? 'active' : ''}" data-slide="${index}">
-                <img src="${img}" alt="${model.name} - Imagen ${index + 1}" loading="lazy" onerror="this.src='${placeholderImage}'">
+                <img src="${img}" alt="${model.name} - Imagen ${index + 1}" loading="lazy" onerror="${imageErrorHandlers[index]}">
               </div>
             `).join('')}
           </div>
@@ -482,7 +517,8 @@ class RTMProducts {
         </div>
       `;
     } else {
-      imageHTML = `<img src="${this.normalizeImagePath(normalizedImages[0] || placeholderImage)}" alt="${model.name}" loading="lazy" onerror="this.src='${placeholderImage}'">`;
+      const primaryImage = images[0] || placeholderImage;
+      imageHTML = `<img src="${this.normalizeImagePath(primaryImage)}" alt="${model.name}" loading="lazy" onerror="${this.getImageFallbackHandler(primaryImage, placeholderImage)}">`;
     }
 
     // ── CAMBIO ──
@@ -523,6 +559,7 @@ class RTMProducts {
     const hasMultipleImages = model.images && model.images.length > 1;
     const images = model.images || (model.image ? [model.image] : []);
     const normalizedImages = images.map(img => this.normalizeImagePath(img));
+    const imageErrorHandlers = images.map(img => this.getImageFallbackHandler(img, placeholderImage));
     let imageHTML = '';
     if (hasMultipleImages) {
       imageHTML = `
@@ -530,7 +567,7 @@ class RTMProducts {
           <div class="carousel-container">
             ${normalizedImages.map((img, index) => `
               <div class="carousel-slide ${index === 0 ? 'active' : ''}" data-slide="${index}">
-                <img src="${img}" alt="${model.name} - Imagen ${index + 1}" onerror="this.src='${placeholderImage}'">
+                <img src="${img}" alt="${model.name} - Imagen ${index + 1}" onerror="${imageErrorHandlers[index]}">
               </div>
             `).join('')}
           </div>
@@ -544,7 +581,8 @@ class RTMProducts {
         </div>
       `;
     } else {
-      imageHTML = `<img src="${this.normalizeImagePath(normalizedImages[0] || placeholderImage)}" alt="${model.name}" onerror="this.src='${placeholderImage}'">`;
+      const primaryImage = images[0] || placeholderImage;
+      imageHTML = `<img src="${this.normalizeImagePath(primaryImage)}" alt="${model.name}" onerror="${this.getImageFallbackHandler(primaryImage, placeholderImage)}">`;
     }
     let specsHTML = '';
     if (model.specs) {
@@ -602,9 +640,10 @@ class RTMProducts {
     if (content.gallery && content.gallery.length > 0) {
       galleryHTML = '<div class="special-gallery">';
       content.gallery.forEach(item => {
+        const galleryImage = item.image || placeholderImage;
         galleryHTML += `
           <div class="gallery-item">
-            <img src="${item.image || placeholderImage}" alt="${item.caption}" onerror="this.src='${placeholderImage}'">
+            <img src="${this.normalizeImagePath(galleryImage)}" alt="${item.caption}" onerror="${this.getImageFallbackHandler(galleryImage, placeholderImage)}">
             <p class="gallery-caption">${item.caption}</p>
           </div>
         `;
