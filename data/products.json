@@ -666,13 +666,17 @@
               "name": "PI-RGB",
               "slug": "pi-rgb",
               "description": "Piso LED RGB de alta personalización. Control independiente por zona para crear efectos de iluminación dinámicos e interactivos. Pensado para shows, experiencias inmersivas y producciones artísticas.",
-              "image": "productos/pisos-led/pi-rgb.jpg",
+              "image": "imagenes_productos/pisos_led/pi_rgb/pi_rgb1.png",
               "specs": {
                 "tipo": "Interactivo RGB",
                 "resistencia": "Alta resistencia",
                 "colores": "Full RGB con control por zona",
                 "aplicaciones": "Shows, experiencias inmersivas, eventos artísticos"
-              }
+              },
+              "images": [
+                "imagenes_productos/pisos_led/pi_rgb/pi_rgb1.png",
+                "imagenes_productos/pisos_led/pi_rgb/pi_rgb2.png"
+              ]
             }
           ]
         }
