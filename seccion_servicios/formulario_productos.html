@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Formulario de contacto + footer — RTM Pantallas LED</title>
+  <!-- Favicon -->
+  <link rel="icon" href="../favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+  <link rel="icon" type="image/png" sizes="32x32" href="../rtm_logo/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../rtm_logo/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../rtm_logo/apple-touch-icon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --container: 1200px;
+      --ink: #2b2b2b;
+      --muted:#6b7280;
+      --field:#fff;
+      --border:#cfd4dc;
+      --cta:#5e661e;         /* verde oliva del botón */
+      --cta-hover:#4d5419;
+      --footer-bg:#141516;   /* footer negro */
+      --footer-ink:#f2f3f5;
+      --footer-muted:#cfd4dc;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:"Montserrat",system-ui,Segoe UI,Roboto,Arial,sans-serif;
+      color:var(--ink);
+      background:#fff;
+      line-height:1.5;
+    }
+
+    /* ================== FORM ================== */
+    section.formulario{
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 28px 20px 40px;
+    }
+
+    .formulario h2{
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    form.contact{
+      display: grid;
+      gap: 18px;
+    }
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    label{
+      font-size:.95rem;
+    }
+    .req::after{
+      content:" *"; color:#a12a2a; font-weight:700;
+    }
+
+    input[type="text"],
+    input[type="tel"],
+    textarea{
+      background: var(--field);
+      border:1px solid var(--border);
+      border-radius:2px;
+      padding: 14px 14px;
+      font: inherit;
+      color: var(--ink);
+      outline: none;
+      transition: border-color .2s ease, box-shadow .2s ease;
+      width: 100%;
+    }
+    textarea{ min-height: 60px; resize: vertical; }
+
+    input::placeholder, textarea::placeholder{ color:#a2a8b1; }
+
+    input:focus, textarea:focus{
+      border-color:#98a1ab;
+      box-shadow:0 0 0 3px rgba(100,116,139,.18);
+    }
+
+    /* Tel con icono globo */
+    .phone-wrap{
+      position: relative;
+    }
+    .phone-wrap::before{
+      content:"🌐";
+      position:absolute;
+      left:12px; top:50%;
+      transform:translateY(-50%);
+      font-size:1rem; opacity:.75;
+      pointer-events:none;
+    }
+    .phone-wrap input{ padding-left: 40px; }
+
+    /* Botón grande a todo el ancho */
+    .actions{ margin-top: 6px; }
+    .submit{
+      width: 100%;
+      background: var(--cta);
+      color:#fff;
+      border:0;
+      padding: 14px 18px;
+      border-radius:2px;
+      font-weight:600;
+      cursor:pointer;
+      transition: background .2s ease, transform .06s ease;
+    }
+    .submit:hover{ background: var(--cta-hover); }
+    .submit:active{ transform: translateY(1px); }
+
+    /* ================== FOOTER ================== */
+    footer.site-footer{
+      background: var(--footer-bg);
+      color: var(--footer-ink);
+      margin-top: 14px;
+      padding: 42px 20px 56px;
+    }
+    .footer-wrap{
+      max-width: var(--container);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr;
+      gap: 32px 40px;
+      align-items: start;
+    }
+    .brand img{
+      width: 260px; height: 96px; object-fit: contain; display:block;
+    }
+    .footer-block h3{
+      font-size: 1.9rem; font-weight: 600; margin-bottom: 10px;
+    }
+    .footer-text{ color: var(--footer-muted); }
+    .social{ display:flex; gap:18px; margin-top: 14px; }
+    .social a{
+      width:30px; height:30px; display:inline-grid; place-items:center;
+      color:#e8ebef; text-decoration:none; font-size: 1.2rem;
+      border-radius:50%; border:1px solid rgba(255,255,255,.15);
+      transition: opacity .2s ease, transform .06s ease;
+    }
+    .social a:hover{ opacity:.85; transform: translateY(-1px); }
+
+    /* íconos simples como SVG embebido via background */
+    .ig{ background: no-repeat center / 60% url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="%23e8ebef" viewBox="0 0 24 24"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2.25A2.75 2.75 0 1 0 12 17.75 2.75 2.75 0 0 0 12 9.25zm5.25-.75a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/></svg>'); }
+    .in{ background: no-repeat center / 60% url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="%23e8ebef" viewBox="0 0 24 24"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM0 8h5v16H0zM8 8h4.8v2.2h.07c.67-1.2 2.3-2.46 4.73-2.46 5.06 0 6 3.33 6 7.67V24h-5V16.2c0-1.86-.03-4.26-2.6-4.26-2.6 0-3 2.03-3 4.12V24H8z"/></svg>'); }
+
+    @media (max-width: 960px){
+      .footer-wrap{ grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================== FORMULARIO ================== -->
+  <section class="formulario" id="cotizar" aria-labelledby="form-title">
+    <h2 id="form-title">¡Dejanos tu contacto y te contactaremos en la brevedad!</h2>
+
+    <form class="contact" action="#" method="post" novalidate>
+      <div class="field">
+        <label for="nombre" class="req">Nombre</label>
+        <input id="nombre" name="nombre" type="text" placeholder="Tu nombre" required autocomplete="name">
+      </div>
+
+      <div class="field">
+        <label for="compania" class="req">Nombre de la compañía</label>
+        <input id="compania" name="compania" type="text" placeholder="Tu empresa" required autocomplete="organization">
+      </div>
+
+      <div class="field phone-wrap">
+        <label for="telefono" class="req">Teléfono</label>
+        <input id="telefono" name="telefono" type="tel" placeholder="+54 9 11 1234 5678" required inputmode="tel" autocomplete="tel">
+      </div>
+
+      <div class="field">
+        <label for="producto" class="req">¿Qué producto te gustaría cotizar?</label>
+        <textarea id="producto" name="producto" placeholder="Contanos qué necesitás…" required></textarea>
+      </div>
+
+      <div class="actions">
+        <button type="submit" class="submit">Enviar</button>
+      </div>
+    </form>
+  </section>
+
+  <!-- ================== FOOTER ================== -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-wrap">
+      <div class="brand" aria-label="RTM Pantallas LED">
+        <img src="https://via.placeholder.com/260x96?text=RTM+Logo" alt="RTM Pantallas LED">
+      </div>
+
+      <section class="footer-block" aria-labelledby="ctc-title">
+        <h3 id="ctc-title">Contactanos</h3>
+        <p class="footer-text">Comunicate al +54 9 11 7373 6308</p>
+        <p class="footer-text" style="margin-top:12px;">
+          Av. Tte. Gral. Juan Domingo Perón 2915,<br>
+          B1888IUY Florencio Varela, Provincia<br>
+          de Buenos Aires
+        </p>
+      </section>
+
+      <section class="footer-block" aria-labelledby="news-title">
+        <h3 id="news-title">Enterate de las novedades</h3>
+        <nav class="social" aria-label="Redes sociales">
+          <a class="ig" href="#" aria-label="Instagram"></a>
+          <a class="in" href="#" aria-label="LinkedIn"></a>
+        </nav>
+      </section>
+    </div>
+  </footer>
+
+</body>
+</html>

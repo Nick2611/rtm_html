@@ -302,6 +302,52 @@ function highlight(text, query) {
   return text.replace(new RegExp(`(${query})`, 'gi'), '<mark>$1</mark>');
 }
 
+/* ===== HERO VIDEOS (index.html) ===== */
+function initHeroVideoSequence() {
+  const videos = Array.from(document.querySelectorAll('.hero__video'));
+  const fadeOverlay = document.getElementById('hero-fade-overlay');
+  if (!videos.length || !fadeOverlay) return;
+
+  let current = 0;
+  const fadeMs = 800;
+  const fadeBeforeEnd = .8;
+
+  function playVideo(index) {
+    videos.forEach((video, i) => {
+      video.classList.toggle('active', i === index);
+      if (i !== index) {
+        video.pause();
+        video.currentTime = 0;
+      }
+    });
+
+    const video = videos[index];
+    video.currentTime = 0;
+    fadeOverlay.classList.remove('fade-out');
+    video.play().catch(() => {});
+  }
+
+  function nextVideo() {
+    fadeOverlay.classList.add('fade-out');
+    window.setTimeout(() => {
+      current = (current + 1) % videos.length;
+      playVideo(current);
+    }, fadeMs / 4);
+  }
+
+  videos.forEach(video => {
+    video.addEventListener('timeupdate', () => {
+      if (!video.duration || Number.isNaN(video.duration)) return;
+      if (video.currentTime >= video.duration - fadeBeforeEnd) {
+        fadeOverlay.classList.add('fade-out');
+      }
+    });
+    video.addEventListener('ended', nextVideo);
+  });
+
+  playVideo(current);
+}
+
 /* ===== EXPONER GLOBALS ===== */
 window.closePopup = closePopup;
 window.showPopup  = showPopup;
@@ -316,6 +362,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initLeadPopup();
   initCarousel();
   initProjectVideos();
+  initHeroVideoSequence();
   loadProductsData();
   initMegaMenuSearch();
 });

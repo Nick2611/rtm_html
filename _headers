@@ -7,6 +7,11 @@
   Cache-Control: public, max-age=31536000, immutable
   X-Content-Type-Options: nosniff
 
+# Logo para Schema.org
+/rtm_logo/rtmLogo.png
+  Content-Type: image/png
+  Cache-Control: public, max-age=31536000, immutable
+
 # Archivos SEO
 /robots.txt
   Content-Type: text/plain
@@ -49,12 +54,22 @@
 /background_hero/*
   Cache-Control: public, max-age=31536000, immutable
 
+/background_hero/*.mp4
+  Content-Type: video/mp4
+  Cache-Control: public, max-age=31536000, immutable
+  Accept-Ranges: bytes
+
+/seccion_servicios/*
+  Cache-Control: public, max-age=31536000, immutable
+
 /about_background/*
   Cache-Control: public, max-age=31536000, immutable
 
 # Videos
-/proyectos_videos/*
+/proyectos_videos/*.mp4
+  Content-Type: video/mp4
   Cache-Control: public, max-age=31536000, immutable
+  Accept-Ranges: bytes
 
 # Headers de seguridad globales
 /*

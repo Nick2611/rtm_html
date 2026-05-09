@@ -23,6 +23,7 @@ frontend:
       # Páginas HTML
       - index.html
       - productos.html
+      - servicios.html
       - guia.html
       - privacidad.html
       - proyectos.html
@@ -39,6 +40,7 @@ frontend:
       - 'miniaturas_videos/**/*'
       - 'proyectos_imagenes/**/*'
       - 'proyectos_videos/**/*'
+      - 'seccion_servicios/**/*'
   customHeaders:
     - pattern: 'favicon.ico'
       headers:

@@ -13,9 +13,8 @@
 # ============================================
 # REDIRECCIONES 301 - Rutas antiguas
 # ============================================
-/servicios.html /productos.html 301
-/servicios /productos.html 301
-/services.html /productos.html 301
+/servicios /servicios.html 301
+/services.html /servicios.html 301
 /header.html / 301
 /form_and_footer.html / 301
 /latest_projects.html / 301
@@ -23,24 +22,25 @@
 /clientes.html / 301
 
 # Rutas de servicios antiguos
-/servicios/pantallas-led /productos.html?cat=pantallas-led 301
-/servicios/totems-led /productos.html?cat=totems 301
-/servicios/ramaleros-led /productos.html?cat=soluciones 301
-/servicios/pisos-led /productos.html?cat=pisos-led 301
-/seccion_servicios/pantallas_led.html /productos.html?cat=pantallas-led 301
-/seccion_servicios/totems_led.html /productos.html?cat=totems 301
-/seccion_servicios/pisos_led.html /productos.html?cat=pisos-led 301
-/seccion_servicios/ramaleros_led.html /productos.html?cat=soluciones 301
-/seccion_servicios/formulario_productos.html /productos.html 301
+/servicios/pantallas-led /seccion_servicios/pantallas_led.html 301
+/servicios/totems-led /seccion_servicios/totems_led.html 301
+/servicios/ramaleros-led /seccion_servicios/ramaleros_led.html 301
+/servicios/pisos-led /seccion_servicios/pisos_led.html 301
 
 # ============================================
 # PÁGINAS HTML - Servir directamente
 # ============================================
 /index.html /index.html 200
 /productos.html /productos.html 200
+/servicios.html /servicios.html 200
 /guia.html /guia.html 200
 /privacidad.html /privacidad.html 200
 /proyectos.html /proyectos.html 200
+/seccion_servicios/pantallas_led.html /seccion_servicios/pantallas_led.html 200
+/seccion_servicios/totems_led.html /seccion_servicios/totems_led.html 200
+/seccion_servicios/pisos_led.html /seccion_servicios/pisos_led.html 200
+/seccion_servicios/ramaleros_led.html /seccion_servicios/ramaleros_led.html 200
+/seccion_servicios/formulario_productos.html /seccion_servicios/formulario_productos.html 200
 /404.html /404.html 200
 
 # ============================================

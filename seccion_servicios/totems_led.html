@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tótems LED — RTM Sistemas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- Favicon -->
+  <link rel="icon" href="../favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+  <link rel="icon" type="image/png" sizes="32x32" href="../rtm_logo/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../rtm_logo/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../rtm_logo/apple-touch-icon.png">
+
+  <style>
+    :root{
+      --container: 1200px;
+      --accent: #ef443b;          /* rojo del título y botón */
+      --ink: #333333;
+      --muted: #5a5e63;
+      --panel: #f3f6fb;           /* fondo suave de bloques alternos */
+    }
+
+    *{ box-sizing: border-box; margin:0; padding:0; }
+    body{
+      font-family:"Montserrat", system-ui, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--ink);
+      background:#fff;
+      line-height: 1.6;
+    }
+
+    /* ====== CONTENEDOR GENERAL ====== */
+    section.totems{
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 80px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 90px;
+    }
+
+    .totems__title{
+      font-size: clamp(2.4rem, 4vw, 3.6rem);
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: .2px;
+    }
+
+    /* ====== BLOQUES DE MODELO ====== */
+    .to-item{
+      display: flex;
+      align-items: center;
+      gap: 56px;
+    }
+    .to-item:nth-of-type(even){ flex-direction: row-reverse; }
+
+    .to-media{
+      flex: 1 1 48%;
+      position: relative;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .to-media img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .to-media .video-container {
+      width: auto;
+      height: auto;
+      max-width: 400px;
+      max-height: 300px;
+      border-radius: 12px;
+      overflow: hidden;
+      display: inline-block;
+    }
+    /* Overlay Play - Removed problematic CSS */
+
+    .to-copy{
+      flex: 1 1 52%;
+    }
+    .to-copy h3{
+      font-size: clamp(2rem, 3vw, 3rem);
+      font-weight: 700;
+      margin-bottom: 10px;
+      letter-spacing: .2px;
+      color: #3b3b3b;
+    }
+    .to-copy p{
+      color: var(--muted);
+      font-size: 1.05rem;
+      margin-bottom: 10px;
+    }
+
+    /* Panel alterno */
+    .panel{
+      background: var(--panel);
+      border-radius: 6px;
+      padding: 48px 40px;
+    }
+
+    /* Botón único al final */
+    .btn-final{
+      align-self: flex-start;
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 16px 34px;
+      border-radius: 3px;
+      transition: background .25s ease, transform .06s ease;
+    }
+    .btn-final:hover{ background:#da3a32; transform: translateY(-2px); }
+
+    .btn-final {
+      background: #25D366;
+      color: #fff;
+      border: none;
+      padding: 16px 34px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+    }
+
+    .btn-final:hover {
+      background: #128C7E;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+    }
+
+    /* ===== VIDEO STYLES ===== */
+    .to-media {
+      position: relative;
+      overflow: hidden;
+      border-radius: 6px;
+    }
+
+    .video-container {
+      position: relative;
+      width: auto;
+      height: auto;
+      max-width: 400px;
+      max-height: 300px;
+      overflow: hidden;
+      border-radius: 12px;
+      display: inline-block;
+    }
+
+    .to-media video {
+      width: auto;
+      height: auto;
+      max-width: 400px;
+      max-height: 300px;
+      object-fit: contain;
+      display: block;
+      pointer-events: none;
+      position: relative;
+      z-index: 1;
+    }
+
+    .to-media video::-webkit-media-controls {
+      display: none !important;
+    }
+
+    .to-media video::-webkit-media-controls-panel {
+      display: none !important;
+    }
+
+    .to-media video::-webkit-media-controls-play-button {
+      display: none !important;
+    }
+
+    .to-media video::-webkit-media-controls-start-playback-button {
+      display: none !important;
+    }
+
+    .to-media .play-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 1;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      z-index: 20;
+      width: 100%;
+      height: 100%;
+    }
+
+    .to-media:hover .play-overlay {
+      background: rgba(0, 0, 0, 0.1);
+    }
+
+    .to-media .play-button {
+      width: 60px;
+      height: 60px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease, background 0.3s ease;
+      backdrop-filter: blur(2px);
+    }
+
+    .to-media:hover .play-button {
+      transform: scale(1.1);
+      background: rgba(255, 255, 255, 0.95);
+    }
+
+    .to-media .play-button::before {
+      content: "";
+      width: 0;
+      height: 0;
+      border-top: 12px solid transparent;
+      border-bottom: 12px solid transparent;
+      border-left: 18px solid var(--accent);
+      margin-left: 4px;
+    }
+
+    /* ===== NAVEGACIÓN STYLES ===== */
+    .nav-buttons a:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    .nav-buttons a[href="../servicios.html"]:hover {
+      background: #4b5563;
+    }
+    .nav-buttons a[href="../index.html"]:hover {
+      background: #cf3d39;
+    }
+
+    @media (max-width: 980px){
+      .to-item,
+      .to-item:nth-of-type(even){ flex-direction: column; }
+      .panel{ padding: 36px 22px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header style="background: #141416; padding: 20px 0; box-shadow: 0 2px 14px rgba(0,0,0,.25);">
+    <div style="max-width: var(--container); margin: 0 auto; padding: 0 20px; display: flex; align-items: center; justify-content: space-between;">
+      <a href="../index.html" style="text-decoration: none;">
+        <img src="../rtm_logo/rtmLogo.png" alt="RTM Pantallas LED - Logo" style="height: 50px; width: auto;">
+      </a>
+      <div style="display: flex; gap: 15px; align-items: center;">
+        <a href="../servicios.html" style="display: inline-flex; align-items: center; background: #6b7280; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; transition: all 0.3s ease;">
+          ← Servicios
+        </a>
+        <a href="../index.html" style="display: inline-flex; align-items: center; background: var(--accent); color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; transition: all 0.3s ease;">
+          🏠 Home
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- =============== TÓTEMS LED =============== -->
+  <section class="totems" id="totems-led" aria-labelledby="totems-title">
+    <h1 id="totems-title" class="totems__title">Totems LED</h1>
+
+    <!-- ===== TÓTEMS LED INDOOR ===== -->
+    <div id="indoor"></div>
+
+    <!-- Interior Serie TI -->
+    <article class="to-item" id="ti" aria-labelledby="ti-title">
+      <figure class="to-media">
+        <div class="video-container">
+          <video src="totem_logo/TI.mp4" muted loop playsinline preload="metadata" controls="false"></video>
+          <div class="play-overlay">
+            <div class="play-button"></div>
+          </div>
+        </div>
+      </figure>
+
+      <div class="to-copy">
+        <h3 id="ti-title">Interior Serie TI</h3>
+        <p>Redefine la forma de exhibir productos y contenidos en espacios interiores. Diseñada para funcionar de manera continua, combina elegancia, tecnología y rendimiento visual, convirtiéndose en una herramienta ideal para promocionar marcas, comunicar ofertas o crear experiencias digitales inmersivas.</p>
+        <p>Su estructura delgada y moderna se integra fácilmente a cualquier entorno comercial o corporativo, ofreciendo un impacto visual inigualable con bajo mantenimiento.</p>
+      </div>
+    </article>
+
+    <!-- ===== TÓTEMS LED OUTDOOR ===== -->
+    <div id="outdoor"></div>
+
+    <!-- Exterior Serie TE (panel de fondo suave como en la captura) -->
+    <article class="to-item panel" id="te" aria-labelledby="te-title">
+      <figure class="to-media">
+        <div class="video-container">
+          <video src="totem_logo/te.mp4" muted loop playsinline preload="metadata" controls="false"></video>
+          <div class="play-overlay">
+            <div class="play-button"></div>
+          </div>
+        </div>
+      </figure>
+
+      <div class="to-copy">
+        <h3 id="te-title">Exterior Serie TE</h3>
+        <p>Redefine la forma de comunicar en gran formato. Con su estructura imponente, tecnología de última generación y una calidad de imagen sorprendente, este tótem LED es ideal para espacios públicos, fachadas, shoppings o entornos urbanos que buscan destacar con impacto visual y profesionalismo.</p>
+        <p>Diseñado para resistir las condiciones del exterior, combina potencia, diseño y durabilidad en un solo equipo.</p>
+      </div>
+    </article>
+
+    <!-- Botón final único -->
+    <a class="btn-final" href="https://wa.me/1173736208" target="_blank" style="display: inline-flex; align-items: center; gap: 8px;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+      </svg>
+      Consultar por WhatsApp
+    </a>
+  </section>
+
+  <script>
+    // Funcionalidad de videos de productos
+    function initProductVideos() {
+      const videoItems = document.querySelectorAll('.to-media');
+
+      videoItems.forEach(item => {
+        const video = item.querySelector('video');
+        const overlay = item.querySelector('.play-overlay');
+
+        if (!video || !overlay) return;
+
+        // Asegurar que el video esté pausado al cargar
+        video.pause();
+        video.currentTime = 0;
+
+        // Prevenir autoplay de cualquier forma
+        video.addEventListener('loadstart', function() {
+          video.pause();
+        });
+
+        video.addEventListener('canplay', function() {
+          video.pause();
+        });
+
+        video.addEventListener('loadeddata', function() {
+          video.pause();
+        });
+
+        // Click para play/pause
+        item.addEventListener('click', function() {
+          if (video.paused) {
+            video.play();
+            overlay.style.display = 'none';
+            overlay.style.opacity = '0';
+            overlay.style.pointerEvents = 'none';
+          } else {
+            video.pause();
+            overlay.style.display = 'flex';
+            overlay.style.opacity = '1';
+            overlay.style.pointerEvents = 'auto';
+          }
+        });
+
+        // Pausar otros videos cuando se reproduce uno
+        video.addEventListener('play', function() {
+          document.querySelectorAll('.to-media video').forEach(otherVideo => {
+            if (otherVideo !== video && !otherVideo.paused) {
+              otherVideo.pause();
+              const otherOverlay = otherVideo.closest('.to-media').querySelector('.play-overlay');
+              otherOverlay.style.display = 'flex';
+              otherOverlay.style.opacity = '1';
+              otherOverlay.style.pointerEvents = 'auto';
+            }
+          });
+        });
+      });
+    }
+
+    // Inicializar videos cuando el DOM esté listo
+    document.addEventListener('DOMContentLoaded', initProductVideos);
+  </script>
+
+</body>
+</html>
