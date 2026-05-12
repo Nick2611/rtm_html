@@ -184,12 +184,14 @@ function initCarousel() {
   const logos = Array.from(track.children);
   if (!logos.length) return;
 
+  /* Forzar carga eager */
   logos.forEach(logo => {
     logo.querySelectorAll('img[loading="lazy"]').forEach(img => {
       img.loading = 'eager';
     });
   });
 
+  /* Clonar logos para loop infinito */
   logos.forEach(logo => {
     const clone = logo.cloneNode(true);
     clone.setAttribute('aria-hidden', 'true');
@@ -197,6 +199,35 @@ function initCarousel() {
   });
 
   track.dataset.carouselReady = 'true';
+
+  /* Esperar a que TODAS las imágenes carguen antes de medir y animar */
+  const images = Array.from(track.querySelectorAll('img'));
+  const pending = images.filter(img => !img.complete);
+
+  if (pending.length) {
+    let loaded = 0;
+    const onReady = () => { if (++loaded >= pending.length) startCarousel(track, logos); };
+    pending.forEach(img => {
+      img.addEventListener('load', onReady, { once: true });
+      img.addEventListener('error', onReady, { once: true });
+    });
+  } else {
+    startCarousel(track, logos);
+  }
+}
+
+function startCarousel(track, origLogos) {
+  track.style.animation = 'none';
+  const gap = parseFloat(getComputedStyle(track).gap) || 60;
+  const w = origLogos.reduce((sum, el) => sum + el.offsetWidth, 0) + gap * origLogos.length;
+
+  const id = 'carousel-scroll';
+  const style = document.createElement('style');
+  style.textContent = `@keyframes ${id} { to { transform: translate3d(-${w}px, 0, 0); } }`;
+  document.head.appendChild(style);
+
+  /* Velocidad: ~40px por segundo */
+  track.style.animation = `${id} ${w / 40}s linear infinite`;
 }
 
 /* ===== VIDEOS DE PROYECTOS (index.html) ===== */

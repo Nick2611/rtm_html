@@ -154,17 +154,19 @@ nav.navbar {
 
 .brand img {
   display: block;
-  width: 300px;
-  height: 60px;
+  width: 360px;
+  height: 72px;
   object-fit: contain;
 }
 
-/* Nav center */
+/* Nav center — centrado absoluto para que no dependa
+   del ancho del logo ni del buscador */
 .nav-center {
-  flex: 1 1 auto;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   justify-content: center;
-  padding-right: 0;
 }
 
 /* Menu */
@@ -662,7 +664,7 @@ nav.navbar {
 
 #nav-toggle:checked ~ .drawer     { max-height: 100vh; opacity: 1; pointer-events: auto; }
 #nav-toggle:checked + label .burger::before { transform: translateY(10px) rotate(45deg); }
-#nav-toggle:checked + label .burger::after  { transform: translateY(-10px) rotate(-45deg); }
+#nav-toggle:checked + label .burger::after  { transform: translateY(-11px) rotate(-45deg); }
 #nav-toggle:checked + label .burger span    { opacity: 0; }
 
 .drawer {
@@ -1166,10 +1168,12 @@ section.clientes {
 
 .carousel-track {
   display: flex;
-  animation: scroll 20s linear infinite;
+  /* animación asignada por JS para loop seamless */
   gap: 60px;
   align-items: center;
   will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
 }
 
 .carousel-logo {
@@ -1186,12 +1190,14 @@ section.clientes {
   width: auto; height: auto;
   object-fit: contain;
   transition: transform .3s ease, opacity .3s ease;
+  pointer-events: none;
+  -webkit-user-drag: none;
+  user-select: none;
+  -webkit-user-select: none;
 }
 .carousel-logo:hover img { transform: scale(1.05); opacity: .8; }
 
-@keyframes scroll {
-  to { transform: translateX(-50%); }
-}
+/* keyframe dinámico inyectado por initCarousel() */
 
 /* ============================================
    PROYECTOS (index.html)
@@ -1786,7 +1792,7 @@ footer:not(.site-footer) {
   :root { --header-h: 95px; }
   .header-container { padding-top: 18px; }
   nav.navbar { padding: 16px 20px; }
-  .brand img { width: 250px; height: 50px; }
+  .brand img { width: 300px; height: 60px; }
   .menu { gap: 28px; }
   .menu > li > a { font-size: 1rem; }
   .mega-menu-grid { grid-template-columns: repeat(3, 1fr); }
@@ -1796,7 +1802,7 @@ footer:not(.site-footer) {
   :root { --header-h: 90px; }
   .header-container { padding-top: 16px; }
   nav.navbar { padding: 14px 20px; min-height: 65px; }
-  .brand img { width: 220px; height: 45px; }
+  .brand img { width: 260px; height: 52px; }
 }
 
 /* ── Ocultar menú desktop, mostrar hamburguesa ── */
@@ -1912,6 +1918,9 @@ footer:not(.site-footer) {
   nav.navbar { padding: 8px 15px 10px; }
   .burger-wrap { padding: 6px; min-width: 40px; min-height: 40px; }
   .burger { width: 28px; height: 20px; }
+  .burger span { top: 8px; }
+  #nav-toggle:checked + label .burger::before { transform: translateY(8px) rotate(45deg); }
+  #nav-toggle:checked + label .burger::after  { transform: translateY(-9px) rotate(-45deg); }
 
   /* Hero: botones uno abajo del otro */
   section.hero { padding: 90px 16px 70px; min-height: auto; }
@@ -1977,6 +1986,9 @@ footer:not(.site-footer) {
   .brand img { width: 150px; height: auto; }
   .burger-wrap { padding: 4px; min-width: 36px; min-height: 36px; }
   .burger { width: 24px; height: 18px; }
+  .burger span { top: 7px; }
+  #nav-toggle:checked + label .burger::before { transform: translateY(7px) rotate(45deg); }
+  #nav-toggle:checked + label .burger::after  { transform: translateY(-8px) rotate(-45deg); }
 
   /* Hero */
   section.hero { padding: 80px 12px 60px; }

@@ -19,49 +19,28 @@
               "id": "ifi960",
               "name": "IFI960",
               "slug": "ifi960",
-              "description": "Pantalla LED de interior de instalación fija con mantenimiento frontal por imanes. La fuente de alimentación y la placa de control se acceden desde el frente del gabinete, lo que la hace ideal para instalaciones donde no hay espacio detrás del panel. Disponible en pitch P2, P2.5, P3.07 y P4. Pensada para estudios de TV, centros de convenciones, salas de control, aeropuertos, hoteles, shoppings y templos.",
+              "description": "Pantalla LED indoor de instalación fija con mantenimiento frontal por imanes. Ideal para estudios de TV, aeropuertos y centros de convenciones.",
               "pixelPitch": "P2 / P2.5 / P3.07 / P4",
               "environment": "indoor",
               "image": "productos/pantallas-led/ifi960.jpg",
               "specs": {
                 "tamañoDelPanel": "960 x 960 x 100 mm",
                 "brilloPorM2": "600 - 1200 nits",
-                "frecuenciaDeRefresco": "1920 - 3840 Hz",
-                "gradoIpFrontal": "IP20",
-                "gradoIpGabinete": "IP54",
-                "anguloDeVision": "140° H / 130° V",
-                "metodoDeMantenimiento": "Frontal con imanes / Trasero",
-                "horasDeVida": "100.000 hs",
-                "temperaturaDeTrabajo": "-10 a +50 °C",
-                "garantia": "2 años contra vicio o defecto de fabricación",
-                "aplicaciones": "Estudios de TV, centros de control, aeropuertos, casinos, hoteles, shoppings, templos"
+                "frecuenciaDeRefresco": "1920 - 3840 Hz"
               }
             },
             {
               "id": "ri640",
               "name": "RI640",
               "slug": "ri640",
-              "description": "Pantalla LED Indoor de la serie RI con gabinete de aleación de aluminio y magnesio, liviana y de fácil manipulación. Diseñada para aplicaciones de rental donde los tiempos de armado son acotados. Cuenta con sistema Quick Lock para un montaje rápido entre módulos y conectores Power COM y Canon RJ45 con grado de protección IP65. Disponible en pitch P1.86, P2, P2.5, P3.07 y P4. Placa de control LINSN o NOVA.",
+              "description": "Gabinete de aluminio fundido a presión de 640×640 mm para rental indoor. Montaje rápido con quick lock, liviano y versátil.",
               "pixelPitch": "P1.86 / P2 / P2.5 / P3.07 / P4",
               "environment": "indoor",
               "image": "imagenes_productos/pantallas_led/indoor/ri640/ri640-1.jpeg",
               "specs": {
                 "tamañoDelPanel": "640 x 640 x 65 mm",
                 "brilloPorM2": "500 - 600 nits",
-                "frecuenciaDeRefresco": "1920 - 3840 Hz",
-                "gradoIpFrontal": "IP20",
-                "gradoIpGabinete": "IP54",
-                "anguloDeVision": "140° H / 130° V",
-                "gabinete": "Aleación de aluminio y magnesio",
-                "puertaTrasera": "Simple batiente",
-                "quickLock": "Sí",
-                "pesoDeLaPantalla": "7 - 8.25 Kg",
-                "maximaPotenciaPorM2": "< 900 W",
-                "tensionDeAlimentacion": "220 / 230 Vca - 50 Hz",
-                "horasDeVida": "100.000 hs",
-                "temperaturaDeTrabajo": "-10 a +50 °C",
-                "garantia": "2 años contra vicio o defecto de fabricación",
-                "aplicaciones": "Rental, todas las aplicaciones de interior"
+                "frecuenciaDeRefresco": "1920 - 3840 Hz"
               },
               "images": [
                 "imagenes_productos/pantallas_led/indoor/ri640/ri640-1.jpeg",
@@ -74,27 +53,14 @@
               "id": "ri960",
               "name": "RI960",
               "slug": "ri960",
-              "description": "Versión de mayor superficie de la serie RI Indoor (960 x 960 mm). Mantiene los beneficios del aluminio-magnesio, el sistema Quick Lock y la doble puerta trasera para un mantenimiento ágil. Recomendada cuando se necesita cubrir grandes superficies con menor cantidad de paneles, ideal para lobbies, centros comerciales, eventos corporativos y producciones audiovisuales. Disponible en pitch P2, P2.5, P3.07 y P4.",
+              "description": "Gabinete rental indoor de 960×960 mm con diseño modular. Quick lock y puerta trasera para mantenimiento ágil.",
               "pixelPitch": "P2 / P2.5 / P3.07 / P4",
               "environment": "indoor",
               "image": "imagenes_productos/pantallas_led/indoor/ri960/ri960-1.jpeg",
               "specs": {
                 "tamañoDelPanel": "960 x 960 x 85.5 mm",
                 "brilloPorM2": "500 - 600 nits",
-                "frecuenciaDeRefresco": "1920 - 3840 Hz",
-                "gradoIpFrontal": "IP20",
-                "gradoIpGabinete": "IP54",
-                "anguloDeVision": "140° H / 130° V",
-                "gabinete": "Aleación de aluminio y magnesio",
-                "puertaTrasera": "Doble batiente",
-                "quickLock": "Sí",
-                "pesoDeLaPantalla": "21.75 - 24.30 Kg",
-                "maximaPotenciaPorM2": "< 900 W",
-                "tensionDeAlimentacion": "220 / 230 Vca - 50 Hz",
-                "horasDeVida": "100.000 hs",
-                "temperaturaDeTrabajo": "-10 a +50 °C",
-                "garantia": "2 años contra vicio o defecto de fabricación",
-                "aplicaciones": "Rental, todas las aplicaciones de interior"
+                "frecuenciaDeRefresco": "1920 - 3840 Hz"
               },
               "images": [
                 "imagenes_productos/pantallas_led/indoor/ri960/ri960-1.jpeg",
@@ -114,54 +80,28 @@
               "id": "vp960",
               "name": "VP960",
               "slug": "vp960",
-              "description": "Pantalla LED de exterior de la serie VP, de altas prestaciones, pensada para instalación fija y trabajo continuo en condiciones climáticas extremas. Gabinete de chapa de acero doble decapada de 1,65 mm con puerta trasera de doble batiente que facilita el acceso al control y la fuente. Frente IP65 y módulos LED Kinglight / Nationstar. Disponible en pitch P2.5, P3.07, P4, P5, P6.66 y P8. Ideal para vía pública, frentes de locales comerciales, estadios, shoppings, aeropuertos y terminales de transporte.",
+              "description": "Pantalla LED outdoor para cartelería digital y publicidad exterior. Alta protección IP65 frontal, brillo elevado para visibilidad a plena luz solar.",
               "pixelPitch": "P2.5 / P3.07 / P4 / P5 / P6.66 / P8",
               "environment": "outdoor",
               "image": "productos/pantallas-led/vp960.jpg",
               "specs": {
                 "tamañoDelPanel": "960 x 960 x 110 mm",
                 "brilloPorM2": "4000 - 5500 nits",
-                "frecuenciaDeRefresco": "1920 - 3840 Hz",
-                "gradoIpFrontal": "IP65",
-                "gradoIpGabinete": "IP54",
-                "anguloDeVision": "140° H / 130° V",
-                "gabinete": "Chapa de acero doble decapada de 1,65 mm",
-                "puertaTrasera": "Doble batiente",
-                "quickLock": "No",
-                "pesoDeLaPantalla": "25 Kg",
-                "maximaPotenciaPorM2": "< 720 W",
-                "tensionDeAlimentacion": "220 / 230 Vca - 50 Hz",
-                "horasDeVida": "100.000 hs",
-                "temperaturaDeTrabajo": "-10 a +50 °C",
-                "garantia": "2 años contra vicio o defecto de fabricación",
-                "aplicaciones": "Instalación fija, vía pública, fachadas, estadios, shoppings, aeropuertos"
+                "frecuenciaDeRefresco": "1920 - 3840 Hz"
               }
             },
             {
               "id": "re640",
               "name": "RE640",
               "slug": "re640",
-              "description": "Pantalla LED de exterior serie RE de 640 x 640 mm. Liviana, robusta y pensada para rental: tiempos de armado vertiginosos en condiciones ambientales extremas. Gabinete de aleación de aluminio y magnesio, frente IP65 y sistema Quick Lock para ensamblar paneles entre sí en pocos minutos. Disponible en versión Pro y Pro Gold (chip LED con conexión en oro, mayor brillo). Pitch P2.5, P3.07, P4, P5 y P8. Placa de control LINSN o NOVA.",
+              "description": "Gabinete rental outdoor de 640×640 mm. IP65 frontal, ideal para eventos al aire libre y escenarios.",
               "pixelPitch": "P2.5 / P3.07 / P4 / P5 / P8",
               "environment": "outdoor",
               "image": "imagenes_productos/pantallas_led/outdoor/re640/re640-1.jpeg",
               "specs": {
                 "tamañoDelPanel": "640 x 640 x 65 mm",
                 "brilloPorM2": "Pro: 4500 - 5500 nits / Pro Gold: 6000 - 7000 nits",
-                "frecuenciaDeRefresco": "1920 - 3840 Hz",
-                "gradoIpFrontal": "IP65",
-                "gradoIpGabinete": "IP54",
-                "anguloDeVision": "140° H / 140° V",
-                "gabinete": "Aleación de aluminio y magnesio",
-                "puertaTrasera": "Simple batiente",
-                "quickLock": "Sí",
-                "pesoDeLaPantalla": "7.7 - 8.6 Kg",
-                "maximaPotenciaPorM2": "< 720 W",
-                "tensionDeAlimentacion": "220 / 230 Vca - 50 Hz",
-                "horasDeVida": "100.000 hs",
-                "temperaturaDeTrabajo": "-10 a +50 °C",
-                "garantia": "2 años contra vicio o defecto de fabricación",
-                "aplicaciones": "Rental y aplicaciones de exterior"
+                "frecuenciaDeRefresco": "1920 - 3840 Hz"
               },
               "images": [
                 "imagenes_productos/pantallas_led/outdoor/re640/re640-1.jpeg",
@@ -174,27 +114,14 @@
               "id": "re960",
               "name": "RE960",
               "slug": "re960",
-              "description": "Pantalla LED de exterior serie RE en formato 960 x 960 mm. Misma robustez y conectores IP65 que la RE640, pero con mayor superficie por panel para reducir la cantidad de módulos en pantallas grandes. Gabinete de aluminio y magnesio con doble batiente trasero. Versiones Pro y Pro Gold con chip LED de conexión en oro para máximo brillo. Pitch P2.5, P3.07, P4, P5 y P8.",
+              "description": "Gabinete rental outdoor de 960×960 mm con alta protección IP. Diseñado para shows y eventos exteriores.",
               "pixelPitch": "P2.5 / P3.07 / P4 / P5 / P8",
               "environment": "outdoor",
               "image": "imagenes_productos/pantallas_led/outdoor/re960/re960-1.jpeg",
               "specs": {
                 "tamañoDelPanel": "960 x 960 x 85.5 mm",
                 "brilloPorM2": "Pro: 4500 - 5500 nits / Pro Gold: 6000 - 7000 nits",
-                "frecuenciaDeRefresco": "1920 - 3840 Hz",
-                "gradoIpFrontal": "IP65",
-                "gradoIpGabinete": "IP54",
-                "anguloDeVision": "140° H / 140° V",
-                "gabinete": "Aleación de aluminio y magnesio",
-                "puertaTrasera": "Doble batiente",
-                "quickLock": "Sí",
-                "pesoDeLaPantalla": "23 - 25.2 Kg",
-                "maximaPotenciaPorM2": "< 720 W",
-                "tensionDeAlimentacion": "220 / 230 Vca - 50 Hz",
-                "horasDeVida": "100.000 hs",
-                "temperaturaDeTrabajo": "-10 a +50 °C",
-                "garantia": "2 años contra vicio o defecto de fabricación",
-                "aplicaciones": "Rental y aplicaciones de exterior, fachadas, estadios"
+                "frecuenciaDeRefresco": "1920 - 3840 Hz"
               },
               "images": [
                 "imagenes_productos/pantallas_led/outdoor/re960/re960-1.jpeg",
@@ -224,27 +151,14 @@
               "id": "ri500",
               "name": "RI500",
               "slug": "ri500",
-              "description": "Panel tour indoor de 500 x 500 mm con gabinete de aluminio-magnesio. Liviano y de fácil manipulación, pensado para shows, eventos, congresos, estudios de TV, aeropuertos, hoteles, casinos y locales comerciales. Sistema Quick Lock para ensamble rápido entre módulos y conectores Power COM + Canon RJ45 con IP65. Disponible en pitch P2.84 y P3.91 con LEDs Epistar SMD-2020. Opcional sistema curvo para armar pantallas cóncavas o convexas.",
+              "description": "Gabinete tour de 500×500 mm en aluminio-magnesio. Ultraliviano, montaje rápido y transporte eficiente para giras y eventos.",
               "pixelPitch": "P2.84 / P3.91",
               "environment": "indoor",
               "image": "imagenes_productos/tour_series/indoor/ri500/ri500-1.jpeg",
               "specs": {
                 "tamañoDelPanel": "500 x 500 x 70 mm",
                 "brilloPorM2": "1200 nits",
-                "frecuenciaDeRefresco": "> 3840 Hz",
-                "gradoIpFrontal": "IP20",
-                "gradoIpGabinete": "IP54",
-                "anguloDeVision": "140° H / 140° V",
-                "gabinete": "Aleación de aluminio y magnesio",
-                "puertaTrasera": "Simple batiente",
-                "quickLock": "Sí",
-                "pesoDeLaPantalla": "8 Kg",
-                "maximaPotenciaPorM2": "< 576 W",
-                "tensionDeAlimentacion": "220 / 230 Vca - 50 Hz",
-                "horasDeVida": "100.000 hs",
-                "temperaturaDeTrabajo": "-10 a +50 °C",
-                "garantia": "2 años contra vicio o defecto de fabricación",
-                "aplicaciones": "Shows, eventos, congresos, rental, estudios de TV, hoteles, locales comerciales"
+                "frecuenciaDeRefresco": "> 3840 Hz"
               },
               "images": [
                 "imagenes_productos/tour_series/indoor/ri500/ri500-1.jpeg",
@@ -255,38 +169,28 @@
               "id": "ric500",
               "name": "RIC500",
               "slug": "ric500",
-              "description": "Variante curva del RI500. Mismo gabinete de aluminio-magnesio de 500 x 500 mm con sistema curvo opcional que permite ensamblar pantallas cóncavas o convexas, ideal para escenarios y producciones con diseño no lineal. Pitch P2.84 y P3.91, frecuencia >3840 Hz.",
+              "description": "Variante curva del RI500. Sistema curvo opcional para pantallas cóncavas o convexas en escenarios.",
               "pixelPitch": "P2.84 / P3.91",
               "environment": "indoor",
               "image": "productos/tour-series/ric500.jpg",
               "specs": {
                 "tamañoDelPanel": "500 x 500 x 70 mm",
                 "brilloPorM2": "1200 nits",
-                "frecuenciaDeRefresco": "> 3840 Hz",
-                "feature": "Sistema curvo (cóncavo / convexo)",
-                "quickLock": "Sí",
-                "horasDeVida": "100.000 hs",
-                "garantia": "2 años contra vicio o defecto de fabricación",
-                "aplicaciones": "Escenarios, eventos, producciones con diseño no lineal"
+                "frecuenciaDeRefresco": "> 3840 Hz"
               }
             },
             {
               "id": "rif500",
               "name": "RIF500",
               "slug": "rif500",
-              "description": "Versión Front Service del RI500. Permite acceder a la fuente y placa de control desde el frente del panel, indispensable cuando no hay espacio detrás de la pantalla (instalaciones contra muro o semipermanentes). Pitch P2.84 / P3.91, gabinete aluminio-magnesio.",
+              "description": "Variante frontal del RI500 con mantenimiento 100% frontal por imanes. Ideal para instalaciones sin acceso trasero.",
               "pixelPitch": "P2.84 / P3.91",
               "environment": "indoor",
               "image": "imagenes_productos/tour_series/indoor/rif500/rif500-1.jpeg",
               "specs": {
                 "tamañoDelPanel": "500 x 500 x 70 mm",
                 "brilloPorM2": "1200 nits",
-                "frecuenciaDeRefresco": "> 3840 Hz",
-                "feature": "Front Service (mantenimiento frontal)",
-                "quickLock": "Sí",
-                "horasDeVida": "100.000 hs",
-                "garantia": "2 años contra vicio o defecto de fabricación",
-                "aplicaciones": "Instalaciones permanentes o semipermanentes sin acceso trasero"
+                "frecuenciaDeRefresco": "> 3840 Hz"
               },
               "images": [
                 "imagenes_productos/tour_series/indoor/rif500/rif500-1.jpeg",
@@ -299,22 +203,14 @@
               "id": "ri1000",
               "name": "RI1000",
               "slug": "ri1000",
-              "description": "Panel tour indoor de 500 x 1000 mm. Misma serie RI con el doble de superficie por panel: reduce la cantidad de piezas necesarias para montar pantallas grandes y acelera los tiempos de armado. Pitch P2.84 / P3.91, frecuencia > 3840 Hz, sistema Quick Lock incluido.",
+              "description": "Gabinete tour de 1000×500 mm para grandes superficies indoor. Menos juntas, montaje rápido.",
               "pixelPitch": "P2.84 / P3.91",
               "environment": "indoor",
               "image": "imagenes_productos/tour_series/indoor/ri1000/ri1000-1.jpeg",
               "specs": {
                 "tamañoDelPanel": "500 x 1000 x 85 mm",
                 "brilloPorM2": "1200 nits",
-                "frecuenciaDeRefresco": "> 3840 Hz",
-                "gradoIpFrontal": "IP20",
-                "gradoIpGabinete": "IP54",
-                "gabinete": "Aleación de aluminio y magnesio",
-                "quickLock": "Sí",
-                "pesoDeLaPantalla": "12 Kg",
-                "horasDeVida": "100.000 hs",
-                "garantia": "2 años contra vicio o defecto de fabricación",
-                "aplicaciones": "Pantallas grandes para shows, eventos masivos, estudios de TV"
+                "frecuenciaDeRefresco": "> 3840 Hz"
               },
               "images": [
                 "imagenes_productos/tour_series/indoor/ri1000/ri1000-1.jpeg",
@@ -325,17 +221,13 @@
               "id": "ric1000",
               "name": "RIC1000",
               "slug": "ric1000",
-              "description": "Versión curva del RI1000 (500 x 1000 mm) para crear pantallas cóncavas o convexas de gran formato. Aplicable en escenografías de gran escala con diseño no rectangular.",
+              "description": "Variante curva del RI1000. Permite ensamblados curvos para escenarios y producciones.",
               "pixelPitch": "P2.84 / P3.91",
               "environment": "indoor",
               "image": "productos/tour-series/ric1000.jpg",
               "specs": {
                 "tamañoDelPanel": "500 x 1000 x 85 mm",
-                "brilloPorM2": "1200 nits",
-                "feature": "Sistema curvo (cóncavo / convexo)",
-                "quickLock": "Sí",
-                "horasDeVida": "100.000 hs",
-                "garantia": "2 años contra vicio o defecto de fabricación"
+                "brilloPorM2": "1200 nits"
               }
             }
           ]
@@ -351,27 +243,14 @@
               "id": "re500",
               "name": "RE500",
               "slug": "re500",
-              "description": "Panel tour outdoor de 500 x 500 mm. Resistente a lluvia, polvo y radiación solar plena: pensado para festivales, recitales y eventos al aire libre. Gabinete de aluminio-magnesio, frente IP65 y sistema Quick Lock para armado rápido. Pitch P4.81 y P5.95 con LEDs Epistar SMD-2727B. Opcional sistema curvo.",
+              "description": "Gabinete tour outdoor de 500×500 mm. IP65 frontal, resistente a la intemperie para eventos al aire libre.",
               "pixelPitch": "P4.81 / P5.95",
               "environment": "outdoor",
               "image": "imagenes_productos/tour_series/outdoor/re500/re500-1.jpeg",
               "specs": {
                 "tamañoDelPanel": "500 x 500 x 70 mm",
                 "brilloPorM2": "4500 nits",
-                "frecuenciaDeRefresco": "> 3840 Hz",
-                "gradoIpFrontal": "IP65",
-                "gradoIpGabinete": "IP65",
-                "anguloDeVision": "140° H / 130° V",
-                "gabinete": "Aleación de aluminio y magnesio",
-                "puertaTrasera": "Simple batiente",
-                "quickLock": "Sí",
-                "pesoDeLaPantalla": "8 Kg",
-                "maximaPotenciaPorM2": "< 720 W",
-                "tensionDeAlimentacion": "220 / 230 Vca - 50 Hz",
-                "horasDeVida": "100.000 hs",
-                "temperaturaDeTrabajo": "-10 a +50 °C",
-                "garantia": "2 años contra vicio o defecto de fabricación",
-                "aplicaciones": "Festivales, recitales, eventos al aire libre, rental"
+                "frecuenciaDeRefresco": "> 3840 Hz"
               },
               "images": [
                 "imagenes_productos/tour_series/outdoor/re500/re500-1.jpeg",
@@ -382,41 +261,27 @@
               "id": "rec500",
               "name": "REC500",
               "slug": "rec500",
-              "description": "Variante curva del RE500 outdoor. Permite armar pantallas cóncavas o convexas resistentes a la intemperie, para escenografías creativas en exteriores. Pitch P4.81 / P5.95.",
+              "description": "Variante curva del RE500 para instalaciones outdoor con diseño no lineal.",
               "pixelPitch": "P4.81 / P5.95",
               "environment": "outdoor",
               "image": "productos/tour-series/rec500.jpg",
               "specs": {
                 "tamañoDelPanel": "500 x 500 x 70 mm",
-                "brilloPorM2": "4500 nits",
-                "gradoIpFrontal": "IP65",
-                "feature": "Sistema curvo (cóncavo / convexo)",
-                "quickLock": "Sí",
-                "horasDeVida": "100.000 hs",
-                "garantia": "2 años contra vicio o defecto de fabricación"
+                "brilloPorM2": "4500 nits"
               }
             },
             {
               "id": "re1000",
               "name": "RE1000",
               "slug": "re1000",
-              "description": "Panel tour outdoor de 500 x 1000 mm. Doble superficie por panel para grandes pantallas en exteriores con menos cantidad de módulos y menor tiempo de armado. Frente IP65, sistema Quick Lock, pitch P4.81 y P5.95.",
+              "description": "Gabinete tour outdoor de 1000×500 mm. Gran formato con protección IP65 para exteriores.",
               "pixelPitch": "P4.81 / P5.95",
               "environment": "outdoor",
               "image": "imagenes_productos/tour_series/outdoor/re1000/re1000-1.jpeg",
               "specs": {
                 "tamañoDelPanel": "500 x 1000 x 85 mm",
                 "brilloPorM2": "4500 nits",
-                "frecuenciaDeRefresco": "> 3840 Hz",
-                "gradoIpFrontal": "IP65",
-                "gradoIpGabinete": "IP65",
-                "gabinete": "Aleación de aluminio y magnesio",
-                "quickLock": "Sí",
-                "pesoDeLaPantalla": "12.5 Kg",
-                "tensionDeAlimentacion": "220 / 230 Vca - 50 Hz",
-                "horasDeVida": "100.000 hs",
-                "garantia": "2 años contra vicio o defecto de fabricación",
-                "aplicaciones": "Festivales, recitales, eventos masivos al aire libre"
+                "frecuenciaDeRefresco": "> 3840 Hz"
               },
               "images": [
                 "imagenes_productos/tour_series/outdoor/re1000/re1000-1.jpeg",
@@ -427,18 +292,13 @@
               "id": "rec1000",
               "name": "REC1000",
               "slug": "rec1000",
-              "description": "Versión curva outdoor del RE1000 para grandes superficies con diseño no rectangular. Resistente a la intemperie y con sistema Quick Lock.",
+              "description": "Variante curva del RE1000. Configuraciones cóncavas/convexas para exteriores.",
               "pixelPitch": "P4.81 / P5.95",
               "environment": "outdoor",
               "image": "productos/tour-series/rec1000.jpg",
               "specs": {
                 "tamañoDelPanel": "500 x 1000 x 85 mm",
-                "brilloPorM2": "4500 nits",
-                "gradoIpFrontal": "IP65",
-                "feature": "Sistema curvo (cóncavo / convexo)",
-                "quickLock": "Sí",
-                "horasDeVida": "100.000 hs",
-                "garantia": "2 años contra vicio o defecto de fabricación"
+                "brilloPorM2": "4500 nits"
               }
             }
           ]
@@ -464,21 +324,20 @@
               "id": "ti520",
               "name": "TI520",
               "slug": "ti520",
-              "description": "Tótem LED indoor compacto. Estructura vertical autoportante con pantalla integrada, ideal para locales comerciales, recepciones y puntos de información en espacios reducidos. Pitch P5.2 mm.",
+              "description": "Totem LED indoor de alta definición, formato vertical para señalización digital en interiores.",
               "pixelPitch": "5.2 mm",
               "environment": "indoor",
               "image": "productos/totems/ti520.jpg",
               "specs": {
                 "brillo": "1200 nits",
-                "formato": "Vertical",
-                "aplicaciones": "Locales comerciales, recepciones, puntos de información"
+                "formato": "Vertical"
               }
             },
             {
               "id": "ti640",
               "name": "TI640",
               "slug": "ti640",
-              "description": "Tótem LED indoor de tamaño medio. Estructura vertical autoportante con display de 640 x 1600 mm que combina soporte y pantalla en una sola unidad, sin necesidad de instalación en pared. Disponible en pitch P2, P2.5, P3.07 y P4 con LEDs Epistar. Placa de control LINSN o NOVA. Soporta entrada de video VGA, DVI, HDMI, HD-SDI y opciones alternativas como USB (pen drive), WiFi, 3G y 4G.",
+              "description": "Totem LED indoor premium con gabinete de aluminio fundido. Ideal para lobbies, shoppings y aeropuertos.",
               "pixelPitch": "P2 / P2.5 / P3.07 / P4",
               "environment": "indoor",
               "image": "productos/totems/ti640.jpg",
@@ -486,34 +345,20 @@
                 "dimensionesDelDisplay": "640 x 1600 mm",
                 "dimensionesExteriores": "680 x 1740 x 60 mm",
                 "brilloPorM2": "1000 - 1200 nits",
-                "frecuenciaDeRefresco": "1920 - 3840 Hz",
-                "gradoIpFrontal": "IP20",
-                "gradoIpGabinete": "IP20",
-                "anguloDeVision": "140° H / 140° V",
-                "gabinete": "Chapa de acero doble decapada",
-                "puertaTrasera": "Simple batiente",
-                "metodoDeMantenimiento": "Frontal con imanes / Trasero",
-                "maximaPotenciaTotem": "< 585 W",
-                "tensionDeAlimentacion": "220 / 230 Vca - 50 Hz",
-                "controlAlternativo": "USB (pen drive / disco rígido), WiFi, 3G, 4G",
-                "horasDeVida": "100.000 hs",
-                "temperaturaDeTrabajo": "-10 a +50 °C",
-                "garantia": "2 años contra vicio o defecto de fabricación",
-                "aplicaciones": "Locales comerciales, hoteles, oficinas, puntos de venta, promoción"
+                "frecuenciaDeRefresco": "1920 - 3840 Hz"
               }
             },
             {
               "id": "ti960",
               "name": "TI960",
               "slug": "ti960",
-              "description": "Tótem LED indoor de mayor impacto visual. Pensado para lobbies, aeropuertos, centros comerciales y espacios de gran circulación donde se necesita destacar. Pitch P9.6 mm.",
+              "description": "Totem LED indoor de gran formato para espacios amplios y eventos corporativos.",
               "pixelPitch": "9.6 mm",
               "environment": "indoor",
               "image": "productos/totems/ti960.jpg",
               "specs": {
                 "brillo": "1200 nits",
-                "formato": "Vertical",
-                "aplicaciones": "Lobbies, aeropuertos, centros comerciales, espacios de gran circulación"
+                "formato": "Vertical"
               }
             }
           ]
@@ -529,7 +374,7 @@
               "id": "te960-s",
               "name": "TE960-S",
               "slug": "te960-s",
-              "description": "Tótem LED outdoor de cara simple. Estructura vertical resistente a la intemperie, con pantalla de alta luminosidad para mostrar contenido en una dirección. Ideal para veredas, plazas y accesos. Pitch P9.6 mm.",
+              "description": "Totem LED outdoor simple cara. Alta luminosidad para publicidad exterior y señalización vial.",
               "pixelPitch": "9.6 mm",
               "environment": "outdoor",
               "image": "productos/totems/te960-s.jpg",
@@ -537,15 +382,14 @@
                 "brillo": "6000 nits",
                 "formato": "Vertical",
                 "tipo": "Simple cara",
-                "proteccion": "IP65",
-                "aplicaciones": "Veredas, plazas, accesos, vía pública"
+                "proteccion": "IP65"
               }
             },
             {
               "id": "te960-d",
               "name": "TE960-D",
               "slug": "te960-d",
-              "description": "Tótem LED outdoor de doble cara. Permite mostrar contenido en ambas direcciones, maximizando el impacto en zonas de alto tránsito peatonal. Pitch P9.6 mm.",
+              "description": "Totem LED outdoor doble cara. Máxima visibilidad desde ambos sentidos de circulación.",
               "pixelPitch": "9.6 mm",
               "environment": "outdoor",
               "image": "productos/totems/te960-d.jpg",
@@ -553,8 +397,7 @@
                 "brillo": "6000 nits",
                 "formato": "Vertical",
                 "tipo": "Doble cara",
-                "proteccion": "IP65",
-                "aplicaciones": "Zonas de alto tránsito peatonal, plazas, paseos"
+                "proteccion": "IP65"
               }
             }
           ]
@@ -579,27 +422,22 @@
               "id": "pdance",
               "name": "PDANCE",
               "slug": "pdance",
-              "description": "Piso LED de la serie P-DANCE 640. Acabado superficial en vidrio templado de 10 mm de espesor que soporta el tránsito de personas y reproduce video en tiempo real bajo los pies. Cada gabinete tiene conectores de entrada y salida de alimentación y datos. Pitch P3 y P6.66, frecuencia > 1920 Hz, IP54 frontal y de gabinete. Placa de control LINSN o NOVA. Ideal para shows, pasarelas, desfiles, estudios de TV, casinos, hoteles, discos y locales comerciales.",
+              "description": "Piso LED interactivo con sensor de presión. Ideal para escenarios, discotecas y eventos.",
               "pixelPitch": "P3 / P6.66",
               "image": "productos/pisos-led/pdance.jpg",
               "specs": {
                 "tamañoDelPanel": "640 x 640 x 100 mm",
                 "brilloPorM2": "5000 nits",
                 "frecuenciaDeRefresco": "> 1920 Hz",
-                "gradoIpFrontal": "IP54",
-                "gradoIpGabinete": "IP54",
                 "acabadoSuperficial": "Vidrio templado de 10 mm",
-                "tipo": "Pista de baile transitable",
-                "horasDeVida": "100.000 hs",
-                "garantia": "2 años contra vicio o defecto de fabricación",
-                "aplicaciones": "Shows, eventos, congresos, pasarelas, desfiles, estudios de TV, discos, locales comerciales"
+                "tipo": "Pista de baile transitable"
               }
             },
             {
               "id": "p60-disco",
               "name": "P-60 DISCO",
               "slug": "p60-disco",
-              "description": "Piso LED con pitch de 6 mm para espacios donde los espectadores están cerca y la imagen tiene que ser nítida. Alta resistencia al impacto y al agua, con efectos de luz integrados.",
+              "description": "Piso LED tipo disco con efectos de iluminación RGB. Para pistas de baile y eventos.",
               "pixelPitch": "6 mm",
               "image": "productos/pisos-led/p60-disco.jpg",
               "specs": {
@@ -612,13 +450,12 @@
               "id": "pi-rgb",
               "name": "PI-RGB",
               "slug": "pi-rgb",
-              "description": "Piso LED RGB de alta personalización. Control independiente por zona para crear efectos de iluminación dinámicos e interactivos. Pensado para shows, experiencias inmersivas y producciones artísticas.",
+              "description": "Piso LED RGB resistente para instalaciones permanentes en bares, discotecas y eventos.",
               "image": "imagenes_productos/pisos_led/pi_rgb/pi_rgb1.png",
               "specs": {
                 "tipo": "Interactivo RGB",
                 "resistencia": "Alta resistencia",
-                "colores": "Full RGB con control por zona",
-                "aplicaciones": "Shows, experiencias inmersivas, eventos artísticos"
+                "colores": "Full RGB con control por zona"
               },
               "images": [
                 "imagenes_productos/pisos_led/pi_rgb/pi_rgb1.png",
@@ -647,7 +484,7 @@
               "id": "cartelera",
               "name": "Cartelera",
               "slug": "cartelera",
-              "description": "Cartelera LED frontal para colectivos. Muestra el número de línea y el destino de manera clara y visible a gran distancia, reemplazando los carteles tradicionales. Diseñada para soportar las vibraciones y condiciones de uso continuo del transporte público.",
+              "description": "Display LED frontal para colectivos. Muestra recorrido y número de línea con alta visibilidad.",
               "image": "productos/soluciones/cartelera.jpg",
               "specs": {
                 "aplicacion": "Transporte público",
@@ -659,7 +496,7 @@
               "id": "ramalera",
               "name": "Ramalera",
               "slug": "ramalera",
-              "description": "Ramalera LED lateral indicadora de recorrido. Muestra en tiempo real el ramal o trayecto del colectivo para que los pasajeros en la vereda lo identifiquen rápidamente.",
+              "description": "Display LED lateral para colectivos. Indica el ramal y destino de la unidad.",
               "image": "productos/soluciones/ramalera.jpg",
               "specs": {
                 "aplicacion": "Transporte público",
@@ -671,7 +508,7 @@
               "id": "luneta-led",
               "name": "Luneta de LED",
               "slug": "luneta-led",
-              "description": "Pantalla LED trasera integrada en la luneta del colectivo. Complementa la señalización del vehículo con información adicional o publicidad.",
+              "description": "Display LED trasero para colectivos. Información visible para vehículos que circulan detrás.",
               "image": "productos/soluciones/luneta-led.jpg",
               "specs": {
                 "aplicacion": "Transporte público",
@@ -690,7 +527,7 @@
               "id": "lpr-9648",
               "name": "LPR-9648",
               "slug": "lpr-9648",
-              "description": "Pórtico LED para rutas y autopistas. Señalización de gran formato visible desde largas distancias para información vial y mensajes de tránsito.",
+              "description": "Pórtico LED para autopistas y rutas. Señalización vial dinámica de alta visibilidad.",
               "image": "productos/soluciones/lpr-9648.jpg",
               "specs": {
                 "aplicacion": "Rutas y autopistas",
@@ -701,7 +538,7 @@
               "id": "lpr-1248",
               "name": "LPR-1248",
               "slug": "lpr-1248",
-              "description": "Pórtico LED compacto para accesos, parkings y zonas urbanas donde el espacio disponible es más limitado.",
+              "description": "Pórtico LED compacto para peajes y accesos. Mensajería variable en tiempo real.",
               "image": "productos/soluciones/lpr-1248.jpg",
               "specs": {
                 "aplicacion": "Accesos, parkings, zonas urbanas",
@@ -712,7 +549,7 @@
               "id": "lpr-1264",
               "name": "LPR-1264",
               "slug": "lpr-1264",
-              "description": "Pórtico LED de formato vertical extendido. Ideal para señalización en túneles, playones y accesos con altura disponible.",
+              "description": "Pórtico LED de formato medio para señalización en rutas y avenidas.",
               "image": "productos/soluciones/lpr-1264.jpg",
               "specs": {
                 "aplicacion": "Túneles, playones, accesos verticales",
@@ -731,7 +568,7 @@
               "id": "sh-1696",
               "name": "SH-1696",
               "slug": "sh-1696",
-              "description": "Pantalla LED de formato especial para proyectos a medida. RTM diseña y fabrica soluciones personalizadas para requerimientos únicos que no se adaptan a formatos estándar.",
+              "description": "Pantalla LED de diseño especial para instalaciones a medida y proyectos personalizados.",
               "image": "productos/soluciones/sh-1696.jpg",
               "specs": {
                 "aplicacion": "Proyectos personalizados",
@@ -809,12 +646,11 @@
               "id": "cmb-7r",
               "name": "CMB-7R",
               "slug": "cmb-7r",
-              "description": "Cabezal móvil Beam de 7R. Compacto y potente, ideal para escenarios medianos y eventos donde se prioriza la movilidad del equipo. Genera haces de luz definidos para shows, discotecas y producciones audiovisuales.",
+              "description": "Cabezal móvil beam de 7R. Haz concentrado de largo alcance para shows y eventos.",
               "image": "imagenes_productos/iluminacion_profesional/beam/cmb_7_r/cbm7r-1.jpeg",
               "specs": {
                 "tipo": "Cabezal móvil Beam",
-                "potencia": "7R",
-                "aplicaciones": "Escenarios medianos, shows, discotecas, eventos"
+                "potencia": "7R"
               },
               "images": [
                 "imagenes_productos/iluminacion_profesional/beam/cmb_7_r/cbm7r-1.jpeg",
@@ -828,12 +664,11 @@
               "id": "cmb-20r",
               "name": "CMB-20R",
               "slug": "cmb-20r",
-              "description": "Cabezal móvil Beam de 20R. Mayor potencia lumínica para grandes escenarios, estadios y espectáculos de alto impacto visual donde el haz necesita atravesar largas distancias.",
+              "description": "Cabezal móvil beam de 20R. Mayor potencia para grandes escenarios y festivales.",
               "image": "imagenes_productos/iluminacion_profesional/beam/cmb_20_r/cmb20r-1.jpeg",
               "specs": {
                 "tipo": "Cabezal móvil Beam",
-                "potencia": "20R",
-                "aplicaciones": "Grandes escenarios, estadios, espectáculos de alto impacto"
+                "potencia": "20R"
               },
               "images": [
                 "imagenes_productos/iluminacion_profesional/beam/cmb_20_r/cmb20r-1.jpeg",
@@ -855,12 +690,11 @@
               "id": "cmr-250-led",
               "name": "CMR-250-LED",
               "slug": "cmr-250-led",
-              "description": "Cabezal móvil 3 en 1 de 250W LED. Combina los modos beam, spot y wash en un solo equipo, con eficiencia energética máxima al usar fuente LED en lugar de lámpara tradicional.",
+              "description": "Cabezal móvil 3 en 1 de 250W LED. Combina beam, spot y wash en una unidad.",
               "image": "imagenes_productos/iluminacion_profesional/3_en_1/cmr_250_led/cmr250-1.jpeg",
               "specs": {
                 "tipo": "Cabezal móvil 3 en 1 (Beam / Spot / Wash)",
-                "potencia": "250W LED",
-                "aplicaciones": "Producciones donde se necesitan los tres efectos en un solo equipo"
+                "potencia": "250W LED"
               },
               "images": [
                 "imagenes_productos/iluminacion_profesional/3_en_1/cmr_250_led/cmr250-1.jpeg",
@@ -873,12 +707,11 @@
               "id": "cmr-400-led",
               "name": "CMR-400-LED",
               "slug": "cmr-400-led",
-              "description": "Cabezal móvil 3 en 1 de 400W LED. Mayor potencia para producciones exigentes donde se necesitan los tres efectos (beam, spot, wash) en un solo equipo de alta gama.",
+              "description": "Cabezal móvil 3 en 1 de 400W LED. Alta potencia para grandes producciones.",
               "image": "imagenes_productos/iluminacion_profesional/3_en_1/cmr_400_led/ cmr400-2.jpeg",
               "specs": {
                 "tipo": "Cabezal móvil 3 en 1 (Beam / Spot / Wash)",
-                "potencia": "400W LED",
-                "aplicaciones": "Producciones de alta gama, escenarios grandes"
+                "potencia": "400W LED"
               },
               "images": [
                 "imagenes_productos/iluminacion_profesional/3_en_1/cmr_400_led/ cmr400-2.jpeg",
@@ -897,7 +730,7 @@
               "id": "lb-1040-led",
               "name": "LB-1040-LED",
               "slug": "lb-1040-led",
-              "description": "Barra móvil LED de 10 cabezas (10 x 40W). Genera efectos de barrido y chase para shows, discotecas y eventos de entretenimiento. Cada cabezal puede controlarse de forma independiente para crear secuencias dinámicas.",
+              "description": "Barra móvil LED de 10 cabezas independientes. Efectos dinámicos para escenarios.",
               "images": [
                 "imagenes_productos/iluminacion_profesional/barra_movil/barramovil-1.jpeg",
                 "imagenes_productos/iluminacion_profesional/barra_movil/barramovil-2.jpeg"
@@ -905,8 +738,7 @@
               "image": "imagenes_productos/iluminacion_profesional/barra_movil/barramovil-1.jpeg",
               "specs": {
                 "tipo": "Barra móvil LED",
-                "leds": "10 x 40W",
-                "aplicaciones": "Shows, discotecas, eventos de entretenimiento"
+                "leds": "10 x 40W"
               }
             }
           ]
@@ -921,12 +753,11 @@
               "id": "st-960-led",
               "name": "ST-960-LED",
               "slug": "st-960-led",
-              "description": "Flash LED estroboscópico de alta potencia (960W). Efectos de flash programables para espectáculos, discotecas, recitales y producciones audiovisuales.",
+              "description": "Flash LED estroboscópico de alta potencia. Efectos de impacto para shows en vivo.",
               "image": "imagenes_productos/iluminacion_profesional/flashes/st_960_led/st960-1.jpeg",
               "specs": {
                 "tipo": "Flash estroboscópico LED",
-                "potencia": "960W LED",
-                "aplicaciones": "Espectáculos, discotecas, recitales, producciones audiovisuales"
+                "potencia": "960W LED"
               },
               "images": [
                 "imagenes_productos/iluminacion_profesional/flashes/st_960_led/st960-2.jpeg",
