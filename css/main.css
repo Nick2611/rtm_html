@@ -1918,8 +1918,11 @@ footer:not(.site-footer) {
   nav.navbar { padding: 8px 15px 10px; }
   .burger-wrap { padding: 6px; min-width: 40px; min-height: 40px; }
   .burger { width: 28px; height: 20px; }
-  .burger span { top: 8px; }
-  #nav-toggle:checked + label .burger::before { transform: translateY(8px) rotate(45deg); }
+  .burger span,
+  .burger::before,
+  .burger::after { height: 2px; }
+  .burger span { top: 9px; }
+  #nav-toggle:checked + label .burger::before { transform: translateY(9px) rotate(45deg); }
   #nav-toggle:checked + label .burger::after  { transform: translateY(-9px) rotate(-45deg); }
 
   /* Hero: botones uno abajo del otro */
@@ -1986,8 +1989,11 @@ footer:not(.site-footer) {
   .brand img { width: 150px; height: auto; }
   .burger-wrap { padding: 4px; min-width: 36px; min-height: 36px; }
   .burger { width: 24px; height: 18px; }
-  .burger span { top: 7px; }
-  #nav-toggle:checked + label .burger::before { transform: translateY(7px) rotate(45deg); }
+  .burger span,
+  .burger::before,
+  .burger::after { height: 2px; }
+  .burger span { top: 8px; }
+  #nav-toggle:checked + label .burger::before { transform: translateY(8px) rotate(45deg); }
   #nav-toggle:checked + label .burger::after  { transform: translateY(-8px) rotate(-45deg); }
 
   /* Hero */
