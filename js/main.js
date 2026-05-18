@@ -313,16 +313,37 @@ function initMegaMenuSearch() {
   });
 }
 
+/* ===== BÚSQUEDA GLOBAL del navbar (todas las páginas) ===== */
+function initGlobalSearch() {
+  const input   = document.getElementById('global-search');
+  const results = document.getElementById('search-results');
+  if (!input || !results) return;
+
+  let timer;
+  input.addEventListener('input', e => {
+    clearTimeout(timer);
+    timer = setTimeout(() => renderSearchResults(e.target.value, results), 200);
+  });
+
+  input.addEventListener('focus', () => {
+    if (input.value.length >= 2 && searchIndex.length) results.classList.add('active');
+  });
+
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.search-container')) results.classList.remove('active');
+  });
+}
+
 function renderSearchResults(query, container) {
   if (query.length < 2 || !searchIndex.length) {
     container.classList.remove('active');
     return;
   }
 
-  const q    = normalize(query);
+  const q    = normalize(query).replace(/\s+/g, '');
   const hits = searchIndex.filter(item =>
-    normalize(item.name).includes(q) ||
-    normalize(item.categoryName || '').includes(q)
+    normalize(item.name).replace(/\s+/g, '').includes(q) ||
+    normalize(item.categoryName || '').replace(/\s+/g, '').includes(q)
   ).slice(0, 8);
 
   const labels = { category: 'Categoría', subcategory: 'Familia', model: 'Modelo' };
@@ -412,4 +433,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeroVideoSequence();
   loadProductsData();
   initMegaMenuSearch();
+  initGlobalSearch();
 });
