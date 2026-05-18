@@ -10,6 +10,11 @@ class RTMProducts {
     this.currentSubcategory = null;
     this.currentFilter = 'all'; // 'all', 'indoor', 'outdoor'
     this.searchIndex = [];
+    this.defaultProductImageBaseUrl = 'https://imagenes-productos-rtm-158129172701-us-east-1-an.s3.us-east-1.amazonaws.com';
+    this.productImageExtensions = ['jpeg', 'jpg', 'png', 'webp'];
+    this.productImageMaxImages = 12;
+    this.productImageProbeCache = new Map();
+    this.productImageDirectoryCache = new Map();
     this.productImageBaseUrl = this.resolveProductImageBaseUrl();
     this.init();
   }
@@ -20,7 +25,7 @@ class RTMProducts {
       this.buildSearchIndex();
       this.renderMegaMenu();
       this.initSearch();
-      this.handleRouting();
+      await this.handleRouting();
     } catch (error) {
       console.error('Error initializing RTM Products:', error);
     }
@@ -30,7 +35,7 @@ class RTMProducts {
     const metaBaseUrl = document
       .querySelector('meta[name="rtm-product-image-base-url"]')
       ?.getAttribute('content');
-    const configuredBaseUrl = window.RTM_PRODUCT_IMAGE_BASE_URL || metaBaseUrl || '';
+    const configuredBaseUrl = window.RTM_PRODUCT_IMAGE_BASE_URL || metaBaseUrl || this.defaultProductImageBaseUrl;
     return configuredBaseUrl.trim().replace(/\/+$/, '');
   }
 
@@ -38,101 +43,439 @@ class RTMProducts {
     return /^(https?:)?\/\//.test(imagePath);
   }
 
-  normalizeLocalImagePath(imagePath) {
-    if (!imagePath) return '';
-    if (this.isRemoteImagePath(imagePath)) return imagePath;
-    if (imagePath.startsWith('data:')) return imagePath;
-    const cleanedPath = imagePath
+  normalizeBucketPath(imagePath) {
+    if (!imagePath || this.isRemoteImagePath(imagePath) || imagePath.startsWith('data:')) return '';
+    return imagePath
       .trim()
       .replace(/^\.\//, '')
       .replace(/^\/+/, '')
-      .replace(/\/\s+/g, '/')
-      .replace(/\/+/g, '/');
-    return '/' + cleanedPath;
+      .replace(/\/+/g, '/')
+      .split('/')
+      .map(part => part.trim())
+      .filter(Boolean)
+      .join('/');
   }
 
   normalizeImagePath(imagePath) {
     if (!imagePath) return '';
     if (this.isRemoteImagePath(imagePath)) return imagePath;
-    if (imagePath.startsWith('data:')) return imagePath;
+    if (imagePath.startsWith('data:')) return '';
 
-    const cleanedPath = imagePath
-      .trim()
-      .replace(/^\.\//, '')
-      .replace(/^\/+/, '')
-      .replace(/\/\s+/g, '/')
-      .replace(/\/+/g, '/');
-    if (this.productImageBaseUrl) return `${this.productImageBaseUrl}/${cleanedPath}`;
-    return '/' + cleanedPath;
+    const cleanedPath = this.normalizeBucketPath(imagePath);
+    return cleanedPath ? this.toBucketImageUrl(cleanedPath) : '';
   }
 
-  buildProductImageKey(modelName, imagePath, index = 0) {
-    const extensionMatch = imagePath && imagePath.match(/(\.[a-z0-9]+)$/i);
-    const extension = extensionMatch ? extensionMatch[1].toLowerCase() : '.jpeg';
-    const normalizedName = (modelName || 'producto')
+  escapeAttribute(value) {
+    return String(value ?? '')
+      .replace(/&/g, '&amp;')
+      .replace(/"/g, '&quot;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
+
+  toBucketImageUrl(imagePath) {
+    if (!imagePath) return '';
+    if (this.isRemoteImagePath(imagePath)) return imagePath;
+    const cleanedPath = this.normalizeBucketPath(imagePath);
+    return cleanedPath ? `${this.productImageBaseUrl}/${cleanedPath}` : '';
+  }
+
+  slugifyPathSegment(value) {
+    return String(value || '')
       .normalize('NFD')
       .replace(/[\u0300-\u036f]/g, '')
-      .replace(/\s+/g, '-')
-      .replace(/[^A-Za-z0-9-]/g, '-')
-      .replace(/-+/g, '-')
-      .replace(/^-|-$/g, '');
-    const suffix = index > 0 ? `-${index + 1}` : '';
-    return `${normalizedName}${suffix}${extension}`;
+      .toLowerCase()
+      .replace(/&/g, ' y ')
+      .replace(/[^a-z0-9]+/g, '_')
+      .replace(/_+/g, '_')
+      .replace(/^_|_$/g, '');
   }
 
-  buildBucketProductImagePath(modelName, imagePath, index = 0) {
-    const localPath = this.normalizeLocalImagePath(imagePath).replace(/^\/+/, '');
-    const pathParts = localPath.split('/').filter(Boolean);
-    if (pathParts[0] !== 'imagenes_productos' || pathParts.length < 5) return '';
-
-    const bucketDirectory = pathParts.slice(0, -2).join('/');
-    const filename = this.buildProductImageKey(modelName, imagePath, index);
-    return bucketDirectory ? `${bucketDirectory}/${filename}` : filename;
+  compactPathSegment(value) {
+    return this.slugifyPathSegment(value).replace(/_/g, '');
   }
 
-  getProductImageCandidates(modelName, imagePath, index = 0) {
-    if (!imagePath) return [];
-    if (this.isRemoteImagePath(imagePath) || imagePath.startsWith('data:')) return [imagePath];
+  compactCasePathSegment(value) {
+    return String(value || '')
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^A-Za-z0-9]+/g, '');
+  }
 
-    const localPath = this.normalizeLocalImagePath(imagePath);
-    if (!this.productImageBaseUrl) return [localPath];
+  isProductBucketPath(imagePath) {
+    return this.normalizeBucketPath(imagePath).startsWith('imagenes_productos/');
+  }
 
-    const cleanedPath = localPath.replace(/^\/+/, '');
-    const bucketProductPath = this.buildBucketProductImagePath(modelName, imagePath, index);
+  getDeclaredProductImagePaths(model) {
+    const declaredImages = [
+      ...(Array.isArray(model.images) ? model.images : []),
+      model.image
+    ];
 
+    return [...new Set(declaredImages
+      .map(imagePath => this.normalizeBucketPath(imagePath))
+      .filter(imagePath => imagePath.startsWith('imagenes_productos/')))];
+  }
+
+  getCanonicalProductImageDirectory(category, subcategory) {
+    const categorySegment = this.slugifyPathSegment(category.imageFolder || category.slug || category.id || category.name);
+    const rawSubcategorySegment = subcategory?.imageFolder || subcategory?.environment || subcategory?.name || subcategory?.slug || '';
+    const subcategorySegment = this.slugifyPathSegment(rawSubcategorySegment);
+    const segments = ['imagenes_productos', categorySegment];
+
+    if (subcategorySegment && subcategorySegment !== 'modelos') segments.push(subcategorySegment);
+    return segments.filter(Boolean).join('/');
+  }
+
+  getDeclaredProductImageDirectories(model) {
+    return this.getDeclaredProductImagePaths(model)
+      .map(imagePath => imagePath.split('/').slice(0, -1).join('/'))
+      .filter(Boolean);
+  }
+
+  getProductImageDirectories(category, subcategory, model) {
     return [...new Set([
-      bucketProductPath ? `${this.productImageBaseUrl}/${bucketProductPath}` : '',
-      `${this.productImageBaseUrl}/${cleanedPath}`,
-      localPath
+      this.getCanonicalProductImageDirectory(category, subcategory),
+      ...this.getDeclaredProductImageDirectories(model)
     ].filter(Boolean))];
   }
 
-  resolveProductImagePath(modelName, imagePath, index = 0) {
-    const candidates = this.getProductImageCandidates(modelName, imagePath, index);
-    return candidates[0] || '';
+  parseImageFilename(imagePath) {
+    const filename = this.normalizeBucketPath(imagePath).split('/').pop() || '';
+    const match = filename.match(/^(.+?)(\.[a-z0-9]+)$/i);
+    if (!match) return null;
+
+    const name = match[1].trim();
+    const extension = match[2].slice(1).toLowerCase();
+    const numberedMatch = name.match(/^(.*?)([-_]?)(\d+)$/);
+    const numberedIndex = numberedMatch ? Number(numberedMatch[3]) : null;
+    const hasImageIndex = Boolean(numberedMatch && (numberedMatch[2] || numberedIndex <= this.productImageMaxImages));
+    return {
+      prefix: (hasImageIndex ? numberedMatch[1] : name).trim(),
+      separator: hasImageIndex ? numberedMatch[2] : '-',
+      extension,
+      index: hasImageIndex ? numberedIndex : null
+    };
   }
 
-  getImageFallbackHandler(imagePath, placeholderImage) {
-    if (!imagePath || this.isRemoteImagePath(imagePath) || imagePath.startsWith('data:')) {
-      return `this.onerror=null;this.src='${placeholderImage}'`;
-    }
-
-    const localFallback = this.normalizeLocalImagePath(imagePath);
-    if (this.productImageBaseUrl && localFallback && localFallback !== placeholderImage) {
-      return `this.onerror=function(){this.onerror=null;this.src='${placeholderImage}';};this.src='${localFallback}'`;
-    }
-    return `this.onerror=null;this.src='${placeholderImage}'`;
+  getDeclaredProductImageDetails(model) {
+    return this.getDeclaredProductImagePaths(model)
+      .map(imagePath => ({
+        path: imagePath,
+        directory: imagePath.split('/').slice(0, -1).join('/'),
+        url: this.toBucketImageUrl(imagePath),
+        parts: this.parseImageFilename(imagePath)
+      }))
+      .filter(item => item.directory && item.url && item.parts);
   }
 
-  getProductImageFallbackHandler(modelName, imagePath, index, placeholderImage) {
-    const candidates = this.getProductImageCandidates(modelName, imagePath, index);
-    const fallbackQueue = [...new Set([...candidates.slice(1), placeholderImage].filter(Boolean))];
+  getProductImageProbePlans(model) {
+    const plans = [];
+    const seenPlans = new Set();
+    const addPlan = (prefix, extension = 'jpeg', separator = '-', fromDeclared = false) => {
+      const cleanPrefix = String(prefix || '').trim();
+      const cleanExtension = String(extension || 'jpeg').replace(/^\./, '').toLowerCase();
+      if (!cleanPrefix || !cleanExtension) return;
+      const key = `${cleanPrefix}|${separator}|${cleanExtension}`;
+      if (seenPlans.has(key)) return;
+      seenPlans.add(key);
+      plans.push({ prefix: cleanPrefix, separator, extension: cleanExtension, fromDeclared });
+    };
 
-    if (!fallbackQueue.length) {
-      return `this.onerror=null;this.src=${JSON.stringify(placeholderImage)};`;
+    this.getDeclaredProductImagePaths(model)
+      .map(imagePath => this.parseImageFilename(imagePath))
+      .filter(Boolean)
+      .forEach(parts => addPlan(parts.prefix, parts.extension, parts.separator, true));
+
+    const compactCandidates = [
+      model.imagePrefix,
+      model.slug,
+      model.id,
+      model.name
+    ].map(value => this.compactPathSegment(value)).filter(Boolean);
+
+    const caseSensitiveCandidates = [
+      model.imagePrefix,
+      model.name,
+      model.id,
+      model.slug
+    ].map(value => this.compactCasePathSegment(value)).filter(Boolean);
+
+    const candidatePrefixes = [...new Set([...compactCandidates, ...caseSensitiveCandidates])];
+
+    candidatePrefixes.forEach(prefix => {
+      addPlan(prefix, 'jpeg');
+      if (prefix.endsWith('led')) addPlan(prefix.replace(/led$/, ''), 'jpeg');
+    });
+
+    const productSegment = this.slugifyPathSegment(model.slug || model.id || model.name);
+    addPlan(productSegment, 'jpeg');
+
+    candidatePrefixes.slice(0, 2).forEach(prefix => {
+      this.productImageExtensions.forEach(extension => addPlan(prefix, extension));
+    });
+
+    return plans;
+  }
+
+  getImagesMatchingProbePlans(imageUrls, probePlans) {
+    const planKeys = new Set(probePlans.map(plan =>
+      `${plan.prefix.toLowerCase()}|${plan.extension.toLowerCase()}`
+    ));
+
+    return this.sortImageUrls(imageUrls.filter(imageUrl => {
+      const parsed = this.parseImageFilename(imageUrl);
+      if (!parsed) return false;
+      return planKeys.has(`${parsed.prefix.toLowerCase()}|${parsed.extension.toLowerCase()}`);
+    }));
+  }
+
+  sortImageUrls(imageUrls) {
+    const getImageOrder = imageUrl => {
+      const filename = decodeURIComponent(String(imageUrl).split('/').pop() || '').split('?')[0];
+      const parsed = this.parseImageFilename(filename);
+      return parsed?.index || 1;
+    };
+
+    return [...new Set(imageUrls.filter(Boolean))]
+      .sort((a, b) =>
+        getImageOrder(a) - getImageOrder(b) ||
+        a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' })
+      );
+  }
+
+  async listBucketImages(directory) {
+    if (!directory || !this.productImageBaseUrl) return [];
+    if (this.productImageDirectoryCache.has(directory)) return this.productImageDirectoryCache.get(directory);
+
+    const listUrl = `${this.productImageBaseUrl}/?list-type=2&prefix=${encodeURIComponent(directory + '/')}`;
+    const request = fetch(listUrl)
+      .then(response => response.ok ? response.text() : '')
+      .then(text => {
+        if (!text) return [];
+        const doc = new DOMParser().parseFromString(text, 'application/xml');
+        const directoryPrefix = `${directory}/`;
+        const keys = Array.from(doc.querySelectorAll('Key'))
+          .map(key => key.textContent.trim())
+          .filter(key => key.startsWith(directoryPrefix))
+          .filter(key => !key.slice(directoryPrefix.length).includes('/'))
+          .filter(key => /\.(jpe?g|png|webp)$/i.test(key));
+        return this.sortImageUrls(keys.map(key => this.toBucketImageUrl(key)));
+      })
+      .catch(() => []);
+
+    this.productImageDirectoryCache.set(directory, request);
+    return request;
+  }
+
+  imageExists(imageUrl) {
+    if (!imageUrl) return Promise.resolve(false);
+    if (this.productImageProbeCache.has(imageUrl)) return this.productImageProbeCache.get(imageUrl);
+
+    const request = new Promise(resolve => {
+      const image = new Image();
+      const timeout = window.setTimeout(() => resolve(false), 4000);
+      const finish = exists => {
+        window.clearTimeout(timeout);
+        resolve(exists);
+      };
+      image.onload = () => finish(true);
+      image.onerror = () => finish(false);
+      image.src = imageUrl;
+    });
+
+    this.productImageProbeCache.set(imageUrl, request);
+    return request;
+  }
+
+  async probeSequentialProductImages(directory, plan, startIndex = 1) {
+    const foundImages = [];
+    let firstNumberedIndex = startIndex;
+    let foundAnyForPlan = false;
+
+    if (startIndex <= 1) {
+      const baseImageUrl = this.toBucketImageUrl(`${directory}/${plan.prefix}.${plan.extension}`);
+      if (await this.imageExists(baseImageUrl)) {
+        foundImages.push(baseImageUrl);
+        firstNumberedIndex = 2;
+        foundAnyForPlan = true;
+      }
     }
 
-    return `(function(img){const queue=${JSON.stringify(fallbackQueue)};img.onerror=function(){const next=queue.shift();if(!next){this.onerror=null;return;}this.src=next;};img.onerror();})(this);`;
+    for (let index = firstNumberedIndex; index <= this.productImageMaxImages; index++) {
+      const filename = `${plan.prefix}${plan.separator}${index}.${plan.extension}`;
+      const imageUrl = this.toBucketImageUrl(`${directory}/${filename}`);
+      const exists = await this.imageExists(imageUrl);
+      if (!exists) {
+        if (foundAnyForPlan || index >= 2) break;
+        continue;
+      }
+      foundImages.push(imageUrl);
+      foundAnyForPlan = true;
+    }
+
+    return foundImages;
+  }
+
+  async discoverProductImages(category, subcategory, model) {
+    const cacheKey = `${category.slug || category.id}|${subcategory?.slug || subcategory?.id || ''}|${model.slug || model.id}`;
+    if (model._bucketImagesCacheKey === cacheKey && Array.isArray(model._bucketImages)) return model._bucketImages;
+
+    const directories = this.getProductImageDirectories(category, subcategory, model);
+    const probePlans = this.getProductImageProbePlans(model);
+    const declaredDetails = this.getDeclaredProductImageDetails(model);
+
+    for (const directory of directories) {
+      const listedImages = await this.listBucketImages(directory);
+      const matchingImages = this.getImagesMatchingProbePlans(listedImages, probePlans);
+      if (matchingImages.length > 0) {
+        model._bucketImagesCacheKey = cacheKey;
+        model._bucketImages = matchingImages;
+        return matchingImages;
+      }
+    }
+
+    for (const directory of directories) {
+      const declaredInDirectory = declaredDetails.filter(item => item.directory === directory);
+      const discoveredMatches = (await Promise.all(declaredInDirectory.map(async item =>
+        await this.imageExists(item.url) ? item.url : ''
+      ))).filter(Boolean);
+
+      const declaredGroups = new Map();
+      declaredInDirectory.forEach(item => {
+        const groupKey = `${item.parts.prefix}|${item.parts.separator}|${item.parts.extension}`;
+        const group = declaredGroups.get(groupKey) || {
+          prefix: item.parts.prefix,
+          separator: item.parts.separator,
+          extension: item.parts.extension,
+          maxIndex: 0,
+          hasBaseImage: false
+        };
+        if (item.parts.index === null) group.hasBaseImage = true;
+        if (item.parts.index) group.maxIndex = Math.max(group.maxIndex, item.parts.index);
+        declaredGroups.set(groupKey, group);
+      });
+
+      for (const plan of declaredGroups.values()) {
+        const startIndex = plan.hasBaseImage ? 1 : plan.maxIndex + 1;
+        if (!plan.hasBaseImage && (plan.maxIndex < 1 || plan.maxIndex >= this.productImageMaxImages)) continue;
+        discoveredMatches.push(...await this.probeSequentialProductImages(directory, plan, startIndex));
+      }
+
+      for (const plan of probePlans.filter(item => !item.fromDeclared)) {
+        discoveredMatches.push(...await this.probeSequentialProductImages(directory, plan));
+      }
+
+      if (discoveredMatches.length > 0) {
+        const images = this.sortImageUrls(discoveredMatches);
+        model._bucketImagesCacheKey = cacheKey;
+        model._bucketImages = images;
+        return images;
+      }
+    }
+
+    model._bucketImagesCacheKey = cacheKey;
+    model._bucketImages = [];
+    return [];
+  }
+
+  async hydrateModelImages(category, subcategory, model) {
+    const images = await this.discoverProductImages(category, subcategory, model);
+    model.bucketImages = images;
+    return images;
+  }
+
+  async hydrateModelsImages(category, subcategories) {
+    const models = subcategories.flatMap(subcategory =>
+      (subcategory.models || []).map(model => ({ subcategory, model }))
+    );
+    await Promise.all(models.map(({ subcategory, model }) => this.hydrateModelImages(category, subcategory, model)));
+  }
+
+  getModelImages(model) {
+    return Array.isArray(model.bucketImages) ? model.bucketImages : [];
+  }
+
+  getImageErrorHandler() {
+    return 'this.onerror=null;this.style.display="none";this.classList.add("image-load-error");';
+  }
+
+  findProductCard(container, modelSlug) {
+    return Array.from(container.querySelectorAll('.product-card'))
+      .find(card => card.dataset.model === modelSlug);
+  }
+
+  renderProductEnvironmentBadge(model, subcategory) {
+    const modelEnvironment = model.environment || subcategory.environment || 'all';
+    return modelEnvironment !== 'all'
+      ? `<span class="product-env-badge env-${modelEnvironment}">${modelEnvironment}</span>`
+      : '';
+  }
+
+  renderProductMedia(model, options = {}) {
+    const images = this.getModelImages(model);
+    const detail = Boolean(options.detail);
+    const carouselId = options.carouselId || model.id;
+    const frameClass = detail ? 'model-media-frame' : 'product-media-frame';
+    const carouselClass = detail ? 'model-carousel' : 'product-carousel';
+    const imageErrorHandler = this.getImageErrorHandler();
+
+    if (images.length > 1) {
+      return `
+        <div class="${carouselClass}" data-carousel-id="${carouselId}">
+          <div class="product-carousel-container">
+            ${images.map((img, index) => `
+              <div class="carousel-slide ${index === 0 ? 'active' : ''}" data-slide="${index}">
+                <img src="${this.escapeAttribute(img)}" alt="${this.escapeAttribute(model.name)} - Imagen ${index + 1}" loading="${index === 0 ? 'eager' : 'lazy'}" decoding="async" onerror="${this.escapeAttribute(imageErrorHandler)}">
+              </div>
+            `).join('')}
+          </div>
+          <div class="carousel-indicators">
+            ${images.map((_, index) => `
+              <button class="carousel-indicator ${index === 0 ? 'active' : ''}" data-slide-to="${index}" aria-label="Ir a imagen ${index + 1}"></button>
+            `).join('')}
+          </div>
+          <button class="carousel-nav carousel-prev" aria-label="Imagen anterior"><i class="fas fa-chevron-left"></i></button>
+          <button class="carousel-nav carousel-next" aria-label="Imagen siguiente"><i class="fas fa-chevron-right"></i></button>
+        </div>
+      `;
+    }
+
+    return `
+      <div class="${frameClass}" ${images[0] ? '' : 'data-empty="true"'}>
+        ${images[0] ? `<img src="${this.escapeAttribute(images[0])}" alt="${this.escapeAttribute(model.name)}" loading="eager" decoding="async" onerror="${this.escapeAttribute(imageErrorHandler)}">` : ''}
+      </div>
+    `;
+  }
+
+  hydrateRenderedModelImages(category, subcategories, container) {
+    subcategories.forEach(subcategory => {
+      (subcategory.models || []).forEach(model => {
+        this.hydrateModelImages(category, subcategory, model)
+          .then(images => {
+            if (!images.length) return;
+            const card = this.findProductCard(container, model.slug);
+            const imageContainer = card?.querySelector('.product-card-image');
+            if (!imageContainer) return;
+            imageContainer.innerHTML = this.renderProductMedia(model) + this.renderProductEnvironmentBadge(model, subcategory);
+            if (images.length > 1) this.initCarousel(model.id);
+          })
+          .catch(error => console.warn(`No se pudieron cargar imágenes para ${model.name}:`, error));
+      });
+    });
+  }
+
+  hydrateRenderedModelDetailImage(category, subcategory, model, container) {
+    this.hydrateModelImages(category, subcategory, model)
+      .then(images => {
+        if (!images.length) return;
+        const imageContainer = container.querySelector('.model-detail-image');
+        if (!imageContainer) return;
+        const carouselId = `${model.id}-detail`;
+        imageContainer.innerHTML = this.renderProductMedia(model, { detail: true, carouselId });
+        if (images.length > 1) this.initCarousel(carouselId);
+      })
+      .catch(error => console.warn(`No se pudieron cargar imágenes para ${model.name}:`, error));
   }
 
   async loadData() {
@@ -370,15 +713,15 @@ class RTMProducts {
     return text.replace(regex, '<mark>$1</mark>');
   }
 
-  handleRouting() {
+  async handleRouting() {
     const params = new URLSearchParams(window.location.search);
     const categorySlug = params.get('cat');
     const subcategorySlug = params.get('sub');
     const modelSlug = params.get('model');
-    if (categorySlug) this.loadCategoryPage(categorySlug, subcategorySlug, modelSlug);
+    if (categorySlug) await this.loadCategoryPage(categorySlug, subcategorySlug, modelSlug);
   }
 
-  loadCategoryPage(categorySlug, subcategorySlug = null, modelSlug = null) {
+  async loadCategoryPage(categorySlug, subcategorySlug = null, modelSlug = null) {
     const category = this.data.categories.find(c => c.slug === categorySlug);
     if (!category) { this.showNotFound(); return; }
     this.currentCategory = category;
@@ -387,24 +730,24 @@ class RTMProducts {
       const subcategory = category.subcategories.find(s => s.slug === subcategorySlug);
       if (subcategory) {
         this.currentSubcategory = subcategory;
-        if (modelSlug) this.renderModelDetail(category, subcategory, modelSlug);
-        else this.renderSubcategoryPage(category, subcategory);
+        if (modelSlug) await this.renderModelDetail(category, subcategory, modelSlug);
+        else await this.renderSubcategoryPage(category, subcategory);
       } else {
-        this.renderCategoryPage(category);
+        await this.renderCategoryPage(category);
       }
     } else {
-      this.renderCategoryPage(category);
+      await this.renderCategoryPage(category);
     }
   }
 
-  renderCategoryPage(category) {
+  async renderCategoryPage(category) {
     const subcatsConModelos = (category.subcategories || []).filter(s =>
       s.models && s.models.length > 0 && !s.parentSubcategory
     );
 
     // Si la categoría se divide por entorno, "Todos" debe mostrar todos los modelos.
     if (category.hasEnvironmentFilter && subcatsConModelos.length > 0) {
-      this.renderEnvironmentCategoryPage(category, subcatsConModelos);
+      await this.renderEnvironmentCategoryPage(category, subcatsConModelos);
       return;
     }
 
@@ -412,7 +755,7 @@ class RTMProducts {
     // saltear esa carpeta y mostrar directamente los productos.
     if (subcatsConModelos.length === 1) {
       this.currentSubcategory = subcatsConModelos[0];
-      this.renderSubcategoryPage(category, subcatsConModelos[0]);
+      await this.renderSubcategoryPage(category, subcatsConModelos[0]);
       return;
     }
 
@@ -457,7 +800,7 @@ class RTMProducts {
     container.innerHTML = html;
   }
 
-  renderEnvironmentCategoryPage(category, subcategories) {
+  async renderEnvironmentCategoryPage(category, subcategories) {
     const container = document.getElementById('product-content');
     if (!container) return;
 
@@ -491,17 +834,12 @@ class RTMProducts {
     html += '</div>';
     container.innerHTML = html;
 
-    subcategories.forEach(subcategory => {
-      subcategory.models.forEach(model => {
-        if (model.images && model.images.length > 1) this.initCarousel(model.id);
-      });
-    });
-
     this.attachImageLinkEvents(container);
     this.attachFilterEvents();
+    this.hydrateRenderedModelImages(category, subcategories, container);
   }
 
-  renderSubcategoryPage(category, subcategory) {
+  async renderSubcategoryPage(category, subcategory) {
     const container = document.getElementById('product-content');
     if (!container) return;
     document.title = `${subcategory.name} - ${category.name} — RTM Pantallas LED`;
@@ -530,14 +868,10 @@ class RTMProducts {
     }
     html += '</div>';
     container.innerHTML = html;
-    if (subcategory.models && subcategory.models.length > 0) {
-      subcategory.models.forEach(model => {
-        if (model.images && model.images.length > 1) this.initCarousel(model.id);
-      });
-    }
     // ── CAMBIO ──
     // Hacer las imágenes clickeables para ir al detalle del modelo.
     this.attachImageLinkEvents(container);
+    this.hydrateRenderedModelImages(category, [subcategory], container);
   }
 
   // ── NUEVO ──
@@ -558,36 +892,6 @@ class RTMProducts {
   }
 
   renderProductCard(model, category, subcategory) {
-    const placeholderImage = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"%3E%3Crect fill="%23141416" width="300" height="200"/%3E%3Ctext fill="%23e84a45" font-family="Montserrat,sans-serif" font-size="14" text-anchor="middle" x="150" y="100"%3E' + encodeURIComponent(model.name) + '%3C/text%3E%3C/svg%3E';
-    const hasMultipleImages = model.images && model.images.length > 1;
-    const images = model.images || (model.image ? [model.image] : []);
-    const normalizedImages = images.map((img, index) => this.resolveProductImagePath(model.name, img, index));
-    const imageErrorHandlers = images.map((img, index) => this.getProductImageFallbackHandler(model.name, img, index, placeholderImage));
-    let imageHTML = '';
-    if (hasMultipleImages) {
-      imageHTML = `
-        <div class="product-carousel" data-carousel-id="${model.id}">
-          <div class="carousel-container">
-            ${normalizedImages.map((img, index) => `
-              <div class="carousel-slide ${index === 0 ? 'active' : ''}" data-slide="${index}">
-                <img src="${img}" alt="${model.name} - Imagen ${index + 1}" loading="lazy" onerror="${imageErrorHandlers[index]}">
-              </div>
-            `).join('')}
-          </div>
-          <div class="carousel-indicators">
-            ${normalizedImages.map((_, index) => `
-              <button class="carousel-indicator ${index === 0 ? 'active' : ''}" data-slide-to="${index}" aria-label="Ir a imagen ${index + 1}"></button>
-            `).join('')}
-          </div>
-          <button class="carousel-nav carousel-prev" aria-label="Imagen anterior"><i class="fas fa-chevron-left"></i></button>
-          <button class="carousel-nav carousel-next" aria-label="Imagen siguiente"><i class="fas fa-chevron-right"></i></button>
-        </div>
-      `;
-    } else {
-      const primaryImage = images[0] || placeholderImage;
-      imageHTML = `<img src="${this.resolveProductImagePath(model.name, primaryImage, 0)}" alt="${model.name}" loading="lazy" onerror="${this.getProductImageFallbackHandler(model.name, primaryImage, 0, placeholderImage)}">`;
-    }
-
     // ── CAMBIO ──
     // URL al detalle del modelo + atributos para que la imagen sea clickeable.
     const modelUrl = `productos.html?cat=${category.slug}&sub=${subcategory.slug}&model=${model.slug}`;
@@ -601,8 +905,8 @@ class RTMProducts {
              role="link"
              tabindex="0"
              aria-label="Ver detalles de ${model.name}">
-          ${imageHTML}
-          ${modelEnvironment !== 'all' ? `<span class="product-env-badge env-${modelEnvironment}">${modelEnvironment}</span>` : ''}
+          ${this.renderProductMedia(model)}
+          ${this.renderProductEnvironmentBadge(model, subcategory)}
         </div>
         <div class="product-card-content">
           <h3 class="product-card-title">${model.name}</h3>
@@ -616,41 +920,12 @@ class RTMProducts {
     `;
   }
 
-  renderModelDetail(category, subcategory, modelSlug) {
+  async renderModelDetail(category, subcategory, modelSlug) {
     const model = subcategory.models.find(m => m.slug === modelSlug);
-    if (!model) { this.renderSubcategoryPage(category, subcategory); return; }
+    if (!model) { await this.renderSubcategoryPage(category, subcategory); return; }
     const container = document.getElementById('product-content');
     if (!container) return;
     document.title = `${model.name} - ${category.name} — RTM Pantallas LED`;
-    const placeholderImage = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400"%3E%3Crect fill="%23141416" width="600" height="400"/%3E%3Ctext fill="%23e84a45" font-family="Montserrat,sans-serif" font-size="24" text-anchor="middle" x="300" y="200"%3E' + encodeURIComponent(model.name) + '%3C/text%3E%3C/svg%3E';
-    const hasMultipleImages = model.images && model.images.length > 1;
-    const images = model.images || (model.image ? [model.image] : []);
-    const normalizedImages = images.map((img, index) => this.resolveProductImagePath(model.name, img, index));
-    const imageErrorHandlers = images.map((img, index) => this.getProductImageFallbackHandler(model.name, img, index, placeholderImage));
-    let imageHTML = '';
-    if (hasMultipleImages) {
-      imageHTML = `
-        <div class="model-carousel" data-carousel-id="${model.id}-detail">
-          <div class="carousel-container">
-            ${normalizedImages.map((img, index) => `
-              <div class="carousel-slide ${index === 0 ? 'active' : ''}" data-slide="${index}">
-                <img src="${img}" alt="${model.name} - Imagen ${index + 1}" onerror="${imageErrorHandlers[index]}">
-              </div>
-            `).join('')}
-          </div>
-          <div class="carousel-indicators">
-            ${normalizedImages.map((_, index) => `
-              <button class="carousel-indicator ${index === 0 ? 'active' : ''}" data-slide-to="${index}" aria-label="Ir a imagen ${index + 1}"></button>
-            `).join('')}
-          </div>
-          <button class="carousel-nav carousel-prev" aria-label="Imagen anterior"><i class="fas fa-chevron-left"></i></button>
-          <button class="carousel-nav carousel-next" aria-label="Imagen siguiente"><i class="fas fa-chevron-right"></i></button>
-        </div>
-      `;
-    } else {
-      const primaryImage = images[0] || placeholderImage;
-      imageHTML = `<img src="${this.resolveProductImagePath(model.name, primaryImage, 0)}" alt="${model.name}" onerror="${this.getProductImageFallbackHandler(model.name, primaryImage, 0, placeholderImage)}">`;
-    }
     let specsHTML = '';
     if (model.specs) {
       specsHTML = '<div class="model-specs"><h3>Especificaciones</h3><ul>';
@@ -675,7 +950,7 @@ class RTMProducts {
         </nav>
       </div>
       <div class="model-detail">
-        <div class="model-detail-image">${imageHTML}</div>
+        <div class="model-detail-image">${this.renderProductMedia(model, { detail: true, carouselId: `${model.id}-detail` })}</div>
         <div class="model-detail-info">
           <h1 class="model-detail-title">${model.name}</h1>
           ${model.environment ? `<span class="model-env-badge env-${model.environment}">${model.environment}</span>` : ''}
@@ -694,7 +969,7 @@ class RTMProducts {
       </div>
     `;
     container.innerHTML = html;
-    if (hasMultipleImages) this.initCarousel(`${model.id}-detail`);
+    this.hydrateRenderedModelDetailImage(category, subcategory, model, container);
   }
 
   renderSpecialPage(category) {
@@ -702,15 +977,15 @@ class RTMProducts {
     if (!container) return;
     document.title = `${category.name} — RTM Pantallas LED`;
     const content = category.content;
-    const placeholderImage = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400"%3E%3Crect fill="%23141416" width="600" height="400"/%3E%3Ctext fill="%23e84a45" font-family="Montserrat,sans-serif" font-size="24" text-anchor="middle" x="300" y="200"%3ELED Trucks%3C/text%3E%3C/svg%3E';
+    const imageErrorHandler = this.getImageErrorHandler();
     let galleryHTML = '';
     if (content.gallery && content.gallery.length > 0) {
       galleryHTML = '<div class="special-gallery">';
       content.gallery.forEach(item => {
-        const galleryImage = item.image || placeholderImage;
+        const galleryImage = this.normalizeImagePath(item.image);
         galleryHTML += `
           <div class="gallery-item">
-            <img src="${this.normalizeImagePath(galleryImage)}" alt="${item.caption}" onerror="${this.getImageFallbackHandler(galleryImage, placeholderImage)}">
+            ${galleryImage ? `<img src="${this.escapeAttribute(galleryImage)}" alt="${this.escapeAttribute(item.caption)}" onerror="${this.escapeAttribute(imageErrorHandler)}">` : ''}
             <p class="gallery-caption">${item.caption}</p>
           </div>
         `;

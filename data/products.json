@@ -22,7 +22,7 @@
               "description": "Pantalla LED indoor de instalación fija con mantenimiento frontal por imanes. Ideal para estudios de TV, aeropuertos y centros de convenciones.",
               "pixelPitch": "P2 / P2.5 / P3.07 / P4",
               "environment": "indoor",
-              "image": "productos/pantallas-led/ifi960.jpg",
+              "image": "imagenes_productos/pantallas_led/indoor/IFI960.png",
               "specs": {
                 "tamañoDelPanel": "960 x 960 x 100 mm",
                 "brilloPorM2": "600 - 1200 nits",
@@ -83,7 +83,7 @@
               "description": "Pantalla LED outdoor para cartelería digital y publicidad exterior. Alta protección IP65 frontal, brillo elevado para visibilidad a plena luz solar.",
               "pixelPitch": "P2.5 / P3.07 / P4 / P5 / P6.66 / P8",
               "environment": "outdoor",
-              "image": "productos/pantallas-led/vp960.jpg",
+              "image": "imagenes_productos/pantallas_led/outdoor/VP960.jpeg",
               "specs": {
                 "tamañoDelPanel": "960 x 960 x 110 mm",
                 "brilloPorM2": "4000 - 5500 nits",
@@ -172,7 +172,7 @@
               "description": "Variante curva del RI500. Sistema curvo opcional para pantallas cóncavas o convexas en escenarios.",
               "pixelPitch": "P2.84 / P3.91",
               "environment": "indoor",
-              "image": "productos/tour-series/ric500.jpg",
+              "image": "imagenes_productos/tour_series/indoor/ric500/ric500-1.jpeg",
               "specs": {
                 "tamañoDelPanel": "500 x 500 x 70 mm",
                 "brilloPorM2": "1200 nits",
@@ -224,7 +224,7 @@
               "description": "Variante curva del RI1000. Permite ensamblados curvos para escenarios y producciones.",
               "pixelPitch": "P2.84 / P3.91",
               "environment": "indoor",
-              "image": "productos/tour-series/ric1000.jpg",
+              "image": "imagenes_productos/tour_series/indoor/ric1000/ric1000-1.jpeg",
               "specs": {
                 "tamañoDelPanel": "500 x 1000 x 85 mm",
                 "brilloPorM2": "1200 nits"
@@ -264,7 +264,7 @@
               "description": "Variante curva del RE500 para instalaciones outdoor con diseño no lineal.",
               "pixelPitch": "P4.81 / P5.95",
               "environment": "outdoor",
-              "image": "productos/tour-series/rec500.jpg",
+              "image": "imagenes_productos/tour_series/outdoor/rec500/rec500-1.jpeg",
               "specs": {
                 "tamañoDelPanel": "500 x 500 x 70 mm",
                 "brilloPorM2": "4500 nits"
@@ -295,7 +295,7 @@
               "description": "Variante curva del RE1000. Configuraciones cóncavas/convexas para exteriores.",
               "pixelPitch": "P4.81 / P5.95",
               "environment": "outdoor",
-              "image": "productos/tour-series/rec1000.jpg",
+              "image": "imagenes_productos/tour_series/outdoor/rec1000/rec1000-1.jpeg",
               "specs": {
                 "tamañoDelPanel": "500 x 1000 x 85 mm",
                 "brilloPorM2": "4500 nits"
@@ -327,7 +327,7 @@
               "description": "Totem LED indoor de alta definición, formato vertical para señalización digital en interiores.",
               "pixelPitch": "5.2 mm",
               "environment": "indoor",
-              "image": "productos/totems/ti520.jpg",
+              "image": "imagenes_productos/totems/indoor/ti520/ti520-1.jpeg",
               "specs": {
                 "brillo": "1200 nits",
                 "formato": "Vertical"
@@ -340,7 +340,7 @@
               "description": "Totem LED indoor premium con gabinete de aluminio fundido. Ideal para lobbies, shoppings y aeropuertos.",
               "pixelPitch": "P2 / P2.5 / P3.07 / P4",
               "environment": "indoor",
-              "image": "productos/totems/ti640.jpg",
+              "image": "imagenes_productos/totems/indoor/ti640/ti640-1.jpeg",
               "specs": {
                 "dimensionesDelDisplay": "640 x 1600 mm",
                 "dimensionesExteriores": "680 x 1740 x 60 mm",
@@ -355,7 +355,7 @@
               "description": "Totem LED indoor de gran formato para espacios amplios y eventos corporativos.",
               "pixelPitch": "9.6 mm",
               "environment": "indoor",
-              "image": "productos/totems/ti960.jpg",
+              "image": "imagenes_productos/totems/indoor/ti960/ti960-1.jpeg",
               "specs": {
                 "brillo": "1200 nits",
                 "formato": "Vertical"
@@ -377,7 +377,7 @@
               "description": "Totem LED outdoor simple cara. Alta luminosidad para publicidad exterior y señalización vial.",
               "pixelPitch": "9.6 mm",
               "environment": "outdoor",
-              "image": "productos/totems/te960-s.jpg",
+              "image": "imagenes_productos/totems/outdoor/te960_s/te960s-1.jpeg",
               "specs": {
                 "brillo": "6000 nits",
                 "formato": "Vertical",
@@ -392,7 +392,7 @@
               "description": "Totem LED outdoor doble cara. Máxima visibilidad desde ambos sentidos de circulación.",
               "pixelPitch": "9.6 mm",
               "environment": "outdoor",
-              "image": "productos/totems/te960-d.jpg",
+              "image": "imagenes_productos/totems/outdoor/te960_d/te960d-1.jpeg",
               "specs": {
                 "brillo": "6000 nits",
                 "formato": "Vertical",
@@ -424,7 +424,7 @@
               "slug": "pdance",
               "description": "Piso LED interactivo con sensor de presión. Ideal para escenarios, discotecas y eventos.",
               "pixelPitch": "P3 / P6.66",
-              "image": "productos/pisos-led/pdance.jpg",
+              "image": "imagenes_productos/pisos_led/pdance/pdance-1.jpeg",
               "specs": {
                 "tamañoDelPanel": "640 x 640 x 100 mm",
                 "brilloPorM2": "5000 nits",
@@ -439,7 +439,7 @@
               "slug": "p60-disco",
               "description": "Piso LED tipo disco con efectos de iluminación RGB. Para pistas de baile y eventos.",
               "pixelPitch": "6 mm",
-              "image": "productos/pisos-led/p60-disco.jpg",
+              "image": "imagenes_productos/pisos_led/p60_disco/p60disco-1.jpeg",
               "specs": {
                 "tipo": "Discoteca",
                 "resistencia": "Alta resistencia al impacto y al agua",
@@ -485,7 +485,7 @@
               "name": "Cartelera",
               "slug": "cartelera",
               "description": "Display LED frontal para colectivos. Muestra recorrido y número de línea con alta visibilidad.",
-              "image": "productos/soluciones/cartelera.jpg",
+              "image": "imagenes_productos/soluciones/unidades_colectivos/cartelera/cartelera-1.jpeg",
               "specs": {
                 "aplicacion": "Transporte público",
                 "visibilidad": "Alta visibilidad a gran distancia",
@@ -497,7 +497,7 @@
               "name": "Ramalera",
               "slug": "ramalera",
               "description": "Display LED lateral para colectivos. Indica el ramal y destino de la unidad.",
-              "image": "productos/soluciones/ramalera.jpg",
+              "image": "imagenes_productos/soluciones/unidades_colectivos/ramalera/ramalera-1.jpeg",
               "specs": {
                 "aplicacion": "Transporte público",
                 "tipo": "Indicador de recorrido",
@@ -509,7 +509,7 @@
               "name": "Luneta de LED",
               "slug": "luneta-led",
               "description": "Display LED trasero para colectivos. Información visible para vehículos que circulan detrás.",
-              "image": "productos/soluciones/luneta-led.jpg",
+              "image": "imagenes_productos/soluciones/unidades_colectivos/luneta_led/lunetaled-1.jpeg",
               "specs": {
                 "aplicacion": "Transporte público",
                 "ubicacion": "Trasera del vehículo (luneta)"
@@ -528,7 +528,7 @@
               "name": "LPR-9648",
               "slug": "lpr-9648",
               "description": "Pórtico LED para autopistas y rutas. Señalización vial dinámica de alta visibilidad.",
-              "image": "productos/soluciones/lpr-9648.jpg",
+              "image": "imagenes_productos/soluciones/porticos/lpr_9648/lpr9648-1.jpeg",
               "specs": {
                 "aplicacion": "Rutas y autopistas",
                 "tipo": "Pórtico de gran formato"
@@ -539,7 +539,7 @@
               "name": "LPR-1248",
               "slug": "lpr-1248",
               "description": "Pórtico LED compacto para peajes y accesos. Mensajería variable en tiempo real.",
-              "image": "productos/soluciones/lpr-1248.jpg",
+              "image": "imagenes_productos/soluciones/porticos/lpr_1248/lpr1248-1.jpeg",
               "specs": {
                 "aplicacion": "Accesos, parkings, zonas urbanas",
                 "tipo": "Pórtico compacto"
@@ -550,7 +550,7 @@
               "name": "LPR-1264",
               "slug": "lpr-1264",
               "description": "Pórtico LED de formato medio para señalización en rutas y avenidas.",
-              "image": "productos/soluciones/lpr-1264.jpg",
+              "image": "imagenes_productos/soluciones/porticos/lpr_1264/lpr1264-1.jpeg",
               "specs": {
                 "aplicacion": "Túneles, playones, accesos verticales",
                 "tipo": "Pórtico vertical"
@@ -569,7 +569,7 @@
               "name": "SH-1696",
               "slug": "sh-1696",
               "description": "Pantalla LED de diseño especial para instalaciones a medida y proyectos personalizados.",
-              "image": "productos/soluciones/sh-1696.jpg",
+              "image": "imagenes_productos/soluciones/disenos_especiales/sh_1696/sh1696-1.jpeg",
               "specs": {
                 "aplicacion": "Proyectos personalizados",
                 "tipo": "Diseño a medida"
@@ -601,19 +601,19 @@
         ],
         "gallery": [
           {
-            "image": "productos/led-trucks/truck-1.jpg",
+            "image": "imagenes_productos/led_trucks/truck_1/truck-1.jpeg",
             "caption": "LED Truck en evento corporativo"
           },
           {
-            "image": "productos/led-trucks/truck-2.jpg",
+            "image": "imagenes_productos/led_trucks/truck_2/truck-2.jpeg",
             "caption": "Publicidad móvil en zona céntrica"
           },
           {
-            "image": "productos/led-trucks/truck-3.jpg",
+            "image": "imagenes_productos/led_trucks/truck_3/truck-3.jpeg",
             "caption": "Activación de marca en estadio"
           },
           {
-            "image": "productos/led-trucks/truck-4.jpg",
+            "image": "imagenes_productos/led_trucks/truck_4/truck-4.jpeg",
             "caption": "Cobertura de evento masivo"
           }
         ]
