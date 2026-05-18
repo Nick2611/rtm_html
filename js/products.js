@@ -42,7 +42,12 @@ class RTMProducts {
     if (!imagePath) return '';
     if (this.isRemoteImagePath(imagePath)) return imagePath;
     if (imagePath.startsWith('data:')) return imagePath;
-    const cleanedPath = imagePath.replace(/^\.\//, '').replace(/^\/+/, '').replace(/\/+/g, '/');
+    const cleanedPath = imagePath
+      .trim()
+      .replace(/^\.\//, '')
+      .replace(/^\/+/, '')
+      .replace(/\/\s+/g, '/')
+      .replace(/\/+/g, '/');
     return '/' + cleanedPath;
   }
 
@@ -51,9 +56,60 @@ class RTMProducts {
     if (this.isRemoteImagePath(imagePath)) return imagePath;
     if (imagePath.startsWith('data:')) return imagePath;
 
-    const cleanedPath = imagePath.replace(/^\.\//, '').replace(/^\/+/, '').replace(/\/+/g, '/');
+    const cleanedPath = imagePath
+      .trim()
+      .replace(/^\.\//, '')
+      .replace(/^\/+/, '')
+      .replace(/\/\s+/g, '/')
+      .replace(/\/+/g, '/');
     if (this.productImageBaseUrl) return `${this.productImageBaseUrl}/${cleanedPath}`;
     return '/' + cleanedPath;
+  }
+
+  buildProductImageKey(modelName, imagePath, index = 0) {
+    const extensionMatch = imagePath && imagePath.match(/(\.[a-z0-9]+)$/i);
+    const extension = extensionMatch ? extensionMatch[1].toLowerCase() : '.jpeg';
+    const normalizedName = (modelName || 'producto')
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/[^A-Za-z0-9-]/g, '-')
+      .replace(/-+/g, '-')
+      .replace(/^-|-$/g, '');
+    const suffix = index > 0 ? `-${index + 1}` : '';
+    return `${normalizedName}${suffix}${extension}`;
+  }
+
+  buildBucketProductImagePath(modelName, imagePath, index = 0) {
+    const localPath = this.normalizeLocalImagePath(imagePath).replace(/^\/+/, '');
+    const pathParts = localPath.split('/').filter(Boolean);
+    if (pathParts[0] !== 'imagenes_productos' || pathParts.length < 5) return '';
+
+    const bucketDirectory = pathParts.slice(0, -2).join('/');
+    const filename = this.buildProductImageKey(modelName, imagePath, index);
+    return bucketDirectory ? `${bucketDirectory}/${filename}` : filename;
+  }
+
+  getProductImageCandidates(modelName, imagePath, index = 0) {
+    if (!imagePath) return [];
+    if (this.isRemoteImagePath(imagePath) || imagePath.startsWith('data:')) return [imagePath];
+
+    const localPath = this.normalizeLocalImagePath(imagePath);
+    if (!this.productImageBaseUrl) return [localPath];
+
+    const cleanedPath = localPath.replace(/^\/+/, '');
+    const bucketProductPath = this.buildBucketProductImagePath(modelName, imagePath, index);
+
+    return [...new Set([
+      bucketProductPath ? `${this.productImageBaseUrl}/${bucketProductPath}` : '',
+      `${this.productImageBaseUrl}/${cleanedPath}`,
+      localPath
+    ].filter(Boolean))];
+  }
+
+  resolveProductImagePath(modelName, imagePath, index = 0) {
+    const candidates = this.getProductImageCandidates(modelName, imagePath, index);
+    return candidates[0] || '';
   }
 
   getImageFallbackHandler(imagePath, placeholderImage) {
@@ -66,6 +122,17 @@ class RTMProducts {
       return `this.onerror=function(){this.onerror=null;this.src='${placeholderImage}';};this.src='${localFallback}'`;
     }
     return `this.onerror=null;this.src='${placeholderImage}'`;
+  }
+
+  getProductImageFallbackHandler(modelName, imagePath, index, placeholderImage) {
+    const candidates = this.getProductImageCandidates(modelName, imagePath, index);
+    const fallbackQueue = [...new Set([...candidates.slice(1), placeholderImage].filter(Boolean))];
+
+    if (!fallbackQueue.length) {
+      return `this.onerror=null;this.src=${JSON.stringify(placeholderImage)};`;
+    }
+
+    return `(function(img){const queue=${JSON.stringify(fallbackQueue)};img.onerror=function(){const next=queue.shift();if(!next){this.onerror=null;return;}this.src=next;};img.onerror();})(this);`;
   }
 
   async loadData() {
@@ -494,8 +561,8 @@ class RTMProducts {
     const placeholderImage = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"%3E%3Crect fill="%23141416" width="300" height="200"/%3E%3Ctext fill="%23e84a45" font-family="Montserrat,sans-serif" font-size="14" text-anchor="middle" x="150" y="100"%3E' + encodeURIComponent(model.name) + '%3C/text%3E%3C/svg%3E';
     const hasMultipleImages = model.images && model.images.length > 1;
     const images = model.images || (model.image ? [model.image] : []);
-    const normalizedImages = images.map(img => this.normalizeImagePath(img));
-    const imageErrorHandlers = images.map(img => this.getImageFallbackHandler(img, placeholderImage));
+    const normalizedImages = images.map((img, index) => this.resolveProductImagePath(model.name, img, index));
+    const imageErrorHandlers = images.map((img, index) => this.getProductImageFallbackHandler(model.name, img, index, placeholderImage));
     let imageHTML = '';
     if (hasMultipleImages) {
       imageHTML = `
@@ -518,7 +585,7 @@ class RTMProducts {
       `;
     } else {
       const primaryImage = images[0] || placeholderImage;
-      imageHTML = `<img src="${this.normalizeImagePath(primaryImage)}" alt="${model.name}" loading="lazy" onerror="${this.getImageFallbackHandler(primaryImage, placeholderImage)}">`;
+      imageHTML = `<img src="${this.resolveProductImagePath(model.name, primaryImage, 0)}" alt="${model.name}" loading="lazy" onerror="${this.getProductImageFallbackHandler(model.name, primaryImage, 0, placeholderImage)}">`;
     }
 
     // ── CAMBIO ──
@@ -558,8 +625,8 @@ class RTMProducts {
     const placeholderImage = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400"%3E%3Crect fill="%23141416" width="600" height="400"/%3E%3Ctext fill="%23e84a45" font-family="Montserrat,sans-serif" font-size="24" text-anchor="middle" x="300" y="200"%3E' + encodeURIComponent(model.name) + '%3C/text%3E%3C/svg%3E';
     const hasMultipleImages = model.images && model.images.length > 1;
     const images = model.images || (model.image ? [model.image] : []);
-    const normalizedImages = images.map(img => this.normalizeImagePath(img));
-    const imageErrorHandlers = images.map(img => this.getImageFallbackHandler(img, placeholderImage));
+    const normalizedImages = images.map((img, index) => this.resolveProductImagePath(model.name, img, index));
+    const imageErrorHandlers = images.map((img, index) => this.getProductImageFallbackHandler(model.name, img, index, placeholderImage));
     let imageHTML = '';
     if (hasMultipleImages) {
       imageHTML = `
@@ -582,7 +649,7 @@ class RTMProducts {
       `;
     } else {
       const primaryImage = images[0] || placeholderImage;
-      imageHTML = `<img src="${this.normalizeImagePath(primaryImage)}" alt="${model.name}" onerror="${this.getImageFallbackHandler(primaryImage, placeholderImage)}">`;
+      imageHTML = `<img src="${this.resolveProductImagePath(model.name, primaryImage, 0)}" alt="${model.name}" onerror="${this.getProductImageFallbackHandler(model.name, primaryImage, 0, placeholderImage)}">`;
     }
     let specsHTML = '';
     if (model.specs) {
