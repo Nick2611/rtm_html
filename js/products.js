@@ -10,7 +10,7 @@ class RTMProducts {
     this.currentSubcategory = null;
     this.currentFilter = 'all'; // 'all', 'indoor', 'outdoor'
     this.searchIndex = [];
-    this.defaultProductImageBaseUrl = 'https://imagenes-productos-rtm-158129172701-us-east-1-an.s3.us-east-1.amazonaws.com';
+        this.defaultProductImageBaseUrl = 'https://imagenes-productos-rtm.s3.sa-east-1.amazonaws.com';
     this.productImageExtensions = ['jpeg', 'jpg', 'png', 'webp'];
     this.productImageMaxImages = 12;
     this.productImageProbeCache = new Map();
