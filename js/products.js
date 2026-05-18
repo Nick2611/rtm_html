@@ -268,11 +268,11 @@ class RTMProducts {
       return;
     }
     const stripDiacritics = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '');
-    const normalizedQuery = stripDiacritics(query.toLowerCase());
+    const normalizedQuery = stripDiacritics(query.toLowerCase()).replace(/\s+/g, '');
     const results = this.searchIndex.filter(item => {
-      const normalizedName = stripDiacritics(item.name.toLowerCase());
-      const normalizedDesc = stripDiacritics((item.description || '').toLowerCase());
-      const normalizedCategory = stripDiacritics((item.categoryName || '').toLowerCase());
+      const normalizedName = stripDiacritics(item.name.toLowerCase()).replace(/\s+/g, '');
+      const normalizedDesc = stripDiacritics((item.description || '').toLowerCase()).replace(/\s+/g, '');
+      const normalizedCategory = stripDiacritics((item.categoryName || '').toLowerCase()).replace(/\s+/g, '');
       return normalizedName.includes(normalizedQuery) ||
              normalizedDesc.includes(normalizedQuery) ||
              normalizedCategory.includes(normalizedQuery);
