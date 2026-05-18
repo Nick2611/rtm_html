@@ -10,11 +10,12 @@ class RTMProducts {
     this.currentSubcategory = null;
     this.currentFilter = 'all'; // 'all', 'indoor', 'outdoor'
     this.searchIndex = [];
-        this.defaultProductImageBaseUrl = 'https://imagenes-productos-rtm.s3.sa-east-1.amazonaws.com';
+    this.defaultProductImageBaseUrl = 'https://imagenes-productos-rtm.s3.sa-east-1.amazonaws.com';
     this.productImageExtensions = ['jpeg', 'jpg', 'png', 'webp'];
     this.productImageMaxImages = 12;
     this.productImageProbeCache = new Map();
     this.productImageDirectoryCache = new Map();
+    this.productPrimaryImageCache = new Map();
     this.productImageBaseUrl = this.resolveProductImageBaseUrl();
     this.init();
   }
@@ -169,6 +170,19 @@ class RTMProducts {
       .filter(item => item.directory && item.url && item.parts);
   }
 
+  getDeclaredPrimaryProductImageUrl(model) {
+    const declaredImages = [
+      model.image,
+      ...(Array.isArray(model.images) ? model.images : [])
+    ];
+
+    const primaryImagePath = declaredImages
+      .map(imagePath => this.normalizeBucketPath(imagePath))
+      .find(imagePath => imagePath.startsWith('imagenes_productos/'));
+
+    return primaryImagePath ? this.toBucketImageUrl(primaryImagePath) : '';
+  }
+
   getProductImageProbePlans(model) {
     const plans = [];
     const seenPlans = new Set();
@@ -318,7 +332,7 @@ class RTMProducts {
   }
 
   async discoverProductImages(category, subcategory, model) {
-    const cacheKey = `${category.slug || category.id}|${subcategory?.slug || subcategory?.id || ''}|${model.slug || model.id}`;
+    const cacheKey = this.getModelImageCacheKey(category, subcategory, model);
     if (model._bucketImagesCacheKey === cacheKey && Array.isArray(model._bucketImages)) return model._bucketImages;
 
     const directories = this.getProductImageDirectories(category, subcategory, model);
@@ -379,6 +393,54 @@ class RTMProducts {
     return [];
   }
 
+  getModelImageCacheKey(category, subcategory, model) {
+    return `${category.slug || category.id}|${subcategory?.slug || subcategory?.id || ''}|${model.slug || model.id}`;
+  }
+
+  async discoverPrimaryProductImage(category, subcategory, model) {
+    const cacheKey = this.getModelImageCacheKey(category, subcategory, model);
+    if (model._bucketPrimaryImageCacheKey === cacheKey && typeof model._bucketPrimaryImage === 'string') {
+      return model._bucketPrimaryImage;
+    }
+    if (this.productPrimaryImageCache.has(cacheKey)) return this.productPrimaryImageCache.get(cacheKey);
+
+    const request = this.resolvePrimaryProductImage(category, subcategory, model)
+      .then(imageUrl => {
+        model._bucketPrimaryImageCacheKey = cacheKey;
+        model._bucketPrimaryImage = imageUrl;
+        return imageUrl;
+      });
+
+    this.productPrimaryImageCache.set(cacheKey, request);
+    return request;
+  }
+
+  async resolvePrimaryProductImage(category, subcategory, model) {
+    const declaredPrimaryImage = this.getDeclaredPrimaryProductImageUrl(model);
+    if (declaredPrimaryImage && await this.imageExists(declaredPrimaryImage)) return declaredPrimaryImage;
+
+    const directories = this.getProductImageDirectories(category, subcategory, model);
+    const probePlans = this.getProductImageProbePlans(model);
+
+    for (const directory of directories) {
+      const listedImages = await this.listBucketImages(directory);
+      const matchingImages = this.getImagesMatchingProbePlans(listedImages, probePlans);
+      if (matchingImages.length > 0) return matchingImages[0];
+    }
+
+    for (const directory of directories) {
+      for (const plan of probePlans) {
+        const baseImageUrl = this.toBucketImageUrl(`${directory}/${plan.prefix}.${plan.extension}`);
+        if (await this.imageExists(baseImageUrl)) return baseImageUrl;
+
+        const numberedImageUrl = this.toBucketImageUrl(`${directory}/${plan.prefix}${plan.separator}1.${plan.extension}`);
+        if (await this.imageExists(numberedImageUrl)) return numberedImageUrl;
+      }
+    }
+
+    return '';
+  }
+
   async hydrateModelImages(category, subcategory, model) {
     const images = await this.discoverProductImages(category, subcategory, model);
     model.bucketImages = images;
@@ -392,8 +454,16 @@ class RTMProducts {
     await Promise.all(models.map(({ subcategory, model }) => this.hydrateModelImages(category, subcategory, model)));
   }
 
+  async hydratePrimaryModelImage(category, subcategory, model) {
+    const primaryImage = await this.discoverPrimaryProductImage(category, subcategory, model);
+    model.bucketImages = primaryImage ? [primaryImage] : [];
+    return model.bucketImages;
+  }
+
   getModelImages(model) {
-    return Array.isArray(model.bucketImages) ? model.bucketImages : [];
+    if (Array.isArray(model.bucketImages)) return model.bucketImages;
+    const declaredPrimaryImage = this.getDeclaredPrimaryProductImageUrl(model);
+    return declaredPrimaryImage ? [declaredPrimaryImage] : [];
   }
 
   getImageErrorHandler() {
@@ -418,6 +488,8 @@ class RTMProducts {
     const carouselId = options.carouselId || model.id;
     const frameClass = detail ? 'model-media-frame' : 'product-media-frame';
     const carouselClass = detail ? 'model-carousel' : 'product-carousel';
+    const firstImageLoading = detail ? 'eager' : 'lazy';
+    const firstImagePriority = detail ? 'high' : 'low';
     const imageErrorHandler = this.getImageErrorHandler();
 
     if (images.length > 1) {
@@ -426,7 +498,7 @@ class RTMProducts {
           <div class="product-carousel-container">
             ${images.map((img, index) => `
               <div class="carousel-slide ${index === 0 ? 'active' : ''}" data-slide="${index}">
-                <img src="${this.escapeAttribute(img)}" alt="${this.escapeAttribute(model.name)} - Imagen ${index + 1}" loading="${index === 0 ? 'eager' : 'lazy'}" decoding="async" onerror="${this.escapeAttribute(imageErrorHandler)}">
+                <img src="${this.escapeAttribute(img)}" alt="${this.escapeAttribute(model.name)} - Imagen ${index + 1}" loading="${index === 0 ? firstImageLoading : 'lazy'}" fetchpriority="${index === 0 ? firstImagePriority : 'low'}" decoding="async" onerror="${this.escapeAttribute(imageErrorHandler)}">
               </div>
             `).join('')}
           </div>
@@ -443,7 +515,7 @@ class RTMProducts {
 
     return `
       <div class="${frameClass}" ${images[0] ? '' : 'data-empty="true"'}>
-        ${images[0] ? `<img src="${this.escapeAttribute(images[0])}" alt="${this.escapeAttribute(model.name)}" loading="eager" decoding="async" onerror="${this.escapeAttribute(imageErrorHandler)}">` : ''}
+        ${images[0] ? `<img src="${this.escapeAttribute(images[0])}" alt="${this.escapeAttribute(model.name)}" loading="${firstImageLoading}" fetchpriority="${firstImagePriority}" decoding="async" onerror="${this.escapeAttribute(imageErrorHandler)}">` : ''}
       </div>
     `;
   }
@@ -451,14 +523,13 @@ class RTMProducts {
   hydrateRenderedModelImages(category, subcategories, container) {
     subcategories.forEach(subcategory => {
       (subcategory.models || []).forEach(model => {
-        this.hydrateModelImages(category, subcategory, model)
+        this.hydratePrimaryModelImage(category, subcategory, model)
           .then(images => {
             if (!images.length) return;
             const card = this.findProductCard(container, model.slug);
             const imageContainer = card?.querySelector('.product-card-image');
             if (!imageContainer) return;
             imageContainer.innerHTML = this.renderProductMedia(model) + this.renderProductEnvironmentBadge(model, subcategory);
-            if (images.length > 1) this.initCarousel(model.id);
           })
           .catch(error => console.warn(`No se pudieron cargar imágenes para ${model.name}:`, error));
       });

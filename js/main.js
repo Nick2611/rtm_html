@@ -3,6 +3,10 @@
  * JS compartido para todas las páginas
  */
 
+const PRODUCT_IMAGE_BASE_URL = 'https://imagenes-productos-rtm.s3.sa-east-1.amazonaws.com';
+const PRODUCT_IMAGE_PREFETCH_CONCURRENCY = 2;
+const productImagePreloaders = new Set();
+
 /* ===== SCROLL SUAVE ===== */
 function initSmoothScroll() {
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -279,7 +283,9 @@ async function loadProductsData() {
   try {
     const res = await fetch('data/products.json');
     if (!res.ok) return;
-    buildSearchIndex(await res.json());
+    const data = await res.json();
+    buildSearchIndex(data);
+    schedulePrimaryProductImagePrefetch(data);
   } catch { /* se carga al visitar productos.html */ }
 }
 
@@ -294,6 +300,117 @@ function buildSearchIndex(data) {
         searchIndex.push({ type: 'model', name: model.name, categoryName: cat.name, subcategoryName: sub.name, url: `productos.html?cat=${cat.slug}&sub=${sub.slug}&model=${model.slug}` });
       });
     });
+  });
+}
+
+function resolveProductImageBaseUrl() {
+  const metaBaseUrl = document
+    .querySelector('meta[name="rtm-product-image-base-url"]')
+    ?.getAttribute('content');
+  const configuredBaseUrl = window.RTM_PRODUCT_IMAGE_BASE_URL || metaBaseUrl || PRODUCT_IMAGE_BASE_URL;
+  return configuredBaseUrl.trim().replace(/\/+$/, '');
+}
+
+function normalizeBucketPath(imagePath) {
+  if (!imagePath || /^(https?:)?\/\//.test(imagePath) || imagePath.startsWith('data:')) return '';
+  return imagePath
+    .trim()
+    .replace(/^\.\//, '')
+    .replace(/^\/+/, '')
+    .replace(/\/+/g, '/')
+    .split('/')
+    .map(part => part.trim())
+    .filter(Boolean)
+    .join('/');
+}
+
+function toProductImageUrl(imagePath) {
+  if (!imagePath) return '';
+  if (/^(https?:)?\/\//.test(imagePath)) return imagePath;
+  const bucketPath = normalizeBucketPath(imagePath);
+  return bucketPath.startsWith('imagenes_productos/')
+    ? `${resolveProductImageBaseUrl()}/${bucketPath}`
+    : '';
+}
+
+function getPrimaryProductImageUrls(data) {
+  const urls = [];
+  data.categories?.forEach(category => {
+    category.subcategories?.forEach(subcategory => {
+      subcategory.models?.forEach(model => {
+        const imageUrl = toProductImageUrl(model.image || model.images?.[0]);
+        if (imageUrl) urls.push(imageUrl);
+      });
+    });
+  });
+  return [...new Set(urls)];
+}
+
+function isHomePage() {
+  const page = window.location.pathname.split('/').pop();
+  return page === '' || page === 'index.html';
+}
+
+function shouldPrefetchProductImages() {
+  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  if (connection?.saveData) return false;
+  if (['slow-2g', '2g'].includes(connection?.effectiveType)) return false;
+  return true;
+}
+
+function schedulePrimaryProductImagePrefetch(data) {
+  if (!isHomePage() || !shouldPrefetchProductImages()) return;
+
+  const urls = getPrimaryProductImageUrls(data);
+  if (!urls.length) return;
+
+  const storageKey = `rtmProductPrimaryImagesPrefetched:${resolveProductImageBaseUrl()}`;
+  try {
+    if (sessionStorage.getItem(storageKey) === '1') return;
+    sessionStorage.setItem(storageKey, '1');
+  } catch {
+    // Si el navegador bloquea sessionStorage, igual hacemos el prefetch.
+  }
+
+  const startPrefetch = () => prefetchProductImages(urls);
+  if ('requestIdleCallback' in window) {
+    window.requestIdleCallback(startPrefetch, { timeout: 2500 });
+  } else {
+    window.setTimeout(startPrefetch, 1200);
+  }
+}
+
+function prefetchProductImages(urls) {
+  let nextIndex = 0;
+  let active = 0;
+
+  const loadNext = () => {
+    while (active < PRODUCT_IMAGE_PREFETCH_CONCURRENCY && nextIndex < urls.length) {
+      const url = urls[nextIndex++];
+      active += 1;
+      prefetchProductImage(url).finally(() => {
+        active -= 1;
+        loadNext();
+      });
+    }
+  };
+
+  loadNext();
+}
+
+function prefetchProductImage(url) {
+  return new Promise(resolve => {
+    const image = new Image();
+    productImagePreloaders.add(image);
+    if ('fetchPriority' in image) image.fetchPriority = 'low';
+    image.decoding = 'async';
+    const finish = () => {
+      productImagePreloaders.delete(image);
+      resolve();
+    };
+    image.onload = finish;
+    image.onerror = finish;
+    image.src = url;
   });
 }
 
