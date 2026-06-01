@@ -1,146 +1,821 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Conocé nuestros proyectos de instalación de pantallas LED. Casos de éxito y realizaciones profesionales.">
-  <meta name="robots" content="index, follow">
-  
-  <!-- Favicon -->
-  <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="any">
-  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-  <link rel="icon" type="image/png" sizes="48x48" href="/rtm_logo/favicon-48x48.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/rtm_logo/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/rtm_logo/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/rtm_logo/apple-touch-icon.png">
-  
-  <!-- Canonical -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Proyectos — RTM Pantallas LED</title>
+
+  <meta name="description" content="Galería de proyectos realizados por RTM Pantallas LED: instalaciones de pantallas LED para eventos, comercios, transmisiones y espacios corporativos.">
   <link rel="canonical" href="https://pantallasledrtm.com/proyectos.html">
-  
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website">
+  <meta property="og:url"         content="https://pantallasledrtm.com/proyectos.html">
+  <meta property="og:title"       content="Proyectos — RTM Pantallas LED">
+  <meta property="og:description" content="Galería de proyectos realizados por RTM Pantallas LED: instalaciones de pantallas LED para eventos, comercios, transmisiones y espacios corporativos.">
+  <meta property="og:image"       content="https://pantallasledrtm.com/rtm_logo/rtmLogo.png">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:url"         content="https://pantallasledrtm.com/proyectos.html">
+  <meta name="twitter:title"       content="Proyectos — RTM Pantallas LED">
+  <meta name="twitter:description" content="Galería de proyectos realizados por RTM Pantallas LED.">
+  <meta name="twitter:image"       content="https://pantallasledrtm.com/rtm_logo/rtmLogo.png">
+
+  <!-- Favicons -->
+  <link rel="icon"             href="/favicon.ico" type="image/x-icon" sizes="any">
+  <link rel="shortcut icon"    href="/favicon.ico" type="image/x-icon">
+  <link rel="icon"             type="image/png" sizes="48x48" href="/rtm_logo/favicon-48x48.png">
+  <link rel="icon"             type="image/png" sizes="32x32" href="/rtm_logo/favicon-32x32.png">
+  <link rel="icon"             type="image/png" sizes="16x16" href="/rtm_logo/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180"               href="/rtm_logo/apple-touch-icon.png">
+
+  <!-- Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Tipografía e Iconos -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/main.css">
+
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
-    :root {
-      --bg-dark: #141416;
-      --accent: #e84a45;
-      --text-light: #ffffff;
-      --text-dim: rgba(255, 255, 255, 0.7);
-    }
-    
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-      background: var(--bg-dark);
-      color: var(--text-light);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+    /* ── Hero de la página de proyectos ── */
+    .proyectos-page-hero {
+      background:
+        linear-gradient(rgba(20,20,22,.88), rgba(15,20,32,.93)),
+        radial-gradient(circle at top left, rgba(232, 74, 69, 0.25), transparent 38%),
+        linear-gradient(180deg, rgba(20, 20, 22, 0.96), rgba(15, 20, 32, 0.98));
+      padding: 80px 20px 70px;
       text-align: center;
-      padding: 20px;
     }
-    
-    .container {
-      max-width: 600px;
-    }
-    
-    .logo {
-      width: 180px;
-      margin-bottom: 40px;
-    }
-    
-    .badge {
-      display: inline-block;
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--accent);
-      margin-bottom: 16px;
-    }
-    
-    h1 {
-      font-size: 2.5rem;
+    .proyectos-page-hero h1 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
       font-weight: 700;
-      margin-bottom: 20px;
-      line-height: 1.2;
+      color: #fff;
+      margin-bottom: 14px;
     }
-    
-    p {
-      font-size: 1.1rem;
-      color: var(--text-dim);
-      margin-bottom: 40px;
-      line-height: 1.6;
+    .proyectos-page-hero p {
+      font-size: clamp(1rem, 2vw, 1.15rem);
+      color: #cbd5e1;
+      max-width: 620px;
+      margin: 0 auto;
+      line-height: 1.7;
     }
-    
-    .btn {
+
+    /* La sección reutiliza .proyectos pero sin el header con botón */
+    .proyectos--full {
+      padding-top: 60px;
+      padding-bottom: 80px;
+    }
+
+    /* CTA al final */
+    .proyectos-cta {
+      text-align: center;
+      padding: 60px 20px 80px;
+      background: #f3f4fa;
+    }
+    .proyectos-cta h2 {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      color: #1b1e18;
+      margin-bottom: 12px;
+    }
+    .proyectos-cta p {
+      color: #555;
+      max-width: 600px;
+      margin: 0 auto 24px;
+    }
+    .proyectos-cta .btn {
       display: inline-block;
-      padding: 14px 32px;
+      padding: 14px 28px;
       background: var(--accent);
-      color: var(--text-light);
+      color: #fff;
       text-decoration: none;
+      border-radius: 6px;
       font-weight: 600;
-      font-size: 1rem;
-      border-radius: 8px;
-      transition: background 0.2s ease, transform 0.2s ease;
+      transition: background .2s ease, transform .2s ease;
     }
-    
-    .btn:hover {
-      background: #d43d38;
+    .proyectos-cta .btn:hover {
+      background: var(--accent-hover);
       transform: translateY(-2px);
     }
-    
-    .links {
-      margin-top: 30px;
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-      flex-wrap: wrap;
+
+    /* ── Tarjetas de la galería ── */
+    .proyecto-card {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 25px rgba(0,0,0,.15);
+      transition: transform .3s ease, box-shadow .3s ease;
+      aspect-ratio: 16/10;
+      cursor: pointer;
+      background: #0f1420;
     }
-    
-    .links a {
-      color: var(--text-dim);
-      text-decoration: none;
-      font-size: 0.95rem;
-      transition: color 0.2s ease;
+    .proyecto-card:hover {
+      transform: scale(1.02);
+      box-shadow: 0 12px 35px rgba(0,0,0,.25);
     }
-    
-    .links a:hover {
-      color: var(--accent);
+    .proyecto-card > img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
     }
-    
+    /* Lupa al pasar el mouse (proyectos individuales) */
+    .proyecto-card .zoom-hint {
+      position: absolute; top: 10px; right: 10px;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: rgba(0,0,0,.5);
+      color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .9rem;
+      opacity: 0;
+      transition: opacity .3s ease;
+      pointer-events: none;
+    }
+    .proyecto-card:hover .zoom-hint { opacity: 1; }
+    /* Insignia de conjunto (cantidad de elementos) */
+    .conjunto-badge {
+      position: absolute; top: 10px; right: 10px;
+      display: flex; align-items: center; gap: 6px;
+      padding: 6px 11px;
+      border-radius: 20px;
+      background: rgba(0,0,0,.6);
+      color: #fff; font-size: .8rem; font-weight: 600;
+      backdrop-filter: blur(2px);
+      pointer-events: none;
+    }
+    /* Ocultamos la lista de elementos del conjunto en la página */
+    .conjunto-items { display: none; }
+
+    /* ── Flechas para pasar imágenes en la propia tarjeta (conjuntos) ── */
+    .card-nav {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 38px; height: 38px;
+      border: none; border-radius: 50%;
+      background: rgba(0,0,0,.5);
+      color: #fff; font-size: 1.4rem; line-height: 1;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0;
+      transition: opacity .25s ease, background .2s ease;
+      z-index: 3;
+    }
+    .proyecto-card:hover .card-nav { opacity: 1; }
+    .card-nav:hover { background: rgba(0,0,0,.75); }
+    .card-prev { left: 10px; }
+    .card-next { right: 10px; }
+    /* Indicador de posición (ej. 2/4) abajo a la izquierda de la tarjeta */
+    .card-counter {
+      position: absolute; bottom: 10px; left: 10px;
+      padding: 4px 10px; border-radius: 14px;
+      background: rgba(0,0,0,.6);
+      color: #fff; font-size: .75rem; font-weight: 600;
+      pointer-events: none; z-index: 3;
+    }
+    /* Botón play que aparece cuando la imagen actual de la tarjeta es un video */
+    .card-play {
+      position: absolute; inset: 0;
+      display: none; align-items: center; justify-content: center;
+      pointer-events: none; z-index: 2;
+    }
+    .card-play.show { display: flex; }
+    .card-play::before {
+      content: "";
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.85);
+      box-shadow: 0 0 0 6px rgba(0,0,0,.15);
+    }
+    .card-play::after {
+      content: "";
+      position: absolute;
+      width: 0; height: 0;
+      border-top: 11px solid transparent;
+      border-bottom: 11px solid transparent;
+      border-left: 17px solid var(--accent, #e84a45);
+      margin-left: 5px;
+    }
+    /* En pantallas táctiles las flechas se ven siempre (no hay hover) */
+    @media (hover: none) {
+      .card-nav { opacity: 1; background: rgba(0,0,0,.45); }
+    }
+
+    /* ── Visor a pantalla completa (lightbox) ── */
+    .pl-lightbox {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.93);
+      display: none;
+      align-items: center; justify-content: center;
+      z-index: 9999;
+      padding: 20px;
+    }
+    .pl-lightbox.open { display: flex; }
+    .pl-lightbox img,
+    .pl-lightbox video {
+      max-width: 92vw;
+      max-height: 86vh;
+      border-radius: 8px;
+      box-shadow: 0 10px 40px rgba(0,0,0,.5);
+    }
+    .pl-close {
+      position: absolute; top: 16px; right: 22px;
+      font-size: 2.2rem; line-height: 1;
+      color: #fff; background: none; border: none; cursor: pointer;
+    }
+    .pl-nav {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 54px; height: 54px;
+      border: none; border-radius: 50%;
+      background: rgba(255,255,255,.14);
+      color: #fff; font-size: 2rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .2s ease;
+    }
+    .pl-nav:hover { background: rgba(255,255,255,.28); }
+    .pl-prev { left: 18px; }
+    .pl-next { right: 18px; }
+    .pl-counter {
+      position: absolute; bottom: 18px; left: 50%;
+      transform: translateX(-50%);
+      color: #fff; font-size: .95rem;
+      background: rgba(0,0,0,.45);
+      padding: 5px 14px; border-radius: 20px;
+    }
+    /* Si el proyecto tiene un solo elemento, no mostramos flechas ni contador */
+    .pl-lightbox.pl-single .pl-nav,
+    .pl-lightbox.pl-single .pl-counter { display: none; }
     @media (max-width: 600px) {
-      h1 {
-        font-size: 1.8rem;
-      }
-      
-      p {
-        font-size: 1rem;
-      }
+      .pl-nav { width: 44px; height: 44px; font-size: 1.6rem; }
+      .pl-prev { left: 10px; } .pl-next { right: 10px; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <a href="index.html"><img src="rtm_logo/rtmLogo.png" alt="RTM Pantallas LED" class="logo" width="100px"></a>
-    
-    <h1>Nuestros proyectos</h1>
-    <p>
-      Estamos preparando una galería con nuestros últimos proyectos e instalaciones.
-      Mientras tanto, podés ver una selección en la página principal o contactarnos para conocer casos de éxito.
-    </p>
-    
-    <a href="index.html#proyectos" class="btn">Ver proyectos en el inicio</a>
-    
-    <div class="links">
-      <a href="index.html">Inicio</a>
-      <a href="productos.html">Productos</a>
-      <a href="index.html#about">Nosotros</a>
-      <a href="index.html#contacto">Contacto</a>
+
+  <!-- Skip Link -->
+  <a href="#contenido" class="skip-link">Saltar al contenido</a>
+
+  <!-- ================== HEADER ================== -->
+  <header class="site-header" role="banner">
+    <nav class="navbar" aria-label="Principal">
+
+      <!-- Botón volver (mobile) -->
+      <button class="btn-back" onclick="history.back()" aria-label="Volver atrás">
+        <i class="fas fa-arrow-left"></i>
+      </button>
+
+      <a class="brand" href="index.html" aria-label="RTM Pantallas LED - Inicio">
+        <img src="rtm_logo/rtmLogo.png" alt="RTM Pantallas LED - Logo" loading="eager" width="300" height="60">
+      </a>
+
+      <div class="nav-center">
+        <ul class="menu" role="menubar">
+          <li role="none"><a role="menuitem" href="index.html#home">Home</a></li>
+          <li role="none"><a role="menuitem" href="index.html#about">Nosotros</a></li>
+          <li role="none" class="menu-item-dropdown mega-menu-trigger">
+            <a role="menuitem" href="productos.html">Productos</a>
+            <div class="mega-menu-wrapper">
+              <div class="mega-menu">
+                <div class="mega-menu-grid">
+
+                  <div class="mega-menu-category">
+                    <a href="productos.html?cat=pantallas-led" class="mega-menu-category-title">
+                      <i class="fas fa-tv"></i><span>Pantallas LED</span>
+                    </a>
+                    <ul class="mega-menu-subcategories">
+                      <li><a href="productos.html?cat=pantallas-led&sub=indoor">Indoor <span class="env-badge env-indoor">Indoor</span></a></li>
+                      <li><a href="productos.html?cat=pantallas-led&sub=outdoor">Outdoor <span class="env-badge env-outdoor">Outdoor</span></a></li>
+                    </ul>
+                  </div>
+
+                  <div class="mega-menu-category">
+                    <a href="productos.html?cat=tour-series" class="mega-menu-category-title">
+                      <i class="fas fa-truck-loading"></i><span>Tour Series</span>
+                    </a>
+                    <ul class="mega-menu-subcategories">
+                      <li><a href="productos.html?cat=tour-series&sub=indoor">Indoor <span class="env-badge env-indoor">Indoor</span></a></li>
+                      <li><a href="productos.html?cat=tour-series&sub=outdoor">Outdoor <span class="env-badge env-outdoor">Outdoor</span></a></li>
+                    </ul>
+                  </div>
+
+                  <div class="mega-menu-category">
+                    <a href="productos.html?cat=totems" class="mega-menu-category-title">
+                      <i class="fas fa-columns"></i><span>Totems</span>
+                    </a>
+                    <ul class="mega-menu-subcategories">
+                      <li><a href="productos.html?cat=totems&sub=indoor">Indoor <span class="env-badge env-indoor">Indoor</span></a></li>
+                      <li><a href="productos.html?cat=totems&sub=outdoor">Outdoor <span class="env-badge env-outdoor">Outdoor</span></a></li>
+                    </ul>
+                  </div>
+
+                  <div class="mega-menu-category">
+                    <a href="productos.html?cat=pisos-led" class="mega-menu-category-title">
+                      <i class="fas fa-th"></i><span>Pisos LED</span>
+                    </a>
+                    <ul class="mega-menu-subcategories">
+                      <li><a href="productos.html?cat=pisos-led">PDANCE</a></li>
+                      <li><a href="productos.html?cat=pisos-led">P-60 DISCO</a></li>
+                      <li><a href="productos.html?cat=pisos-led">PI-RGB</a></li>
+                    </ul>
+                  </div>
+
+                  <div class="mega-menu-category">
+                    <a href="productos.html?cat=soluciones" class="mega-menu-category-title">
+                      <i class="fas fa-lightbulb"></i><span>Soluciones</span>
+                    </a>
+                    <ul class="mega-menu-subcategories">
+                      <li><a href="productos.html?cat=soluciones&sub=unidades-colectivos">Unidades de Colectivos</a></li>
+                      <li><a href="productos.html?cat=soluciones&sub=unidades-comercios">Unidades para Comercios</a></li>
+                      <li><a href="productos.html?cat=soluciones&sub=porticos">Pórticos</a></li>
+                      <li><a href="productos.html?cat=soluciones&sub=disenos-especiales">Diseños Especiales</a></li>
+                    </ul>
+                  </div>
+
+                  <div class="mega-menu-category">
+                    <a href="productos.html?cat=led-trucks" class="mega-menu-category-title">
+                      <i class="fas fa-truck"></i><span>LED Trucks</span>
+                    </a>
+                    <span class="mega-menu-special-tag">Página especial</span>
+                  </div>
+
+                  <div class="mega-menu-category">
+                    <a href="productos.html?cat=iluminacion-profesional" class="mega-menu-category-title">
+                      <i class="fas fa-lightbulb"></i><span>Iluminación Profesional</span>
+                    </a>
+                    <ul class="mega-menu-subcategories">
+                      <li><a href="productos.html?cat=iluminacion-profesional&sub=beam">Cabezales Beam</a></li>
+                      <li><a href="productos.html?cat=iluminacion-profesional&sub=3en1">Cabezales 3 en 1</a></li>
+                      <li><a href="productos.html?cat=iluminacion-profesional&sub=barras-moviles">Barras Móviles</a></li>
+                      <li><a href="productos.html?cat=iluminacion-profesional&sub=flashes">Flashes</a></li>
+                    </ul>
+                  </div>
+
+                </div>
+                <div class="mega-menu-search">
+                  <div class="search-input-wrapper">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="mega-menu-search" placeholder="Buscar productos, modelos...">
+                  </div>
+                  <div id="mega-menu-search-results" class="search-results-dropdown"></div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li role="none"><a role="menuitem" href="index.html#clientes">Clientes</a></li>
+          <li role="none"><a role="menuitem" class="active" href="proyectos.html">Proyectos</a></li>
+        </ul>
+      </div>
+
+      <div class="search-container">
+        <div class="search-input-wrapper">
+          <i class="fas fa-search"></i>
+          <input type="text" id="global-search" placeholder="Buscar productos...">
+        </div>
+        <div id="search-results"></div>
+      </div>
+
+      <input type="checkbox" id="nav-toggle" aria-label="Abrir menú">
+      <label for="nav-toggle" class="burger-wrap" aria-hidden="true">
+        <div class="burger"><span></span></div>
+      </label>
+
+      <div class="drawer" aria-label="Menú móvil">
+        <ul>
+          <li><a href="index.html#home">Home</a></li>
+          <li><a href="index.html#about">Nosotros</a></li>
+          <li><a href="productos.html">Productos</a></li>
+          <li><a href="index.html#clientes">Clientes</a></li>
+          <li><a class="active" href="proyectos.html">Proyectos</a></li>
+          <li><a href="index.html#contacto">Contactanos</a></li>
+        </ul>
+      </div>
+
+    </nav>
+  </header>
+
+  <!-- ================== HERO ================== -->
+  <section class="proyectos-page-hero" id="contenido">
+    <h1>Nuestros Proyectos</h1>
+    <p>Conocé algunos de los proyectos que llevamos adelante: instalaciones de pantallas LED para eventos, comercios, transmisiones y espacios corporativos en todo el país.</p>
+  </section>
+
+  <!-- ================== GALERÍA DE PROYECTOS ================== -->
+  <!--
+    ┌──────────────────────────────────────────────────────────────────────┐
+    │ ARCHIVOS DE ESTA GALERÍA (extensiones reales ya configuradas)          │
+    ├──────────────────────────────────────────────────────────────────────┤
+    │ Carpetas: proyectos_imagenes/  (fotos)  y  proyectos_videos/ (video)   │
+    │                                                                        │
+    │ 17 PROYECTOS INDIVIDUALES (no existe proyecto_3, se quitó):             │
+    │   proyecto_1.jpg  proyecto_2.jpg                                        │
+    │   proyecto_4.png  proyecto_5.png  proyecto_6.png  proyecto_7.png       │
+    │   proyecto_8.png  proyecto_9.jpeg ... proyecto_18.jpeg                 │
+    │                                                                        │
+    │ 7 CONJUNTOS (la 1ra imagen es la portada):                             │
+    │   Conjunto 1: conjunto_1_1.png, conjunto_1_2.png                       │
+    │   Conjunto 2: conjunto_2_1.jpeg, conjunto_2_2.jpeg                      │
+    │              + video proyectos_videos/conjunto_2_video.mp4             │
+    │   Conjunto 3: conjunto_3_1.jpeg, conjunto_3_2.jpeg                      │
+    │   Conjunto 4: conjunto_4_1.jpeg, conjunto_4_2.jpeg                      │
+    │   Conjunto 5: conjunto_5_1.jpeg ... conjunto_5_4.jpeg                   │
+    │   Conjunto 6: conjunto_6_1.png, conjunto_6_2.png                       │
+    │                                                                        │
+    │ Cambiá cada alt="" por una descripción real (mejora el SEO).           │
+    └──────────────────────────────────────────────────────────────────────┘
+  -->
+  <section class="proyectos proyectos--full">
+    <div class="proyectos-container">
+      <div class="proyectos-galeria">
+
+        <!-- Proyecto individual 1 -->
+        <figure class="proyecto-card" data-tipo="individual">
+          <img src="proyectos_imagenes/proyecto_1.jpg" alt="Proyecto 1 - descripción breve" loading="lazy">
+          <span class="zoom-hint" aria-hidden="true"><i class="fas fa-search-plus"></i></span>
+        </figure>
+
+        <!-- Proyecto individual 2 -->
+        <figure class="proyecto-card" data-tipo="individual">
+          <img src="proyectos_imagenes/proyecto_2.jpg" alt="Proyecto 2 - descripción breve" loading="lazy">
+          <span class="zoom-hint" aria-hidden="true"><i class="fas fa-search-plus"></i></span>
+        </figure>
+
+        <!-- Proyecto individual 4 -->
+        <figure class="proyecto-card" data-tipo="individual">
+          <img src="proyectos_imagenes/proyecto_4.png" alt="Proyecto 4 - descripción breve" loading="lazy">
+          <span class="zoom-hint" aria-hidden="true"><i class="fas fa-search-plus"></i></span>
+        </figure>
+
+        <!-- Proyecto individual 5 -->
+        <figure class="proyecto-card" data-tipo="individual">
+          <img src="proyectos_imagenes/proyecto_5.png" alt="Proyecto 5 - descripción breve" loading="lazy">
+          <span class="zoom-hint" aria-hidden="true"><i class="fas fa-search-plus"></i></span>
+        </figure>
+
+        <!-- Proyecto individual 6 -->
+        <figure class="proyecto-card" data-tipo="individual">
+          <img src="proyectos_imagenes/proyecto_6.png" alt="Proyecto 6 - descripción breve" loading="lazy">
+          <span class="zoom-hint" aria-hidden="true"><i class="fas fa-search-plus"></i></span>
+        </figure>
+
+        <!-- Proyecto individual 7 -->
+        <figure class="proyecto-card" data-tipo="individual">
+          <img src="proyectos_imagenes/proyecto_7.png" alt="Proyecto 7 - descripción breve" loading="lazy">
+          <span class="zoom-hint" aria-hidden="true"><i class="fas fa-search-plus"></i></span>
+        </figure>
+
+        <!-- Proyecto individual 8 -->
+        <figure class="proyecto-card" data-tipo="individual">
+          <img src="proyectos_imagenes/proyecto_8.png" alt="Proyecto 8 - descripción breve" loading="lazy">
+          <span class="zoom-hint" aria-hidden="true"><i class="fas fa-search-plus"></i></span>
+        </figure>
+
+        <!-- Proyecto individual 9 -->
+        <figure class="proyecto-card" data-tipo="individual">
+          <img src="proyectos_imagenes/proyecto_9.jpeg" alt="Proyecto 9 - descripción breve" loading="lazy">
+          <span class="zoom-hint" aria-hidden="true"><i class="fas fa-search-plus"></i></span>
+        </figure>
+
+        <!-- Proyecto individual 10 -->
+        <figure class="proyecto-card" data-tipo="individual">
+          <img src="proyectos_imagenes/proyecto_10.jpeg" alt="Proyecto 10 - descripción breve" loading="lazy">
+          <span class="zoom-hint" aria-hidden="true"><i class="fas fa-search-plus"></i></span>
+        </figure>
+
+        <!-- Proyecto individual 11 -->
+        <figure class="proyecto-card" data-tipo="individual">
+          <img src="proyectos_imagenes/proyecto_11.jpeg" alt="Proyecto 11 - descripción breve" loading="lazy">
+          <span class="zoom-hint" aria-hidden="true"><i class="fas fa-search-plus"></i></span>
+        </figure>
+
+        <!-- Proyecto individual 12 -->
+        <figure class="proyecto-card" data-tipo="individual">
+          <img src="proyectos_imagenes/proyecto_12.jpeg" alt="Proyecto 12 - descripción breve" loading="lazy">
+          <span class="zoom-hint" aria-hidden="true"><i class="fas fa-search-plus"></i></span>
+        </figure>
+
+        <!-- Proyecto individual 13 -->
+        <figure class="proyecto-card" data-tipo="individual">
+          <img src="proyectos_imagenes/proyecto_13.jpeg" alt="Proyecto 13 - descripción breve" loading="lazy">
+          <span class="zoom-hint" aria-hidden="true"><i class="fas fa-search-plus"></i></span>
+        </figure>
+
+        <!-- Proyecto individual 14 -->
+        <figure class="proyecto-card" data-tipo="individual">
+          <img src="proyectos_imagenes/proyecto_14.jpeg" alt="Proyecto 14 - descripción breve" loading="lazy">
+          <span class="zoom-hint" aria-hidden="true"><i class="fas fa-search-plus"></i></span>
+        </figure>
+
+        <!-- Proyecto individual 15 -->
+        <figure class="proyecto-card" data-tipo="individual">
+          <img src="proyectos_imagenes/proyecto_15.jpeg" alt="Proyecto 15 - descripción breve" loading="lazy">
+          <span class="zoom-hint" aria-hidden="true"><i class="fas fa-search-plus"></i></span>
+        </figure>
+
+        <!-- Proyecto individual 16 -->
+        <figure class="proyecto-card" data-tipo="individual">
+          <img src="proyectos_imagenes/proyecto_16.jpeg" alt="Proyecto 16 - descripción breve" loading="lazy">
+          <span class="zoom-hint" aria-hidden="true"><i class="fas fa-search-plus"></i></span>
+        </figure>
+
+        <!-- Proyecto individual 17 -->
+        <figure class="proyecto-card" data-tipo="individual">
+          <img src="proyectos_imagenes/proyecto_17.jpeg" alt="Proyecto 17 - descripción breve" loading="lazy">
+          <span class="zoom-hint" aria-hidden="true"><i class="fas fa-search-plus"></i></span>
+        </figure>
+
+        <!-- Proyecto individual 18 -->
+        <figure class="proyecto-card" data-tipo="individual">
+          <img src="proyectos_imagenes/proyecto_18.jpeg" alt="Proyecto 18 - descripción breve" loading="lazy">
+          <span class="zoom-hint" aria-hidden="true"><i class="fas fa-search-plus"></i></span>
+        </figure>
+
+        <!-- Conjunto 1 (2 elementos) -->
+        <figure class="proyecto-card" data-tipo="conjunto">
+          <img src="proyectos_imagenes/conjunto_1_1.png" alt="Conjunto 1 - foto principal" loading="lazy">
+          <span class="conjunto-badge"><i class="fas fa-images"></i> 2</span>
+          <div class="card-play" aria-hidden="true"></div>
+          <button class="card-nav card-prev" type="button" aria-label="Imagen anterior">&#10094;</button>
+          <button class="card-nav card-next" type="button" aria-label="Imagen siguiente">&#10095;</button>
+          <span class="card-counter">1/2</span>
+          <div class="conjunto-items">
+            <span data-tipo="img" data-src="proyectos_imagenes/conjunto_1_1.png" data-alt="Conjunto 1 - imagen 1"></span>
+            <span data-tipo="img" data-src="proyectos_imagenes/conjunto_1_2.png" data-alt="Conjunto 1 - imagen 2"></span>
+          </div>
+        </figure>
+
+        <!-- Conjunto 2 (3 elementos) -->
+        <figure class="proyecto-card" data-tipo="conjunto">
+          <img src="proyectos_imagenes/conjunto_2_1.jpeg" alt="Conjunto 2 - foto principal" loading="lazy">
+          <span class="conjunto-badge"><i class="fas fa-images"></i> 3</span>
+          <div class="card-play" aria-hidden="true"></div>
+          <button class="card-nav card-prev" type="button" aria-label="Imagen anterior">&#10094;</button>
+          <button class="card-nav card-next" type="button" aria-label="Imagen siguiente">&#10095;</button>
+          <span class="card-counter">1/3</span>
+          <div class="conjunto-items">
+            <span data-tipo="img" data-src="proyectos_imagenes/conjunto_2_1.jpeg" data-alt="Conjunto 2 - imagen 1"></span>
+            <span data-tipo="img" data-src="proyectos_imagenes/conjunto_2_2.jpeg" data-alt="Conjunto 2 - imagen 2"></span>
+            <span data-tipo="video" data-src="proyectos_videos/conjunto_2_video.mp4" data-poster="proyectos_imagenes/conjunto_2_1.jpeg"></span>
+          </div>
+        </figure>
+
+        <!-- Conjunto 3 (2 elementos) -->
+        <figure class="proyecto-card" data-tipo="conjunto">
+          <img src="proyectos_imagenes/conjunto_3_1.jpeg" alt="Conjunto 3 - foto principal" loading="lazy">
+          <span class="conjunto-badge"><i class="fas fa-images"></i> 2</span>
+          <div class="card-play" aria-hidden="true"></div>
+          <button class="card-nav card-prev" type="button" aria-label="Imagen anterior">&#10094;</button>
+          <button class="card-nav card-next" type="button" aria-label="Imagen siguiente">&#10095;</button>
+          <span class="card-counter">1/2</span>
+          <div class="conjunto-items">
+            <span data-tipo="img" data-src="proyectos_imagenes/conjunto_3_1.jpeg" data-alt="Conjunto 3 - imagen 1"></span>
+            <span data-tipo="img" data-src="proyectos_imagenes/conjunto_3_2.jpeg" data-alt="Conjunto 3 - imagen 2"></span>
+          </div>
+        </figure>
+
+        <!-- Conjunto 4 (2 elementos) -->
+        <figure class="proyecto-card" data-tipo="conjunto">
+          <img src="proyectos_imagenes/conjunto_4_1.jpeg" alt="Conjunto 4 - foto principal" loading="lazy">
+          <span class="conjunto-badge"><i class="fas fa-images"></i> 2</span>
+          <div class="card-play" aria-hidden="true"></div>
+          <button class="card-nav card-prev" type="button" aria-label="Imagen anterior">&#10094;</button>
+          <button class="card-nav card-next" type="button" aria-label="Imagen siguiente">&#10095;</button>
+          <span class="card-counter">1/2</span>
+          <div class="conjunto-items">
+            <span data-tipo="img" data-src="proyectos_imagenes/conjunto_4_1.jpeg" data-alt="Conjunto 4 - imagen 1"></span>
+            <span data-tipo="img" data-src="proyectos_imagenes/conjunto_4_2.jpeg" data-alt="Conjunto 4 - imagen 2"></span>
+          </div>
+        </figure>
+
+        <!-- Conjunto 5 (4 elementos) -->
+        <figure class="proyecto-card" data-tipo="conjunto">
+          <img src="proyectos_imagenes/conjunto_5_1.jpeg" alt="Conjunto 5 - foto principal" loading="lazy">
+          <span class="conjunto-badge"><i class="fas fa-images"></i> 4</span>
+          <div class="card-play" aria-hidden="true"></div>
+          <button class="card-nav card-prev" type="button" aria-label="Imagen anterior">&#10094;</button>
+          <button class="card-nav card-next" type="button" aria-label="Imagen siguiente">&#10095;</button>
+          <span class="card-counter">1/4</span>
+          <div class="conjunto-items">
+            <span data-tipo="img" data-src="proyectos_imagenes/conjunto_5_1.jpeg" data-alt="Conjunto 5 - imagen 1"></span>
+            <span data-tipo="img" data-src="proyectos_imagenes/conjunto_5_2.jpeg" data-alt="Conjunto 5 - imagen 2"></span>
+            <span data-tipo="img" data-src="proyectos_imagenes/conjunto_5_3.jpeg" data-alt="Conjunto 5 - imagen 3"></span>
+            <span data-tipo="img" data-src="proyectos_imagenes/conjunto_5_4.jpeg" data-alt="Conjunto 5 - imagen 4"></span>
+          </div>
+        </figure>
+
+        <!-- Conjunto 6 (2 elementos) -->
+        <figure class="proyecto-card" data-tipo="conjunto">
+          <img src="proyectos_imagenes/conjunto_6_1.png" alt="Conjunto 6 - foto principal" loading="lazy">
+          <span class="conjunto-badge"><i class="fas fa-images"></i> 2</span>
+          <div class="card-play" aria-hidden="true"></div>
+          <button class="card-nav card-prev" type="button" aria-label="Imagen anterior">&#10094;</button>
+          <button class="card-nav card-next" type="button" aria-label="Imagen siguiente">&#10095;</button>
+          <span class="card-counter">1/2</span>
+          <div class="conjunto-items">
+            <span data-tipo="img" data-src="proyectos_imagenes/conjunto_6_1.png" data-alt="Conjunto 6 - imagen 1"></span>
+            <span data-tipo="img" data-src="proyectos_imagenes/conjunto_6_2.png" data-alt="Conjunto 6 - imagen 2"></span>
+          </div>
+        </figure>
+
+        <!-- Conjunto 7 (4 elementos) -->
+        <figure class="proyecto-card" data-tipo="conjunto">
+          <img src="proyectos_imagenes/conjunto_7_1.jpeg" alt="Conjunto 7 - foto principal" loading="lazy">
+          <span class="conjunto-badge"><i class="fas fa-images"></i> 4</span>
+          <div class="card-play" aria-hidden="true"></div>
+          <button class="card-nav card-prev" type="button" aria-label="Imagen anterior">&#10094;</button>
+          <button class="card-nav card-next" type="button" aria-label="Imagen siguiente">&#10095;</button>
+          <span class="card-counter">1/4</span>
+          <div class="conjunto-items">
+            <span data-tipo="img" data-src="proyectos_imagenes/conjunto_7_1.jpeg" data-alt="Conjunto 7 - imagen 1"></span>
+            <span data-tipo="img" data-src="proyectos_imagenes/conjunto_7_2.jpeg" data-alt="Conjunto 7 - imagen 2"></span>
+            <span data-tipo="img" data-src="proyectos_imagenes/conjunto_7_3.jpeg" data-alt="Conjunto 7 - imagen 3"></span>
+            <span data-tipo="img" data-src="proyectos_imagenes/conjunto_7_4.jpeg" data-alt="Conjunto 7 - imagen 4"></span>
+          </div>
+        </figure>
+
+      </div>
     </div>
+  </section>
+
+  <!-- ================== CTA CONTACTO ================== -->
+  <section class="proyectos-cta">
+    <h2>¿Tenés un proyecto en mente?</h2>
+    <p>Contactanos y te ayudamos a encontrar la solución LED ideal para tu próximo evento, comercio o instalación corporativa.</p>
+    <a href="index.html#contacto" class="btn">Hablar con un asesor</a>
+  </section>
+
+  <!-- ================== FOOTER ================== -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer__wrap">
+      <section class="footer__brand" aria-label="Marca">
+        <img src="rtm_logo/rtmLogo.png" alt="RTM Pantallas LED" loading="lazy">
+      </section>
+      <section class="footer__block" aria-labelledby="contactanos-title">
+        <h4 id="contactanos-title">Contactanos</h4>
+        <p class="footer__text">
+          <a href="tel:+5491173736308" style="color:var(--footer-ink);text-decoration:none">+54 9 11 7373 6308</a>
+        </p>
+        <p class="footer__text" style="margin-top:12px">
+          Av. Tte. Gral. Juan Domingo Perón 2915,<br>
+          B1888IUY Florencio Varela, Provincia<br>
+          de Buenos Aires
+        </p>
+      </section>
+      <section class="footer__block" aria-labelledby="novedades-title">
+        <h4 id="novedades-title">Enterate de las<br>novedades</h4>
+        <nav class="footer__social" aria-label="Redes sociales">
+          <a href="https://www.instagram.com/pantallasledrtm/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://www.linkedin.com/in/rtmpantallasled/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+        </nav>
+      </section>
+    </div>
+  </footer>
+
+  <!-- ================== BOTONES FLOTANTES ================== -->
+  <div class="floating-buttons" aria-label="Accesos rápidos">
+    <a href="index.html#contacto" class="floating-btn floating-btn--contact" aria-label="Ir a formulario de contacto" title="Contactanos">
+      <i class="fas fa-envelope"></i>
+    </a>
+    <a href="https://wa.me/5491173736308?text=Hola,%20me%20interesa%20conocer%20más%20sobre%20sus%20soluciones%20LED"
+       target="_blank" rel="noopener noreferrer"
+       class="floating-btn floating-btn--whatsapp"
+       aria-label="Contactar por WhatsApp" title="WhatsApp">
+      <i class="fab fa-whatsapp"></i>
+    </a>
   </div>
+
+  <!-- ================== VISOR (LIGHTBOX) ================== -->
+  <div class="pl-lightbox" id="plLightbox" role="dialog" aria-modal="true" aria-label="Visor de proyecto">
+    <button class="pl-close" id="plClose" aria-label="Cerrar">&times;</button>
+    <button class="pl-nav pl-prev" id="plPrev" aria-label="Anterior">&#10094;</button>
+    <div class="pl-stage" id="plStage"></div>
+    <button class="pl-nav pl-next" id="plNext" aria-label="Siguiente">&#10095;</button>
+    <div class="pl-counter" id="plCounter"></div>
+  </div>
+
+  <script src="js/main.js" defer></script>
+
+  <!-- Lógica del visor de proyectos (individuales + conjuntos con flechas) -->
+  <script>
+    (function () {
+      var cards   = Array.prototype.slice.call(document.querySelectorAll('.proyecto-card'));
+      var box     = document.getElementById('plLightbox');
+      var stage   = document.getElementById('plStage');
+      var counter = document.getElementById('plCounter');
+      var items   = [];   // elementos del proyecto abierto
+      var idx     = 0;
+
+      // Arma la lista de elementos de una tarjeta.
+      // Si tiene <div class="conjunto-items">, usa esos; si no, usa su imagen.
+      function buildItems(card) {
+        var nodes = card.querySelectorAll('.conjunto-items > [data-tipo]');
+        if (nodes.length) {
+          return Array.prototype.map.call(nodes, function (n) {
+            return {
+              tipo:   n.dataset.tipo,
+              src:    n.dataset.src,
+              poster: n.dataset.poster || '',
+              alt:    n.dataset.alt || ''
+            };
+          });
+        }
+        var img = card.querySelector('img');
+        return [{ tipo: 'img', src: img.getAttribute('src'), alt: img.alt || '' }];
+      }
+
+      function render() {
+        var it = items[idx];
+        stage.innerHTML = '';
+        if (it.tipo === 'video') {
+          var v = document.createElement('video');
+          v.src = it.src;
+          v.controls = true;
+          v.autoplay = true;
+          v.playsInline = true;
+          if (it.poster) v.poster = it.poster;
+          stage.appendChild(v);
+        } else {
+          var img = document.createElement('img');
+          img.src = it.src;
+          img.alt = it.alt;
+          stage.appendChild(img);
+        }
+        counter.textContent = items.length > 1 ? (idx + 1) + ' / ' + items.length : '';
+        box.classList.toggle('pl-single', items.length <= 1);
+      }
+
+      function open(card, startIndex) {
+        items = buildItems(card);
+        idx = startIndex || 0;
+        render();
+        box.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function close() {
+        box.classList.remove('open');
+        stage.innerHTML = ''; // detiene cualquier video
+        document.body.style.overflow = '';
+      }
+
+      function move(step) {
+        if (items.length <= 1) return;
+        idx = (idx + step + items.length) % items.length;
+        render();
+      }
+
+      cards.forEach(function (card) {
+        // Elementos del conjunto para navegar en la propia tarjeta
+        var list  = buildItems(card);
+        var cover = card.querySelector('img');
+        var play  = card.querySelector('.card-play');
+        var cnt   = card.querySelector('.card-counter');
+        var pos   = 0;
+
+        // Muestra en la portada el elemento "pos" (imagen o póster del video)
+        function showOnCard() {
+          var it = list[pos];
+          cover.src = (it.tipo === 'video') ? (it.poster || cover.src) : it.src;
+          cover.alt = it.alt || cover.alt;
+          if (play) play.classList.toggle('show', it.tipo === 'video');
+          if (cnt)  cnt.textContent = (pos + 1) + '/' + list.length;
+        }
+
+        var prev = card.querySelector('.card-prev');
+        var next = card.querySelector('.card-next');
+        if (prev) prev.addEventListener('click', function (e) {
+          e.stopPropagation();
+          pos = (pos - 1 + list.length) % list.length;
+          showOnCard();
+        });
+        if (next) next.addEventListener('click', function (e) {
+          e.stopPropagation();
+          pos = (pos + 1) % list.length;
+          showOnCard();
+        });
+
+        // Al hacer clic en la tarjeta, abrir el visor en la imagen que se ve
+        card.addEventListener('click', function () { open(card, pos); });
+      });
+
+      document.getElementById('plClose').addEventListener('click', close);
+      document.getElementById('plPrev').addEventListener('click', function () { move(-1); });
+      document.getElementById('plNext').addEventListener('click', function () { move(1); });
+
+      box.addEventListener('click', function (e) {
+        if (e.target === box) close(); // cerrar al hacer clic en el fondo
+      });
+
+      document.addEventListener('keydown', function (e) {
+        if (!box.classList.contains('open')) return;
+        if (e.key === 'Escape')     close();
+        if (e.key === 'ArrowLeft')  move(-1);
+        if (e.key === 'ArrowRight') move(1);
+      });
+    })();
+  </script>
+
 </body>
 </html>
