@@ -501,9 +501,10 @@ nav.navbar {
   position: relative;
 }
 
-.mega-menu-search input {
+.mega-menu-search input,
+#mega-menu-search {
   width: 100%;
-  padding: 12px 14px;
+  padding: 12px 14px 12px 42px !important;
   background: #1e1e20 !important;
   border: 1px solid rgba(255,255,255,.15);
   border-radius: 8px;
@@ -514,6 +515,19 @@ nav.navbar {
   transition: all .25s ease;
   -webkit-appearance: none;
   appearance: none;
+}
+.mega-menu-search .search-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.mega-menu-search .search-input-wrapper i {
+  position: absolute;
+  left: 14px;
+  color: rgba(255,255,255,.6);
+  font-size: .9rem;
+  pointer-events: none;
+  z-index: 2;
 }
 .mega-menu-search input::placeholder { color: rgba(255,255,255,.5) !important; opacity: 1; }
 .mega-menu-search input:focus {

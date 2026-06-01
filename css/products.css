@@ -11,6 +11,9 @@
   --product-card-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   --product-card-shadow-hover: 0 8px 32px rgba(0, 0, 0, 0.15);
   --product-card-radius: 12px;
+  --product-media-bg: #ffffff;
+  --product-media-border: #e6e9ef;
+  --product-media-padding: clamp(12px, 2vw, 18px);
   --env-indoor: #3498db;
   --env-outdoor: #e67e22;
 }
@@ -25,8 +28,10 @@
 
 .products-container {
   max-width: 1200px;
+  width: 100%;
   margin: 0 auto;
   padding: 40px 20px;
+  box-sizing: border-box;
 }
 
 /* Breadcrumb */
@@ -251,11 +256,13 @@
    ============================================ */
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 320px));
-  gap: 30px;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 320px));
+  gap: clamp(18px, 2.4vw, 30px);
   align-items: stretch;
   width: 100%;
-  justify-content: start;
+  max-width: 100%;
+  min-width: 0;
+  justify-content: center;
 }
 
 .product-card {
@@ -270,6 +277,8 @@
   height: 100%;
   width: 100%;
   max-width: 320px;
+  min-width: 0;
+  justify-self: center;
 }
 
 .product-card:hover {
@@ -278,16 +287,28 @@
 }
 
 .product-card-image {
+  --media-padding: var(--product-media-padding);
   position: relative;
-  height: 200px;
-  min-height: 200px;
-  max-height: 200px;
-  background: #ffffff;
+  aspect-ratio: auto;
+  height: auto;
+  min-height: 0;
+  max-height: none;
+  background: var(--product-media-bg);
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: block;
   flex-shrink: 0;
+  padding: var(--media-padding);
+  box-sizing: border-box;
+  isolation: isolate;
+}
+
+.product-card-image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--product-media-border);
+  pointer-events: none;
+  z-index: 1;
 }
 
 /* Imagen clickeable: lleva al detalle del producto */
@@ -304,13 +325,19 @@
   outline: none;
 }
 
-.product-card-image img {
+.product-card-image img,
+.product-media-frame img,
+.model-media-frame img {
   width: 100%;
   height: 100%;
+  max-width: 100%;
+  max-height: 100%;
   object-fit: contain;
   object-position: center;
   transition: transform 0.4s ease;
   display: block;
+  min-width: 0;
+  min-height: 0;
 }
 
 .product-card:hover .product-card-image img {
@@ -321,6 +348,7 @@
   position: absolute;
   top: 15px;
   right: 15px;
+  z-index: 2;
   font-size: 0.75rem;
   padding: 5px 12px;
   border-radius: 20px;
@@ -416,19 +444,29 @@
 }
 
 .model-detail-image {
+  --media-padding: clamp(14px, 2vw, 24px);
+  position: relative;
   border-radius: 12px;
   overflow: hidden;
-  background: linear-gradient(135deg, #141416 0%, #2a2a2e 100%);
+  background: var(--product-media-bg);
+  border: 1px solid var(--product-media-border);
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 300px;
+  aspect-ratio: 4 / 3;
   align-self: start;
+  padding: var(--media-padding);
+  box-sizing: border-box;
 }
 
 .model-detail-image img {
   width: 100%;
-  height: auto;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center;
   display: block;
 }
 
@@ -618,14 +656,18 @@
 .gallery-item {
   border-radius: 10px;
   overflow: hidden;
-  background: #f0f0f0;
+  background: var(--product-media-bg);
+  border: 1px solid var(--product-media-border);
 }
 
 .gallery-item img {
   width: 100%;
-  height: 200px;
-  object-fit: cover;
+  height: 220px;
+  object-fit: contain;
+  object-position: center;
   display: block;
+  padding: 14px;
+  background: var(--product-media-bg);
 }
 
 .gallery-caption {
@@ -762,7 +804,12 @@
   
   .subcategories-grid,
   .products-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+  }
+
+  .product-card {
+    max-width: 430px;
   }
 }
 
@@ -788,51 +835,105 @@
     padding: 10px 12px;
     font-size: 0.85rem;
   }
+
+  .product-card-image {
+    --media-padding: 10px;
+  }
+
+  .product-card {
+    max-width: calc(100vw - 40px);
+  }
+
+  .product-card-content {
+    padding: 20px 16px;
+  }
+
+  .product-env-badge {
+    top: 12px;
+    right: 12px;
+  }
 }
 
 /* ============================================
    Product Carousel (Instagram Style)
    ============================================ */
+.product-media-frame,
 .product-carousel,
+.model-media-frame,
 .model-carousel {
   position: relative;
   width: 100%;
   height: 100%;
+  min-width: 0;
+  min-height: 0;
   overflow: hidden;
-  border-radius: 12px;
+  border-radius: 8px;
+  background: var(--product-media-bg);
 }
 
-.carousel-container {
+.product-card-image > .product-media-frame,
+.product-card-image > .product-carousel,
+.model-detail-image > .model-media-frame,
+.model-detail-image > .model-carousel {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  max-height: none;
+}
+
+.product-card-image > .product-media-frame,
+.product-card-image > .product-carousel {
+  aspect-ratio: 4 / 3;
+}
+
+.model-detail-image > .model-media-frame,
+.model-detail-image > .model-carousel {
+  aspect-ratio: 4 / 3;
+}
+
+.product-carousel-container {
   position: relative;
   width: 100%;
   height: 100%;
-  display: flex;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  margin-left: 0;
+  transform: none;
+  animation: none;
 }
 
 .carousel-slide {
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: relative;
   width: 100%;
   height: 100%;
   opacity: 0;
+  visibility: hidden;
+  display: none;
   transition: opacity 0.4s ease-in-out;
-  display: flex;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
+  pointer-events: none;
 }
 
 .carousel-slide.active {
   opacity: 1;
-  position: relative;
+  visibility: visible;
+  display: flex;
+  pointer-events: auto;
 }
 
 .carousel-slide img {
   width: 100%;
   height: 100%;
+  max-width: 100%;
+  max-height: 100%;
   object-fit: contain;
   object-position: center;
   display: block;
+  min-width: 0;
+  min-height: 0;
 }
 
 .carousel-indicators {
@@ -910,9 +1011,10 @@
 
 /* Ajustes para product-card-image con carrusel */
 .product-card-image .product-carousel {
-  height: 200px;
-  min-height: 200px;
-  max-height: 200px;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  min-height: 0;
+  max-height: none;
   width: 100%;
 }
 
@@ -925,8 +1027,10 @@
 
 /* Ajustes para model-detail-image con carrusel */
 .model-detail-image .model-carousel {
-  min-height: 300px;
-  height: 100%;
+  min-height: 0;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  width: 100%;
 }
 
 /* Responsive */
@@ -949,5 +1053,3 @@
     bottom: 10px;
   }
 }
-
-
