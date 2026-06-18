@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "rtm_html",
+			"path": ".."
+		},
+		{
+			"name": "imagenes_productos_restantes",
+			"path": "../../../../Downloads/imagenes_productos_restantes"
+		}
+	],
+	"settings": {}
+}

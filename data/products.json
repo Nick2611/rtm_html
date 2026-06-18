@@ -22,12 +22,12 @@
               "description": "Pantalla LED indoor de instalación fija con mantenimiento frontal por imanes. Ideal para estudios de TV, aeropuertos y centros de convenciones.",
               "pixelPitch": "P2 / P2.5 / P3.07 / P4",
               "environment": "indoor",
-              "image": "imagenes_productos/pantallas_led/indoor/IFI960.png",
               "specs": {
                 "tamañoDelPanel": "960 x 960 x 100 mm",
                 "brilloPorM2": "600 - 1200 nits",
                 "frecuenciaDeRefresco": "1920 - 3840 Hz"
-              }
+              },
+              "image": "imagenes_productos/pantallas_led/indoor/IFI960.png"
             },
             {
               "id": "ri640",
@@ -36,13 +36,15 @@
               "description": "Gabinete de aluminio fundido a presión de 640×640 mm para rental indoor. Montaje rápido con quick lock, liviano y versátil.",
               "pixelPitch": "P1.86 / P2 / P2.5 / P3.07 / P4",
               "environment": "indoor",
-              "image": "imagenes_productos/pantallas_led/indoor/ri640/ri640-1.jpeg",
               "specs": {
                 "tamañoDelPanel": "640 x 640 x 65 mm",
                 "brilloPorM2": "500 - 600 nits",
                 "frecuenciaDeRefresco": "1920 - 3840 Hz"
               },
+              "image": "imagenes_productos/pantallas_led/indoor/RI640.jpeg",
               "images": [
+                "imagenes_productos/pantallas_led/indoor/RI640.jpeg",
+                "imagenes_productos/pantallas_led/indoor/RI640-2.jpeg",
                 "imagenes_productos/pantallas_led/indoor/ri640/ri640-1.jpeg",
                 "imagenes_productos/pantallas_led/indoor/ri640/ri640-2.jpeg",
                 "imagenes_productos/pantallas_led/indoor/ri640/ri640-3.jpeg",
@@ -56,13 +58,15 @@
               "description": "Gabinete rental indoor de 960×960 mm con diseño modular. Quick lock y puerta trasera para mantenimiento ágil.",
               "pixelPitch": "P2 / P2.5 / P3.07 / P4",
               "environment": "indoor",
-              "image": "imagenes_productos/pantallas_led/indoor/ri960/ri960-1.jpeg",
               "specs": {
                 "tamañoDelPanel": "960 x 960 x 85.5 mm",
                 "brilloPorM2": "500 - 600 nits",
                 "frecuenciaDeRefresco": "1920 - 3840 Hz"
               },
+              "image": "imagenes_productos/pantallas_led/indoor/RI960.jpeg",
               "images": [
+                "imagenes_productos/pantallas_led/indoor/RI960.jpeg",
+                "imagenes_productos/pantallas_led/indoor/RI960-2.jpeg",
                 "imagenes_productos/pantallas_led/indoor/ri960/ri960-1.jpeg",
                 "imagenes_productos/pantallas_led/indoor/ri960/ri960-2.jpeg"
               ]
@@ -83,12 +87,18 @@
               "description": "Pantalla LED outdoor para cartelería digital y publicidad exterior. Alta protección IP65 frontal, brillo elevado para visibilidad a plena luz solar.",
               "pixelPitch": "P2.5 / P3.07 / P4 / P5 / P6.66 / P8",
               "environment": "outdoor",
-              "image": "imagenes_productos/pantallas_led/outdoor/VP960.jpeg",
               "specs": {
                 "tamañoDelPanel": "960 x 960 x 110 mm",
                 "brilloPorM2": "4000 - 5500 nits",
                 "frecuenciaDeRefresco": "1920 - 3840 Hz"
-              }
+              },
+              "image": "imagenes_productos/pantallas_led/outdoor/VP960.jpeg",
+              "images": [
+                "imagenes_productos/pantallas_led/outdoor/VP960.jpeg",
+                "imagenes_productos/pantallas_led/outdoor/VP960-2.jpeg",
+                "imagenes_productos/pantallas_led/outdoor/VP960-3.jpeg",
+                "imagenes_productos/pantallas_led/outdoor/VP960-4.jpeg"
+              ]
             },
             {
               "id": "re640",
@@ -97,13 +107,16 @@
               "description": "Gabinete rental outdoor de 640×640 mm. IP65 frontal, ideal para eventos al aire libre y escenarios.",
               "pixelPitch": "P2.5 / P3.07 / P4 / P5 / P8",
               "environment": "outdoor",
-              "image": "imagenes_productos/pantallas_led/outdoor/re640/re640-1.jpeg",
               "specs": {
                 "tamañoDelPanel": "640 x 640 x 65 mm",
                 "brilloPorM2": "Pro: 4500 - 5500 nits / Pro Gold: 6000 - 7000 nits",
                 "frecuenciaDeRefresco": "1920 - 3840 Hz"
               },
+              "image": "imagenes_productos/pantallas_led/outdoor/RE640.jpeg",
               "images": [
+                "imagenes_productos/pantallas_led/outdoor/RE640.jpeg",
+                "imagenes_productos/pantallas_led/outdoor/RE640-2.jpeg",
+                "imagenes_productos/pantallas_led/outdoor/RE640-3.jpeg",
                 "imagenes_productos/pantallas_led/outdoor/re640/re640-1.jpeg",
                 "imagenes_productos/pantallas_led/outdoor/re640/re640-2.jpeg",
                 "imagenes_productos/pantallas_led/outdoor/re640/re640-3.jpeg",
@@ -117,13 +130,16 @@
               "description": "Gabinete rental outdoor de 960×960 mm con alta protección IP. Diseñado para shows y eventos exteriores.",
               "pixelPitch": "P2.5 / P3.07 / P4 / P5 / P8",
               "environment": "outdoor",
-              "image": "imagenes_productos/pantallas_led/outdoor/re960/re960-1.jpeg",
               "specs": {
                 "tamañoDelPanel": "960 x 960 x 85.5 mm",
                 "brilloPorM2": "Pro: 4500 - 5500 nits / Pro Gold: 6000 - 7000 nits",
                 "frecuenciaDeRefresco": "1920 - 3840 Hz"
               },
+              "image": "imagenes_productos/pantallas_led/outdoor/RE960.jpeg",
               "images": [
+                "imagenes_productos/pantallas_led/outdoor/RE960.jpeg",
+                "imagenes_productos/pantallas_led/outdoor/RE960-2.jpeg",
+                "imagenes_productos/pantallas_led/outdoor/RE960-3.jpeg",
                 "imagenes_productos/pantallas_led/outdoor/re960/re960-1.jpeg",
                 "imagenes_productos/pantallas_led/outdoor/re960/re960-2.jpeg"
               ]
@@ -154,15 +170,17 @@
               "description": "Gabinete tour de 500×500 mm en aluminio-magnesio. Ultraliviano, montaje rápido y transporte eficiente para giras y eventos.",
               "pixelPitch": "P2.84 / P3.91",
               "environment": "indoor",
-              "image": "imagenes_productos/tour_series/indoor/ri500/ri500-1.jpeg",
               "specs": {
                 "tamañoDelPanel": "500 x 500 x 70 mm",
                 "brilloPorM2": "1200 nits",
                 "frecuenciaDeRefresco": "> 3840 Hz"
               },
+              "image": "imagenes_productos/tour_series/indoor/ri500/ri500-1.jpeg",
               "images": [
                 "imagenes_productos/tour_series/indoor/ri500/ri500-1.jpeg",
-                "imagenes_productos/tour_series/indoor/ri500/ri500-2.jpeg"
+                "imagenes_productos/tour_series/indoor/ri500/ri500-2.jpeg",
+                "imagenes_productos_restantes/RI-RO-500/mmexport1779842190832.jpg",
+                "imagenes_productos_restantes/RI-RO-500/mmexport1779915677419.jpg"
               ]
             },
             {
@@ -172,12 +190,22 @@
               "description": "Variante curva del RI500. Sistema curvo opcional para pantallas cóncavas o convexas en escenarios.",
               "pixelPitch": "P2.84 / P3.91",
               "environment": "indoor",
-              "image": "imagenes_productos/tour_series/indoor/ric500/ric500-1.jpeg",
               "specs": {
                 "tamañoDelPanel": "500 x 500 x 70 mm",
                 "brilloPorM2": "1200 nits",
                 "frecuenciaDeRefresco": "> 3840 Hz"
-              }
+              },
+              "image": "imagenes_productos_restantes/RIC-ROC-500/416c1842-4b8e-4507-a771-e7f9cdd039b3.jpg",
+              "images": [
+                "imagenes_productos_restantes/RIC-ROC-500/416c1842-4b8e-4507-a771-e7f9cdd039b3.jpg",
+                "imagenes_productos_restantes/RIC-ROC-500/ec55a2f1-811e-450c-8aee-3acb8bfebefc.jpg",
+                "imagenes_productos_restantes/RIC-ROC-500/mmexport1779842182615.jpg",
+                "imagenes_productos_restantes/RIC-ROC-500/mmexport1779915694134.jpg",
+                "imagenes_productos_restantes/RIC-ROC-500+/mmexport1779915646291.jpg",
+                "imagenes_productos_restantes/RIC-ROC-500+/mmexport1779915658132.jpg",
+                "imagenes_productos_restantes/RIC-ROC-500+/mmexport1779915663474.png",
+                "imagenes_productos_restantes/RIC-ROC-500+/mmexport1779915699273.jpg"
+              ]
             },
             {
               "id": "rif500",
@@ -186,17 +214,21 @@
               "description": "Variante frontal del RI500 con mantenimiento 100% frontal por imanes. Ideal para instalaciones sin acceso trasero.",
               "pixelPitch": "P2.84 / P3.91",
               "environment": "indoor",
-              "image": "imagenes_productos/tour_series/indoor/rif500/rif500-1.jpeg",
               "specs": {
                 "tamañoDelPanel": "500 x 500 x 70 mm",
                 "brilloPorM2": "1200 nits",
                 "frecuenciaDeRefresco": "> 3840 Hz"
               },
+              "image": "imagenes_productos/tour_series/indoor/rif500/rif500-1.jpeg",
               "images": [
                 "imagenes_productos/tour_series/indoor/rif500/rif500-1.jpeg",
                 "imagenes_productos/tour_series/indoor/rif500/rif500-2.jpeg",
                 "imagenes_productos/tour_series/indoor/rif500/rif500-3.jpeg",
-                "imagenes_productos/tour_series/indoor/rif500/rif500-4.jpeg"
+                "imagenes_productos/tour_series/indoor/rif500/rif500-4.jpeg",
+                "imagenes_productos_restantes/RIF500/41490e59-c64f-47fb-a824-377d3167bfa9.jpg",
+                "imagenes_productos_restantes/RIF500/73938fa5-a129-44ea-adbc-fefe5481ec30.jpg",
+                "imagenes_productos_restantes/RIF500/95252c6b-c7ef-43a0-92d6-666a18a92555.jpg",
+                "imagenes_productos_restantes/RIF500/df4092ad-a415-4a87-8259-181da675d0db.jpg"
               ]
             },
             {
@@ -206,15 +238,16 @@
               "description": "Gabinete tour de 1000×500 mm para grandes superficies indoor. Menos juntas, montaje rápido.",
               "pixelPitch": "P2.84 / P3.91",
               "environment": "indoor",
-              "image": "imagenes_productos/tour_series/indoor/ri1000/ri1000-1.jpeg",
               "specs": {
                 "tamañoDelPanel": "500 x 1000 x 85 mm",
                 "brilloPorM2": "1200 nits",
                 "frecuenciaDeRefresco": "> 3840 Hz"
               },
+              "image": "imagenes_productos/tour_series/indoor/ri1000/ri1000-1.jpeg",
               "images": [
                 "imagenes_productos/tour_series/indoor/ri1000/ri1000-1.jpeg",
-                "imagenes_productos/tour_series/indoor/ri1000/ri1000-2.jpeg"
+                "imagenes_productos/tour_series/indoor/ri1000/ri1000-2.jpeg",
+                "imagenes_productos_restantes/RI-RO-1000/mmexport1779915707088.jpg"
               ]
             },
             {
@@ -224,11 +257,17 @@
               "description": "Variante curva del RI1000. Permite ensamblados curvos para escenarios y producciones.",
               "pixelPitch": "P2.84 / P3.91",
               "environment": "indoor",
-              "image": "imagenes_productos/tour_series/indoor/ric1000/ric1000-1.jpeg",
               "specs": {
                 "tamañoDelPanel": "500 x 1000 x 85 mm",
                 "brilloPorM2": "1200 nits"
-              }
+              },
+              "image": "imagenes_productos_restantes/RIC-ROC-1000/3f641732-a774-4649-b411-81e86f0fa4a4.jpg",
+              "images": [
+                "imagenes_productos_restantes/RIC-ROC-1000/3f641732-a774-4649-b411-81e86f0fa4a4.jpg",
+                "imagenes_productos_restantes/RIC-ROC-1000/mmexport1779842199128.jpg",
+                "imagenes_productos_restantes/RIC-ROC-1000/mmexport1779915683497.jpg",
+                "imagenes_productos_restantes/RIC-ROC-1000/mmexport1779915707088.jpg"
+              ]
             }
           ]
         },
@@ -246,15 +285,17 @@
               "description": "Gabinete tour outdoor de 500×500 mm. IP65 frontal, resistente a la intemperie para eventos al aire libre.",
               "pixelPitch": "P4.81 / P5.95",
               "environment": "outdoor",
-              "image": "imagenes_productos/tour_series/outdoor/re500/re500-1.jpeg",
               "specs": {
                 "tamañoDelPanel": "500 x 500 x 70 mm",
                 "brilloPorM2": "4500 nits",
                 "frecuenciaDeRefresco": "> 3840 Hz"
               },
+              "image": "imagenes_productos/tour_series/outdoor/re500/re500-1.jpeg",
               "images": [
                 "imagenes_productos/tour_series/outdoor/re500/re500-1.jpeg",
-                "imagenes_productos/tour_series/outdoor/re500/re500-2.jpeg"
+                "imagenes_productos/tour_series/outdoor/re500/re500-2.jpeg",
+                "imagenes_productos_restantes/RI-RO-500/mmexport1779842190832.jpg",
+                "imagenes_productos_restantes/RI-RO-500/mmexport1779915677419.jpg"
               ]
             },
             {
@@ -264,11 +305,21 @@
               "description": "Variante curva del RE500 para instalaciones outdoor con diseño no lineal.",
               "pixelPitch": "P4.81 / P5.95",
               "environment": "outdoor",
-              "image": "imagenes_productos/tour_series/outdoor/rec500/rec500-1.jpeg",
               "specs": {
                 "tamañoDelPanel": "500 x 500 x 70 mm",
                 "brilloPorM2": "4500 nits"
-              }
+              },
+              "image": "imagenes_productos_restantes/RIC-ROC-500/416c1842-4b8e-4507-a771-e7f9cdd039b3.jpg",
+              "images": [
+                "imagenes_productos_restantes/RIC-ROC-500/416c1842-4b8e-4507-a771-e7f9cdd039b3.jpg",
+                "imagenes_productos_restantes/RIC-ROC-500/ec55a2f1-811e-450c-8aee-3acb8bfebefc.jpg",
+                "imagenes_productos_restantes/RIC-ROC-500/mmexport1779842182615.jpg",
+                "imagenes_productos_restantes/RIC-ROC-500/mmexport1779915694134.jpg",
+                "imagenes_productos_restantes/RIC-ROC-500+/mmexport1779915646291.jpg",
+                "imagenes_productos_restantes/RIC-ROC-500+/mmexport1779915658132.jpg",
+                "imagenes_productos_restantes/RIC-ROC-500+/mmexport1779915663474.png",
+                "imagenes_productos_restantes/RIC-ROC-500+/mmexport1779915699273.jpg"
+              ]
             },
             {
               "id": "re1000",
@@ -277,15 +328,16 @@
               "description": "Gabinete tour outdoor de 1000×500 mm. Gran formato con protección IP65 para exteriores.",
               "pixelPitch": "P4.81 / P5.95",
               "environment": "outdoor",
-              "image": "imagenes_productos/tour_series/outdoor/re1000/re1000-1.jpeg",
               "specs": {
                 "tamañoDelPanel": "500 x 1000 x 85 mm",
                 "brilloPorM2": "4500 nits",
                 "frecuenciaDeRefresco": "> 3840 Hz"
               },
+              "image": "imagenes_productos/tour_series/outdoor/re1000/re1000-1.jpeg",
               "images": [
                 "imagenes_productos/tour_series/outdoor/re1000/re1000-1.jpeg",
-                "imagenes_productos/tour_series/outdoor/re1000/re1000-2.jpeg"
+                "imagenes_productos/tour_series/outdoor/re1000/re1000-2.jpeg",
+                "imagenes_productos_restantes/RI-RO-1000/mmexport1779915707088.jpg"
               ]
             },
             {
@@ -295,11 +347,17 @@
               "description": "Variante curva del RE1000. Configuraciones cóncavas/convexas para exteriores.",
               "pixelPitch": "P4.81 / P5.95",
               "environment": "outdoor",
-              "image": "imagenes_productos/tour_series/outdoor/rec1000/rec1000-1.jpeg",
               "specs": {
                 "tamañoDelPanel": "500 x 1000 x 85 mm",
                 "brilloPorM2": "4500 nits"
-              }
+              },
+              "image": "imagenes_productos_restantes/RIC-ROC-1000/3f641732-a774-4649-b411-81e86f0fa4a4.jpg",
+              "images": [
+                "imagenes_productos_restantes/RIC-ROC-1000/3f641732-a774-4649-b411-81e86f0fa4a4.jpg",
+                "imagenes_productos_restantes/RIC-ROC-1000/mmexport1779842199128.jpg",
+                "imagenes_productos_restantes/RIC-ROC-1000/mmexport1779915683497.jpg",
+                "imagenes_productos_restantes/RIC-ROC-1000/mmexport1779915707088.jpg"
+              ]
             }
           ]
         }
@@ -327,11 +385,15 @@
               "description": "Totem LED indoor de alta definición, formato vertical para señalización digital en interiores.",
               "pixelPitch": "5.2 mm",
               "environment": "indoor",
-              "image": "imagenes_productos/totems/indoor/ti520/ti520-1.jpeg",
               "specs": {
                 "brillo": "1200 nits",
                 "formato": "Vertical"
-              }
+              },
+              "image": "imagenes_productos/totems/indoor/TI520.png",
+              "images": [
+                "imagenes_productos/totems/indoor/TI520.png",
+                "imagenes_productos/totems/indoor/TI520-2.png"
+              ]
             },
             {
               "id": "ti640",
@@ -340,26 +402,17 @@
               "description": "Totem LED indoor premium con gabinete de aluminio fundido. Ideal para lobbies, shoppings y aeropuertos.",
               "pixelPitch": "P2 / P2.5 / P3.07 / P4",
               "environment": "indoor",
-              "image": "imagenes_productos/totems/indoor/ti640/ti640-1.jpeg",
               "specs": {
                 "dimensionesDelDisplay": "640 x 1600 mm",
                 "dimensionesExteriores": "680 x 1740 x 60 mm",
                 "brilloPorM2": "1000 - 1200 nits",
                 "frecuenciaDeRefresco": "1920 - 3840 Hz"
-              }
-            },
-            {
-              "id": "ti960",
-              "name": "TI960",
-              "slug": "ti960",
-              "description": "Totem LED indoor de gran formato para espacios amplios y eventos corporativos.",
-              "pixelPitch": "9.6 mm",
-              "environment": "indoor",
-              "image": "imagenes_productos/totems/indoor/ti960/ti960-1.jpeg",
-              "specs": {
-                "brillo": "1200 nits",
-                "formato": "Vertical"
-              }
+              },
+              "image": "imagenes_productos/totems/indoor/TI640.jpeg",
+              "images": [
+                "imagenes_productos/totems/indoor/TI640.jpeg",
+                "imagenes_productos/totems/indoor/TI640-2.jpeg"
+              ]
             }
           ]
         },
@@ -377,13 +430,17 @@
               "description": "Totem LED outdoor simple cara. Alta luminosidad para publicidad exterior y señalización vial.",
               "pixelPitch": "9.6 mm",
               "environment": "outdoor",
-              "image": "imagenes_productos/totems/outdoor/te960_s/te960s-1.jpeg",
               "specs": {
                 "brillo": "6000 nits",
                 "formato": "Vertical",
                 "tipo": "Simple cara",
                 "proteccion": "IP65"
-              }
+              },
+              "image": "imagenes_productos/totems/outdoor/TE960-S.png",
+              "images": [
+                "imagenes_productos/totems/outdoor/TE960-S.png",
+                "imagenes_productos/totems/outdoor/TE960-S-2.png"
+              ]
             },
             {
               "id": "te960-d",
@@ -392,13 +449,13 @@
               "description": "Totem LED outdoor doble cara. Máxima visibilidad desde ambos sentidos de circulación.",
               "pixelPitch": "9.6 mm",
               "environment": "outdoor",
-              "image": "imagenes_productos/totems/outdoor/te960_d/te960d-1.jpeg",
               "specs": {
                 "brillo": "6000 nits",
                 "formato": "Vertical",
                 "tipo": "Doble cara",
                 "proteccion": "IP65"
-              }
+              },
+              "image": "imagenes_productos/totems/outdoor/TE960-D.png"
             }
           ]
         }
@@ -424,14 +481,18 @@
               "slug": "pdance",
               "description": "Piso LED interactivo con sensor de presión. Ideal para escenarios, discotecas y eventos.",
               "pixelPitch": "P3 / P6.66",
-              "image": "imagenes_productos/pisos_led/pdance/pdance-1.jpeg",
               "specs": {
                 "tamañoDelPanel": "640 x 640 x 100 mm",
                 "brilloPorM2": "5000 nits",
                 "frecuenciaDeRefresco": "> 1920 Hz",
                 "acabadoSuperficial": "Vidrio templado de 10 mm",
                 "tipo": "Pista de baile transitable"
-              }
+              },
+              "image": "imagenes_productos/pisos_led/PDANCE.png",
+              "images": [
+                "imagenes_productos/pisos_led/PDANCE.png",
+                "imagenes_productos/pisos_led/PDANCE-1.png"
+              ]
             },
             {
               "id": "p60-disco",
@@ -439,25 +500,32 @@
               "slug": "p60-disco",
               "description": "Piso LED tipo disco con efectos de iluminación RGB. Para pistas de baile y eventos.",
               "pixelPitch": "6 mm",
-              "image": "imagenes_productos/pisos_led/p60_disco/p60disco-1.jpeg",
               "specs": {
                 "tipo": "Discoteca",
                 "resistencia": "Alta resistencia al impacto y al agua",
                 "efectos": "Efectos de luz integrados"
-              }
+              },
+              "image": "imagenes_productos/pisos_led/P60DISCO.jpeg",
+              "images": [
+                "imagenes_productos/pisos_led/P60DISCO.jpeg",
+                "imagenes_productos/pisos_led/P60DISCO-2.jpeg",
+                "imagenes_productos/pisos_led/P60DISCO-3.jpeg"
+              ]
             },
             {
               "id": "pi-rgb",
               "name": "PI-RGB",
               "slug": "pi-rgb",
               "description": "Piso LED RGB resistente para instalaciones permanentes en bares, discotecas y eventos.",
-              "image": "imagenes_productos/pisos_led/pi_rgb/pi_rgb1.png",
               "specs": {
                 "tipo": "Interactivo RGB",
                 "resistencia": "Alta resistencia",
                 "colores": "Full RGB con control por zona"
               },
+              "image": "imagenes_productos/pisos_led/PIRGB.jpeg",
               "images": [
+                "imagenes_productos/pisos_led/PIRGB.jpeg",
+                "imagenes_productos/pisos_led/PIRGB-2.jpeg",
                 "imagenes_productos/pisos_led/pi_rgb/pi_rgb1.png",
                 "imagenes_productos/pisos_led/pi_rgb/pi_rgb2.png"
               ]
@@ -481,39 +549,35 @@
           "description": "Sistemas LED para transporte público",
           "models": [
             {
-              "id": "cartelera",
-              "name": "Cartelera",
-              "slug": "cartelera",
-              "description": "Display LED frontal para colectivos. Muestra recorrido y número de línea con alta visibilidad.",
-              "image": "imagenes_productos/soluciones/unidades_colectivos/cartelera/cartelera-1.jpeg",
-              "specs": {
-                "aplicacion": "Transporte público",
-                "visibilidad": "Alta visibilidad a gran distancia",
-                "ubicacion": "Frontal del vehículo"
-              }
-            },
-            {
               "id": "ramalera",
               "name": "Ramalera",
               "slug": "ramalera",
               "description": "Display LED lateral para colectivos. Indica el ramal y destino de la unidad.",
-              "image": "imagenes_productos/soluciones/unidades_colectivos/ramalera/ramalera-1.jpeg",
               "specs": {
                 "aplicacion": "Transporte público",
                 "tipo": "Indicador de recorrido",
                 "ubicacion": "Lateral del vehículo"
-              }
+              },
+              "image": "imagenes_productos/soluciones/RAMALERA.png",
+              "images": [
+                "imagenes_productos/soluciones/RAMALERA.png",
+                "imagenes_productos/soluciones/RAMALERA-2.png"
+              ]
             },
             {
               "id": "luneta-led",
               "name": "Luneta de LED",
               "slug": "luneta-led",
               "description": "Display LED trasero para colectivos. Información visible para vehículos que circulan detrás.",
-              "image": "imagenes_productos/soluciones/unidades_colectivos/luneta_led/lunetaled-1.jpeg",
               "specs": {
                 "aplicacion": "Transporte público",
                 "ubicacion": "Trasera del vehículo (luneta)"
-              }
+              },
+              "image": "imagenes_productos/soluciones/LUNETA.png",
+              "images": [
+                "imagenes_productos/soluciones/LUNETA.png",
+                "imagenes_productos/soluciones/LUNETA-2.png"
+              ]
             }
           ]
         },
@@ -528,33 +592,41 @@
               "name": "LPR-9648",
               "slug": "lpr-9648",
               "description": "Pórtico LED para autopistas y rutas. Señalización vial dinámica de alta visibilidad.",
-              "image": "imagenes_productos/soluciones/porticos/lpr_9648/lpr9648-1.jpeg",
               "specs": {
                 "aplicacion": "Rutas y autopistas",
                 "tipo": "Pórtico de gran formato"
-              }
+              },
+              "image": "imagenes_productos/soluciones/LPR9648.jpeg"
             },
             {
               "id": "lpr-1248",
               "name": "LPR-1248",
               "slug": "lpr-1248",
               "description": "Pórtico LED compacto para peajes y accesos. Mensajería variable en tiempo real.",
-              "image": "imagenes_productos/soluciones/porticos/lpr_1248/lpr1248-1.jpeg",
               "specs": {
                 "aplicacion": "Accesos, parkings, zonas urbanas",
                 "tipo": "Pórtico compacto"
-              }
+              },
+              "image": "imagenes_productos/soluciones/LPR1248.jpeg",
+              "images": [
+                "imagenes_productos/soluciones/LPR1248.jpeg",
+                "imagenes_productos/soluciones/LPR1248-2.jpeg"
+              ]
             },
             {
               "id": "lpr-1264",
               "name": "LPR-1264",
               "slug": "lpr-1264",
               "description": "Pórtico LED de formato medio para señalización en rutas y avenidas.",
-              "image": "imagenes_productos/soluciones/porticos/lpr_1264/lpr1264-1.jpeg",
               "specs": {
                 "aplicacion": "Túneles, playones, accesos verticales",
                 "tipo": "Pórtico vertical"
-              }
+              },
+              "image": "imagenes_productos/soluciones/LPR1264.jpeg",
+              "images": [
+                "imagenes_productos/soluciones/LPR1264.jpeg",
+                "imagenes_productos/soluciones/LPR1264-2.jpeg"
+              ]
             }
           ]
         },
@@ -569,11 +641,15 @@
               "name": "SH-1696",
               "slug": "sh-1696",
               "description": "Pantalla LED de diseño especial para instalaciones a medida y proyectos personalizados.",
-              "image": "imagenes_productos/soluciones/disenos_especiales/sh_1696/sh1696-1.jpeg",
               "specs": {
                 "aplicacion": "Proyectos personalizados",
                 "tipo": "Diseño a medida"
-              }
+              },
+              "image": "imagenes_productos/soluciones/SH1696.png",
+              "images": [
+                "imagenes_productos/soluciones/SH1696.png",
+                "imagenes_productos/soluciones/SH1696-2.png"
+              ]
             }
           ]
         }
@@ -599,24 +675,7 @@
           "Operadores especializados incluidos",
           "Proyecto llave en mano (diseño + fabricación + instalación)"
         ],
-        "gallery": [
-          {
-            "image": "imagenes_productos/led_trucks/truck_1/truck-1.jpeg",
-            "caption": "LED Truck en evento corporativo"
-          },
-          {
-            "image": "imagenes_productos/led_trucks/truck_2/truck-2.jpeg",
-            "caption": "Publicidad móvil en zona céntrica"
-          },
-          {
-            "image": "imagenes_productos/led_trucks/truck_3/truck-3.jpeg",
-            "caption": "Activación de marca en estadio"
-          },
-          {
-            "image": "imagenes_productos/led_trucks/truck_4/truck-4.jpeg",
-            "caption": "Cobertura de evento masivo"
-          }
-        ]
+        "gallery": []
       },
       "subcategories": []
     },
@@ -647,11 +706,11 @@
               "name": "CMB-7R",
               "slug": "cmb-7r",
               "description": "Cabezal móvil beam de 7R. Haz concentrado de largo alcance para shows y eventos.",
-              "image": "imagenes_productos/iluminacion_profesional/beam/cmb_7_r/cbm7r-1.jpeg",
               "specs": {
                 "tipo": "Cabezal móvil Beam",
                 "potencia": "7R"
               },
+              "image": "imagenes_productos/iluminacion_profesional/beam/cmb_7_r/cbm7r-1.jpeg",
               "images": [
                 "imagenes_productos/iluminacion_profesional/beam/cmb_7_r/cbm7r-1.jpeg",
                 "imagenes_productos/iluminacion_profesional/beam/cmb_7_r/cmb7r-2.jpeg",
@@ -665,11 +724,11 @@
               "name": "CMB-20R",
               "slug": "cmb-20r",
               "description": "Cabezal móvil beam de 20R. Mayor potencia para grandes escenarios y festivales.",
-              "image": "imagenes_productos/iluminacion_profesional/beam/cmb_20_r/cmb20r-1.jpeg",
               "specs": {
                 "tipo": "Cabezal móvil Beam",
                 "potencia": "20R"
               },
+              "image": "imagenes_productos/iluminacion_profesional/beam/cmb_20_r/cmb20r-1.jpeg",
               "images": [
                 "imagenes_productos/iluminacion_profesional/beam/cmb_20_r/cmb20r-1.jpeg",
                 "imagenes_productos/iluminacion_profesional/beam/cmb_20_r/cmb20r-2.jpeg",
@@ -691,11 +750,11 @@
               "name": "CMR-250-LED",
               "slug": "cmr-250-led",
               "description": "Cabezal móvil 3 en 1 de 250W LED. Combina beam, spot y wash en una unidad.",
-              "image": "imagenes_productos/iluminacion_profesional/3_en_1/cmr_250_led/cmr250-1.jpeg",
               "specs": {
                 "tipo": "Cabezal móvil 3 en 1 (Beam / Spot / Wash)",
                 "potencia": "250W LED"
               },
+              "image": "imagenes_productos/iluminacion_profesional/3_en_1/cmr_250_led/cmr250-1.jpeg",
               "images": [
                 "imagenes_productos/iluminacion_profesional/3_en_1/cmr_250_led/cmr250-1.jpeg",
                 "imagenes_productos/iluminacion_profesional/3_en_1/cmr_250_led/cmr250-2.jpeg",
@@ -708,13 +767,13 @@
               "name": "CMR-400-LED",
               "slug": "cmr-400-led",
               "description": "Cabezal móvil 3 en 1 de 400W LED. Alta potencia para grandes producciones.",
-              "image": "imagenes_productos/iluminacion_profesional/3_en_1/cmr_400_led/ cmr400-2.jpeg",
               "specs": {
                 "tipo": "Cabezal móvil 3 en 1 (Beam / Spot / Wash)",
                 "potencia": "400W LED"
               },
+              "image": "imagenes_productos/iluminacion_profesional/3_en_1/cmr_400_led/cmr400-2.jpeg",
               "images": [
-                "imagenes_productos/iluminacion_profesional/3_en_1/cmr_400_led/ cmr400-2.jpeg",
+                "imagenes_productos/iluminacion_profesional/3_en_1/cmr_400_led/cmr400-2.jpeg",
                 "imagenes_productos/iluminacion_profesional/3_en_1/cmr_400_led/cmr400-1.jpeg"
               ]
             }
@@ -731,15 +790,15 @@
               "name": "LB-1040-LED",
               "slug": "lb-1040-led",
               "description": "Barra móvil LED de 10 cabezas independientes. Efectos dinámicos para escenarios.",
-              "images": [
-                "imagenes_productos/iluminacion_profesional/barra_movil/barramovil-1.jpeg",
-                "imagenes_productos/iluminacion_profesional/barra_movil/barramovil-2.jpeg"
-              ],
-              "image": "imagenes_productos/iluminacion_profesional/barra_movil/barramovil-1.jpeg",
               "specs": {
                 "tipo": "Barra móvil LED",
                 "leds": "10 x 40W"
-              }
+              },
+              "image": "imagenes_productos/iluminacion_profesional/barra_movil/barramovil-1.jpeg",
+              "images": [
+                "imagenes_productos/iluminacion_profesional/barra_movil/barramovil-1.jpeg",
+                "imagenes_productos/iluminacion_profesional/barra_movil/barramovil-2.jpeg"
+              ]
             }
           ]
         },
@@ -754,11 +813,11 @@
               "name": "ST-960-LED",
               "slug": "st-960-led",
               "description": "Flash LED estroboscópico de alta potencia. Efectos de impacto para shows en vivo.",
-              "image": "imagenes_productos/iluminacion_profesional/flashes/st_960_led/st960-1.jpeg",
               "specs": {
                 "tipo": "Flash estroboscópico LED",
                 "potencia": "960W LED"
               },
+              "image": "imagenes_productos/iluminacion_profesional/flashes/st_960_led/st960-2.jpeg",
               "images": [
                 "imagenes_productos/iluminacion_profesional/flashes/st_960_led/st960-2.jpeg",
                 "imagenes_productos/iluminacion_profesional/flashes/st_960_led/st960-3.jpeg",
@@ -773,7 +832,7 @@
   ],
   "metadata": {
     "version": "2.0.0",
-    "lastUpdated": "2026-05-07",
+    "lastUpdated": "2026-06-18",
     "company": "RTM Pantallas LED",
     "contact": {
       "phone": "+54 9 11 7373 6308",

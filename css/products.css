@@ -24,6 +24,9 @@
 .products-page {
   min-height: 100vh;
   background: #f8f9fc;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
 }
 
 .products-container {
@@ -32,6 +35,8 @@
   margin: 0 auto;
   padding: 40px 20px;
   box-sizing: border-box;
+  min-width: 0;
+  overflow-x: clip;
 }
 
 /* Breadcrumb */
@@ -65,10 +70,12 @@
 /* Category Header */
 .category-header {
   margin-bottom: 40px;
+  min-width: 0;
 }
 
 .category-title {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 15px;
   font-size: 2.5rem;
@@ -87,13 +94,16 @@
   line-height: 1.6;
   max-width: 800px;
   margin: 0;
+  overflow-wrap: anywhere;
 }
 
 /* Environment Filter */
 .environment-filter {
   display: flex;
+  flex-wrap: wrap;
   gap: 12px;
   margin-top: 25px;
+  max-width: 100%;
 }
 
 .filter-btn {
@@ -107,6 +117,7 @@
   font-size: 0.95rem;
   font-weight: 500;
   color: #666;
+  min-width: 0;
   cursor: pointer;
   transition: all 0.25s ease;
   font-family: inherit;
@@ -446,6 +457,9 @@
 .model-detail-image {
   --media-padding: clamp(14px, 2vw, 24px);
   position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   border-radius: 12px;
   overflow: hidden;
   background: var(--product-media-bg);
@@ -773,6 +787,11 @@
     grid-template-columns: 1fr;
     gap: 30px;
     padding: 25px;
+    min-width: 0;
+  }
+
+  .model-detail-image {
+    min-height: 0;
   }
   
   .model-actions {
@@ -815,7 +834,7 @@
 
 @media (max-width: 480px) {
   .products-container {
-    padding: 20px 15px;
+    padding: 20px 12px;
   }
   
   .category-title {
@@ -830,10 +849,15 @@
   }
   
   .filter-btn {
-    flex: 1;
+    flex: 1 1 calc(50% - 6px);
     justify-content: center;
-    padding: 10px 12px;
+    padding: 10px 8px;
     font-size: 0.85rem;
+    white-space: nowrap;
+  }
+
+  .filter-btn:first-child {
+    flex-basis: 100%;
   }
 
   .product-card-image {
@@ -841,7 +865,15 @@
   }
 
   .product-card {
-    max-width: calc(100vw - 40px);
+    max-width: 100%;
+  }
+
+  .model-detail {
+    padding: 18px;
+  }
+
+  .model-detail-image {
+    --media-padding: 10px;
   }
 
   .product-card-content {
