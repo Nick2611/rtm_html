@@ -42,6 +42,21 @@
 /imagenes_productos/*
   Cache-Control: public, max-age=31536000, immutable
 
+/imagenes_productos_restantes/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/imagenes_productos/*.webp
+  Content-Type: image/webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/imagenes_productos_restantes/*.webp
+  Content-Type: image/webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/proyectos_imagenes/*.webp
+  Content-Type: image/webp
+  Cache-Control: public, max-age=31536000, immutable
+
 /logos_clientes/*
   Cache-Control: public, max-age=31536000, immutable
 
