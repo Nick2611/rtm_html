@@ -603,6 +603,12 @@ class RTMProducts {
           <p class="model-detail-description">${model.description}</p>
           ${model.pixelPitch ? `<p class="model-pixel-pitch"><strong>Pixel Pitch:</strong> ${model.pixelPitch}</p>` : ''}
           ${specsHTML}
+          <div class="model-projects-cta">
+            <p>¿Querés verlo en un proyecto real? Visitá nuestra página de proyectos.</p>
+            <a href="proyectos.html" class="btn btn-projects">
+              <i class="fas fa-images"></i> Ver proyectos
+            </a>
+          </div>
           <div class="model-actions">
             <a href="index.html#contacto" class="btn btn-primary">
               <i class="fas fa-envelope"></i> Solicitar cotización
@@ -631,7 +637,7 @@ class RTMProducts {
         const galleryImage = this.normalizeImagePath(item.image);
         galleryHTML += `
           <div class="gallery-item">
-            ${galleryImage ? `<img src="${this.escapeAttribute(galleryImage)}" alt="${this.escapeAttribute(item.caption)}" onerror="${this.escapeAttribute(imageErrorHandler)}">` : ''}
+            ${galleryImage ? `<img src="${this.escapeAttribute(galleryImage)}" alt="${this.escapeAttribute(item.caption)}" loading="lazy" decoding="async" onerror="${this.escapeAttribute(imageErrorHandler)}">` : ''}
             <p class="gallery-caption">${item.caption}</p>
           </div>
         `;
@@ -672,6 +678,9 @@ class RTMProducts {
           <div class="special-actions">
             <a href="index.html#contacto" class="btn btn-primary">
               <i class="fas fa-envelope"></i> Contactar
+            </a>
+            <a href="proyectos.html" class="btn btn-projects">
+              <i class="fas fa-images"></i> Ver proyectos
             </a>
             <a href="https://wa.me/5491173736308?text=Hola!%20Me%20interesa%20información%20sobre%20LED%20Trucks" class="btn btn-whatsapp" target="_blank">
               <i class="fab fa-whatsapp"></i> WhatsApp

@@ -158,6 +158,8 @@
   overflow: hidden;
   border: 1px solid rgba(0, 0, 0, 0.05);
   display: block;
+  width: 100%;
+  min-width: 0;
 }
 
 .subcategory-card::before {
@@ -598,6 +600,34 @@
   transform: translateY(-2px);
 }
 
+.model-projects-cta {
+  display: grid;
+  gap: 12px;
+  padding: 18px;
+  background: #f8f9fc;
+  border: 1px solid var(--product-media-border);
+  border-radius: 10px;
+}
+
+.model-projects-cta p {
+  margin: 0;
+  color: #444;
+  font-size: 0.98rem;
+  line-height: 1.55;
+}
+
+.btn-projects,
+.special-actions .btn-projects {
+  background: #33382d;
+  color: #fff;
+}
+
+.btn-projects:hover,
+.special-actions .btn-projects:hover {
+  background: #242820;
+  transform: translateY(-2px);
+}
+
 /* ============================================
    Special Page (LED Trucks)
    ============================================ */
@@ -662,7 +692,7 @@
 
 .special-gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
   gap: 20px;
   padding: 0 40px 40px;
 }
@@ -824,11 +854,13 @@
   .subcategories-grid,
   .products-grid {
     grid-template-columns: minmax(0, 1fr);
-    justify-items: center;
+    justify-items: stretch;
   }
 
+  .subcategory-card,
   .product-card {
-    max-width: 430px;
+    max-width: 560px;
+    justify-self: center;
   }
 }
 

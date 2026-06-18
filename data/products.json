@@ -27,7 +27,7 @@
                 "brilloPorM2": "600 - 1200 nits",
                 "frecuenciaDeRefresco": "1920 - 3840 Hz"
               },
-              "image": "imagenes_productos/pantallas_led/indoor/IFI960.png"
+              "image": "imagenes_productos/pantallas_led/indoor/IFI960.webp"
             },
             {
               "id": "ri640",
@@ -41,14 +41,14 @@
                 "brilloPorM2": "500 - 600 nits",
                 "frecuenciaDeRefresco": "1920 - 3840 Hz"
               },
-              "image": "imagenes_productos/pantallas_led/indoor/RI640.jpeg",
+              "image": "imagenes_productos/pantallas_led/indoor/RI640.webp",
               "images": [
-                "imagenes_productos/pantallas_led/indoor/RI640.jpeg",
-                "imagenes_productos/pantallas_led/indoor/RI640-2.jpeg",
-                "imagenes_productos/pantallas_led/indoor/ri640/ri640-1.jpeg",
-                "imagenes_productos/pantallas_led/indoor/ri640/ri640-2.jpeg",
-                "imagenes_productos/pantallas_led/indoor/ri640/ri640-3.jpeg",
-                "imagenes_productos/pantallas_led/indoor/ri640/ri640-4.jpeg"
+                "imagenes_productos/pantallas_led/indoor/RI640.webp",
+                "imagenes_productos/pantallas_led/indoor/RI640-2.webp",
+                "imagenes_productos/pantallas_led/indoor/ri640/ri640-1.webp",
+                "imagenes_productos/pantallas_led/indoor/ri640/ri640-2.webp",
+                "imagenes_productos/pantallas_led/indoor/ri640/ri640-3.webp",
+                "imagenes_productos/pantallas_led/indoor/ri640/ri640-4.webp"
               ]
             },
             {
@@ -63,12 +63,12 @@
                 "brilloPorM2": "500 - 600 nits",
                 "frecuenciaDeRefresco": "1920 - 3840 Hz"
               },
-              "image": "imagenes_productos/pantallas_led/indoor/RI960.jpeg",
+              "image": "imagenes_productos/pantallas_led/indoor/RI960.webp",
               "images": [
-                "imagenes_productos/pantallas_led/indoor/RI960.jpeg",
-                "imagenes_productos/pantallas_led/indoor/RI960-2.jpeg",
-                "imagenes_productos/pantallas_led/indoor/ri960/ri960-1.jpeg",
-                "imagenes_productos/pantallas_led/indoor/ri960/ri960-2.jpeg"
+                "imagenes_productos/pantallas_led/indoor/RI960.webp",
+                "imagenes_productos/pantallas_led/indoor/RI960-2.webp",
+                "imagenes_productos/pantallas_led/indoor/ri960/ri960-1.webp",
+                "imagenes_productos/pantallas_led/indoor/ri960/ri960-2.webp"
               ]
             }
           ]
@@ -92,12 +92,12 @@
                 "brilloPorM2": "4000 - 5500 nits",
                 "frecuenciaDeRefresco": "1920 - 3840 Hz"
               },
-              "image": "imagenes_productos/pantallas_led/outdoor/VP960.jpeg",
+              "image": "imagenes_productos/pantallas_led/outdoor/VP960.webp",
               "images": [
-                "imagenes_productos/pantallas_led/outdoor/VP960.jpeg",
-                "imagenes_productos/pantallas_led/outdoor/VP960-2.jpeg",
-                "imagenes_productos/pantallas_led/outdoor/VP960-3.jpeg",
-                "imagenes_productos/pantallas_led/outdoor/VP960-4.jpeg"
+                "imagenes_productos/pantallas_led/outdoor/VP960.webp",
+                "imagenes_productos/pantallas_led/outdoor/VP960-2.webp",
+                "imagenes_productos/pantallas_led/outdoor/VP960-3.webp",
+                "imagenes_productos/pantallas_led/outdoor/VP960-4.webp"
               ]
             },
             {
@@ -112,15 +112,15 @@
                 "brilloPorM2": "Pro: 4500 - 5500 nits / Pro Gold: 6000 - 7000 nits",
                 "frecuenciaDeRefresco": "1920 - 3840 Hz"
               },
-              "image": "imagenes_productos/pantallas_led/outdoor/RE640.jpeg",
+              "image": "imagenes_productos/pantallas_led/outdoor/RE640.webp",
               "images": [
-                "imagenes_productos/pantallas_led/outdoor/RE640.jpeg",
-                "imagenes_productos/pantallas_led/outdoor/RE640-2.jpeg",
-                "imagenes_productos/pantallas_led/outdoor/RE640-3.jpeg",
-                "imagenes_productos/pantallas_led/outdoor/re640/re640-1.jpeg",
-                "imagenes_productos/pantallas_led/outdoor/re640/re640-2.jpeg",
-                "imagenes_productos/pantallas_led/outdoor/re640/re640-3.jpeg",
-                "imagenes_productos/pantallas_led/outdoor/re640/re640-4.jpeg"
+                "imagenes_productos/pantallas_led/outdoor/RE640.webp",
+                "imagenes_productos/pantallas_led/outdoor/RE640-2.webp",
+                "imagenes_productos/pantallas_led/outdoor/RE640-3.webp",
+                "imagenes_productos/pantallas_led/outdoor/re640/re640-1.webp",
+                "imagenes_productos/pantallas_led/outdoor/re640/re640-2.webp",
+                "imagenes_productos/pantallas_led/outdoor/re640/re640-3.webp",
+                "imagenes_productos/pantallas_led/outdoor/re640/re640-4.webp"
               ]
             },
             {
@@ -135,13 +135,13 @@
                 "brilloPorM2": "Pro: 4500 - 5500 nits / Pro Gold: 6000 - 7000 nits",
                 "frecuenciaDeRefresco": "1920 - 3840 Hz"
               },
-              "image": "imagenes_productos/pantallas_led/outdoor/RE960.jpeg",
+              "image": "imagenes_productos/pantallas_led/outdoor/RE960.webp",
               "images": [
-                "imagenes_productos/pantallas_led/outdoor/RE960.jpeg",
-                "imagenes_productos/pantallas_led/outdoor/RE960-2.jpeg",
-                "imagenes_productos/pantallas_led/outdoor/RE960-3.jpeg",
-                "imagenes_productos/pantallas_led/outdoor/re960/re960-1.jpeg",
-                "imagenes_productos/pantallas_led/outdoor/re960/re960-2.jpeg"
+                "imagenes_productos/pantallas_led/outdoor/RE960.webp",
+                "imagenes_productos/pantallas_led/outdoor/RE960-2.webp",
+                "imagenes_productos/pantallas_led/outdoor/RE960-3.webp",
+                "imagenes_productos/pantallas_led/outdoor/re960/re960-1.webp",
+                "imagenes_productos/pantallas_led/outdoor/re960/re960-2.webp"
               ]
             }
           ]
@@ -175,12 +175,12 @@
                 "brilloPorM2": "1200 nits",
                 "frecuenciaDeRefresco": "> 3840 Hz"
               },
-              "image": "imagenes_productos/tour_series/indoor/ri500/ri500-1.jpeg",
+              "image": "imagenes_productos/tour_series/indoor/ri500/ri500-1.webp",
               "images": [
-                "imagenes_productos/tour_series/indoor/ri500/ri500-1.jpeg",
-                "imagenes_productos/tour_series/indoor/ri500/ri500-2.jpeg",
-                "imagenes_productos_restantes/RI-RO-500/mmexport1779842190832.jpg",
-                "imagenes_productos_restantes/RI-RO-500/mmexport1779915677419.jpg"
+                "imagenes_productos/tour_series/indoor/ri500/ri500-1.webp",
+                "imagenes_productos/tour_series/indoor/ri500/ri500-2.webp",
+                "imagenes_productos_restantes/RI-RO-500/mmexport1779842190832.webp",
+                "imagenes_productos_restantes/RI-RO-500/mmexport1779915677419.webp"
               ]
             },
             {
@@ -195,16 +195,16 @@
                 "brilloPorM2": "1200 nits",
                 "frecuenciaDeRefresco": "> 3840 Hz"
               },
-              "image": "imagenes_productos_restantes/RIC-ROC-500/416c1842-4b8e-4507-a771-e7f9cdd039b3.jpg",
+              "image": "imagenes_productos_restantes/RIC-ROC-500/416c1842-4b8e-4507-a771-e7f9cdd039b3.webp",
               "images": [
-                "imagenes_productos_restantes/RIC-ROC-500/416c1842-4b8e-4507-a771-e7f9cdd039b3.jpg",
-                "imagenes_productos_restantes/RIC-ROC-500/ec55a2f1-811e-450c-8aee-3acb8bfebefc.jpg",
-                "imagenes_productos_restantes/RIC-ROC-500/mmexport1779842182615.jpg",
-                "imagenes_productos_restantes/RIC-ROC-500/mmexport1779915694134.jpg",
-                "imagenes_productos_restantes/RIC-ROC-500+/mmexport1779915646291.jpg",
-                "imagenes_productos_restantes/RIC-ROC-500+/mmexport1779915658132.jpg",
-                "imagenes_productos_restantes/RIC-ROC-500+/mmexport1779915663474.png",
-                "imagenes_productos_restantes/RIC-ROC-500+/mmexport1779915699273.jpg"
+                "imagenes_productos_restantes/RIC-ROC-500/416c1842-4b8e-4507-a771-e7f9cdd039b3.webp",
+                "imagenes_productos_restantes/RIC-ROC-500/ec55a2f1-811e-450c-8aee-3acb8bfebefc.webp",
+                "imagenes_productos_restantes/RIC-ROC-500/mmexport1779842182615.webp",
+                "imagenes_productos_restantes/RIC-ROC-500/mmexport1779915694134.webp",
+                "imagenes_productos_restantes/RIC-ROC-500+/mmexport1779915646291.webp",
+                "imagenes_productos_restantes/RIC-ROC-500+/mmexport1779915658132.webp",
+                "imagenes_productos_restantes/RIC-ROC-500+/mmexport1779915663474.webp",
+                "imagenes_productos_restantes/RIC-ROC-500+/mmexport1779915699273.webp"
               ]
             },
             {
@@ -219,16 +219,16 @@
                 "brilloPorM2": "1200 nits",
                 "frecuenciaDeRefresco": "> 3840 Hz"
               },
-              "image": "imagenes_productos/tour_series/indoor/rif500/rif500-1.jpeg",
+              "image": "imagenes_productos/tour_series/indoor/rif500/rif500-1.webp",
               "images": [
-                "imagenes_productos/tour_series/indoor/rif500/rif500-1.jpeg",
-                "imagenes_productos/tour_series/indoor/rif500/rif500-2.jpeg",
-                "imagenes_productos/tour_series/indoor/rif500/rif500-3.jpeg",
-                "imagenes_productos/tour_series/indoor/rif500/rif500-4.jpeg",
-                "imagenes_productos_restantes/RIF500/41490e59-c64f-47fb-a824-377d3167bfa9.jpg",
-                "imagenes_productos_restantes/RIF500/73938fa5-a129-44ea-adbc-fefe5481ec30.jpg",
-                "imagenes_productos_restantes/RIF500/95252c6b-c7ef-43a0-92d6-666a18a92555.jpg",
-                "imagenes_productos_restantes/RIF500/df4092ad-a415-4a87-8259-181da675d0db.jpg"
+                "imagenes_productos/tour_series/indoor/rif500/rif500-1.webp",
+                "imagenes_productos/tour_series/indoor/rif500/rif500-2.webp",
+                "imagenes_productos/tour_series/indoor/rif500/rif500-3.webp",
+                "imagenes_productos/tour_series/indoor/rif500/rif500-4.webp",
+                "imagenes_productos_restantes/RIF500/41490e59-c64f-47fb-a824-377d3167bfa9.webp",
+                "imagenes_productos_restantes/RIF500/73938fa5-a129-44ea-adbc-fefe5481ec30.webp",
+                "imagenes_productos_restantes/RIF500/95252c6b-c7ef-43a0-92d6-666a18a92555.webp",
+                "imagenes_productos_restantes/RIF500/df4092ad-a415-4a87-8259-181da675d0db.webp"
               ]
             },
             {
@@ -243,11 +243,11 @@
                 "brilloPorM2": "1200 nits",
                 "frecuenciaDeRefresco": "> 3840 Hz"
               },
-              "image": "imagenes_productos/tour_series/indoor/ri1000/ri1000-1.jpeg",
+              "image": "imagenes_productos/tour_series/indoor/ri1000/ri1000-1.webp",
               "images": [
-                "imagenes_productos/tour_series/indoor/ri1000/ri1000-1.jpeg",
-                "imagenes_productos/tour_series/indoor/ri1000/ri1000-2.jpeg",
-                "imagenes_productos_restantes/RI-RO-1000/mmexport1779915707088.jpg"
+                "imagenes_productos/tour_series/indoor/ri1000/ri1000-1.webp",
+                "imagenes_productos/tour_series/indoor/ri1000/ri1000-2.webp",
+                "imagenes_productos_restantes/RI-RO-1000/mmexport1779915707088.webp"
               ]
             },
             {
@@ -261,12 +261,12 @@
                 "tamañoDelPanel": "500 x 1000 x 85 mm",
                 "brilloPorM2": "1200 nits"
               },
-              "image": "imagenes_productos_restantes/RIC-ROC-1000/3f641732-a774-4649-b411-81e86f0fa4a4.jpg",
+              "image": "imagenes_productos_restantes/RIC-ROC-1000/3f641732-a774-4649-b411-81e86f0fa4a4.webp",
               "images": [
-                "imagenes_productos_restantes/RIC-ROC-1000/3f641732-a774-4649-b411-81e86f0fa4a4.jpg",
-                "imagenes_productos_restantes/RIC-ROC-1000/mmexport1779842199128.jpg",
-                "imagenes_productos_restantes/RIC-ROC-1000/mmexport1779915683497.jpg",
-                "imagenes_productos_restantes/RIC-ROC-1000/mmexport1779915707088.jpg"
+                "imagenes_productos_restantes/RIC-ROC-1000/3f641732-a774-4649-b411-81e86f0fa4a4.webp",
+                "imagenes_productos_restantes/RIC-ROC-1000/mmexport1779842199128.webp",
+                "imagenes_productos_restantes/RIC-ROC-1000/mmexport1779915683497.webp",
+                "imagenes_productos_restantes/RIC-ROC-1000/mmexport1779915707088.webp"
               ]
             }
           ]
@@ -290,12 +290,12 @@
                 "brilloPorM2": "4500 nits",
                 "frecuenciaDeRefresco": "> 3840 Hz"
               },
-              "image": "imagenes_productos/tour_series/outdoor/re500/re500-1.jpeg",
+              "image": "imagenes_productos/tour_series/outdoor/re500/re500-1.webp",
               "images": [
-                "imagenes_productos/tour_series/outdoor/re500/re500-1.jpeg",
-                "imagenes_productos/tour_series/outdoor/re500/re500-2.jpeg",
-                "imagenes_productos_restantes/RI-RO-500/mmexport1779842190832.jpg",
-                "imagenes_productos_restantes/RI-RO-500/mmexport1779915677419.jpg"
+                "imagenes_productos/tour_series/outdoor/re500/re500-1.webp",
+                "imagenes_productos/tour_series/outdoor/re500/re500-2.webp",
+                "imagenes_productos_restantes/RI-RO-500/mmexport1779842190832.webp",
+                "imagenes_productos_restantes/RI-RO-500/mmexport1779915677419.webp"
               ]
             },
             {
@@ -309,16 +309,16 @@
                 "tamañoDelPanel": "500 x 500 x 70 mm",
                 "brilloPorM2": "4500 nits"
               },
-              "image": "imagenes_productos_restantes/RIC-ROC-500/416c1842-4b8e-4507-a771-e7f9cdd039b3.jpg",
+              "image": "imagenes_productos_restantes/RIC-ROC-500/416c1842-4b8e-4507-a771-e7f9cdd039b3.webp",
               "images": [
-                "imagenes_productos_restantes/RIC-ROC-500/416c1842-4b8e-4507-a771-e7f9cdd039b3.jpg",
-                "imagenes_productos_restantes/RIC-ROC-500/ec55a2f1-811e-450c-8aee-3acb8bfebefc.jpg",
-                "imagenes_productos_restantes/RIC-ROC-500/mmexport1779842182615.jpg",
-                "imagenes_productos_restantes/RIC-ROC-500/mmexport1779915694134.jpg",
-                "imagenes_productos_restantes/RIC-ROC-500+/mmexport1779915646291.jpg",
-                "imagenes_productos_restantes/RIC-ROC-500+/mmexport1779915658132.jpg",
-                "imagenes_productos_restantes/RIC-ROC-500+/mmexport1779915663474.png",
-                "imagenes_productos_restantes/RIC-ROC-500+/mmexport1779915699273.jpg"
+                "imagenes_productos_restantes/RIC-ROC-500/416c1842-4b8e-4507-a771-e7f9cdd039b3.webp",
+                "imagenes_productos_restantes/RIC-ROC-500/ec55a2f1-811e-450c-8aee-3acb8bfebefc.webp",
+                "imagenes_productos_restantes/RIC-ROC-500/mmexport1779842182615.webp",
+                "imagenes_productos_restantes/RIC-ROC-500/mmexport1779915694134.webp",
+                "imagenes_productos_restantes/RIC-ROC-500+/mmexport1779915646291.webp",
+                "imagenes_productos_restantes/RIC-ROC-500+/mmexport1779915658132.webp",
+                "imagenes_productos_restantes/RIC-ROC-500+/mmexport1779915663474.webp",
+                "imagenes_productos_restantes/RIC-ROC-500+/mmexport1779915699273.webp"
               ]
             },
             {
@@ -333,11 +333,11 @@
                 "brilloPorM2": "4500 nits",
                 "frecuenciaDeRefresco": "> 3840 Hz"
               },
-              "image": "imagenes_productos/tour_series/outdoor/re1000/re1000-1.jpeg",
+              "image": "imagenes_productos/tour_series/outdoor/re1000/re1000-1.webp",
               "images": [
-                "imagenes_productos/tour_series/outdoor/re1000/re1000-1.jpeg",
-                "imagenes_productos/tour_series/outdoor/re1000/re1000-2.jpeg",
-                "imagenes_productos_restantes/RI-RO-1000/mmexport1779915707088.jpg"
+                "imagenes_productos/tour_series/outdoor/re1000/re1000-1.webp",
+                "imagenes_productos/tour_series/outdoor/re1000/re1000-2.webp",
+                "imagenes_productos_restantes/RI-RO-1000/mmexport1779915707088.webp"
               ]
             },
             {
@@ -351,12 +351,12 @@
                 "tamañoDelPanel": "500 x 1000 x 85 mm",
                 "brilloPorM2": "4500 nits"
               },
-              "image": "imagenes_productos_restantes/RIC-ROC-1000/3f641732-a774-4649-b411-81e86f0fa4a4.jpg",
+              "image": "imagenes_productos_restantes/RIC-ROC-1000/3f641732-a774-4649-b411-81e86f0fa4a4.webp",
               "images": [
-                "imagenes_productos_restantes/RIC-ROC-1000/3f641732-a774-4649-b411-81e86f0fa4a4.jpg",
-                "imagenes_productos_restantes/RIC-ROC-1000/mmexport1779842199128.jpg",
-                "imagenes_productos_restantes/RIC-ROC-1000/mmexport1779915683497.jpg",
-                "imagenes_productos_restantes/RIC-ROC-1000/mmexport1779915707088.jpg"
+                "imagenes_productos_restantes/RIC-ROC-1000/3f641732-a774-4649-b411-81e86f0fa4a4.webp",
+                "imagenes_productos_restantes/RIC-ROC-1000/mmexport1779842199128.webp",
+                "imagenes_productos_restantes/RIC-ROC-1000/mmexport1779915683497.webp",
+                "imagenes_productos_restantes/RIC-ROC-1000/mmexport1779915707088.webp"
               ]
             }
           ]
@@ -389,10 +389,10 @@
                 "brillo": "1200 nits",
                 "formato": "Vertical"
               },
-              "image": "imagenes_productos/totems/indoor/TI520.png",
+              "image": "imagenes_productos/totems/indoor/TI520.webp",
               "images": [
-                "imagenes_productos/totems/indoor/TI520.png",
-                "imagenes_productos/totems/indoor/TI520-2.png"
+                "imagenes_productos/totems/indoor/TI520.webp",
+                "imagenes_productos/totems/indoor/TI520-2.webp"
               ]
             },
             {
@@ -408,10 +408,10 @@
                 "brilloPorM2": "1000 - 1200 nits",
                 "frecuenciaDeRefresco": "1920 - 3840 Hz"
               },
-              "image": "imagenes_productos/totems/indoor/TI640.jpeg",
+              "image": "imagenes_productos/totems/indoor/TI640.webp",
               "images": [
-                "imagenes_productos/totems/indoor/TI640.jpeg",
-                "imagenes_productos/totems/indoor/TI640-2.jpeg"
+                "imagenes_productos/totems/indoor/TI640.webp",
+                "imagenes_productos/totems/indoor/TI640-2.webp"
               ]
             }
           ]
@@ -436,10 +436,10 @@
                 "tipo": "Simple cara",
                 "proteccion": "IP65"
               },
-              "image": "imagenes_productos/totems/outdoor/TE960-S.png",
+              "image": "imagenes_productos/totems/outdoor/TE960-S.webp",
               "images": [
-                "imagenes_productos/totems/outdoor/TE960-S.png",
-                "imagenes_productos/totems/outdoor/TE960-S-2.png"
+                "imagenes_productos/totems/outdoor/TE960-S.webp",
+                "imagenes_productos/totems/outdoor/TE960-S-2.webp"
               ]
             },
             {
@@ -455,7 +455,7 @@
                 "tipo": "Doble cara",
                 "proteccion": "IP65"
               },
-              "image": "imagenes_productos/totems/outdoor/TE960-D.png"
+              "image": "imagenes_productos/totems/outdoor/TE960-D.webp"
             }
           ]
         }
@@ -488,10 +488,10 @@
                 "acabadoSuperficial": "Vidrio templado de 10 mm",
                 "tipo": "Pista de baile transitable"
               },
-              "image": "imagenes_productos/pisos_led/PDANCE.png",
+              "image": "imagenes_productos/pisos_led/PDANCE.webp",
               "images": [
-                "imagenes_productos/pisos_led/PDANCE.png",
-                "imagenes_productos/pisos_led/PDANCE-1.png"
+                "imagenes_productos/pisos_led/PDANCE.webp",
+                "imagenes_productos/pisos_led/PDANCE-1.webp"
               ]
             },
             {
@@ -505,11 +505,11 @@
                 "resistencia": "Alta resistencia al impacto y al agua",
                 "efectos": "Efectos de luz integrados"
               },
-              "image": "imagenes_productos/pisos_led/P60DISCO.jpeg",
+              "image": "imagenes_productos/pisos_led/P60DISCO.webp",
               "images": [
-                "imagenes_productos/pisos_led/P60DISCO.jpeg",
-                "imagenes_productos/pisos_led/P60DISCO-2.jpeg",
-                "imagenes_productos/pisos_led/P60DISCO-3.jpeg"
+                "imagenes_productos/pisos_led/P60DISCO.webp",
+                "imagenes_productos/pisos_led/P60DISCO-2.webp",
+                "imagenes_productos/pisos_led/P60DISCO-3.webp"
               ]
             },
             {
@@ -522,12 +522,12 @@
                 "resistencia": "Alta resistencia",
                 "colores": "Full RGB con control por zona"
               },
-              "image": "imagenes_productos/pisos_led/PIRGB.jpeg",
+              "image": "imagenes_productos/pisos_led/PIRGB.webp",
               "images": [
-                "imagenes_productos/pisos_led/PIRGB.jpeg",
-                "imagenes_productos/pisos_led/PIRGB-2.jpeg",
-                "imagenes_productos/pisos_led/pi_rgb/pi_rgb1.png",
-                "imagenes_productos/pisos_led/pi_rgb/pi_rgb2.png"
+                "imagenes_productos/pisos_led/PIRGB.webp",
+                "imagenes_productos/pisos_led/PIRGB-2.webp",
+                "imagenes_productos/pisos_led/pi_rgb/pi_rgb1.webp",
+                "imagenes_productos/pisos_led/pi_rgb/pi_rgb2.webp"
               ]
             }
           ]
@@ -558,10 +558,10 @@
                 "tipo": "Indicador de recorrido",
                 "ubicacion": "Lateral del vehículo"
               },
-              "image": "imagenes_productos/soluciones/RAMALERA.png",
+              "image": "imagenes_productos/soluciones/RAMALERA.webp",
               "images": [
-                "imagenes_productos/soluciones/RAMALERA.png",
-                "imagenes_productos/soluciones/RAMALERA-2.png"
+                "imagenes_productos/soluciones/RAMALERA.webp",
+                "imagenes_productos/soluciones/RAMALERA-2.webp"
               ]
             },
             {
@@ -573,10 +573,10 @@
                 "aplicacion": "Transporte público",
                 "ubicacion": "Trasera del vehículo (luneta)"
               },
-              "image": "imagenes_productos/soluciones/LUNETA.png",
+              "image": "imagenes_productos/soluciones/LUNETA.webp",
               "images": [
-                "imagenes_productos/soluciones/LUNETA.png",
-                "imagenes_productos/soluciones/LUNETA-2.png"
+                "imagenes_productos/soluciones/LUNETA.webp",
+                "imagenes_productos/soluciones/LUNETA-2.webp"
               ]
             }
           ]
@@ -596,7 +596,7 @@
                 "aplicacion": "Rutas y autopistas",
                 "tipo": "Pórtico de gran formato"
               },
-              "image": "imagenes_productos/soluciones/LPR9648.jpeg"
+              "image": "imagenes_productos/soluciones/LPR9648.webp"
             },
             {
               "id": "lpr-1248",
@@ -607,10 +607,10 @@
                 "aplicacion": "Accesos, parkings, zonas urbanas",
                 "tipo": "Pórtico compacto"
               },
-              "image": "imagenes_productos/soluciones/LPR1248.jpeg",
+              "image": "imagenes_productos/soluciones/LPR1248.webp",
               "images": [
-                "imagenes_productos/soluciones/LPR1248.jpeg",
-                "imagenes_productos/soluciones/LPR1248-2.jpeg"
+                "imagenes_productos/soluciones/LPR1248.webp",
+                "imagenes_productos/soluciones/LPR1248-2.webp"
               ]
             },
             {
@@ -622,10 +622,10 @@
                 "aplicacion": "Túneles, playones, accesos verticales",
                 "tipo": "Pórtico vertical"
               },
-              "image": "imagenes_productos/soluciones/LPR1264.jpeg",
+              "image": "imagenes_productos/soluciones/LPR1264.webp",
               "images": [
-                "imagenes_productos/soluciones/LPR1264.jpeg",
-                "imagenes_productos/soluciones/LPR1264-2.jpeg"
+                "imagenes_productos/soluciones/LPR1264.webp",
+                "imagenes_productos/soluciones/LPR1264-2.webp"
               ]
             }
           ]
@@ -645,10 +645,10 @@
                 "aplicacion": "Proyectos personalizados",
                 "tipo": "Diseño a medida"
               },
-              "image": "imagenes_productos/soluciones/SH1696.png",
+              "image": "imagenes_productos/soluciones/SH1696.webp",
               "images": [
-                "imagenes_productos/soluciones/SH1696.png",
-                "imagenes_productos/soluciones/SH1696-2.png"
+                "imagenes_productos/soluciones/SH1696.webp",
+                "imagenes_productos/soluciones/SH1696-2.webp"
               ]
             }
           ]
@@ -675,7 +675,24 @@
           "Operadores especializados incluidos",
           "Proyecto llave en mano (diseño + fabricación + instalación)"
         ],
-        "gallery": []
+        "gallery": [
+          {
+            "image": "proyectos_imagenes/proyecto_1.webp",
+            "caption": "LED Truck en operación para evento en vivo"
+          },
+          {
+            "image": "proyectos_imagenes/proyecto_9.webp",
+            "caption": "Pantalla móvil para activaciones y campañas"
+          },
+          {
+            "image": "proyectos_imagenes/proyecto_10.webp",
+            "caption": "Cobertura visual para exteriores"
+          },
+          {
+            "image": "proyectos_imagenes/proyecto_11.webp",
+            "caption": "Proyecto móvil con alto impacto de marca"
+          }
+        ]
       },
       "subcategories": []
     },
@@ -710,13 +727,13 @@
                 "tipo": "Cabezal móvil Beam",
                 "potencia": "7R"
               },
-              "image": "imagenes_productos/iluminacion_profesional/beam/cmb_7_r/cbm7r-1.jpeg",
+              "image": "imagenes_productos/iluminacion_profesional/beam/cmb_7_r/cbm7r-1.webp",
               "images": [
-                "imagenes_productos/iluminacion_profesional/beam/cmb_7_r/cbm7r-1.jpeg",
-                "imagenes_productos/iluminacion_profesional/beam/cmb_7_r/cmb7r-2.jpeg",
-                "imagenes_productos/iluminacion_profesional/beam/cmb_7_r/cmb7r-3.jpeg",
-                "imagenes_productos/iluminacion_profesional/beam/cmb_7_r/cmb7r-4.jpeg",
-                "imagenes_productos/iluminacion_profesional/beam/cmb_7_r/cmb7r-5.jpeg"
+                "imagenes_productos/iluminacion_profesional/beam/cmb_7_r/cbm7r-1.webp",
+                "imagenes_productos/iluminacion_profesional/beam/cmb_7_r/cmb7r-2.webp",
+                "imagenes_productos/iluminacion_profesional/beam/cmb_7_r/cmb7r-3.webp",
+                "imagenes_productos/iluminacion_profesional/beam/cmb_7_r/cmb7r-4.webp",
+                "imagenes_productos/iluminacion_profesional/beam/cmb_7_r/cmb7r-5.webp"
               ]
             },
             {
@@ -728,12 +745,12 @@
                 "tipo": "Cabezal móvil Beam",
                 "potencia": "20R"
               },
-              "image": "imagenes_productos/iluminacion_profesional/beam/cmb_20_r/cmb20r-1.jpeg",
+              "image": "imagenes_productos/iluminacion_profesional/beam/cmb_20_r/cmb20r-1.webp",
               "images": [
-                "imagenes_productos/iluminacion_profesional/beam/cmb_20_r/cmb20r-1.jpeg",
-                "imagenes_productos/iluminacion_profesional/beam/cmb_20_r/cmb20r-2.jpeg",
-                "imagenes_productos/iluminacion_profesional/beam/cmb_20_r/cmb20r-3.jpeg",
-                "imagenes_productos/iluminacion_profesional/beam/cmb_20_r/cmb20r-4.jpeg"
+                "imagenes_productos/iluminacion_profesional/beam/cmb_20_r/cmb20r-1.webp",
+                "imagenes_productos/iluminacion_profesional/beam/cmb_20_r/cmb20r-2.webp",
+                "imagenes_productos/iluminacion_profesional/beam/cmb_20_r/cmb20r-3.webp",
+                "imagenes_productos/iluminacion_profesional/beam/cmb_20_r/cmb20r-4.webp"
               ]
             }
           ]
@@ -754,12 +771,12 @@
                 "tipo": "Cabezal móvil 3 en 1 (Beam / Spot / Wash)",
                 "potencia": "250W LED"
               },
-              "image": "imagenes_productos/iluminacion_profesional/3_en_1/cmr_250_led/cmr250-1.jpeg",
+              "image": "imagenes_productos/iluminacion_profesional/3_en_1/cmr_250_led/cmr250-1.webp",
               "images": [
-                "imagenes_productos/iluminacion_profesional/3_en_1/cmr_250_led/cmr250-1.jpeg",
-                "imagenes_productos/iluminacion_profesional/3_en_1/cmr_250_led/cmr250-2.jpeg",
-                "imagenes_productos/iluminacion_profesional/3_en_1/cmr_250_led/cmr250-3.jpeg",
-                "imagenes_productos/iluminacion_profesional/3_en_1/cmr_250_led/cmr250-4.jpeg"
+                "imagenes_productos/iluminacion_profesional/3_en_1/cmr_250_led/cmr250-1.webp",
+                "imagenes_productos/iluminacion_profesional/3_en_1/cmr_250_led/cmr250-2.webp",
+                "imagenes_productos/iluminacion_profesional/3_en_1/cmr_250_led/cmr250-3.webp",
+                "imagenes_productos/iluminacion_profesional/3_en_1/cmr_250_led/cmr250-4.webp"
               ]
             },
             {
@@ -771,10 +788,10 @@
                 "tipo": "Cabezal móvil 3 en 1 (Beam / Spot / Wash)",
                 "potencia": "400W LED"
               },
-              "image": "imagenes_productos/iluminacion_profesional/3_en_1/cmr_400_led/cmr400-2.jpeg",
+              "image": "imagenes_productos/iluminacion_profesional/3_en_1/cmr_400_led/cmr400-2.webp",
               "images": [
-                "imagenes_productos/iluminacion_profesional/3_en_1/cmr_400_led/cmr400-2.jpeg",
-                "imagenes_productos/iluminacion_profesional/3_en_1/cmr_400_led/cmr400-1.jpeg"
+                "imagenes_productos/iluminacion_profesional/3_en_1/cmr_400_led/cmr400-2.webp",
+                "imagenes_productos/iluminacion_profesional/3_en_1/cmr_400_led/cmr400-1.webp"
               ]
             }
           ]
@@ -794,10 +811,10 @@
                 "tipo": "Barra móvil LED",
                 "leds": "10 x 40W"
               },
-              "image": "imagenes_productos/iluminacion_profesional/barra_movil/barramovil-1.jpeg",
+              "image": "imagenes_productos/iluminacion_profesional/barra_movil/barramovil-1.webp",
               "images": [
-                "imagenes_productos/iluminacion_profesional/barra_movil/barramovil-1.jpeg",
-                "imagenes_productos/iluminacion_profesional/barra_movil/barramovil-2.jpeg"
+                "imagenes_productos/iluminacion_profesional/barra_movil/barramovil-1.webp",
+                "imagenes_productos/iluminacion_profesional/barra_movil/barramovil-2.webp"
               ]
             }
           ]
@@ -817,12 +834,12 @@
                 "tipo": "Flash estroboscópico LED",
                 "potencia": "960W LED"
               },
-              "image": "imagenes_productos/iluminacion_profesional/flashes/st_960_led/st960-2.jpeg",
+              "image": "imagenes_productos/iluminacion_profesional/flashes/st_960_led/st960-2.webp",
               "images": [
-                "imagenes_productos/iluminacion_profesional/flashes/st_960_led/st960-2.jpeg",
-                "imagenes_productos/iluminacion_profesional/flashes/st_960_led/st960-3.jpeg",
-                "imagenes_productos/iluminacion_profesional/flashes/st_960_led/st960-4.jpeg",
-                "imagenes_productos/iluminacion_profesional/flashes/st_960_led/st960-5.jpeg"
+                "imagenes_productos/iluminacion_profesional/flashes/st_960_led/st960-2.webp",
+                "imagenes_productos/iluminacion_profesional/flashes/st_960_led/st960-3.webp",
+                "imagenes_productos/iluminacion_profesional/flashes/st_960_led/st960-4.webp",
+                "imagenes_productos/iluminacion_profesional/flashes/st_960_led/st960-5.webp"
               ]
             }
           ]
