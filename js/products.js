@@ -10,13 +10,6 @@ class RTMProducts {
     this.currentSubcategory = null;
     this.currentFilter = 'all'; // 'all', 'indoor', 'outdoor'
     this.searchIndex = [];
-    this.defaultProductImageBaseUrl = 'https://imagenes-productos-rtm.s3.sa-east-1.amazonaws.com';
-    this.productImageExtensions = ['jpeg', 'jpg', 'png', 'webp'];
-    this.productImageMaxImages = 12;
-    this.productImageProbeCache = new Map();
-    this.productImageDirectoryCache = new Map();
-    this.productPrimaryImageCache = new Map();
-    this.productImageBaseUrl = this.resolveProductImageBaseUrl();
     this.init();
   }
 
@@ -32,38 +25,21 @@ class RTMProducts {
     }
   }
 
-  resolveProductImageBaseUrl() {
-    const metaBaseUrl = document
-      .querySelector('meta[name="rtm-product-image-base-url"]')
-      ?.getAttribute('content');
-    const configuredBaseUrl = window.RTM_PRODUCT_IMAGE_BASE_URL || metaBaseUrl || this.defaultProductImageBaseUrl;
-    return configuredBaseUrl.trim().replace(/\/+$/, '');
-  }
-
-  isRemoteImagePath(imagePath) {
-    return /^(https?:)?\/\//.test(imagePath);
-  }
-
-  normalizeBucketPath(imagePath) {
-    if (!imagePath || this.isRemoteImagePath(imagePath) || imagePath.startsWith('data:')) return '';
-    return imagePath
-      .trim()
-      .replace(/^\.\//, '')
-      .replace(/^\/+/, '')
-      .replace(/\/+/g, '/')
-      .split('/')
-      .map(part => part.trim())
-      .filter(Boolean)
-      .join('/');
-  }
-
   normalizeImagePath(imagePath) {
-    if (!imagePath) return '';
-    if (this.isRemoteImagePath(imagePath)) return imagePath;
-    if (imagePath.startsWith('data:')) return '';
+    if (!imagePath || typeof imagePath !== 'string') return '';
 
-    const cleanedPath = this.normalizeBucketPath(imagePath);
-    return cleanedPath ? this.toBucketImageUrl(cleanedPath) : '';
+    const trimmedPath = imagePath.trim();
+    if (trimmedPath.startsWith('data:')) return trimmedPath;
+
+    // El catalogo de productos debe usar imagenes locales.
+    if (/^(https?:)?\/\//i.test(trimmedPath)) return '';
+
+    const cleanedPath = trimmedPath
+      .replace(/^\.?\//, '')
+      .replace(/^\/+/, '')
+      .replace(/\/+/g, '/');
+
+    return cleanedPath ? `/${cleanedPath}` : '';
   }
 
   escapeAttribute(value) {
@@ -74,396 +50,16 @@ class RTMProducts {
       .replace(/>/g, '&gt;');
   }
 
-  toBucketImageUrl(imagePath) {
-    if (!imagePath) return '';
-    if (this.isRemoteImagePath(imagePath)) return imagePath;
-    const cleanedPath = this.normalizeBucketPath(imagePath);
-    return cleanedPath ? `${this.productImageBaseUrl}/${cleanedPath}` : '';
-  }
-
-  slugifyPathSegment(value) {
-    return String(value || '')
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .toLowerCase()
-      .replace(/&/g, ' y ')
-      .replace(/[^a-z0-9]+/g, '_')
-      .replace(/_+/g, '_')
-      .replace(/^_|_$/g, '');
-  }
-
-  compactPathSegment(value) {
-    return this.slugifyPathSegment(value).replace(/_/g, '');
-  }
-
-  compactCasePathSegment(value) {
-    return String(value || '')
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .replace(/[^A-Za-z0-9]+/g, '');
-  }
-
-  isProductBucketPath(imagePath) {
-    return this.normalizeBucketPath(imagePath).startsWith('imagenes_productos/');
-  }
-
-  getDeclaredProductImagePaths(model) {
-    const declaredImages = [
-      ...(Array.isArray(model.images) ? model.images : []),
-      model.image
-    ];
-
-    return [...new Set(declaredImages
-      .map(imagePath => this.normalizeBucketPath(imagePath))
-      .filter(imagePath => imagePath.startsWith('imagenes_productos/')))];
-  }
-
-  getCanonicalProductImageDirectory(category, subcategory) {
-    const categorySegment = this.slugifyPathSegment(category.imageFolder || category.slug || category.id || category.name);
-    const rawSubcategorySegment = subcategory?.imageFolder || subcategory?.environment || subcategory?.name || subcategory?.slug || '';
-    const subcategorySegment = this.slugifyPathSegment(rawSubcategorySegment);
-    const segments = ['imagenes_productos', categorySegment];
-
-    if (subcategorySegment && subcategorySegment !== 'modelos') segments.push(subcategorySegment);
-    return segments.filter(Boolean).join('/');
-  }
-
-  getDeclaredProductImageDirectories(model) {
-    return this.getDeclaredProductImagePaths(model)
-      .map(imagePath => imagePath.split('/').slice(0, -1).join('/'))
-      .filter(Boolean);
-  }
-
-  getProductImageDirectories(category, subcategory, model) {
-    return [...new Set([
-      this.getCanonicalProductImageDirectory(category, subcategory),
-      ...this.getDeclaredProductImageDirectories(model)
-    ].filter(Boolean))];
-  }
-
-  parseImageFilename(imagePath) {
-    const filename = this.normalizeBucketPath(imagePath).split('/').pop() || '';
-    const match = filename.match(/^(.+?)(\.[a-z0-9]+)$/i);
-    if (!match) return null;
-
-    const name = match[1].trim();
-    const extension = match[2].slice(1).toLowerCase();
-    const numberedMatch = name.match(/^(.*?)([-_]?)(\d+)$/);
-    const numberedIndex = numberedMatch ? Number(numberedMatch[3]) : null;
-    const hasImageIndex = Boolean(numberedMatch && (numberedMatch[2] || numberedIndex <= this.productImageMaxImages));
-    return {
-      prefix: (hasImageIndex ? numberedMatch[1] : name).trim(),
-      separator: hasImageIndex ? numberedMatch[2] : '-',
-      extension,
-      index: hasImageIndex ? numberedIndex : null
-    };
-  }
-
-  getDeclaredProductImageDetails(model) {
-    return this.getDeclaredProductImagePaths(model)
-      .map(imagePath => ({
-        path: imagePath,
-        directory: imagePath.split('/').slice(0, -1).join('/'),
-        url: this.toBucketImageUrl(imagePath),
-        parts: this.parseImageFilename(imagePath)
-      }))
-      .filter(item => item.directory && item.url && item.parts);
-  }
-
-  getDeclaredPrimaryProductImageUrl(model) {
-    const declaredImages = [
-      model.image,
-      ...(Array.isArray(model.images) ? model.images : [])
-    ];
-
-    const primaryImagePath = declaredImages
-      .map(imagePath => this.normalizeBucketPath(imagePath))
-      .find(imagePath => imagePath.startsWith('imagenes_productos/'));
-
-    return primaryImagePath ? this.toBucketImageUrl(primaryImagePath) : '';
-  }
-
-  getProductImageProbePlans(model) {
-    const plans = [];
-    const seenPlans = new Set();
-    const addPlan = (prefix, extension = 'jpeg', separator = '-', fromDeclared = false) => {
-      const cleanPrefix = String(prefix || '').trim();
-      const cleanExtension = String(extension || 'jpeg').replace(/^\./, '').toLowerCase();
-      if (!cleanPrefix || !cleanExtension) return;
-      const key = `${cleanPrefix}|${separator}|${cleanExtension}`;
-      if (seenPlans.has(key)) return;
-      seenPlans.add(key);
-      plans.push({ prefix: cleanPrefix, separator, extension: cleanExtension, fromDeclared });
-    };
-
-    this.getDeclaredProductImagePaths(model)
-      .map(imagePath => this.parseImageFilename(imagePath))
-      .filter(Boolean)
-      .forEach(parts => addPlan(parts.prefix, parts.extension, parts.separator, true));
-
-    const compactCandidates = [
-      model.imagePrefix,
-      model.slug,
-      model.id,
-      model.name
-    ].map(value => this.compactPathSegment(value)).filter(Boolean);
-
-    const caseSensitiveCandidates = [
-      model.imagePrefix,
-      model.name,
-      model.id,
-      model.slug
-    ].map(value => this.compactCasePathSegment(value)).filter(Boolean);
-
-    const candidatePrefixes = [...new Set([...compactCandidates, ...caseSensitiveCandidates])];
-
-    candidatePrefixes.forEach(prefix => {
-      addPlan(prefix, 'jpeg');
-      if (prefix.endsWith('led')) addPlan(prefix.replace(/led$/, ''), 'jpeg');
-    });
-
-    const productSegment = this.slugifyPathSegment(model.slug || model.id || model.name);
-    addPlan(productSegment, 'jpeg');
-
-    candidatePrefixes.slice(0, 2).forEach(prefix => {
-      this.productImageExtensions.forEach(extension => addPlan(prefix, extension));
-    });
-
-    return plans;
-  }
-
-  getImagesMatchingProbePlans(imageUrls, probePlans) {
-    const planKeys = new Set(probePlans.map(plan =>
-      `${plan.prefix.toLowerCase()}|${plan.extension.toLowerCase()}`
-    ));
-
-    return this.sortImageUrls(imageUrls.filter(imageUrl => {
-      const parsed = this.parseImageFilename(imageUrl);
-      if (!parsed) return false;
-      return planKeys.has(`${parsed.prefix.toLowerCase()}|${parsed.extension.toLowerCase()}`);
-    }));
-  }
-
-  sortImageUrls(imageUrls) {
-    const getImageOrder = imageUrl => {
-      const filename = decodeURIComponent(String(imageUrl).split('/').pop() || '').split('?')[0];
-      const parsed = this.parseImageFilename(filename);
-      return parsed?.index || 1;
-    };
-
-    return [...new Set(imageUrls.filter(Boolean))]
-      .sort((a, b) =>
-        getImageOrder(a) - getImageOrder(b) ||
-        a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' })
-      );
-  }
-
-  async listBucketImages(directory) {
-    if (!directory || !this.productImageBaseUrl) return [];
-    if (this.productImageDirectoryCache.has(directory)) return this.productImageDirectoryCache.get(directory);
-
-    const listUrl = `${this.productImageBaseUrl}/?list-type=2&prefix=${encodeURIComponent(directory + '/')}`;
-    const request = fetch(listUrl)
-      .then(response => response.ok ? response.text() : '')
-      .then(text => {
-        if (!text) return [];
-        const doc = new DOMParser().parseFromString(text, 'application/xml');
-        const directoryPrefix = `${directory}/`;
-        const keys = Array.from(doc.querySelectorAll('Key'))
-          .map(key => key.textContent.trim())
-          .filter(key => key.startsWith(directoryPrefix))
-          .filter(key => !key.slice(directoryPrefix.length).includes('/'))
-          .filter(key => /\.(jpe?g|png|webp)$/i.test(key));
-        return this.sortImageUrls(keys.map(key => this.toBucketImageUrl(key)));
-      })
-      .catch(() => []);
-
-    this.productImageDirectoryCache.set(directory, request);
-    return request;
-  }
-
-  imageExists(imageUrl) {
-    if (!imageUrl) return Promise.resolve(false);
-    if (this.productImageProbeCache.has(imageUrl)) return this.productImageProbeCache.get(imageUrl);
-
-    const request = new Promise(resolve => {
-      const image = new Image();
-      const timeout = window.setTimeout(() => resolve(false), 4000);
-      const finish = exists => {
-        window.clearTimeout(timeout);
-        resolve(exists);
-      };
-      image.onload = () => finish(true);
-      image.onerror = () => finish(false);
-      image.src = imageUrl;
-    });
-
-    this.productImageProbeCache.set(imageUrl, request);
-    return request;
-  }
-
-  async probeSequentialProductImages(directory, plan, startIndex = 1) {
-    const foundImages = [];
-    let firstNumberedIndex = startIndex;
-    let foundAnyForPlan = false;
-
-    if (startIndex <= 1) {
-      const baseImageUrl = this.toBucketImageUrl(`${directory}/${plan.prefix}.${plan.extension}`);
-      if (await this.imageExists(baseImageUrl)) {
-        foundImages.push(baseImageUrl);
-        firstNumberedIndex = 2;
-        foundAnyForPlan = true;
-      }
-    }
-
-    for (let index = firstNumberedIndex; index <= this.productImageMaxImages; index++) {
-      const filename = `${plan.prefix}${plan.separator}${index}.${plan.extension}`;
-      const imageUrl = this.toBucketImageUrl(`${directory}/${filename}`);
-      const exists = await this.imageExists(imageUrl);
-      if (!exists) {
-        if (foundAnyForPlan || index >= 2) break;
-        continue;
-      }
-      foundImages.push(imageUrl);
-      foundAnyForPlan = true;
-    }
-
-    return foundImages;
-  }
-
-  async discoverProductImages(category, subcategory, model) {
-    const cacheKey = this.getModelImageCacheKey(category, subcategory, model);
-    if (model._bucketImagesCacheKey === cacheKey && Array.isArray(model._bucketImages)) return model._bucketImages;
-
-    const directories = this.getProductImageDirectories(category, subcategory, model);
-    const probePlans = this.getProductImageProbePlans(model);
-    const declaredDetails = this.getDeclaredProductImageDetails(model);
-
-    for (const directory of directories) {
-      const listedImages = await this.listBucketImages(directory);
-      const matchingImages = this.getImagesMatchingProbePlans(listedImages, probePlans);
-      if (matchingImages.length > 0) {
-        model._bucketImagesCacheKey = cacheKey;
-        model._bucketImages = matchingImages;
-        return matchingImages;
-      }
-    }
-
-    for (const directory of directories) {
-      const declaredInDirectory = declaredDetails.filter(item => item.directory === directory);
-      const discoveredMatches = (await Promise.all(declaredInDirectory.map(async item =>
-        await this.imageExists(item.url) ? item.url : ''
-      ))).filter(Boolean);
-
-      const declaredGroups = new Map();
-      declaredInDirectory.forEach(item => {
-        const groupKey = `${item.parts.prefix}|${item.parts.separator}|${item.parts.extension}`;
-        const group = declaredGroups.get(groupKey) || {
-          prefix: item.parts.prefix,
-          separator: item.parts.separator,
-          extension: item.parts.extension,
-          maxIndex: 0,
-          hasBaseImage: false
-        };
-        if (item.parts.index === null) group.hasBaseImage = true;
-        if (item.parts.index) group.maxIndex = Math.max(group.maxIndex, item.parts.index);
-        declaredGroups.set(groupKey, group);
-      });
-
-      for (const plan of declaredGroups.values()) {
-        const startIndex = plan.hasBaseImage ? 1 : plan.maxIndex + 1;
-        if (!plan.hasBaseImage && (plan.maxIndex < 1 || plan.maxIndex >= this.productImageMaxImages)) continue;
-        discoveredMatches.push(...await this.probeSequentialProductImages(directory, plan, startIndex));
-      }
-
-      for (const plan of probePlans.filter(item => !item.fromDeclared)) {
-        discoveredMatches.push(...await this.probeSequentialProductImages(directory, plan));
-      }
-
-      if (discoveredMatches.length > 0) {
-        const images = this.sortImageUrls(discoveredMatches);
-        model._bucketImagesCacheKey = cacheKey;
-        model._bucketImages = images;
-        return images;
-      }
-    }
-
-    model._bucketImagesCacheKey = cacheKey;
-    model._bucketImages = [];
-    return [];
-  }
-
-  getModelImageCacheKey(category, subcategory, model) {
-    return `${category.slug || category.id}|${subcategory?.slug || subcategory?.id || ''}|${model.slug || model.id}`;
-  }
-
-  async discoverPrimaryProductImage(category, subcategory, model) {
-    const cacheKey = this.getModelImageCacheKey(category, subcategory, model);
-    if (model._bucketPrimaryImageCacheKey === cacheKey && typeof model._bucketPrimaryImage === 'string') {
-      return model._bucketPrimaryImage;
-    }
-    if (this.productPrimaryImageCache.has(cacheKey)) return this.productPrimaryImageCache.get(cacheKey);
-
-    const request = this.resolvePrimaryProductImage(category, subcategory, model)
-      .then(imageUrl => {
-        model._bucketPrimaryImageCacheKey = cacheKey;
-        model._bucketPrimaryImage = imageUrl;
-        return imageUrl;
-      });
-
-    this.productPrimaryImageCache.set(cacheKey, request);
-    return request;
-  }
-
-  async resolvePrimaryProductImage(category, subcategory, model) {
-    const declaredPrimaryImage = this.getDeclaredPrimaryProductImageUrl(model);
-    if (declaredPrimaryImage && await this.imageExists(declaredPrimaryImage)) return declaredPrimaryImage;
-
-    const directories = this.getProductImageDirectories(category, subcategory, model);
-    const probePlans = this.getProductImageProbePlans(model);
-
-    for (const directory of directories) {
-      const listedImages = await this.listBucketImages(directory);
-      const matchingImages = this.getImagesMatchingProbePlans(listedImages, probePlans);
-      if (matchingImages.length > 0) return matchingImages[0];
-    }
-
-    for (const directory of directories) {
-      for (const plan of probePlans) {
-        const baseImageUrl = this.toBucketImageUrl(`${directory}/${plan.prefix}.${plan.extension}`);
-        if (await this.imageExists(baseImageUrl)) return baseImageUrl;
-
-        const numberedImageUrl = this.toBucketImageUrl(`${directory}/${plan.prefix}${plan.separator}1.${plan.extension}`);
-        if (await this.imageExists(numberedImageUrl)) return numberedImageUrl;
-      }
-    }
-
-    return '';
-  }
-
-  async hydrateModelImages(category, subcategory, model) {
-    const images = await this.discoverProductImages(category, subcategory, model);
-    model.bucketImages = images;
-    return images;
-  }
-
-  async hydrateModelsImages(category, subcategories) {
-    const models = subcategories.flatMap(subcategory =>
-      (subcategory.models || []).map(model => ({ subcategory, model }))
-    );
-    await Promise.all(models.map(({ subcategory, model }) => this.hydrateModelImages(category, subcategory, model)));
-  }
-
-  async hydratePrimaryModelImage(category, subcategory, model) {
-    const primaryImage = await this.discoverPrimaryProductImage(category, subcategory, model);
-    model.bucketImages = primaryImage ? [primaryImage] : [];
-    return model.bucketImages;
-  }
-
   getModelImages(model) {
-    if (Array.isArray(model.bucketImages)) return model.bucketImages;
-    const declaredPrimaryImage = this.getDeclaredPrimaryProductImageUrl(model);
-    return declaredPrimaryImage ? [declaredPrimaryImage] : [];
+    const declaredImages = Array.isArray(model.images) && model.images.length > 0
+      ? model.images
+      : (model.image ? [model.image] : []);
+
+    return [...new Set(
+      declaredImages
+        .map(image => this.normalizeImagePath(image))
+        .filter(Boolean)
+    )];
   }
 
   getImageErrorHandler() {
@@ -473,6 +69,14 @@ class RTMProducts {
   findProductCard(container, modelSlug) {
     return Array.from(container.querySelectorAll('.product-card'))
       .find(card => card.dataset.model === modelSlug);
+  }
+
+  initProductCarousels(subcategories) {
+    subcategories.forEach(subcategory => {
+      (subcategory.models || []).forEach(model => {
+        if (this.getModelImages(model).length > 1) this.initCarousel(model.id);
+      });
+    });
   }
 
   renderProductEnvironmentBadge(model, subcategory) {
@@ -518,35 +122,6 @@ class RTMProducts {
         ${images[0] ? `<img src="${this.escapeAttribute(images[0])}" alt="${this.escapeAttribute(model.name)}" loading="${firstImageLoading}" fetchpriority="${firstImagePriority}" decoding="async" onerror="${this.escapeAttribute(imageErrorHandler)}">` : ''}
       </div>
     `;
-  }
-
-  hydrateRenderedModelImages(category, subcategories, container) {
-    subcategories.forEach(subcategory => {
-      (subcategory.models || []).forEach(model => {
-        this.hydratePrimaryModelImage(category, subcategory, model)
-          .then(images => {
-            if (!images.length) return;
-            const card = this.findProductCard(container, model.slug);
-            const imageContainer = card?.querySelector('.product-card-image');
-            if (!imageContainer) return;
-            imageContainer.innerHTML = this.renderProductMedia(model) + this.renderProductEnvironmentBadge(model, subcategory);
-          })
-          .catch(error => console.warn(`No se pudieron cargar imágenes para ${model.name}:`, error));
-      });
-    });
-  }
-
-  hydrateRenderedModelDetailImage(category, subcategory, model, container) {
-    this.hydrateModelImages(category, subcategory, model)
-      .then(images => {
-        if (!images.length) return;
-        const imageContainer = container.querySelector('.model-detail-image');
-        if (!imageContainer) return;
-        const carouselId = `${model.id}-detail`;
-        imageContainer.innerHTML = this.renderProductMedia(model, { detail: true, carouselId });
-        if (images.length > 1) this.initCarousel(carouselId);
-      })
-      .catch(error => console.warn(`No se pudieron cargar imágenes para ${model.name}:`, error));
   }
 
   async loadData() {
@@ -907,7 +482,7 @@ class RTMProducts {
 
     this.attachImageLinkEvents(container);
     this.attachFilterEvents();
-    this.hydrateRenderedModelImages(category, subcategories, container);
+    this.initProductCarousels(subcategories);
   }
 
   async renderSubcategoryPage(category, subcategory) {
@@ -942,7 +517,7 @@ class RTMProducts {
     // ── CAMBIO ──
     // Hacer las imágenes clickeables para ir al detalle del modelo.
     this.attachImageLinkEvents(container);
-    this.hydrateRenderedModelImages(category, [subcategory], container);
+    this.initProductCarousels([subcategory]);
   }
 
   // ── NUEVO ──
@@ -1040,7 +615,7 @@ class RTMProducts {
       </div>
     `;
     container.innerHTML = html;
-    this.hydrateRenderedModelDetailImage(category, subcategory, model, container);
+    if (this.getModelImages(model).length > 1) this.initCarousel(`${model.id}-detail`);
   }
 
   renderSpecialPage(category) {
