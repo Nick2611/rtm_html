@@ -3,6 +3,30 @@
  * JS compartido para todas las páginas
  */
 
+window.RTM_ASSET_VERSION = window.RTM_ASSET_VERSION || '20260619-cache2';
+window.RTM_GET_VERSIONED_DATA_PATH = window.RTM_GET_VERSIONED_DATA_PATH || function(path) {
+  const separator = path.includes('?') ? '&' : '?';
+  return `${path}${separator}v=${encodeURIComponent(window.RTM_ASSET_VERSION)}`;
+};
+window.RTM_FETCH_PRODUCTS_DATA = window.RTM_FETCH_PRODUCTS_DATA || function() {
+  if (!window.RTM_PRODUCTS_DATA_PROMISE) {
+    const fetchJson = path => fetch(window.RTM_GET_VERSIONED_DATA_PATH(path), { cache: 'no-store' });
+    window.RTM_PRODUCTS_DATA_PROMISE = fetchJson('data/products.json')
+      .then(async response => {
+        if (response.ok) return response.json();
+        const altResponse = await fetchJson('../data/products.json');
+        if (!altResponse.ok) throw new Error('Could not load products data');
+        return altResponse.json();
+      })
+      .catch(error => {
+        window.RTM_PRODUCTS_DATA_PROMISE = null;
+        throw error;
+      });
+  }
+
+  return window.RTM_PRODUCTS_DATA_PROMISE;
+};
+
 /* ===== SCROLL SUAVE ===== */
 function initSmoothScroll() {
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -288,9 +312,7 @@ let searchIndex = [];
 
 async function loadProductsData() {
   try {
-    const res = await fetch('data/products.json');
-    if (!res.ok) return;
-    const data = await res.json();
+    const data = await window.RTM_FETCH_PRODUCTS_DATA();
     buildSearchIndex(data);
   } catch { /* se carga al visitar productos.html */ }
 }
