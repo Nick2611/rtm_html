@@ -3,14 +3,14 @@
  * Maneja la carga dinámica de productos, navegación y búsqueda
  */
 
-window.RTM_ASSET_VERSION = window.RTM_ASSET_VERSION || '20260619-cache2';
+window.RTM_ASSET_VERSION = window.RTM_ASSET_VERSION || '20260619-perf2';
 window.RTM_GET_VERSIONED_DATA_PATH = window.RTM_GET_VERSIONED_DATA_PATH || function(path) {
   const separator = path.includes('?') ? '&' : '?';
   return `${path}${separator}v=${encodeURIComponent(window.RTM_ASSET_VERSION)}`;
 };
 window.RTM_FETCH_PRODUCTS_DATA = window.RTM_FETCH_PRODUCTS_DATA || function() {
   if (!window.RTM_PRODUCTS_DATA_PROMISE) {
-    const fetchJson = path => fetch(window.RTM_GET_VERSIONED_DATA_PATH(path), { cache: 'no-store' });
+    const fetchJson = path => fetch(window.RTM_GET_VERSIONED_DATA_PATH(path));
     window.RTM_PRODUCTS_DATA_PROMISE = fetchJson('data/products.json')
       .then(async response => {
         if (response.ok) return response.json();

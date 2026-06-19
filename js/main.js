@@ -3,14 +3,14 @@
  * JS compartido para todas las páginas
  */
 
-window.RTM_ASSET_VERSION = window.RTM_ASSET_VERSION || '20260619-cache2';
+window.RTM_ASSET_VERSION = window.RTM_ASSET_VERSION || '20260619-perf2';
 window.RTM_GET_VERSIONED_DATA_PATH = window.RTM_GET_VERSIONED_DATA_PATH || function(path) {
   const separator = path.includes('?') ? '&' : '?';
   return `${path}${separator}v=${encodeURIComponent(window.RTM_ASSET_VERSION)}`;
 };
 window.RTM_FETCH_PRODUCTS_DATA = window.RTM_FETCH_PRODUCTS_DATA || function() {
   if (!window.RTM_PRODUCTS_DATA_PROMISE) {
-    const fetchJson = path => fetch(window.RTM_GET_VERSIONED_DATA_PATH(path), { cache: 'no-store' });
+    const fetchJson = path => fetch(window.RTM_GET_VERSIONED_DATA_PATH(path));
     window.RTM_PRODUCTS_DATA_PROMISE = fetchJson('data/products.json')
       .then(async response => {
         if (response.ok) return response.json();
@@ -309,12 +309,24 @@ function pauseAllVideos(except) {
 
 /* ===== MEGA MENU SEARCH (index.html) ===== */
 let searchIndex = [];
+let searchDataPromise = null;
 
 async function loadProductsData() {
-  try {
-    const data = await window.RTM_FETCH_PRODUCTS_DATA();
-    buildSearchIndex(data);
-  } catch { /* se carga al visitar productos.html */ }
+  const data = await window.RTM_FETCH_PRODUCTS_DATA();
+  buildSearchIndex(data);
+}
+
+function ensureProductsSearchIndex() {
+  if (searchIndex.length) return Promise.resolve(searchIndex);
+  if (!searchDataPromise) {
+    searchDataPromise = loadProductsData()
+      .then(() => searchIndex)
+      .catch(error => {
+        searchDataPromise = null;
+        throw error;
+      });
+  }
+  return searchDataPromise;
 }
 
 function buildSearchIndex(data) {
@@ -339,7 +351,10 @@ function initMegaMenuSearch() {
   let timer;
   input.addEventListener('input', e => {
     clearTimeout(timer);
-    timer = setTimeout(() => renderSearchResults(e.target.value, results), 200);
+    timer = setTimeout(async () => {
+      await ensureProductsSearchIndex().catch(() => []);
+      renderSearchResults(e.target.value, results);
+    }, 200);
   });
 
   document.addEventListener('click', e => {
@@ -356,11 +371,18 @@ function initGlobalSearch() {
   let timer;
   input.addEventListener('input', e => {
     clearTimeout(timer);
-    timer = setTimeout(() => renderSearchResults(e.target.value, results), 200);
+    timer = setTimeout(async () => {
+      await ensureProductsSearchIndex().catch(() => []);
+      renderSearchResults(e.target.value, results);
+    }, 200);
   });
 
   input.addEventListener('focus', () => {
-    if (input.value.length >= 2 && searchIndex.length) results.classList.add('active');
+    if (input.value.length >= 2) {
+      ensureProductsSearchIndex()
+        .then(() => renderSearchResults(input.value, results))
+        .catch(() => {});
+    }
   });
 
   document.addEventListener('click', e => {
@@ -409,10 +431,20 @@ function initHeroVideoSequence() {
   const videos = Array.from(document.querySelectorAll('.hero__video'));
   const fadeOverlay = document.getElementById('hero-fade-overlay');
   if (!videos.length || !fadeOverlay) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || navigator.connection?.saveData) return;
 
   let current = 0;
   const fadeMs = 800;
   const fadeBeforeEnd = .8;
+
+  function ensureVideoSource(video) {
+    const pendingSource = video.querySelector('source[data-src]');
+    if (!pendingSource) return;
+    pendingSource.src = pendingSource.dataset.src;
+    pendingSource.removeAttribute('data-src');
+    video.preload = 'auto';
+    video.load();
+  }
 
   function playVideo(index) {
     videos.forEach((video, i) => {
@@ -424,6 +456,7 @@ function initHeroVideoSequence() {
     });
 
     const video = videos[index];
+    ensureVideoSource(video);
     video.currentTime = 0;
     fadeOverlay.classList.remove('fade-out');
     video.play().catch(() => {});
@@ -465,7 +498,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initCarousel();
   initProjectVideos();
   initHeroVideoSequence();
-  loadProductsData();
   initMegaMenuSearch();
   initGlobalSearch();
 });
