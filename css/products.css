@@ -692,8 +692,8 @@
 
 .special-gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
   padding: 0 40px 40px;
 }
 
@@ -706,12 +706,11 @@
 
 .gallery-item img {
   width: 100%;
-  height: 220px;
-  object-fit: contain;
+  height: clamp(280px, 26vw, 420px);
+  object-fit: cover;
   object-position: center;
   display: block;
-  padding: 14px;
-  background: var(--product-media-bg);
+  background: #111;
 }
 
 .gallery-caption {
@@ -841,6 +840,15 @@
   .special-cta {
     padding-left: 25px;
     padding-right: 25px;
+  }
+
+  .special-gallery {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+  }
+
+  .gallery-item img {
+    height: clamp(240px, 58vw, 360px);
   }
   
   .special-actions {

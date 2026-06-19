@@ -209,7 +209,7 @@ class RTMProducts {
 
   generateSubcategoriesHTML(category) {
     if (!category.subcategories || category.subcategories.length === 0) {
-      if (category.isSpecialPage) return '<span class="mega-menu-special-tag">Página especial</span>';
+      if (category.isSpecialPage) return '';
       return '';
     }
 

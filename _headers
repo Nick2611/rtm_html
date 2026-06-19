@@ -60,6 +60,10 @@
 /logos_clientes/*
   Cache-Control: public, max-age=31536000, immutable
 
+/logos_clientes/*.webp
+  Content-Type: image/webp
+  Cache-Control: public, max-age=31536000, immutable
+
 /miniaturas_videos/*
   Cache-Control: public, max-age=31536000, immutable
 

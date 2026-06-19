@@ -8,6 +8,7 @@ const ROOTS = [
   'imagenes_productos',
   'imagenes_productos_restantes',
   'proyectos_imagenes',
+  'logos_clientes',
 ];
 
 const SOURCE_EXTENSIONS = new Set(['.jpg', '.jpeg', '.png']);

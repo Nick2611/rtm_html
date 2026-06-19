@@ -195,9 +195,8 @@
                 "brilloPorM2": "1200 nits",
                 "frecuenciaDeRefresco": "> 3840 Hz"
               },
-              "image": "imagenes_productos_restantes/RIC-ROC-500/416c1842-4b8e-4507-a771-e7f9cdd039b3.webp",
+              "image": "imagenes_productos_restantes/RIC-ROC-500/ec55a2f1-811e-450c-8aee-3acb8bfebefc.webp",
               "images": [
-                "imagenes_productos_restantes/RIC-ROC-500/416c1842-4b8e-4507-a771-e7f9cdd039b3.webp",
                 "imagenes_productos_restantes/RIC-ROC-500/ec55a2f1-811e-450c-8aee-3acb8bfebefc.webp",
                 "imagenes_productos_restantes/RIC-ROC-500/mmexport1779842182615.webp",
                 "imagenes_productos_restantes/RIC-ROC-500/mmexport1779915694134.webp",
@@ -264,7 +263,6 @@
               "image": "imagenes_productos_restantes/RIC-ROC-1000/3f641732-a774-4649-b411-81e86f0fa4a4.webp",
               "images": [
                 "imagenes_productos_restantes/RIC-ROC-1000/3f641732-a774-4649-b411-81e86f0fa4a4.webp",
-                "imagenes_productos_restantes/RIC-ROC-1000/mmexport1779842199128.webp",
                 "imagenes_productos_restantes/RIC-ROC-1000/mmexport1779915683497.webp",
                 "imagenes_productos_restantes/RIC-ROC-1000/mmexport1779915707088.webp"
               ]
@@ -290,10 +288,8 @@
                 "brilloPorM2": "4500 nits",
                 "frecuenciaDeRefresco": "> 3840 Hz"
               },
-              "image": "imagenes_productos/tour_series/outdoor/re500/re500-1.webp",
+              "image": "imagenes_productos_restantes/RI-RO-500/mmexport1779842190832.webp",
               "images": [
-                "imagenes_productos/tour_series/outdoor/re500/re500-1.webp",
-                "imagenes_productos/tour_series/outdoor/re500/re500-2.webp",
                 "imagenes_productos_restantes/RI-RO-500/mmexport1779842190832.webp",
                 "imagenes_productos_restantes/RI-RO-500/mmexport1779915677419.webp"
               ]
@@ -309,9 +305,8 @@
                 "tamañoDelPanel": "500 x 500 x 70 mm",
                 "brilloPorM2": "4500 nits"
               },
-              "image": "imagenes_productos_restantes/RIC-ROC-500/416c1842-4b8e-4507-a771-e7f9cdd039b3.webp",
+              "image": "imagenes_productos_restantes/RIC-ROC-500/ec55a2f1-811e-450c-8aee-3acb8bfebefc.webp",
               "images": [
-                "imagenes_productos_restantes/RIC-ROC-500/416c1842-4b8e-4507-a771-e7f9cdd039b3.webp",
                 "imagenes_productos_restantes/RIC-ROC-500/ec55a2f1-811e-450c-8aee-3acb8bfebefc.webp",
                 "imagenes_productos_restantes/RIC-ROC-500/mmexport1779842182615.webp",
                 "imagenes_productos_restantes/RIC-ROC-500/mmexport1779915694134.webp",
@@ -354,7 +349,6 @@
               "image": "imagenes_productos_restantes/RIC-ROC-1000/3f641732-a774-4649-b411-81e86f0fa4a4.webp",
               "images": [
                 "imagenes_productos_restantes/RIC-ROC-1000/3f641732-a774-4649-b411-81e86f0fa4a4.webp",
-                "imagenes_productos_restantes/RIC-ROC-1000/mmexport1779842199128.webp",
                 "imagenes_productos_restantes/RIC-ROC-1000/mmexport1779915683497.webp",
                 "imagenes_productos_restantes/RIC-ROC-1000/mmexport1779915707088.webp"
               ]
@@ -525,9 +519,7 @@
               "image": "imagenes_productos/pisos_led/PIRGB.webp",
               "images": [
                 "imagenes_productos/pisos_led/PIRGB.webp",
-                "imagenes_productos/pisos_led/PIRGB-2.webp",
-                "imagenes_productos/pisos_led/pi_rgb/pi_rgb1.webp",
-                "imagenes_productos/pisos_led/pi_rgb/pi_rgb2.webp"
+                "imagenes_productos/pisos_led/PIRGB-2.webp"
               ]
             }
           ]
@@ -549,19 +541,19 @@
           "description": "Sistemas LED para transporte público",
           "models": [
             {
-              "id": "ramalera",
-              "name": "Ramalera",
-              "slug": "ramalera",
-              "description": "Display LED lateral para colectivos. Indica el ramal y destino de la unidad.",
+              "id": "cartelera",
+              "name": "Cartelera",
+              "slug": "cartelera",
+              "description": "Pantalla LED frontal para colectivos. Muestra el número de línea y el destino de manera clara y visible.",
               "specs": {
                 "aplicacion": "Transporte público",
-                "tipo": "Indicador de recorrido",
-                "ubicacion": "Lateral del vehículo"
+                "tipo": "Cartelera frontal",
+                "ubicacion": "Frente del vehículo"
               },
-              "image": "imagenes_productos/soluciones/RAMALERA.webp",
+              "image": "imagenes_productos/soluciones/CARTELERA.webp",
               "images": [
-                "imagenes_productos/soluciones/RAMALERA.webp",
-                "imagenes_productos/soluciones/RAMALERA-2.webp"
+                "imagenes_productos/soluciones/CARTELERA.webp",
+                "imagenes_productos/soluciones/CARTELERA-2.webp"
               ]
             },
             {
@@ -771,9 +763,8 @@
                 "tipo": "Cabezal móvil 3 en 1 (Beam / Spot / Wash)",
                 "potencia": "250W LED"
               },
-              "image": "imagenes_productos/iluminacion_profesional/3_en_1/cmr_250_led/cmr250-1.webp",
+              "image": "imagenes_productos/iluminacion_profesional/3_en_1/cmr_250_led/cmr250-2.webp",
               "images": [
-                "imagenes_productos/iluminacion_profesional/3_en_1/cmr_250_led/cmr250-1.webp",
                 "imagenes_productos/iluminacion_profesional/3_en_1/cmr_250_led/cmr250-2.webp",
                 "imagenes_productos/iluminacion_profesional/3_en_1/cmr_250_led/cmr250-3.webp",
                 "imagenes_productos/iluminacion_profesional/3_en_1/cmr_250_led/cmr250-4.webp"
@@ -788,10 +779,12 @@
                 "tipo": "Cabezal móvil 3 en 1 (Beam / Spot / Wash)",
                 "potencia": "400W LED"
               },
-              "image": "imagenes_productos/iluminacion_profesional/3_en_1/cmr_400_led/cmr400-2.webp",
+              "image": "imagenes_productos/iluminacion_profesional/3_en_1/cmr_400_led/cmr_400.webp",
               "images": [
-                "imagenes_productos/iluminacion_profesional/3_en_1/cmr_400_led/cmr400-2.webp",
-                "imagenes_productos/iluminacion_profesional/3_en_1/cmr_400_led/cmr400-1.webp"
+                "imagenes_productos/iluminacion_profesional/3_en_1/cmr_400_led/cmr_400.webp",
+                "imagenes_productos/iluminacion_profesional/3_en_1/cmr_400_led/cmr_400-2.webp",
+                "imagenes_productos/iluminacion_profesional/3_en_1/cmr_400_led/cmr_400-3.webp",
+                "imagenes_productos/iluminacion_profesional/3_en_1/cmr_400_led/cmr_400-4.webp"
               ]
             }
           ]
