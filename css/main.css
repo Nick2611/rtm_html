@@ -471,16 +471,6 @@ nav.navbar {
 }
 .mega-menu-subcategories a:hover { color: #fff; padding-left: 6px; }
 
-.mega-menu-special-tag {
-  display: inline-block;
-  padding: 4px 10px;
-  background: rgba(232,74,69,.15);
-  color: var(--accent);
-  border-radius: 4px;
-  font-size: .75rem;
-  margin-top: 5px;
-}
-
 /* Env badges */
 .env-badge {
   font-size: .65rem;
