@@ -56,15 +56,15 @@ frontend:
     - pattern: '**/*.css'
       headers:
         - key: 'Cache-Control'
-          value: 'public, max-age=31536000'
+          value: 'no-cache'
     - pattern: '**/*.js'
       headers:
         - key: 'Cache-Control'
-          value: 'public, max-age=31536000'
+          value: 'no-cache'
     - pattern: '**/*.json'
       headers:
         - key: 'Cache-Control'
-          value: 'public, max-age=3600'
+          value: 'no-cache'
     - pattern: '**/*.png'
       headers:
         - key: 'Cache-Control'

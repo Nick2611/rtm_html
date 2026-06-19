@@ -3,6 +3,30 @@
  * Maneja la carga dinámica de productos, navegación y búsqueda
  */
 
+window.RTM_ASSET_VERSION = window.RTM_ASSET_VERSION || '20260619-cache2';
+window.RTM_GET_VERSIONED_DATA_PATH = window.RTM_GET_VERSIONED_DATA_PATH || function(path) {
+  const separator = path.includes('?') ? '&' : '?';
+  return `${path}${separator}v=${encodeURIComponent(window.RTM_ASSET_VERSION)}`;
+};
+window.RTM_FETCH_PRODUCTS_DATA = window.RTM_FETCH_PRODUCTS_DATA || function() {
+  if (!window.RTM_PRODUCTS_DATA_PROMISE) {
+    const fetchJson = path => fetch(window.RTM_GET_VERSIONED_DATA_PATH(path), { cache: 'no-store' });
+    window.RTM_PRODUCTS_DATA_PROMISE = fetchJson('data/products.json')
+      .then(async response => {
+        if (response.ok) return response.json();
+        const altResponse = await fetchJson('../data/products.json');
+        if (!altResponse.ok) throw new Error('Could not load products data');
+        return altResponse.json();
+      })
+      .catch(error => {
+        window.RTM_PRODUCTS_DATA_PROMISE = null;
+        throw error;
+      });
+  }
+
+  return window.RTM_PRODUCTS_DATA_PROMISE;
+};
+
 class RTMProducts {
   constructor() {
     this.data = null;
@@ -102,7 +126,7 @@ class RTMProducts {
           <div class="product-carousel-container">
             ${images.map((img, index) => `
               <div class="carousel-slide ${index === 0 ? 'active' : ''}" data-slide="${index}">
-                <img src="${this.escapeAttribute(img)}" alt="${this.escapeAttribute(model.name)} - Imagen ${index + 1}" loading="${index === 0 ? firstImageLoading : 'lazy'}" fetchpriority="${index === 0 ? firstImagePriority : 'low'}" decoding="async" onerror="${this.escapeAttribute(imageErrorHandler)}">
+                <img ${index === 0 ? `src="${this.escapeAttribute(img)}"` : `data-src="${this.escapeAttribute(img)}"`} alt="${this.escapeAttribute(model.name)} - Imagen ${index + 1}" loading="${index === 0 ? firstImageLoading : 'lazy'}" fetchpriority="${index === 0 ? firstImagePriority : 'low'}" decoding="async" onerror="${this.escapeAttribute(imageErrorHandler)}">
               </div>
             `).join('')}
           </div>
@@ -125,14 +149,7 @@ class RTMProducts {
   }
 
   async loadData() {
-    const response = await fetch('data/products.json');
-    if (!response.ok) {
-      const altResponse = await fetch('../data/products.json');
-      if (!altResponse.ok) throw new Error('Could not load products data');
-      this.data = await altResponse.json();
-    } else {
-      this.data = await response.json();
-    }
+    this.data = await window.RTM_FETCH_PRODUCTS_DATA();
   }
 
   buildSearchIndex() {
@@ -742,13 +759,21 @@ class RTMProducts {
     const nextBtn = carousel.querySelector('.carousel-next');
     let currentSlide = 0;
     const totalSlides = slides.length;
+    const loadSlideImage = index => {
+      const img = slides[index]?.querySelector('img[data-src]');
+      if (!img) return;
+      img.src = img.dataset.src;
+      img.removeAttribute('data-src');
+    };
     const showSlide = (index) => {
       if (index < 0) index = totalSlides - 1;
       if (index >= totalSlides) index = 0;
       currentSlide = index;
+      loadSlideImage(currentSlide);
       slides.forEach((slide, i) => slide.classList.toggle('active', i === currentSlide));
       indicators.forEach((indicator, i) => indicator.classList.toggle('active', i === currentSlide));
     };
+    loadSlideImage(currentSlide);
     if (prevBtn) prevBtn.addEventListener('click', () => showSlide(currentSlide - 1));
     if (nextBtn) nextBtn.addEventListener('click', () => showSlide(currentSlide + 1));
     indicators.forEach((indicator, index) => indicator.addEventListener('click', () => showSlide(index)));
