@@ -6,6 +6,11 @@
 # ============================================
 # Estos archivos DEBEN servirse con 200, no redirigir
 /favicon.ico /favicon.ico 200
+/apple-touch-icon.png /rtm_logo/apple-touch-icon.png 200
+/apple-touch-icon-precomposed.png /rtm_logo/apple-touch-icon.png 200
+/favicon-48x48.png /rtm_logo/favicon-48x48.png 200
+/favicon-32x32.png /rtm_logo/favicon-32x32.png 200
+/favicon-16x16.png /rtm_logo/favicon-16x16.png 200
 /rtm_logo/rtmLogo.png /rtm_logo/rtmLogo.png 200
 /robots.txt /robots.txt 200
 /sitemap.xml /sitemap.xml 200

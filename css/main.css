@@ -727,7 +727,9 @@ section.hero {
   inset: 0;
   z-index: 0;
   overflow: hidden;
-  background: var(--nav-bg);
+  background:
+    linear-gradient(rgba(20,20,22,.85), rgba(15,20,32,.9)),
+    url('../background_hero/background_hero.jpeg') center/cover no-repeat;
 }
 
 .hero__video {

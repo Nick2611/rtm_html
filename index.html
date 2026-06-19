@@ -39,7 +39,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
   <!-- CSS -->
-  <link rel="stylesheet" href="css/main.css?v=20260619-cache2">
+  <link rel="stylesheet" href="css/main.css?v=20260619-perf2">
 
   <!-- Sitemap -->
   <link rel="sitemap" type="application/xml" href="/sitemap.xml">
@@ -90,16 +90,6 @@
   }
   </script>
 
-  <!-- Google Analytics (reemplazar con tu ID real) -->
-  <!--
-  <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'GA_MEASUREMENT_ID');
-  </script>
-  -->
 </head>
 <body>
 
@@ -241,17 +231,17 @@
   <!-- ================== HERO ================== -->
   <section class="hero" id="home">
     <div class="hero__video-container" aria-hidden="true">
-      <video class="hero__video" id="hero-video-1" muted playsinline preload="auto">
+      <video class="hero__video" id="hero-video-1" muted playsinline preload="metadata">
         <source src="background_hero/video_1.mp4" type="video/mp4">
       </video>
-      <video class="hero__video" id="hero-video-2" muted playsinline preload="auto">
-        <source src="background_hero/video_2.mp4" type="video/mp4">
+      <video class="hero__video" id="hero-video-2" muted playsinline preload="none">
+        <source data-src="background_hero/video_2.mp4" type="video/mp4">
       </video>
-      <video class="hero__video" id="hero-video-3" muted playsinline preload="auto">
-        <source src="background_hero/video_3.mp4" type="video/mp4">
+      <video class="hero__video" id="hero-video-3" muted playsinline preload="none">
+        <source data-src="background_hero/video_3.mp4" type="video/mp4">
       </video>
-      <video class="hero__video" id="hero-video-5" muted playsinline preload="auto">
-        <source src="background_hero/video_5.mp4" type="video/mp4">
+      <video class="hero__video" id="hero-video-5" muted playsinline preload="none">
+        <source data-src="background_hero/video_5.mp4" type="video/mp4">
       </video>
       <div class="hero__fade-overlay" id="hero-fade-overlay"></div>
     </div>
@@ -501,7 +491,7 @@
     </a>
   </div>
 
-  <script src="js/main.js?v=20260619-cache2" defer></script>
+  <script src="js/main.js?v=20260619-perf2" defer></script>
 
 </body>
 </html>
