@@ -90,38 +90,49 @@
     nav.navbar{
       max-width: var(--container);
       margin: 0 auto;
-      padding: 18px 20px;
-      display: flex;
+      padding: 14px 24px;
+      display: grid;
+      grid-template-columns: minmax(200px, 230px) minmax(0, 1fr) minmax(136px, 164px);
       align-items: center;
-      justify-content: space-between;
-      gap: 16px;
+      justify-content: normal;
+      gap: clamp(16px, 1.8vw, 22px);
       position: relative;
       width: 100%;
-      min-height: 70px;
-      flex-wrap: nowrap;
+      min-height: 74px;
     }
 
     /* Sistema adaptativo dinámico del header */
     @media (max-width: 1200px) {
       nav.navbar {
-        padding: 16px 20px;
+        padding: 12px 22px;
         min-height: 70px;
+        grid-template-columns: minmax(176px, 230px) minmax(0, 1fr) minmax(130px, 154px);
+        gap: 20px;
       }
       .brand img {
-        width: 250px;
-        height: 50px;
+        width: clamp(180px, 18vw, 220px);
+        height: auto;
+        max-height: 50px;
       }
+      .menu { gap: 20px; }
+      .menu a { font-size: .95rem; }
     }
 
     @media (max-width: 1024px) {
       nav.navbar {
-        padding: 14px 20px;
-        min-height: 65px;
+        padding: 12px 18px;
+        min-height: 66px;
+        grid-template-columns: 190px minmax(0, 1fr) 142px;
+        gap: 14px;
       }
       .brand img {
-        width: 220px;
-        height: 45px;
+        width: 190px;
+        height: auto;
+        max-height: 44px;
       }
+      .menu { gap: 14px; }
+      .menu a { font-size: .88rem; letter-spacing: .1px; }
+      .btn { padding: 10px 14px; font-size: .82rem; }
     }
 
     @media (max-width: 950px) {
@@ -160,8 +171,9 @@
       display: flex;
       align-items: center;
       gap: 14px;
-      min-width: 180px;
-      flex: 0 0 auto;
+      min-width: 0;
+      grid-column: 1;
+      justify-self: end;
     }
 
     /* Ajustar brand en móvil */
@@ -175,8 +187,9 @@
     }
     .brand img{
       display: block;
-      width: 300px;
-      height: 60px;
+      width: clamp(190px, 16vw, 230px);
+      height: auto;
+      max-height: 54px;
       object-fit: contain;
     }
 
@@ -189,23 +202,31 @@
     }
 
     .nav-center{
-      flex: 1 1 auto;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
       display: flex;
       justify-content: center;
+      min-width: 0;
+      z-index: 2;
     }
 
     .menu{
       list-style: none;
       display: flex;
-      gap: 40px;
+      gap: clamp(18px, 2vw, 28px);
       margin: 0;
       padding: 0;
       align-items: center;
+      justify-content: center;
+      min-width: 0;
+      white-space: nowrap;
     }
 
     .menu a{
       text-decoration: none;
       color: var(--nav-text);
+      font-size: clamp(.9rem, .9vw, .98rem);
       font-weight: 500;
       letter-spacing: .2px;
       opacity: .95;
@@ -469,7 +490,10 @@
     }
 
     .cta{
-      flex: 0 0 auto;
+      display: flex;
+      grid-column: 3;
+      justify-self: end;
+      min-width: 0;
     }
 
     /* Ajustar CTA en móvil */
@@ -561,6 +585,13 @@
 
     /* Breakpoints adaptativos para el menú hamburguesa */
     @media (max-width: 1000px){
+      nav.navbar {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        max-width: 100%;
+        width: 100%;
+      }
       .nav-center{ display:none; }
       .burger-wrap{
         display: flex;
@@ -1057,22 +1088,33 @@
     /* ======= RESPONSIVE ======= */
     @media (max-width: 1200px){
       nav.navbar {
-        padding: 16px 20px;
+        padding: 12px 22px;
+        grid-template-columns: minmax(180px, 220px) minmax(0, 1fr) minmax(130px, 154px);
+        gap: 18px;
       }
       .brand img {
-        width: 250px;
-        height: 50px;
+        width: clamp(180px, 18vw, 220px);
+        height: auto;
+        max-height: 50px;
       }
+      .menu { gap: 20px; }
+      .menu a { font-size: .95rem; }
     }
 
     @media (max-width: 1024px){
       nav.navbar {
-        padding: 14px 20px;
+        padding: 12px 18px;
+        grid-template-columns: 190px minmax(0, 1fr) 142px;
+        gap: 14px;
       }
       .brand img {
-        width: 220px;
-        height: 45px;
+        width: 190px;
+        height: auto;
+        max-height: 44px;
       }
+      .menu { gap: 14px; }
+      .menu a { font-size: .88rem; letter-spacing: .1px; }
+      .btn { padding: 10px 14px; font-size: .82rem; }
     }
 
     @media (max-width: 950px){
@@ -1081,7 +1123,8 @@
       }
       .brand img {
         width: 200px;
-        height: 40px;
+        height: auto;
+        max-height: 40px;
       }
       .btn {
         padding: 10px 16px;
@@ -1272,6 +1315,7 @@
               </li>
             </ul>
           </li>
+          <li role="none"><a role="menuitem" href="guia.html#guia-productos">Guía</a></li>
           <li role="none"><a role="menuitem" class="active" href="servicios.html">Servicios</a></li>
           <li role="none"><a role="menuitem" href="index.html#clientes">Clientes</a></li>
           <li role="none"><a role="menuitem" href="proyectos.html">Proyectos</a></li>
@@ -1360,6 +1404,7 @@
               </li>
             </ul>
           </li>
+          <li><a href="guia.html#guia-productos">Guía</a></li>
           <li><a class="active" href="servicios.html">Servicios</a></li>
           <li><a href="index.html#clientes">Clientes</a></li>
           <li><a href="proyectos.html">Proyectos</a></li>
@@ -1500,7 +1545,7 @@
       <section class="footer__block" aria-labelledby="contactanos-title">
         <h4 id="contactanos-title">Contactanos</h4>
         <p class="footer__text">
-          Comunicate al +54 9 11 7373 6308
+          Comunicate al +54 9 11 5153 1530
         </p>
         <p class="footer__text" style="margin-top:12px;">
           Av. Tte. Gral. Juan Domingo Perón 2915,<br>

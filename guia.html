@@ -337,6 +337,8 @@
     /* ── Responsive ── */
     @media (max-width: 768px) {
       .guia-hero { padding: 60px 16px 50px; }
+      .guia-hero-btns { flex-direction: column; align-items: center; }
+      .guia-hero-btns a { width: 100%; max-width: 280px; text-align: center; }
       .guia-body { padding: 40px 16px 60px; }
       .guia-elegir { padding: 30px 20px; }
       .guia-elegir h2 { font-size: 1.3rem; }
@@ -347,8 +349,6 @@
     @media (max-width: 480px) {
       .guia-index__inner { gap: 8px; }
       .guia-models { grid-template-columns: 1fr 1fr; }
-      .guia-hero-btns { flex-direction: column; align-items: center; }
-      .guia-hero-btns a { width: 100%; max-width: 280px; text-align: center; }
     }
   </style>
 </head>
@@ -369,6 +369,7 @@
           <li role="none"><a role="menuitem" href="index.html">Home</a></li>
           <li role="none"><a role="menuitem" href="index.html#about">Nosotros</a></li>
           <li role="none"><a role="menuitem" href="productos.html">Productos</a></li>
+          <li role="none"><a role="menuitem" class="active" href="#guia-productos">Guía</a></li>
           <li role="none"><a role="menuitem" href="index.html#clientes">Clientes</a></li>
           <li role="none"><a role="menuitem" href="proyectos.html">Proyectos</a></li>
         </ul>
@@ -390,6 +391,7 @@
           <li><a href="index.html">Home</a></li>
           <li><a href="index.html#about">Nosotros</a></li>
           <li><a href="productos.html">Productos</a></li>
+          <li><a class="active" href="#guia-productos">Guía</a></li>
           <li><a href="index.html#clientes">Clientes</a></li>
           <li><a href="proyectos.html">Proyectos</a></li>
           <li><a href="index.html#contacto">Contactanos</a></li>
@@ -399,7 +401,7 @@
   </header>
 
   <!-- ================== HERO ================== -->
-  <div class="guia-hero">
+  <div class="guia-hero" id="guia-productos">
     <h1>Guía de Productos RTM</h1>
     <p>Todo lo que necesitás saber sobre nuestra línea de soluciones LED. Modelos, usos y cómo elegir la opción ideal para tu proyecto.</p>
     <div class="guia-hero-btns">
@@ -470,12 +472,12 @@
           </div>
           <div class="guia-model-card">
             <div class="guia-model-name">RE640</div>
-            <div class="guia-model-desc">Pantalla outdoor robusta con pitch de 6.4mm. Equilibrio entre resolución y distancia de visualización para vallas y publicidad exterior.</div>
+            <div class="guia-model-desc">Pantalla outdoor de aluminio y magnesio.</div>
             <span class="guia-model-tag tag-outdoor">Outdoor</span>
           </div>
           <div class="guia-model-card">
             <div class="guia-model-name">RE960</div>
-            <div class="guia-model-desc">Pantalla outdoor de mayor pitch, pensada para grandes superficies y distancias de visualización largas como autopistas o estadios.</div>
+            <div class="guia-model-desc">Pantalla outdoor de mayor tamaño, pensada para grandes superficies y distancias de visualización largas como autopistas o estadios.</div>
             <span class="guia-model-tag tag-outdoor">Outdoor</span>
           </div>
         </div>
@@ -504,7 +506,7 @@
         </div>
       </div>
       <div class="guia-cat__desc">
-        La línea Tour Series está pensada para el mundo del espectáculo y los eventos en vivo. Sus paneles modulares permiten armar y desarmar estructuras de cualquier tamaño en poco tiempo, sin perder calidad de imagen. Son la elección de productoras, empresas de sonido y luz, y organizadores de eventos.
+        La línea Tour Series está pensada para el mundo del espectáculo y los eventos en vivo. Sus paneles modulares permiten armar y desarmar estructuras de cualquier tamaño en poco tiempo, sin perder calidad de imagen. Son la elección de productoras, empresas de sonido e iluminación profesional, y organizadores de eventos.
       </div>
 
       <div class="guia-subcat">
@@ -522,7 +524,7 @@
           </div>
           <div class="guia-model-card">
             <div class="guia-model-name">RIF500</div>
-            <div class="guia-model-desc">Versión front service del RI500. El mantenimiento se realiza por el frente, ideal cuando no hay acceso por detrás del panel.</div>
+            <div class="guia-model-desc">Variante frontal del RI500 con mantenimiento 100% frontal por imanes. Con modulos ultraflexibles y hub incorporado.</div>
             <span class="guia-model-tag tag-indoor">Indoor</span>
           </div>
           <div class="guia-model-card">
@@ -533,11 +535,6 @@
           <div class="guia-model-card">
             <div class="guia-model-name">RIC1000</div>
             <div class="guia-model-desc">Versión curva del RI1000 para pantallas de gran escala con diseño no lineal.</div>
-            <span class="guia-model-tag tag-indoor">Indoor</span>
-          </div>
-          <div class="guia-model-card">
-            <div class="guia-model-name">RIF1000</div>
-            <div class="guia-model-desc">Versión front service del RI1000 para instalaciones permanentes o semipermanentes en grandes escenarios.</div>
             <span class="guia-model-tag tag-indoor">Indoor</span>
           </div>
         </div>
@@ -557,11 +554,6 @@
             <span class="guia-model-tag tag-outdoor">Outdoor</span>
           </div>
           <div class="guia-model-card">
-            <div class="guia-model-name">REF500</div>
-            <div class="guia-model-desc">Front service outdoor de 500mm. Mantenimiento por el frente en instalaciones donde el acceso trasero es limitado.</div>
-            <span class="guia-model-tag tag-outdoor">Outdoor</span>
-          </div>
-          <div class="guia-model-card">
             <div class="guia-model-name">RE1000</div>
             <div class="guia-model-desc">Panel outdoor de 1000mm para cubrir grandes superficies en exteriores con menor cantidad de módulos.</div>
             <span class="guia-model-tag tag-outdoor">Outdoor</span>
@@ -569,11 +561,6 @@
           <div class="guia-model-card">
             <div class="guia-model-name">REC1000</div>
             <div class="guia-model-desc">Versión curva outdoor de 1000mm para pantallas de gran formato con diseño no rectangular.</div>
-            <span class="guia-model-tag tag-outdoor">Outdoor</span>
-          </div>
-          <div class="guia-model-card">
-            <div class="guia-model-name">REF1000</div>
-            <div class="guia-model-desc">Front service outdoor de 1000mm para instalaciones permanentes en exteriores de difícil acceso posterior.</div>
             <span class="guia-model-tag tag-outdoor">Outdoor</span>
           </div>
         </div>
@@ -615,11 +602,6 @@
           <div class="guia-model-card">
             <div class="guia-model-name">TI640</div>
             <div class="guia-model-desc">Tótem indoor de tamaño medio. Equilibrio entre presencia visual e impacto sin ocupar demasiado espacio.</div>
-            <span class="guia-model-tag tag-indoor">Indoor</span>
-          </div>
-          <div class="guia-model-card">
-            <div class="guia-model-name">TI960</div>
-            <div class="guia-model-desc">Tótem indoor de mayor impacto visual. Para lobbies, aeropuertos, centros comerciales y espacios de gran circulación.</div>
             <span class="guia-model-tag tag-indoor">Indoor</span>
           </div>
         </div>
@@ -674,12 +656,12 @@
         </div>
         <div class="guia-model-card">
           <div class="guia-model-name">P-60 DISCO</div>
-          <div class="guia-model-desc">Piso LED con pitch de 6mm. Mayor resolución para espacios donde los espectadores están cerca del piso y la imagen debe ser nítida.</div>
+          <div class="guia-model-desc">Piso LED con pitch de 60mm. Soporta efectos y figuras programables.</div>
           <span class="guia-model-tag tag-general">Piso LED</span>
         </div>
         <div class="guia-model-card">
           <div class="guia-model-name">PI-RGB</div>
-          <div class="guia-model-desc">Piso LED RGB de alta personalización. Control independiente por zona para efectos de iluminación dinámicos e interactivos.</div>
+          <div class="guia-model-desc">Piso LED RGB con efecto infinito. Control independiente por zona para efectos de iluminación dinámicos e interactivos.</div>
           <span class="guia-model-tag tag-general">Piso LED</span>
         </div>
       </div>
@@ -950,7 +932,7 @@
       <section class="footer__block" aria-labelledby="contactanos-title">
         <h4 id="contactanos-title">Contactanos</h4>
         <p class="footer__text">
-          <a href="tel:+5491173736308" style="color:var(--footer-ink);text-decoration:none">+54 9 11 7373 6308</a>
+          <a href="tel:+5491151531530" style="color:var(--footer-ink);text-decoration:none">+54 9 11 5153 1530</a>
         </p>
         <p class="footer__text" style="margin-top:12px">
           Av. Tte. Gral. Juan Domingo Perón 2915,<br>

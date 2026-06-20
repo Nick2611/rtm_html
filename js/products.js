@@ -630,7 +630,7 @@ class RTMProducts {
             <a href="index.html#contacto" class="btn btn-primary">
               <i class="fas fa-envelope"></i> Solicitar cotización
             </a>
-            <a href="https://wa.me/5491173736308?text=Hola!%20Estoy%20interesado%20en%20el%20modelo%20${encodeURIComponent(model.name)}" class="btn btn-whatsapp" target="_blank">
+            <a href="https://wa.me/5491151531530?text=Hola!%20Estoy%20interesado%20en%20el%20modelo%20${encodeURIComponent(model.name)}" class="btn btn-whatsapp" target="_blank">
               <i class="fab fa-whatsapp"></i> Consultar por WhatsApp
             </a>
           </div>
@@ -699,7 +699,7 @@ class RTMProducts {
             <a href="proyectos.html" class="btn btn-projects">
               <i class="fas fa-images"></i> Ver proyectos
             </a>
-            <a href="https://wa.me/5491173736308?text=Hola!%20Me%20interesa%20información%20sobre%20LED%20Trucks" class="btn btn-whatsapp" target="_blank">
+            <a href="https://wa.me/5491151531530?text=Hola!%20Me%20interesa%20información%20sobre%20LED%20Trucks" class="btn btn-whatsapp" target="_blank">
               <i class="fab fa-whatsapp"></i> WhatsApp
             </a>
           </div>
