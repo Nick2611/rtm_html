@@ -36,7 +36,7 @@ body {
    ============================================ */
 :root {
   /* Altura del header fijo (cambia por breakpoint) */
-  --header-h: 100px;
+  --header-h: 82px;
 
   /* Header/Nav */
   --nav-bg: #141416;
@@ -131,16 +131,16 @@ header.site-header {
 nav.navbar {
   max-width: var(--container);
   margin: 0 auto;
-  padding: 18px 20px;
-  display: flex;
+  padding: 14px 24px;
+  display: grid;
+  grid-template-columns: minmax(200px, 230px) minmax(0, 1fr) minmax(176px, 220px);
   align-items: center;
-  justify-content: space-between;
-  gap: 16px;
+  justify-content: normal;
+  gap: clamp(16px, 1.8vw, 22px);
   position: relative;
   z-index: 1000;
   width: 100%;
-  min-height: 70px;
-  flex-wrap: nowrap;
+  min-height: 74px;
 }
 
 /* Brand / Logo */
@@ -148,41 +148,47 @@ nav.navbar {
   display: flex;
   align-items: center;
   gap: 14px;
-  min-width: 180px;
-  flex: 0 0 auto;
+  min-width: 0;
+  grid-column: 1;
+  justify-self: end;
 }
 
 .brand img {
   display: block;
-  width: 360px;
-  height: 72px;
+  width: clamp(190px, 16vw, 230px);
+  height: auto;
+  max-height: 54px;
   object-fit: contain;
 }
 
-/* Nav center — centrado absoluto para que no dependa
-   del ancho del logo ni del buscador */
+/* Nav center */
 .nav-center {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   justify-content: center;
+  min-width: 0;
+  z-index: 2;
 }
 
 /* Menu */
 .menu {
   list-style: none;
   display: flex;
-  gap: 34px;
+  gap: clamp(18px, 2vw, 30px);
   margin: 0;
   padding: 0;
   align-items: center;
+  justify-content: center;
+  min-width: 0;
+  white-space: nowrap;
 }
 
 .menu > li > a {
   text-decoration: none;
   color: var(--nav-text);
-  font-size: 1.08rem;
+  font-size: clamp(.92rem, .92vw, 1rem);
   font-weight: 600;
   line-height: 1.15;
   letter-spacing: .25px;
@@ -208,10 +214,12 @@ nav.navbar {
 /* CTA */
 .cta,
 .cta-wrapper {
-  flex: 0 0 auto;
   display: flex;
   align-items: center;
   gap: 10px;
+  grid-column: 3;
+  justify-self: end;
+  min-width: 0;
 }
 
 /* Botón principal */
@@ -576,7 +584,12 @@ nav.navbar {
 .search-no-results { padding: 20px; text-align: center; color: rgba(255,255,255,.5); }
 
 /* Navbar search (productos.html) */
-.search-container { position: relative; }
+.search-container {
+  position: relative;
+  grid-column: 3;
+  justify-self: end;
+  width: min(100%, 220px);
+}
 .search-input-wrapper { position: relative; display: flex; align-items: center; }
 .search-input-wrapper i {
   position: absolute;
@@ -588,7 +601,7 @@ nav.navbar {
 }
 
 #global-search {
-  width: 200px;
+  width: 100%;
   padding: 10px 14px 10px 42px;
   background: #1e1e20 !important;
   border: 1px solid rgba(255,255,255,.15);
@@ -603,9 +616,10 @@ nav.navbar {
 }
 #global-search::placeholder { color: rgba(255,255,255,.5) !important; opacity: 1; }
 #global-search:focus {
-  width: 280px;
+  width: 100%;
   background: #252527 !important;
   border-color: rgba(232,74,69,.5);
+  box-shadow: 0 0 0 3px rgba(232,74,69,.18);
 }
 
 #search-results {
@@ -1795,25 +1809,45 @@ footer:not(.site-footer) {
 
 /* ── Tablet grande ── */
 @media (max-width: 1200px) {
-  :root { --header-h: 95px; }
+  :root { --header-h: 74px; }
   .header-container { padding-top: 18px; }
-  nav.navbar { padding: 16px 20px; }
-  .brand img { width: 300px; height: 60px; }
-  .menu { gap: 28px; }
-  .menu > li > a { font-size: 1rem; }
+  nav.navbar {
+    padding: 12px 22px;
+    grid-template-columns: minmax(180px, 220px) minmax(0, 1fr) minmax(160px, 210px);
+    gap: 18px;
+  }
+  .brand img { width: clamp(180px, 18vw, 220px); max-height: 50px; }
+  .menu { gap: 22px; }
+  .menu > li > a { font-size: .95rem; }
   .mega-menu-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
 @media (max-width: 1024px) {
-  :root { --header-h: 90px; }
+  :root { --header-h: 68px; }
   .header-container { padding-top: 16px; }
-  nav.navbar { padding: 14px 20px; min-height: 65px; }
-  .brand img { width: 260px; height: 52px; }
+  nav.navbar {
+    padding: 12px 18px;
+    min-height: 66px;
+    grid-template-columns: 190px minmax(0, 1fr) 170px;
+    gap: 14px;
+  }
+  .brand img { width: 190px; max-height: 44px; }
+  .menu { gap: 16px; }
+  .menu > li > a { font-size: .9rem; letter-spacing: .1px; }
+  .search-container { width: 170px; }
+  #global-search { font-size: .84rem; padding-left: 38px; }
 }
 
 /* ── Ocultar menú desktop, mostrar hamburguesa ── */
 @media (max-width: 1000px) {
-  :root { --header-h: 80px; }
+  :root { --header-h: 68px; }
+  nav.navbar {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    max-width: 100%;
+    width: 100%;
+  }
   .nav-center,
   .search-container { display: none; }
   .mega-menu-wrapper { display: none; }
@@ -1882,7 +1916,7 @@ footer:not(.site-footer) {
 }
 
 @media (max-width: 950px) {
-  :root { --header-h: 75px; }
+  :root { --header-h: 64px; }
   nav.navbar { padding: 12px 20px; min-height: 60px; }
   .brand img { width: 200px; height: 40px; }
   .btn { padding: 10px 16px; font-size: .9rem; }
@@ -1890,7 +1924,7 @@ footer:not(.site-footer) {
 
 /* ── Tablet / mobile grande ── */
 @media (max-width: 900px) {
-  :root { --header-h: 70px; }
+  :root { --header-h: 60px; }
   nav.navbar { padding: 10px 15px; min-height: 60px; gap: 10px; }
   .brand { min-width: auto; flex: 1; justify-content: flex-start; order: 1; }
   .brand img { width: 180px; height: 36px; }
@@ -1919,7 +1953,7 @@ footer:not(.site-footer) {
 
 /* ── Mobile ── */
 @media (max-width: 768px) {
-  :root { --header-h: 65px; }
+  :root { --header-h: 60px; }
   .header-container { padding-top: 10px; }
   nav.navbar { padding: 8px 15px 10px; }
   .burger-wrap { padding: 6px; min-width: 40px; min-height: 40px; }
