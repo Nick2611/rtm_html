@@ -175,10 +175,8 @@
                 "frecuenciaDeRefresco": "3840 - 7680 Hz",
                 "tamañoDelPanel": "500 x 500 x 70 mm"
               },
-              "image": "imagenes_productos/tour_series/indoor/ri500/ri500-1.webp",
+              "image": "imagenes_productos_restantes/RI-RO-500/mmexport1779842190832.webp",
               "images": [
-                "imagenes_productos/tour_series/indoor/ri500/ri500-1.webp",
-                "imagenes_productos/tour_series/indoor/ri500/ri500-2.webp",
                 "imagenes_productos_restantes/RI-RO-500/mmexport1779842190832.webp",
                 "imagenes_productos_restantes/RI-RO-500/mmexport1779915677419.webp"
               ]
@@ -330,9 +328,8 @@
                 "frecuenciaDeRefresco": "3840 - 7680 Hz",
                 "tamañoDelPanel": "500 x 1000 x 85 mm"
               },
-              "image": "imagenes_productos/tour_series/outdoor/re1000/re1000-1.webp",
+              "image": "imagenes_productos/tour_series/outdoor/re1000/re1000-2.webp",
               "images": [
-                "imagenes_productos/tour_series/outdoor/re1000/re1000-1.webp",
                 "imagenes_productos/tour_series/outdoor/re1000/re1000-2.webp",
                 "imagenes_productos_restantes/RI-RO-1000/mmexport1779915707088.webp"
               ]
