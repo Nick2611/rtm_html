@@ -11,7 +11,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
 
   <!-- CSS Principal -->
-  <link rel="stylesheet" href="css/main.css?v=20260619-perf2">
+  <link rel="stylesheet" href="css/main.css?v=20260801-contact1">
 
   <!-- Favicon -->
   <link rel="icon" href="favicon.ico" type="image/x-icon">
@@ -1044,6 +1044,27 @@
       box-shadow: 0 0 0 3px rgba(100,116,139,.15);
     }
 
+    .error-message{
+      display:none;
+      margin-top:4px;
+      color:#b91c1c;
+      font-size:.875rem;
+    }
+    .form-field.error input,
+    .form-field.error textarea{
+      border-color:#b91c1c;
+    }
+    .form-field.error .error-message{ display:block; }
+    .form-status{
+      grid-column:1 / -1;
+      min-height:1.25rem;
+      margin:0;
+      text-align:center;
+      font-size:.9rem;
+    }
+    .form-status.error{ color:#b91c1c; }
+    .form-status.success{ color:#166534; }
+
     .form-actions{
       grid-column: 1 / -1;
       margin-top: 6px;
@@ -1233,6 +1254,13 @@
       }
     }
   </style>
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xvo6v2qw7h");
+  </script>
 </head>
 <body>
 
@@ -1499,30 +1527,35 @@
       <h3 id="contacto-title">¿Interesado en nuestros servicios?</h3>
       <p>Completá tus datos y hablemos sobre tu próximo proyecto LED</p>
 
-      <form class="contact-form" id="contact-form" novalidate>
+      <form class="contact-form" id="contact-form" data-contact-form novalidate>
         <div class="form-field">
           <label for="nombre">Nombre</label>
-          <input id="nombre" name="nombre" type="text" placeholder="Tu nombre" autocomplete="given-name" required>
+          <input id="nombre" name="nombre" type="text" placeholder="Tu nombre" autocomplete="given-name" minlength="2" maxlength="80" required>
+          <span class="error-message" aria-live="polite">Ingresá tu nombre.</span>
         </div>
 
         <div class="form-field">
           <label for="apellido">Apellido</label>
-          <input id="apellido" name="apellido" type="text" placeholder="Tu apellido" autocomplete="family-name">
+          <input id="apellido" name="apellido" type="text" placeholder="Tu apellido" autocomplete="family-name" minlength="2" maxlength="80">
+          <span class="error-message" aria-live="polite">Revisá el apellido ingresado.</span>
         </div>
 
         <div class="form-field">
           <label for="empresa">Empresa</label>
-          <input id="empresa" name="empresa" type="text" placeholder="Nombre de tu empresa">
+          <input id="empresa" name="empresa" type="text" placeholder="Nombre de tu empresa" minlength="2" maxlength="120" autocomplete="organization">
+          <span class="error-message" aria-live="polite">Revisá el nombre de la empresa.</span>
         </div>
 
         <div class="form-field">
           <label for="telefono" class="req">Teléfono</label>
-          <input id="telefono" name="telefono" type="tel" placeholder="Tu número de teléfono" inputmode="tel" autocomplete="tel" required>
+          <input id="telefono" name="telefono" type="tel" placeholder="Tu número de teléfono" inputmode="tel" autocomplete="tel" maxlength="25" required>
+          <span class="error-message" aria-live="polite">Ingresá un teléfono válido.</span>
         </div>
 
         <div class="form-field full">
           <label for="consulta" class="req">Consulta</label>
-          <textarea id="consulta" name="consulta" placeholder="Cuéntanos sobre tu proyecto LED..." required></textarea>
+          <textarea id="consulta" name="consulta" placeholder="Contanos sobre tu proyecto LED..." minlength="10" maxlength="2000" required></textarea>
+          <span class="error-message" aria-live="polite">Describí tu consulta.</span>
         </div>
 
         <div class="form-actions">
@@ -1531,6 +1564,7 @@
             <span class="btn-loading" style="display: none;">Enviando...</span>
           </button>
         </div>
+        <p class="form-status" data-form-status role="status" aria-live="polite"></p>
       </form>
     </div>
   </section>
@@ -1606,95 +1640,6 @@
       });
     });
 
-    // ===== MANEJO DEL FORMULARIO DE CONTACTO =====
-    function initContactForm() {
-      const form = document.getElementById('contact-form');
-      const submitBtn = document.getElementById('submit-btn');
-
-      if (!form || !submitBtn) return;
-
-      form.addEventListener('submit', async function(e) {
-        e.preventDefault();
-
-        // Obtener datos del formulario
-        const formData = new FormData(form);
-        const data = {
-          nombre: formData.get('nombre'),
-          apellido: formData.get('apellido'),
-          empresa: formData.get('empresa'),
-          telefono: formData.get('telefono'),
-          consulta: formData.get('consulta')
-        };
-
-        // Validación básica
-        if (!data.nombre || !data.telefono || !data.consulta) {
-          alert('Por favor, completa todos los campos obligatorios.');
-          return;
-        }
-
-        // Mostrar estado de carga
-        submitBtn.classList.add('loading');
-        submitBtn.disabled = true;
-
-        try {
-          console.log('📤 Enviando datos:', data);
-
-          // Enviar datos a la función Lambda
-          const response = await fetch('https://2j77uv25gk.execute-api.us-east-1.amazonaws.com/Prod/send-email', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-            mode: 'cors',
-            credentials: 'omit'
-          });
-
-          console.log('📡 Response recibida:', response);
-          console.log('📊 Response status:', response.status);
-          console.log('📊 Response ok:', response.ok);
-
-          const result = await response.json();
-          console.log('📦 Response body:', result);
-
-          if (response.ok && result.message && result.message.includes('exitosamente')) {
-            console.log('✅ Éxito: Mostrando popup');
-            showPopup();
-            form.reset();
-          } else {
-            console.log('❌ Error en respuesta:', result);
-            throw new Error(result.error || result.message || 'Error enviando el formulario');
-          }
-
-        } catch (error) {
-          console.error('💥 Error completo:', error);
-          console.error('💥 Error message:', error.message);
-          console.error('💥 Error stack:', error.stack);
-          console.error('💥 Error name:', error.name);
-
-          // Detectar tipo específico de error
-          let errorMessage = 'Hubo un error al enviar tu consulta. ';
-
-          if (error.name === 'TypeError' && error.message.includes('Failed to fetch')) {
-            errorMessage += 'Error de conexión: No se pudo conectar al servidor. Verifica tu conexión a internet.';
-          } else if (error.name === 'TypeError' && error.message.includes('CORS')) {
-            errorMessage += 'Error de CORS: El navegador bloqueó la solicitud por políticas de seguridad.';
-          } else if (error.message.includes('load failed')) {
-            errorMessage += 'Error de carga: La solicitud falló al cargar. Esto puede ser un problema de red o configuración del servidor.';
-          } else {
-            errorMessage += error.message;
-          }
-
-          errorMessage += ' Por favor, inténtalo de nuevo o contáctanos directamente.';
-          alert(errorMessage);
-        } finally {
-          // Restaurar botón
-          submitBtn.classList.remove('loading');
-          submitBtn.disabled = false;
-        }
-      });
-    }
-
     // ===== FUNCIONES DEL POPUP =====
     function showPopup() {
       const popup = document.getElementById('popup-overlay');
@@ -1752,9 +1697,10 @@
     document.addEventListener('DOMContentLoaded', function() {
       initProductosDropdown();
       initMobileDropdown();
-      initContactForm();
     });
   </script>
+
+  <script src="js/contact-form.js?v=20260801-contact1" defer></script>
 
   <style>
     /* Debug: asegurar que el menú sea visible cuando está activo */

@@ -39,7 +39,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
   <!-- CSS -->
-  <link rel="stylesheet" href="css/main.css?v=20260619-perf2">
+  <link rel="stylesheet" href="css/main.css?v=20260801-contact1">
 
   <!-- Sitemap -->
   <link rel="sitemap" type="application/xml" href="/sitemap.xml">
@@ -90,6 +90,13 @@
   }
   </script>
 
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xvo6v2qw7h");
+  </script>
 </head>
 <body>
 
@@ -394,21 +401,21 @@
           </div>
         </div>
 
-        <form class="contact-form" id="contact-form" novalidate>
+        <form class="contact-form" id="contact-form" data-contact-form novalidate>
           <div class="form-field">
             <label for="nombre" class="req">Nombre</label>
-            <input id="nombre" name="nombre" type="text" placeholder="Tu nombre" autocomplete="given-name" required>
-            <span class="error-message">Por favor, ingresa tu nombre</span>
+            <input id="nombre" name="nombre" type="text" placeholder="Tu nombre" autocomplete="given-name" minlength="2" maxlength="80" required>
+            <span class="error-message" aria-live="polite">Ingresá tu nombre.</span>
           </div>
           <div class="form-field">
             <label for="apellido" class="req">Apellido</label>
-            <input id="apellido" name="apellido" type="text" placeholder="Tu apellido" autocomplete="family-name" required>
-            <span class="error-message">Por favor, ingresa tu apellido</span>
+            <input id="apellido" name="apellido" type="text" placeholder="Tu apellido" autocomplete="family-name" minlength="2" maxlength="80" required>
+            <span class="error-message" aria-live="polite">Ingresá tu apellido.</span>
           </div>
           <div class="form-field full">
             <label for="telefono" class="req">Número de teléfono</label>
-            <input id="telefono" name="telefono" type="tel" placeholder="+54 9 11 1234-5678" inputmode="tel" autocomplete="tel" required>
-            <span class="error-message">Por favor, ingresa tu número de teléfono</span>
+            <input id="telefono" name="telefono" type="tel" placeholder="+54 9 11 1234-5678" inputmode="tel" autocomplete="tel" maxlength="25" required>
+            <span class="error-message" aria-live="polite">Ingresá un teléfono válido.</span>
           </div>
           <div class="form-field full">
             <label for="tipo-solucion" class="req">Tipo de solución</label>
@@ -420,12 +427,12 @@
               <option value="led-truck">LED Truck</option>
               <option value="carteleria-colectivos">Cartelería para colectivos</option>
             </select>
-            <span class="error-message">Por favor, selecciona un tipo de solución</span>
+            <span class="error-message" aria-live="polite">Seleccioná un tipo de solución.</span>
           </div>
           <div class="form-field full">
             <label for="mensaje" class="req">Mensaje</label>
-            <textarea id="mensaje" name="mensaje" placeholder="Cuéntanos sobre tu proyecto..." rows="6" required></textarea>
-            <span class="error-message">Por favor, describe tu consulta</span>
+            <textarea id="mensaje" name="mensaje" placeholder="Contanos sobre tu proyecto..." rows="6" minlength="10" maxlength="2000" required></textarea>
+            <span class="error-message" aria-live="polite">Describí tu consulta.</span>
           </div>
           <div class="form-actions">
             <button class="btn-submit" type="submit" id="submit-btn" aria-label="Enviar formulario de contacto">
@@ -433,6 +440,7 @@
               <span class="btn-loading" style="display:none">Enviando...</span>
             </button>
           </div>
+          <p class="form-status" data-form-status role="status" aria-live="polite"></p>
           <div class="privacy-notice">
             Al enviar este formulario, aceptas que RTM Pantallas LED procese tus datos de contacto para responder a tu consulta.
             <a href="privacidad.html">Ver política de privacidad</a>
@@ -493,7 +501,8 @@
     </a>
   </div>
 
-  <script src="js/main.js?v=20260619-perf2" defer></script>
+  <script src="js/main.js?v=20260801-contact1" defer></script>
+  <script src="js/contact-form.js?v=20260801-contact1" defer></script>
 
 </body>
 </html>
