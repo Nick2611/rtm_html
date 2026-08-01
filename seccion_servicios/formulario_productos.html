@@ -55,6 +55,7 @@
       flex-direction:column;
       gap:8px;
     }
+    .field[hidden]{ display:none; }
     label{
       font-size:.95rem;
     }
@@ -64,6 +65,7 @@
 
     input[type="text"],
     input[type="tel"],
+    select,
     textarea{
       background: var(--field);
       border:1px solid var(--border);
@@ -79,7 +81,7 @@
 
     input::placeholder, textarea::placeholder{ color:#a2a8b1; }
 
-    input:focus, textarea:focus{
+    input:focus, select:focus, textarea:focus{
       border-color:#98a1ab;
       box-shadow:0 0 0 3px rgba(100,116,139,.18);
     }
@@ -91,6 +93,7 @@
       font-size:.875rem;
     }
     .field.error input,
+    .field.error select,
     .field.error textarea{
       border-color:#b91c1c;
     }
@@ -196,9 +199,23 @@
       </div>
 
       <div class="field">
-        <label for="compania" class="req">Nombre de la compañía</label>
-        <input id="compania" name="compania" type="text" placeholder="Tu empresa" required autocomplete="organization" minlength="2" maxlength="120">
-        <span class="error-message" aria-live="polite">Ingresá el nombre de tu empresa.</span>
+        <label for="compania">Empresa u organización</label>
+        <input id="compania" name="compania" type="text" placeholder="Si corresponde" autocomplete="organization" minlength="2" maxlength="120">
+        <span class="error-message" aria-live="polite">Revisá el nombre ingresado.</span>
+      </div>
+
+      <div class="field">
+        <label for="tipo-cliente" class="req">Tipo de cliente</label>
+        <select id="tipo-cliente" name="tipo-cliente" data-client-type-select required>
+          <option value="">Seleccionar tipo de cliente</option>
+        </select>
+        <span class="error-message" aria-live="polite">Seleccioná un tipo de cliente.</span>
+      </div>
+
+      <div class="field" data-other-client-field hidden>
+        <label for="otro-tipo-cliente" class="req">Especificá el tipo de cliente</label>
+        <input id="otro-tipo-cliente" name="otro-tipo-cliente" type="text" placeholder="Contanos a qué actividad te dedicás" minlength="2" maxlength="80" disabled>
+        <span class="error-message" aria-live="polite">Especificá el tipo de cliente.</span>
       </div>
 
       <div class="field phone-wrap">
@@ -208,7 +225,15 @@
       </div>
 
       <div class="field">
-        <label for="producto" class="req">¿Qué producto te gustaría cotizar?</label>
+        <label for="tipo-solucion" class="req">Solución de interés</label>
+        <select id="tipo-solucion" name="tipo-solucion" data-solution-select required>
+          <option value="">Seleccionar tipo de solución</option>
+        </select>
+        <span class="error-message" aria-live="polite">Seleccioná un tipo de solución.</span>
+      </div>
+
+      <div class="field">
+        <label for="producto" class="req">Detalles de la cotización</label>
         <textarea id="producto" name="producto" placeholder="Contanos qué necesitás…" required minlength="10" maxlength="2000"></textarea>
         <span class="error-message" aria-live="polite">Describí qué producto necesitás.</span>
       </div>
@@ -247,7 +272,7 @@
     </div>
   </footer>
 
-  <script src="../js/contact-form.js?v=20260801-contact1" defer></script>
+  <script src="../js/contact-form.js?v=20260801-contact2" defer></script>
 
 </body>
 </html>

@@ -8,18 +8,51 @@
   const API_ENDPOINT = 'https://2j77uv25gk.execute-api.us-east-1.amazonaws.com/Prod/send-email';
   const NAME_PATTERN = /^[\p{L}\p{M}][\p{L}\p{M}'’ -]*$/u;
   const PHONE_PATTERN = /^\+?[0-9][0-9 ()-]*$/;
-  const SOLUTION_VALUES = new Set([
-    'totems-led',
-    'pantallas-indoor',
-    'pantallas-outdoor',
-    'led-truck',
-    'carteleria-colectivos'
+  const SOLUTION_OPTIONS = Object.freeze([
+    ['pantallas-indoor', 'Pantallas LED Indoor'],
+    ['pantallas-outdoor', 'Pantallas LED Outdoor'],
+    ['tour-indoor', 'Tour Series Indoor'],
+    ['tour-outdoor', 'Tour Series Outdoor'],
+    ['totems-indoor', 'Tótems LED Indoor'],
+    ['totems-outdoor', 'Tótems LED Outdoor'],
+    ['pisos-led', 'Pisos LED'],
+    ['unidades-colectivos', 'Cartelería LED para colectivos'],
+    ['unidades-comercios', 'Unidades LED para comercios'],
+    ['porticos', 'Pórticos y señalización vial'],
+    ['disenos-especiales', 'Diseños especiales y proyectos a medida'],
+    ['led-trucks', 'LED Trucks / publicidad móvil'],
+    ['cabezales-beam', 'Iluminación: cabezales móviles Beam'],
+    ['cabezales-3en1', 'Iluminación: cabezales móviles 3 en 1'],
+    ['barras-moviles', 'Iluminación: barras móviles'],
+    ['flashes', 'Iluminación: flashes'],
+    ['asesoramiento', 'No estoy seguro / necesito asesoramiento']
   ]);
+
+  const CLIENT_TYPE_OPTIONS = Object.freeze([
+    ['eventos-espectaculos', 'Productora, rental, eventos o espectáculos'],
+    ['comercio-retail', 'Comercio, retail o centro comercial'],
+    ['publicidad-marketing', 'Agencia, publicidad o activación de marca'],
+    ['medios-television', 'Medios, televisión o streaming'],
+    ['transporte-logistica', 'Transporte, logística o terminal'],
+    ['gobierno-organismo-publico', 'Gobierno, municipio u organismo público'],
+    ['industria-corporativo', 'Industria o empresa corporativa'],
+    ['gastronomia-hoteleria', 'Gastronomía, hotelería o locales nocturnos'],
+    ['deportes-clubes', 'Deportes, clubes o estadios'],
+    ['arquitectura-construccion', 'Arquitectura, construcción o integración'],
+    ['educacion-cultura', 'Educación, cultura o institución'],
+    ['uso-personal', 'Usuario particular / uso personal'],
+    ['otro', 'Otro']
+  ]);
+
+  const SOLUTION_VALUES = new Set(SOLUTION_OPTIONS.map(([value]) => value));
+  const CLIENT_TYPE_VALUES = new Set(CLIENT_TYPE_OPTIONS.map(([value]) => value));
 
   const FIELD_ALIASES = Object.freeze({
     nombre: ['nombre'],
     apellido: ['apellido'],
     empresa: ['empresa', 'compania'],
+    tipoCliente: ['tipo-cliente', 'tipoCliente'],
+    otroTipoCliente: ['otro-tipo-cliente', 'otroTipoCliente'],
     telefono: ['telefono'],
     tipoSolucion: ['tipo-solucion', 'tipoSolucion'],
     consulta: ['consulta', 'mensaje', 'producto']
@@ -79,6 +112,14 @@
       return '';
     }
 
+    if (fieldName === 'tipoCliente' && !CLIENT_TYPE_VALUES.has(value)) {
+      return 'Seleccioná un tipo de cliente válido.';
+    }
+
+    if (fieldName === 'otroTipoCliente' && (value.length < 2 || value.length > 80)) {
+      return 'Ingresá entre 2 y 80 caracteres.';
+    }
+
     if (fieldName === 'tipoSolucion' && !SOLUTION_VALUES.has(value)) {
       return 'Seleccioná un tipo de solución válido.';
     }
@@ -102,6 +143,37 @@
       errorElement.textContent = message;
       if (!errorElement.id) errorElement.id = `${field.id || field.name}-error`;
       field.setAttribute('aria-describedby', errorElement.id);
+    }
+  }
+
+  function populateSelect(select, options) {
+    if (!select || select.dataset.optionsReady === 'true') return;
+
+    select.querySelectorAll('option:not([value=""])').forEach(option => option.remove());
+    options.forEach(([value, label]) => {
+      const option = document.createElement('option');
+      option.value = value;
+      option.textContent = label;
+      select.appendChild(option);
+    });
+    select.dataset.optionsReady = 'true';
+  }
+
+  function syncOtherClientField(form) {
+    const clientType = form.querySelector('[data-client-type-select]');
+    const otherContainer = form.querySelector('[data-other-client-field]');
+    const otherField = otherContainer?.querySelector('input');
+    if (!clientType || !otherContainer || !otherField) return;
+
+    const shouldShow = clientType.value === 'otro';
+    otherContainer.hidden = !shouldShow;
+    otherField.disabled = !shouldShow;
+    otherField.required = shouldShow;
+    clientType.setAttribute('aria-expanded', String(shouldShow));
+
+    if (!shouldShow) {
+      otherField.value = '';
+      setFieldError(otherField, '');
     }
   }
 
@@ -135,9 +207,12 @@
   function buildPayload(form) {
     const formData = new FormData(form);
     return {
+      formVersion: '2',
       nombre: getFormValue(formData, FIELD_ALIASES.nombre),
       apellido: getFormValue(formData, FIELD_ALIASES.apellido),
       empresa: getFormValue(formData, FIELD_ALIASES.empresa),
+      tipoCliente: getFormValue(formData, FIELD_ALIASES.tipoCliente),
+      otroTipoCliente: getFormValue(formData, FIELD_ALIASES.otroTipoCliente),
       telefono: getFormValue(formData, FIELD_ALIASES.telefono),
       tipoSolucion: getFormValue(formData, FIELD_ALIASES.tipoSolucion),
       consulta: getFormValue(formData, FIELD_ALIASES.consulta)
@@ -233,6 +308,7 @@
       }
 
       form.reset();
+      syncOtherClientField(form);
       form.querySelectorAll('[aria-invalid]').forEach(field => setFieldError(field, ''));
       showSuccess(form);
     } catch (error) {
@@ -254,6 +330,14 @@
   function initializeForm(form) {
     if (form.dataset.contactFormReady === 'true') return;
     form.dataset.contactFormReady = 'true';
+
+    populateSelect(form.querySelector('[data-solution-select]'), SOLUTION_OPTIONS);
+    populateSelect(form.querySelector('[data-client-type-select]'), CLIENT_TYPE_OPTIONS);
+    syncOtherClientField(form);
+
+    form.querySelector('[data-client-type-select]')?.addEventListener('change', () => {
+      syncOtherClientField(form);
+    });
 
     form.querySelectorAll('input, select, textarea').forEach(field => {
       if (canonicalFieldName(field.name) === 'telefono') {
@@ -281,6 +365,8 @@
   }
 
   const publicApi = {
+    CLIENT_TYPE_OPTIONS,
+    SOLUTION_OPTIONS,
     sanitizePhoneInput,
     validateMessage,
     validateName,

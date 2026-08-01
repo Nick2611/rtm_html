@@ -4,16 +4,50 @@ const FIELD_LIMITS = Object.freeze({
     nombre: 80,
     apellido: 80,
     empresa: 120,
+    otroTipoCliente: 80,
     telefono: 25,
     consulta: 2000
 });
 
 const SOLUTION_LABELS = Object.freeze({
-    'totems-led': 'Tótems LED',
     'pantallas-indoor': 'Pantallas LED Indoor',
     'pantallas-outdoor': 'Pantallas LED Outdoor',
-    'led-truck': 'LED Truck',
-    'carteleria-colectivos': 'Cartelería para colectivos'
+    'tour-indoor': 'Tour Series Indoor',
+    'tour-outdoor': 'Tour Series Outdoor',
+    'totems-indoor': 'Tótems LED Indoor',
+    'totems-outdoor': 'Tótems LED Outdoor',
+    'pisos-led': 'Pisos LED',
+    'unidades-colectivos': 'Cartelería LED para colectivos',
+    'unidades-comercios': 'Unidades LED para comercios',
+    'porticos': 'Pórticos y señalización vial',
+    'disenos-especiales': 'Diseños especiales y proyectos a medida',
+    'led-trucks': 'LED Trucks / publicidad móvil',
+    'cabezales-beam': 'Iluminación: cabezales móviles Beam',
+    'cabezales-3en1': 'Iluminación: cabezales móviles 3 en 1',
+    'barras-moviles': 'Iluminación: barras móviles',
+    'flashes': 'Iluminación: flashes',
+    'asesoramiento': 'Necesito asesoramiento',
+    // Compatibilidad con formularios anteriores.
+    'totems-led': 'Tótems LED',
+    'carteleria-colectivos': 'Cartelería LED para colectivos',
+    'led-truck': 'LED Trucks / publicidad móvil',
+    'iluminacion-profesional': 'Iluminación profesional'
+});
+
+const CLIENT_TYPE_LABELS = Object.freeze({
+    'eventos-espectaculos': 'Productora, rental, eventos o espectáculos',
+    'comercio-retail': 'Comercio, retail o centro comercial',
+    'publicidad-marketing': 'Agencia, publicidad o activación de marca',
+    'medios-television': 'Medios, televisión o streaming',
+    'transporte-logistica': 'Transporte, logística o terminal',
+    'gobierno-organismo-publico': 'Gobierno, municipio u organismo público',
+    'industria-corporativo': 'Industria o empresa corporativa',
+    'gastronomia-hoteleria': 'Gastronomía, hotelería o locales nocturnos',
+    'deportes-clubes': 'Deportes, clubes o estadios',
+    'arquitectura-construccion': 'Arquitectura, construcción o integración',
+    'educacion-cultura': 'Educación, cultura o institución',
+    'uso-personal': 'Usuario particular / uso personal',
+    'otro': 'Otro'
 });
 
 const NAME_PATTERN = /^[\p{L}\p{M}][\p{L}\p{M}'’ -]*$/u;
@@ -77,9 +111,45 @@ function validatePhone(value, errors) {
     }
 }
 
-function validateSolution(value, errors) {
-    if (value && !Object.prototype.hasOwnProperty.call(SOLUTION_LABELS, value)) {
+function validateSolution(value, errors, required) {
+    if (!value) {
+        if (required && !errors.tipoSolucion) {
+            errors.tipoSolucion = 'La solución de interés es obligatoria.';
+        }
+        return;
+    }
+
+    if (!Object.prototype.hasOwnProperty.call(SOLUTION_LABELS, value)) {
         errors.tipoSolucion = 'Seleccioná un tipo de solución válido.';
+    }
+}
+
+function validateClientType(value, otherValue, errors, required) {
+    if (!value) {
+        if (required && !errors.tipoCliente) {
+            errors.tipoCliente = 'El tipo de cliente es obligatorio.';
+        }
+        return;
+    }
+
+    if (!Object.prototype.hasOwnProperty.call(CLIENT_TYPE_LABELS, value)) {
+        errors.tipoCliente = 'Seleccioná un tipo de cliente válido.';
+    }
+
+    if (value === 'otro' && !otherValue) {
+        errors.otroTipoCliente = 'Especificá el tipo de cliente.';
+        return;
+    }
+
+    if (
+        otherValue &&
+        (
+            otherValue.length < 2 ||
+            otherValue.length > FIELD_LIMITS.otroTipoCliente ||
+            CONTROL_CHARACTER_PATTERN.test(otherValue)
+        )
+    ) {
+        errors.otroTipoCliente = 'Ingresá entre 2 y 80 caracteres.';
     }
 }
 
@@ -108,19 +178,28 @@ function validateSubmission(body) {
 
     const errors = {};
     const value = {
+        formVersion: readText(body, ['formVersion'], 'formVersion', errors, { collapseWhitespace: true }),
         nombre: readText(body, ['nombre'], 'nombre', errors, { collapseWhitespace: true }),
         apellido: readText(body, ['apellido'], 'apellido', errors, { collapseWhitespace: true }),
         empresa: readText(body, ['empresa', 'compania'], 'empresa', errors, { collapseWhitespace: true }),
+        tipoCliente: readText(body, ['tipoCliente', 'tipo-cliente'], 'tipoCliente', errors, { collapseWhitespace: true }),
+        otroTipoCliente: readText(body, ['otroTipoCliente', 'otro-tipo-cliente'], 'otroTipoCliente', errors, { collapseWhitespace: true }),
         telefono: readText(body, ['telefono'], 'telefono', errors, { collapseWhitespace: true }),
         tipoSolucion: readText(body, ['tipoSolucion', 'tipo-solucion'], 'tipoSolucion', errors, { collapseWhitespace: true }),
         consulta: readText(body, ['consulta', 'mensaje', 'producto'], 'consulta', errors)
     };
+    const requiresNewFields = value.formVersion === '2';
+
+    if (value.formVersion && value.formVersion !== '2') {
+        errors.formVersion = 'La versión del formulario no es válida.';
+    }
 
     validateName(value.nombre, 'nombre', true, errors);
     validateName(value.apellido, 'apellido', false, errors);
     validateOptionalText(value.empresa, 'empresa', errors);
+    validateClientType(value.tipoCliente, value.otroTipoCliente, errors, requiresNewFields);
     validatePhone(value.telefono, errors);
-    validateSolution(value.tipoSolucion, errors);
+    validateSolution(value.tipoSolucion, errors, requiresNewFields);
     validateMessage(value.consulta, errors);
 
     return { value, errors };
@@ -134,6 +213,11 @@ function getSolutionLabel(value) {
     return SOLUTION_LABELS[value] || 'No especificada';
 }
 
+function getClientTypeLabel(value, otherValue) {
+    if (value === 'otro' && otherValue) return `Otro: ${otherValue}`;
+    return CLIENT_TYPE_LABELS[value] || 'No especificado';
+}
+
 function toTelephoneUri(value) {
     const digits = value.replace(/\D/g, '');
     return value.startsWith('+') ? `+${digits}` : digits;
@@ -145,7 +229,9 @@ function isValidEmailAddress(value) {
 
 module.exports = {
     FIELD_LIMITS,
+    CLIENT_TYPE_LABELS,
     SOLUTION_LABELS,
+    getClientTypeLabel,
     getSolutionLabel,
     hasValidationErrors,
     isValidEmailAddress,
