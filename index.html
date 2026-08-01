@@ -419,14 +419,14 @@
           </div>
           <div class="form-field">
             <label for="tipo-cliente" class="req">Tipo de cliente</label>
-            <select id="tipo-cliente" name="tipo-cliente" data-client-type-select required>
+            <select id="tipo-cliente" name="tipoCliente" data-client-type-select required>
               <option value="">Seleccionar tipo de cliente</option>
             </select>
             <span class="error-message" aria-live="polite">Seleccioná un tipo de cliente.</span>
           </div>
           <div class="form-field full" data-other-client-field hidden>
             <label for="otro-tipo-cliente" class="req">Especificá el tipo de cliente</label>
-            <input id="otro-tipo-cliente" name="otro-tipo-cliente" type="text" placeholder="Contanos a qué actividad te dedicás" minlength="2" maxlength="80" disabled>
+            <input id="otro-tipo-cliente" name="otroTipoCliente" type="text" placeholder="Contanos a qué actividad te dedicás" minlength="2" maxlength="80" disabled>
             <span class="error-message" aria-live="polite">Especificá el tipo de cliente.</span>
           </div>
           <div class="form-field full">
@@ -436,14 +436,14 @@
           </div>
           <div class="form-field full">
             <label for="tipo-solucion" class="req">Solución de interés</label>
-            <select id="tipo-solucion" name="tipo-solucion" data-solution-select required>
+            <select id="tipo-solucion" name="tipoSolucion" data-solution-select required>
               <option value="">Seleccionar tipo de solución</option>
             </select>
             <span class="error-message" aria-live="polite">Seleccioná un tipo de solución.</span>
           </div>
           <div class="form-field full">
             <label for="mensaje" class="req">Mensaje</label>
-            <textarea id="mensaje" name="mensaje" placeholder="Contanos sobre tu proyecto..." rows="6" minlength="10" maxlength="2000" required></textarea>
+            <textarea id="mensaje" name="consulta" placeholder="Contanos sobre tu proyecto..." rows="6" minlength="10" maxlength="2000" required></textarea>
             <span class="error-message" aria-live="polite">Describí tu consulta.</span>
           </div>
           <div class="form-actions">
@@ -514,7 +514,7 @@
   </div>
 
   <script src="js/main.js?v=20260801-contact1" defer></script>
-  <script src="js/contact-form.js?v=20260801-contact2" defer></script>
+  <script src="js/contact-form.js?v=20260801-contact3" defer></script>
 
 </body>
 </html>

@@ -5,22 +5,19 @@ const assert = require('node:assert/strict');
 
 const { buildEmail } = require('./email-template');
 const {
-    CLIENT_TYPE_LABELS,
-    SOLUTION_LABELS,
     hasValidationErrors,
     validateSubmission
 } = require('./validation');
 const frontendValidation = require('../../../js/contact-form');
 
 const validPayload = Object.freeze({
-    formVersion: '2',
     nombre: 'Nicolás',
     apellido: 'Méndez',
     empresa: 'RTM',
-    tipoCliente: 'industria-corporativo',
+    tipoCliente: 'Industria o empresa corporativa',
     otroTipoCliente: '',
     telefono: '+54 9 11 5153-1530',
-    tipoSolucion: 'pantallas-outdoor',
+    tipoSolucion: 'Pantallas LED Outdoor',
     consulta: 'Necesito cotizar una pantalla para exterior.'
 });
 
@@ -59,39 +56,14 @@ test('rechaza tipos no string sin producir una excepción', () => {
     assert.equal(result.errors.consulta, 'El valor ingresado no es válido.');
 });
 
-test('acepta los alias usados por el formulario de productos', () => {
+test('acepta una nueva solución segura sin depender de otra lista de opciones', () => {
     const result = validateSubmission({
-        formVersion: '2',
-        nombre: 'María Sol',
-        compania: 'Ejemplo SA',
-        tipoCliente: 'comercio-retail',
-        telefono: '11 5153 1530',
-        tipoSolucion: 'unidades-comercios',
-        producto: 'Quiero cotizar un tótem para un local comercial.'
+        ...validPayload,
+        tipoSolucion: 'Proyecto LED especial para una vidriera'
     });
 
     assert.equal(hasValidationErrors(result.errors), false);
-    assert.equal(result.value.empresa, 'Ejemplo SA');
-    assert.match(result.value.consulta, /cotizar un tótem/);
-});
-
-test('mantiene compatibilidad durante el despliegue con formularios anteriores', () => {
-    const legacyServicesForm = validateSubmission({
-        nombre: 'María Sol',
-        telefono: '11 5153 1530',
-        consulta: 'Necesito asesoramiento para una pantalla.'
-    });
-
-    assert.equal(hasValidationErrors(legacyServicesForm.errors), false);
-});
-
-test('frontend y backend comparten las mismas soluciones y tipos de cliente', () => {
-    frontendValidation.SOLUTION_OPTIONS.forEach(([value]) => {
-        assert.ok(SOLUTION_LABELS[value], `Falta la solución ${value} en backend`);
-    });
-    frontendValidation.CLIENT_TYPE_OPTIONS.forEach(([value]) => {
-        assert.ok(CLIENT_TYPE_LABELS[value], `Falta el tipo de cliente ${value} en backend`);
-    });
+    assert.equal(result.value.tipoSolucion, 'Proyecto LED especial para una vidriera');
 });
 
 test('requiere solución, tipo de cliente y detalle cuando se elige Otro', () => {
@@ -102,7 +74,7 @@ test('requiere solución, tipo de cliente y detalle cuando se elige Otro', () =>
     });
     const missingOtherDetail = validateSubmission({
         ...validPayload,
-        tipoCliente: 'otro',
+        tipoCliente: 'Otro',
         otroTipoCliente: ''
     });
 
@@ -114,11 +86,11 @@ test('requiere solución, tipo de cliente y detalle cuando se elige Otro', () =>
 test('valida la solución y los límites del mensaje', () => {
     const result = validateSubmission({
         ...validPayload,
-        tipoSolucion: 'valor-inventado',
+        tipoSolucion: 'x'.repeat(121),
         consulta: 'Corta'
     });
 
-    assert.match(result.errors.tipoSolucion, /solución válido/i);
+    assert.match(result.errors.tipoSolucion, /solución válida/i);
     assert.match(result.errors.consulta, /entre 10 y 2000/i);
 });
 
