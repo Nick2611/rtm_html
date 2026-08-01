@@ -140,10 +140,7 @@ exports.handler = async (event) => {
             requestId: event?.requestContext?.requestId
         }));
 
-        return response(200, {
-            success: true,
-            message: 'Consulta enviada exitosamente.'
-        });
+        return response(200, { success: true });
     } catch (error) {
         console.error(JSON.stringify({
             event: 'contact_email_send_failed',

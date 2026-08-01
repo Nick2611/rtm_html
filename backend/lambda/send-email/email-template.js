@@ -1,6 +1,6 @@
 'use strict';
 
-const { getClientTypeLabel, getSolutionLabel, toTelephoneUri } = require('./validation');
+const { toTelephoneUri } = require('./validation');
 
 function escapeHtml(value) {
     return String(value)
@@ -34,8 +34,10 @@ function detailRow(label, value, { href } = {}) {
 function buildEmail(submission, now = new Date()) {
     const fullName = [submission.nombre, submission.apellido].filter(Boolean).join(' ');
     const company = submission.empresa || 'No especificada';
-    const clientType = getClientTypeLabel(submission.tipoCliente, submission.otroTipoCliente);
-    const solution = getSolutionLabel(submission.tipoSolucion);
+    const clientType = submission.tipoCliente === 'Otro' && submission.otroTipoCliente
+        ? `Otro: ${submission.otroTipoCliente}`
+        : submission.tipoCliente;
+    const solution = submission.tipoSolucion;
     const submittedAt = formatDate(now);
     const telephoneUri = `tel:${toTelephoneUri(submission.telefono)}`;
     const formattedMessage = escapeHtml(submission.consulta).replace(/\n/g, '<br>');

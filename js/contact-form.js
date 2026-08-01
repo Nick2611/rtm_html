@@ -9,59 +9,40 @@
   const NAME_PATTERN = /^[\p{L}\p{M}][\p{L}\p{M}'’ -]*$/u;
   const PHONE_PATTERN = /^\+?[0-9][0-9 ()-]*$/;
   const SOLUTION_OPTIONS = Object.freeze([
-    ['pantallas-indoor', 'Pantallas LED Indoor'],
-    ['pantallas-outdoor', 'Pantallas LED Outdoor'],
-    ['tour-indoor', 'Tour Series Indoor'],
-    ['tour-outdoor', 'Tour Series Outdoor'],
-    ['totems-indoor', 'Tótems LED Indoor'],
-    ['totems-outdoor', 'Tótems LED Outdoor'],
-    ['pisos-led', 'Pisos LED'],
-    ['unidades-colectivos', 'Cartelería LED para colectivos'],
-    ['unidades-comercios', 'Unidades LED para comercios'],
-    ['porticos', 'Pórticos y señalización vial'],
-    ['disenos-especiales', 'Diseños especiales y proyectos a medida'],
-    ['led-trucks', 'LED Trucks / publicidad móvil'],
-    ['cabezales-beam', 'Iluminación: cabezales móviles Beam'],
-    ['cabezales-3en1', 'Iluminación: cabezales móviles 3 en 1'],
-    ['barras-moviles', 'Iluminación: barras móviles'],
-    ['flashes', 'Iluminación: flashes'],
-    ['asesoramiento', 'No estoy seguro / necesito asesoramiento']
+    'Pantallas LED Indoor',
+    'Pantallas LED Outdoor',
+    'Tour Series Indoor',
+    'Tour Series Outdoor',
+    'Tótems LED Indoor',
+    'Tótems LED Outdoor',
+    'Pisos LED',
+    'Cartelería LED para colectivos',
+    'Unidades LED para comercios',
+    'Pórticos y señalización vial',
+    'Diseños especiales y proyectos a medida',
+    'LED Trucks / publicidad móvil',
+    'Iluminación: cabezales móviles Beam',
+    'Iluminación: cabezales móviles 3 en 1',
+    'Iluminación: barras móviles',
+    'Iluminación: flashes',
+    'No estoy seguro / necesito asesoramiento'
   ]);
 
   const CLIENT_TYPE_OPTIONS = Object.freeze([
-    ['eventos-espectaculos', 'Productora, rental, eventos o espectáculos'],
-    ['comercio-retail', 'Comercio, retail o centro comercial'],
-    ['publicidad-marketing', 'Agencia, publicidad o activación de marca'],
-    ['medios-television', 'Medios, televisión o streaming'],
-    ['transporte-logistica', 'Transporte, logística o terminal'],
-    ['gobierno-organismo-publico', 'Gobierno, municipio u organismo público'],
-    ['industria-corporativo', 'Industria o empresa corporativa'],
-    ['gastronomia-hoteleria', 'Gastronomía, hotelería o locales nocturnos'],
-    ['deportes-clubes', 'Deportes, clubes o estadios'],
-    ['arquitectura-construccion', 'Arquitectura, construcción o integración'],
-    ['educacion-cultura', 'Educación, cultura o institución'],
-    ['uso-personal', 'Usuario particular / uso personal'],
-    ['otro', 'Otro']
+    'Productora, rental, eventos o espectáculos',
+    'Comercio, retail o centro comercial',
+    'Agencia, publicidad o activación de marca',
+    'Medios, televisión o streaming',
+    'Transporte, logística o terminal',
+    'Gobierno, municipio u organismo público',
+    'Industria o empresa corporativa',
+    'Gastronomía, hotelería o locales nocturnos',
+    'Deportes, clubes o estadios',
+    'Arquitectura, construcción o integración',
+    'Educación, cultura o institución',
+    'Usuario particular / uso personal',
+    'Otro'
   ]);
-
-  const SOLUTION_VALUES = new Set(SOLUTION_OPTIONS.map(([value]) => value));
-  const CLIENT_TYPE_VALUES = new Set(CLIENT_TYPE_OPTIONS.map(([value]) => value));
-
-  const FIELD_ALIASES = Object.freeze({
-    nombre: ['nombre'],
-    apellido: ['apellido'],
-    empresa: ['empresa', 'compania'],
-    tipoCliente: ['tipo-cliente', 'tipoCliente'],
-    otroTipoCliente: ['otro-tipo-cliente', 'otroTipoCliente'],
-    telefono: ['telefono'],
-    tipoSolucion: ['tipo-solucion', 'tipoSolucion'],
-    consulta: ['consulta', 'mensaje', 'producto']
-  });
-
-  function canonicalFieldName(name) {
-    return Object.entries(FIELD_ALIASES)
-      .find(([, aliases]) => aliases.includes(name))?.[0] || name;
-  }
 
   function sanitizePhoneInput(value) {
     const allowedCharacters = String(value).replace(/[^0-9+()\s-]/g, '');
@@ -97,7 +78,7 @@
 
   function validateField(field) {
     const value = field.value.trim();
-    const fieldName = canonicalFieldName(field.name);
+    const fieldName = field.name;
 
     if (field.required && !value) return 'Este campo es obligatorio.';
     if (!value) return '';
@@ -112,16 +93,8 @@
       return '';
     }
 
-    if (fieldName === 'tipoCliente' && !CLIENT_TYPE_VALUES.has(value)) {
-      return 'Seleccioná un tipo de cliente válido.';
-    }
-
     if (fieldName === 'otroTipoCliente' && (value.length < 2 || value.length > 80)) {
       return 'Ingresá entre 2 y 80 caracteres.';
-    }
-
-    if (fieldName === 'tipoSolucion' && !SOLUTION_VALUES.has(value)) {
-      return 'Seleccioná un tipo de solución válido.';
     }
 
     if (fieldName === 'consulta') return validateMessage(value);
@@ -150,9 +123,9 @@
     if (!select || select.dataset.optionsReady === 'true') return;
 
     select.querySelectorAll('option:not([value=""])').forEach(option => option.remove());
-    options.forEach(([value, label]) => {
+    options.forEach(label => {
       const option = document.createElement('option');
-      option.value = value;
+      option.value = label;
       option.textContent = label;
       select.appendChild(option);
     });
@@ -165,7 +138,7 @@
     const otherField = otherContainer?.querySelector('input');
     if (!clientType || !otherContainer || !otherField) return;
 
-    const shouldShow = clientType.value === 'otro';
+    const shouldShow = clientType.value === 'Otro';
     otherContainer.hidden = !shouldShow;
     otherField.disabled = !shouldShow;
     otherField.required = shouldShow;
@@ -196,34 +169,28 @@
     return true;
   }
 
-  function getFormValue(formData, aliases) {
-    for (const alias of aliases) {
-      const value = formData.get(alias);
-      if (typeof value === 'string') return value.trim();
-    }
-    return '';
+  function getFormValue(formData, fieldName) {
+    const value = formData.get(fieldName);
+    return typeof value === 'string' ? value.trim() : '';
   }
 
   function buildPayload(form) {
     const formData = new FormData(form);
     return {
-      formVersion: '2',
-      nombre: getFormValue(formData, FIELD_ALIASES.nombre),
-      apellido: getFormValue(formData, FIELD_ALIASES.apellido),
-      empresa: getFormValue(formData, FIELD_ALIASES.empresa),
-      tipoCliente: getFormValue(formData, FIELD_ALIASES.tipoCliente),
-      otroTipoCliente: getFormValue(formData, FIELD_ALIASES.otroTipoCliente),
-      telefono: getFormValue(formData, FIELD_ALIASES.telefono),
-      tipoSolucion: getFormValue(formData, FIELD_ALIASES.tipoSolucion),
-      consulta: getFormValue(formData, FIELD_ALIASES.consulta)
+      nombre: getFormValue(formData, 'nombre'),
+      apellido: getFormValue(formData, 'apellido'),
+      empresa: getFormValue(formData, 'empresa'),
+      tipoCliente: getFormValue(formData, 'tipoCliente'),
+      otroTipoCliente: getFormValue(formData, 'otroTipoCliente'),
+      telefono: getFormValue(formData, 'telefono'),
+      tipoSolucion: getFormValue(formData, 'tipoSolucion'),
+      consulta: getFormValue(formData, 'consulta')
     };
   }
 
-  function findField(form, canonicalName) {
-    const aliases = FIELD_ALIASES[canonicalName] || [canonicalName];
-    return aliases
-      .map(alias => form.elements.namedItem(alias))
-      .find(field => field && typeof field.value === 'string');
+  function findField(form, fieldName) {
+    const field = form.elements.namedItem(fieldName);
+    return field && typeof field.value === 'string' ? field : null;
   }
 
   function applyServerErrors(form, errors) {
@@ -300,9 +267,7 @@
       });
 
       const result = await response.json().catch(() => ({}));
-      const legacySuccess = typeof result.message === 'string' && result.message.includes('exitosamente');
-
-      if (!response.ok || (result.success !== true && !legacySuccess)) {
+      if (!response.ok || result.success !== true) {
         applyServerErrors(form, result.fields);
         throw new Error(result.error || 'No pudimos enviar la consulta.');
       }
@@ -340,7 +305,7 @@
     });
 
     form.querySelectorAll('input, select, textarea').forEach(field => {
-      if (canonicalFieldName(field.name) === 'telefono') {
+      if (field.name === 'telefono') {
         field.addEventListener('input', () => {
           field.value = sanitizePhoneInput(field.value);
           if (field.getAttribute('aria-invalid') === 'true') {
@@ -365,8 +330,6 @@
   }
 
   const publicApi = {
-    CLIENT_TYPE_OPTIONS,
-    SOLUTION_OPTIONS,
     sanitizePhoneInput,
     validateMessage,
     validateName,

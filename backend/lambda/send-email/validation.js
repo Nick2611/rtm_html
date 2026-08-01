@@ -4,50 +4,11 @@ const FIELD_LIMITS = Object.freeze({
     nombre: 80,
     apellido: 80,
     empresa: 120,
+    tipoCliente: 120,
     otroTipoCliente: 80,
     telefono: 25,
+    tipoSolucion: 120,
     consulta: 2000
-});
-
-const SOLUTION_LABELS = Object.freeze({
-    'pantallas-indoor': 'Pantallas LED Indoor',
-    'pantallas-outdoor': 'Pantallas LED Outdoor',
-    'tour-indoor': 'Tour Series Indoor',
-    'tour-outdoor': 'Tour Series Outdoor',
-    'totems-indoor': 'Tótems LED Indoor',
-    'totems-outdoor': 'Tótems LED Outdoor',
-    'pisos-led': 'Pisos LED',
-    'unidades-colectivos': 'Cartelería LED para colectivos',
-    'unidades-comercios': 'Unidades LED para comercios',
-    'porticos': 'Pórticos y señalización vial',
-    'disenos-especiales': 'Diseños especiales y proyectos a medida',
-    'led-trucks': 'LED Trucks / publicidad móvil',
-    'cabezales-beam': 'Iluminación: cabezales móviles Beam',
-    'cabezales-3en1': 'Iluminación: cabezales móviles 3 en 1',
-    'barras-moviles': 'Iluminación: barras móviles',
-    'flashes': 'Iluminación: flashes',
-    'asesoramiento': 'Necesito asesoramiento',
-    // Compatibilidad con formularios anteriores.
-    'totems-led': 'Tótems LED',
-    'carteleria-colectivos': 'Cartelería LED para colectivos',
-    'led-truck': 'LED Trucks / publicidad móvil',
-    'iluminacion-profesional': 'Iluminación profesional'
-});
-
-const CLIENT_TYPE_LABELS = Object.freeze({
-    'eventos-espectaculos': 'Productora, rental, eventos o espectáculos',
-    'comercio-retail': 'Comercio, retail o centro comercial',
-    'publicidad-marketing': 'Agencia, publicidad o activación de marca',
-    'medios-television': 'Medios, televisión o streaming',
-    'transporte-logistica': 'Transporte, logística o terminal',
-    'gobierno-organismo-publico': 'Gobierno, municipio u organismo público',
-    'industria-corporativo': 'Industria o empresa corporativa',
-    'gastronomia-hoteleria': 'Gastronomía, hotelería o locales nocturnos',
-    'deportes-clubes': 'Deportes, clubes o estadios',
-    'arquitectura-construccion': 'Arquitectura, construcción o integración',
-    'educacion-cultura': 'Educación, cultura o institución',
-    'uso-personal': 'Usuario particular / uso personal',
-    'otro': 'Otro'
 });
 
 const NAME_PATTERN = /^[\p{L}\p{M}][\p{L}\p{M}'’ -]*$/u;
@@ -55,17 +16,8 @@ const PHONE_PATTERN = /^\+?[0-9][0-9 ()-]*$/;
 const CONTROL_CHARACTER_PATTERN = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-function firstDefinedValue(source, keys) {
-    for (const key of keys) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-            return source[key];
-        }
-    }
-    return undefined;
-}
-
-function readText(source, keys, field, errors, { collapseWhitespace = false } = {}) {
-    const value = firstDefinedValue(source, keys);
+function readText(source, field, errors, { collapseWhitespace = false } = {}) {
+    const value = source[field];
 
     if (value === undefined || value === null) return '';
 
@@ -79,8 +31,10 @@ function readText(source, keys, field, errors, { collapseWhitespace = false } = 
 }
 
 function validateName(value, field, required, errors) {
+    if (errors[field]) return;
+
     if (!value) {
-        if (required && !errors[field]) errors[field] = 'Este campo es obligatorio.';
+        if (required) errors[field] = 'Este campo es obligatorio.';
         return;
     }
 
@@ -89,17 +43,24 @@ function validateName(value, field, required, errors) {
     }
 }
 
-function validateOptionalText(value, field, errors) {
-    if (!value) return;
+function validateText(value, field, errors, { requiredMessage = '', invalidMessage = '' } = {}) {
+    if (errors[field]) return;
+
+    if (!value) {
+        if (requiredMessage) errors[field] = requiredMessage;
+        return;
+    }
 
     if (value.length < 2 || value.length > FIELD_LIMITS[field] || CONTROL_CHARACTER_PATTERN.test(value)) {
-        errors[field] = `Ingresá entre 2 y ${FIELD_LIMITS[field]} caracteres.`;
+        errors[field] = invalidMessage || `Ingresá entre 2 y ${FIELD_LIMITS[field]} caracteres.`;
     }
 }
 
 function validatePhone(value, errors) {
+    if (errors.telefono) return;
+
     if (!value) {
-        if (!errors.telefono) errors.telefono = 'El teléfono es obligatorio.';
+        errors.telefono = 'El teléfono es obligatorio.';
         return;
     }
 
@@ -111,51 +72,11 @@ function validatePhone(value, errors) {
     }
 }
 
-function validateSolution(value, errors, required) {
-    if (!value) {
-        if (required && !errors.tipoSolucion) {
-            errors.tipoSolucion = 'La solución de interés es obligatoria.';
-        }
-        return;
-    }
-
-    if (!Object.prototype.hasOwnProperty.call(SOLUTION_LABELS, value)) {
-        errors.tipoSolucion = 'Seleccioná un tipo de solución válido.';
-    }
-}
-
-function validateClientType(value, otherValue, errors, required) {
-    if (!value) {
-        if (required && !errors.tipoCliente) {
-            errors.tipoCliente = 'El tipo de cliente es obligatorio.';
-        }
-        return;
-    }
-
-    if (!Object.prototype.hasOwnProperty.call(CLIENT_TYPE_LABELS, value)) {
-        errors.tipoCliente = 'Seleccioná un tipo de cliente válido.';
-    }
-
-    if (value === 'otro' && !otherValue) {
-        errors.otroTipoCliente = 'Especificá el tipo de cliente.';
-        return;
-    }
-
-    if (
-        otherValue &&
-        (
-            otherValue.length < 2 ||
-            otherValue.length > FIELD_LIMITS.otroTipoCliente ||
-            CONTROL_CHARACTER_PATTERN.test(otherValue)
-        )
-    ) {
-        errors.otroTipoCliente = 'Ingresá entre 2 y 80 caracteres.';
-    }
-}
-
 function validateMessage(value, errors) {
+    if (errors.consulta) return;
+
     if (!value) {
-        if (!errors.consulta) errors.consulta = 'La consulta es obligatoria.';
+        errors.consulta = 'La consulta es obligatoria.';
         return;
     }
 
@@ -178,28 +99,32 @@ function validateSubmission(body) {
 
     const errors = {};
     const value = {
-        formVersion: readText(body, ['formVersion'], 'formVersion', errors, { collapseWhitespace: true }),
-        nombre: readText(body, ['nombre'], 'nombre', errors, { collapseWhitespace: true }),
-        apellido: readText(body, ['apellido'], 'apellido', errors, { collapseWhitespace: true }),
-        empresa: readText(body, ['empresa', 'compania'], 'empresa', errors, { collapseWhitespace: true }),
-        tipoCliente: readText(body, ['tipoCliente', 'tipo-cliente'], 'tipoCliente', errors, { collapseWhitespace: true }),
-        otroTipoCliente: readText(body, ['otroTipoCliente', 'otro-tipo-cliente'], 'otroTipoCliente', errors, { collapseWhitespace: true }),
-        telefono: readText(body, ['telefono'], 'telefono', errors, { collapseWhitespace: true }),
-        tipoSolucion: readText(body, ['tipoSolucion', 'tipo-solucion'], 'tipoSolucion', errors, { collapseWhitespace: true }),
-        consulta: readText(body, ['consulta', 'mensaje', 'producto'], 'consulta', errors)
+        nombre: readText(body, 'nombre', errors, { collapseWhitespace: true }),
+        apellido: readText(body, 'apellido', errors, { collapseWhitespace: true }),
+        empresa: readText(body, 'empresa', errors, { collapseWhitespace: true }),
+        tipoCliente: readText(body, 'tipoCliente', errors, { collapseWhitespace: true }),
+        otroTipoCliente: readText(body, 'otroTipoCliente', errors, { collapseWhitespace: true }),
+        telefono: readText(body, 'telefono', errors, { collapseWhitespace: true }),
+        tipoSolucion: readText(body, 'tipoSolucion', errors, { collapseWhitespace: true }),
+        consulta: readText(body, 'consulta', errors)
     };
-    const requiresNewFields = value.formVersion === '2';
-
-    if (value.formVersion && value.formVersion !== '2') {
-        errors.formVersion = 'La versión del formulario no es válida.';
-    }
 
     validateName(value.nombre, 'nombre', true, errors);
     validateName(value.apellido, 'apellido', false, errors);
-    validateOptionalText(value.empresa, 'empresa', errors);
-    validateClientType(value.tipoCliente, value.otroTipoCliente, errors, requiresNewFields);
+    validateText(value.empresa, 'empresa', errors);
+    validateText(value.tipoCliente, 'tipoCliente', errors, {
+        requiredMessage: 'El tipo de cliente es obligatorio.',
+        invalidMessage: 'Ingresá un tipo de cliente válido.'
+    });
+    validateText(value.otroTipoCliente, 'otroTipoCliente', errors);
+    if (value.tipoCliente === 'Otro' && !value.otroTipoCliente && !errors.otroTipoCliente) {
+        errors.otroTipoCliente = 'Especificá el tipo de cliente.';
+    }
     validatePhone(value.telefono, errors);
-    validateSolution(value.tipoSolucion, errors, requiresNewFields);
+    validateText(value.tipoSolucion, 'tipoSolucion', errors, {
+        requiredMessage: 'La solución de interés es obligatoria.',
+        invalidMessage: 'Ingresá una solución válida.'
+    });
     validateMessage(value.consulta, errors);
 
     return { value, errors };
@@ -207,15 +132,6 @@ function validateSubmission(body) {
 
 function hasValidationErrors(errors) {
     return Object.keys(errors).length > 0;
-}
-
-function getSolutionLabel(value) {
-    return SOLUTION_LABELS[value] || 'No especificada';
-}
-
-function getClientTypeLabel(value, otherValue) {
-    if (value === 'otro' && otherValue) return `Otro: ${otherValue}`;
-    return CLIENT_TYPE_LABELS[value] || 'No especificado';
 }
 
 function toTelephoneUri(value) {
@@ -228,11 +144,6 @@ function isValidEmailAddress(value) {
 }
 
 module.exports = {
-    FIELD_LIMITS,
-    CLIENT_TYPE_LABELS,
-    SOLUTION_LABELS,
-    getClientTypeLabel,
-    getSolutionLabel,
     hasValidationErrors,
     isValidEmailAddress,
     toTelephoneUri,
