@@ -84,6 +84,26 @@
       box-shadow:0 0 0 3px rgba(100,116,139,.18);
     }
 
+    .error-message{
+      display:none;
+      margin-top:4px;
+      color:#b91c1c;
+      font-size:.875rem;
+    }
+    .field.error input,
+    .field.error textarea{
+      border-color:#b91c1c;
+    }
+    .field.error .error-message{ display:block; }
+    .form-status{
+      min-height:1.25rem;
+      margin:0;
+      text-align:center;
+      font-size:.9rem;
+    }
+    .form-status.error{ color:#b91c1c; }
+    .form-status.success{ color:#166534; }
+
     /* Tel con icono globo */
     .phone-wrap{
       position: relative;
@@ -113,6 +133,7 @@
     }
     .submit:hover{ background: var(--cta-hover); }
     .submit:active{ transform: translateY(1px); }
+    .submit:disabled{ opacity:.7; cursor:not-allowed; }
 
     /* ================== FOOTER ================== */
     footer.site-footer{
@@ -153,6 +174,13 @@
       .footer-wrap{ grid-template-columns: 1fr; }
     }
   </style>
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xvo6v2qw7h");
+  </script>
 </head>
 <body>
 
@@ -160,30 +188,35 @@
   <section class="formulario" id="cotizar" aria-labelledby="form-title">
     <h2 id="form-title">¡Dejanos tu contacto y te contactaremos en la brevedad!</h2>
 
-    <form class="contact" action="#" method="post" novalidate>
+    <form class="contact" id="product-contact-form" data-contact-form novalidate>
       <div class="field">
         <label for="nombre" class="req">Nombre</label>
-        <input id="nombre" name="nombre" type="text" placeholder="Tu nombre" required autocomplete="name">
+        <input id="nombre" name="nombre" type="text" placeholder="Tu nombre" required autocomplete="name" minlength="2" maxlength="80">
+        <span class="error-message" aria-live="polite">Ingresá tu nombre.</span>
       </div>
 
       <div class="field">
         <label for="compania" class="req">Nombre de la compañía</label>
-        <input id="compania" name="compania" type="text" placeholder="Tu empresa" required autocomplete="organization">
+        <input id="compania" name="compania" type="text" placeholder="Tu empresa" required autocomplete="organization" minlength="2" maxlength="120">
+        <span class="error-message" aria-live="polite">Ingresá el nombre de tu empresa.</span>
       </div>
 
       <div class="field phone-wrap">
         <label for="telefono" class="req">Teléfono</label>
-        <input id="telefono" name="telefono" type="tel" placeholder="+54 9 11 1234 5678" required inputmode="tel" autocomplete="tel">
+        <input id="telefono" name="telefono" type="tel" placeholder="+54 9 11 1234 5678" required inputmode="tel" autocomplete="tel" maxlength="25">
+        <span class="error-message" aria-live="polite">Ingresá un teléfono válido.</span>
       </div>
 
       <div class="field">
         <label for="producto" class="req">¿Qué producto te gustaría cotizar?</label>
-        <textarea id="producto" name="producto" placeholder="Contanos qué necesitás…" required></textarea>
+        <textarea id="producto" name="producto" placeholder="Contanos qué necesitás…" required minlength="10" maxlength="2000"></textarea>
+        <span class="error-message" aria-live="polite">Describí qué producto necesitás.</span>
       </div>
 
       <div class="actions">
         <button type="submit" class="submit">Enviar</button>
       </div>
+      <p class="form-status" data-form-status role="status" aria-live="polite"></p>
     </form>
   </section>
 
@@ -213,6 +246,8 @@
       </section>
     </div>
   </footer>
+
+  <script src="../js/contact-form.js?v=20260801-contact1" defer></script>
 
 </body>
 </html>

@@ -97,86 +97,6 @@ function initPopup() {
   });
 }
 
-/* ===== FORMULARIO DE CONTACTO ===== */
-function validateForm(form) {
-  let valid = true;
-  form.querySelectorAll('[required]').forEach(field => {
-    const empty = field.tagName === 'SELECT' ? !field.value : !field.value.trim();
-    if (empty) {
-      field.closest('.form-field')?.classList.add('error');
-      valid = false;
-    }
-  });
-  return valid;
-}
-
-function clearFieldError(field) {
-  field.closest('.form-field')?.classList.remove('error');
-}
-
-async function handleFormSubmit(e) {
-  e.preventDefault();
-  const form      = e.target;
-  const submitBtn = form.querySelector('.btn-submit') || document.getElementById('submit-btn');
-
-  form.querySelectorAll('.form-field').forEach(f => f.classList.remove('error'));
-
-  if (!validateForm(form)) {
-    const firstError = form.querySelector('.form-field.error');
-    firstError?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    firstError?.querySelector('input, select, textarea')?.focus();
-    return;
-  }
-
-  const data = Object.fromEntries(new FormData(form));
-
-  submitBtn.classList.add('loading');
-  submitBtn.disabled = true;
-
-  try {
-    const response = await fetch('https://2j77uv25gk.execute-api.us-east-1.amazonaws.com/Prod/send-email', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-      mode: 'cors',
-      credentials: 'omit'
-    });
-
-    const result = await response.json();
-
-    if (response.ok && result.message?.includes('exitosamente')) {
-      showPopup();
-      form.reset();
-    } else {
-      throw new Error(result.error || result.message || 'Error al enviar el formulario');
-    }
-  } catch (error) {
-    let msg = 'Hubo un error al enviar tu consulta. ';
-    if (error.name === 'TypeError') {
-      msg += 'Verificá tu conexión a internet e intentá nuevamente.';
-    } else {
-      msg += error.message;
-    }
-    msg += ' También podés contactarnos por WhatsApp.';
-    alert(msg);
-  } finally {
-    submitBtn.classList.remove('loading');
-    submitBtn.disabled = false;
-  }
-}
-
-function initContactForm() {
-  const form = document.getElementById('contact-form');
-  if (!form) return;
-
-  form.querySelectorAll('input, select, textarea').forEach(field => {
-    field.addEventListener('input',  () => clearFieldError(field));
-    field.addEventListener('change', () => clearFieldError(field));
-  });
-
-  form.addEventListener('submit', handleFormSubmit);
-}
-
 /* ===== LEAD POPUP (index.html) ===== */
 function initLeadPopup() {
   const popup    = document.getElementById('lead-popup');
@@ -493,7 +413,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initMobileMenu();
   initMobileDropdown();
   initPopup();
-  initContactForm();
   initLeadPopup();
   initCarousel();
   initProjectVideos();

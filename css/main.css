@@ -1422,6 +1422,16 @@ input:focus, select:focus, textarea:focus {
 .form-field.error textarea { border-color: #dc2626; }
 .form-field.error .error-message { display: block; }
 
+.form-status {
+  grid-column: 1 / -1;
+  min-height: 1.25rem;
+  margin: 0;
+  text-align: center;
+  font-size: .9rem;
+}
+.form-status.error { color: #b91c1c; }
+.form-status.success { color: #166534; }
+
 .form-actions {
   grid-column: 1 / -1;
   margin-top: 6px;
