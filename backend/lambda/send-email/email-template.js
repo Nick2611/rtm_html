@@ -1,6 +1,6 @@
 'use strict';
 
-const { getSolutionLabel, toTelephoneUri } = require('./validation');
+const { getClientTypeLabel, getSolutionLabel, toTelephoneUri } = require('./validation');
 
 function escapeHtml(value) {
     return String(value)
@@ -34,6 +34,7 @@ function detailRow(label, value, { href } = {}) {
 function buildEmail(submission, now = new Date()) {
     const fullName = [submission.nombre, submission.apellido].filter(Boolean).join(' ');
     const company = submission.empresa || 'No especificada';
+    const clientType = getClientTypeLabel(submission.tipoCliente, submission.otroTipoCliente);
     const solution = getSolutionLabel(submission.tipoSolucion);
     const submittedAt = formatDate(now);
     const telephoneUri = `tel:${toTelephoneUri(submission.telefono)}`;
@@ -62,6 +63,7 @@ function buildEmail(submission, now = new Date()) {
                             <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="border-collapse:collapse;">
                                 ${detailRow('Nombre', fullName)}
                                 ${detailRow('Empresa', company)}
+                                ${detailRow('Tipo de cliente', clientType)}
                                 ${detailRow('Solución', solution)}
                                 ${detailRow('Teléfono', submission.telefono, { href: telephoneUri })}
                             </table>
@@ -90,6 +92,7 @@ Nueva consulta desde el sitio web
 
 Nombre: ${fullName}
 Empresa: ${company}
+Tipo de cliente: ${clientType}
 Solución: ${solution}
 Teléfono: ${submission.telefono}
 

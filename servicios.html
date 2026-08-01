@@ -11,7 +11,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
 
   <!-- CSS Principal -->
-  <link rel="stylesheet" href="css/main.css?v=20260801-contact1">
+  <link rel="stylesheet" href="css/main.css?v=20260801-contact2">
 
   <!-- Favicon -->
   <link rel="icon" href="favicon.ico" type="image/x-icon">
@@ -1024,6 +1024,7 @@
     input[type="text"],
     input[type="email"],
     input[type="tel"],
+    select,
     textarea{
       width:100%;
       padding: 14px 14px;
@@ -1039,7 +1040,7 @@
 
     input::placeholder, textarea::placeholder{ color:#9aa1aa; }
 
-    input:focus, textarea:focus{
+    input:focus, select:focus, textarea:focus{
       border-color:#9aa7b2;
       box-shadow: 0 0 0 3px rgba(100,116,139,.15);
     }
@@ -1051,6 +1052,7 @@
       font-size:.875rem;
     }
     .form-field.error input,
+    .form-field.error select,
     .form-field.error textarea{
       border-color:#b91c1c;
     }
@@ -1529,7 +1531,7 @@
 
       <form class="contact-form" id="contact-form" data-contact-form novalidate>
         <div class="form-field">
-          <label for="nombre">Nombre</label>
+          <label for="nombre" class="req">Nombre</label>
           <input id="nombre" name="nombre" type="text" placeholder="Tu nombre" autocomplete="given-name" minlength="2" maxlength="80" required>
           <span class="error-message" aria-live="polite">Ingresá tu nombre.</span>
         </div>
@@ -1542,14 +1544,36 @@
 
         <div class="form-field">
           <label for="empresa">Empresa</label>
-          <input id="empresa" name="empresa" type="text" placeholder="Nombre de tu empresa" minlength="2" maxlength="120" autocomplete="organization">
+          <input id="empresa" name="empresa" type="text" placeholder="Nombre de tu empresa (si corresponde)" minlength="2" maxlength="120" autocomplete="organization">
           <span class="error-message" aria-live="polite">Revisá el nombre de la empresa.</span>
         </div>
 
         <div class="form-field">
+          <label for="tipo-cliente" class="req">Tipo de cliente</label>
+          <select id="tipo-cliente" name="tipo-cliente" data-client-type-select required>
+            <option value="">Seleccionar tipo de cliente</option>
+          </select>
+          <span class="error-message" aria-live="polite">Seleccioná un tipo de cliente.</span>
+        </div>
+
+        <div class="form-field full" data-other-client-field hidden>
+          <label for="otro-tipo-cliente" class="req">Especificá el tipo de cliente</label>
+          <input id="otro-tipo-cliente" name="otro-tipo-cliente" type="text" placeholder="Contanos a qué actividad te dedicás" minlength="2" maxlength="80" disabled>
+          <span class="error-message" aria-live="polite">Especificá el tipo de cliente.</span>
+        </div>
+
+        <div class="form-field full">
           <label for="telefono" class="req">Teléfono</label>
           <input id="telefono" name="telefono" type="tel" placeholder="Tu número de teléfono" inputmode="tel" autocomplete="tel" maxlength="25" required>
           <span class="error-message" aria-live="polite">Ingresá un teléfono válido.</span>
+        </div>
+
+        <div class="form-field full">
+          <label for="tipo-solucion" class="req">Solución de interés</label>
+          <select id="tipo-solucion" name="tipo-solucion" data-solution-select required>
+            <option value="">Seleccionar tipo de solución</option>
+          </select>
+          <span class="error-message" aria-live="polite">Seleccioná un tipo de solución.</span>
         </div>
 
         <div class="form-field full">
@@ -1700,7 +1724,7 @@
     });
   </script>
 
-  <script src="js/contact-form.js?v=20260801-contact1" defer></script>
+  <script src="js/contact-form.js?v=20260801-contact2" defer></script>
 
   <style>
     /* Debug: asegurar que el menú sea visible cuando está activo */
