@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pantallas LED - RTM Sistemas</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&amp;display=swap" rel="stylesheet">
   <!-- Favicon -->
   <link rel="icon" href="../favicon.ico" type="image/x-icon">
   <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
@@ -60,30 +60,17 @@
       flex: 1;
       position: relative;
     }
+    .modelo__video:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
     .modelo__video img {
       width: 100%;
       border-radius: 4px;
       object-fit: cover;
     }
 
-    .modelo__video::after {
-      content: "▶";
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      background: rgba(0,0,0,0.6);
-      color: white;
-      font-size: 2rem;
-      width: 70px; height: 70px;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-    }
-
     .modelo__contenido {
       flex: 1;
     }
-    .modelo__contenido h3 {
+    .modelo__contenido h2 {
       font-size: 2.4rem;
       font-weight: 700;
       margin-bottom: 14px;
@@ -95,25 +82,10 @@
 
     /* ===== BOTÓN FINAL ===== */
     .btn-final {
-      display: inline-block;
-      background: var(--accent);
-      color: white;
-      padding: 16px 34px;
-      border: none;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 1.1rem;
-      border-radius: 3px;
+      display: inline-flex;
+      align-items: center;
       align-self: flex-start;
-      transition: background 0.25s ease, transform 0.1s ease;
-    }
-    .btn-final:hover {
-      background: #d5372b;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(232, 74, 69, 0.4);
-    }
-
-    .btn-final {
+      gap: 8px;
       background: #25D366;
       color: #fff;
       border: none;
@@ -122,14 +94,19 @@
       font-weight: 600;
       font-size: 1.1rem;
       text-decoration: none;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+      transition: background .2s ease, transform .2s ease, box-shadow .2s ease;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, .18);
     }
 
     .btn-final:hover {
       background: #128C7E;
-      transform: translateY(-3px);
-      box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, .22);
+    }
+
+    .btn-final:focus-visible {
+      outline: 3px solid #141416;
+      outline-offset: 3px;
     }
 
     /* ===== VIDEO STYLES ===== */
@@ -246,18 +223,6 @@
       margin-left: 4px;
     }
 
-    /* ===== NAVEGACIÓN STYLES ===== */
-    .nav-buttons a:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    }
-    .nav-buttons a[href="../servicios.html"]:hover {
-      background: #4b5563;
-    }
-    .nav-buttons a[href="../index.html"]:hover {
-      background: #cf3d39;
-    }
-
     @media (max-width: 900px) {
       .modelo {
         flex-direction: column;
@@ -266,7 +231,7 @@
       .modelo:nth-child(even) {
         flex-direction: column;
       }
-      .modelo__contenido h3 {
+      .modelo__contenido h2 {
         font-size: 2rem;
       }
       .modelos__titulo {
@@ -281,8 +246,9 @@
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "xvo6v2qw7h");
   </script>
+  <link rel="stylesheet" href="../css/conversion.css?v=20260805-conversion2">
 </head>
-<body>
+<body class="rtm-conversion-active">
 
   <!-- ===== HEADER ===== -->
   <header style="background: #141416; padding: 20px 0; box-shadow: 0 2px 14px rgba(0,0,0,.25);">
@@ -290,12 +256,9 @@
       <a href="../index.html" style="text-decoration: none;">
         <img src="../rtm_logo/rtmLogo.png" alt="RTM Pantallas LED - Logo" style="height: 50px; width: auto;">
       </a>
-      <div style="display: flex; gap: 15px; align-items: center;">
-        <a href="../servicios.html" style="display: inline-flex; align-items: center; background: #6b7280; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; transition: all 0.3s ease;">
-          ← Servicios
-        </a>
-        <a href="../index.html" style="display: inline-flex; align-items: center; background: var(--accent); color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; transition: all 0.3s ease;">
-          🏠 Home
+      <div style="display: flex; align-items: center;">
+        <a href="../servicios.html" style="display: inline-flex; align-items: center; background: #6b7280; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 6px; font-weight: 600;">
+          Volver a servicios
         </a>
       </div>
     </div>
@@ -311,16 +274,16 @@
     <article class="modelo" id="vp">
       <figure class="modelo__video">
         <div class="video-container">
-          <video src="serie_vp_logo/VP.mp4" muted loop playsinline preload="metadata" controls="false"></video>
+          <video src="serie_vp_logo/VP.mp4" muted loop playsinline preload="metadata"></video>
           <div class="play-overlay">
             <div class="play-button"></div>
           </div>
         </div>
       </figure>
       <div class="modelo__contenido">
-        <h3>Serie VP</h3>
-        <p>Diseñada para ofrecer máximo rendimiento en entornos exigentes. Construida con materiales de primera calidad y tecnología LED de última generación, esta línea garantiza operación continua bajo condiciones climáticas extremas.</p>
-        <p>Ideal para instalaciones fijas en frentes comerciales, shoppings, aeropuertos, estadios o terminales, combina potencia, durabilidad y excelente calidad de imagen, asegurando visibilidad constante y bajo mantenimiento.</p>
+        <h2>Serie VP</h2>
+        <p>Pantalla LED para instalaciones fijas en frentes comerciales, shoppings, aeropuertos, estadios y terminales.</p>
+        <p>Su construcción está orientada al uso exterior y al funcionamiento continuo.</p>
       </div>
     </article>
 
@@ -333,11 +296,9 @@
         <img src="serie_ifi_logo/salon_leones.jpg" alt="Pantalla LED Serie IFI">
       </figure>
       <div class="modelo__contenido">
-        <h3>Serie IFI</h3>
-        <p>Pensada para instalaciones fijas de interior que exigen máxima calidad de imagen, la Serie IFI ofrece una reproducción visual nítida, estable y de gran impacto.</p>
-        <p>Su diseño con mantenimiento frontal magnético permite una instalación limpia, segura y rápida, ideal para centros comerciales, estudios de TV, templos, salones o espacios corporativos.</p>
-        <p>Con brillo uniforme, alta frecuencia de refresco y estructura modular liviana, garantiza rendimiento continuo y una estética impecable.</p>
-        <p>La Serie IFI combina tecnología avanzada y precisión visual, creando entornos profesionales donde cada detalle se ve mejor.</p>
+        <h2>Serie IFI</h2>
+        <p>Pantalla LED para instalaciones fijas de interior en centros comerciales, estudios de TV, templos, salones y espacios corporativos.</p>
+        <p>El mantenimiento frontal magnético facilita la instalación y el acceso a los módulos.</p>
       </div>
     </article>
 
@@ -345,18 +306,16 @@
     <article class="modelo" id="ri" style="background-color: var(--bg-light); padding: 50px 40px; border-radius: 6px;">
       <figure class="modelo__video">
         <div class="video-container">
-          <video src="serie_ri_logo/RI.mp4" muted loop playsinline preload="metadata" controls="false"></video>
+          <video src="serie_ri_logo/RI.mp4" muted loop playsinline preload="metadata"></video>
           <div class="play-overlay">
             <div class="play-button"></div>
           </div>
         </div>
       </figure>
       <div class="modelo__contenido">
-        <h3>Serie RI</h3>
-        <p>Pensada para instalaciones fijas de interior que requieren calidad visual constante, la Serie RI combina precisión, durabilidad y excelente definición de imagen.</p>
-        <p>Su estructura robusta y su sistema de mantenimiento frontal facilitan la instalación en estudios, centros comerciales, auditorios o espacios corporativos.</p>
-        <p>Con alto brillo, frecuencia de refresco superior y módulos LED de última generación, garantiza una visualización nítida y estable en todo momento.</p>
-        <p>La Serie RI representa una solución profesional para quienes buscan rendimiento continuo y una estética visual impecable.</p>
+        <h2>Serie RI</h2>
+        <p>Pantalla LED de interior para estudios, centros comerciales, auditorios y espacios corporativos.</p>
+        <p>Su estructura y mantenimiento frontal facilitan la instalación y el acceso al equipo.</p>
       </div>
     </article>
 
@@ -366,9 +325,9 @@
         <img src="serie_re_logo/serie_re_logo.jpg" alt="Pantalla LED Serie RE">
       </figure>
       <div class="modelo__contenido">
-        <h3>Serie RE</h3>
-        <p>Pensada para quienes buscan potencia visual en un formato liviano, ágil y fácil de manipular. Su estructura compacta y su sistema de montaje rápido la convierten en la opción ideal para eventos itinerantes, escenarios, ferias o instalaciones temporales.</p>
-        <p>Diseñada para soportar condiciones climáticas extremas, combina brillo superior, bajo peso y montaje simple, sin comprometer la calidad de imagen.</p>
+        <h2>Serie RE</h2>
+        <p>Pantalla LED liviana para eventos itinerantes, escenarios, ferias e instalaciones temporales.</p>
+        <p>Su formato compacto y sistema de montaje rápido simplifican el traslado y el armado.</p>
       </div>
     </article>
 
@@ -381,8 +340,8 @@
         <img src="serie_re_logo/serie_re_logo.jpg" alt="Pantalla LED Serie GIGO">
       </figure>
       <div class="modelo__contenido">
-        <h3>Serie GIGO</h3>
-        <p>Serie Galileo GIGO: Solución LED de alto rendimiento diseñada para aplicaciones profesionales que requieren máxima calidad visual y durabilidad.</p>
+        <h2>Serie GIGO</h2>
+        <p>Modelo GIGO de la Serie Galileo para aplicaciones profesionales.</p>
       </div>
     </article>
 
@@ -392,74 +351,55 @@
         <img src="serie_re_logo/serie_re_logo.jpg" alt="Pantalla LED Serie GIG">
       </figure>
       <div class="modelo__contenido">
-        <h3>Serie GIG</h3>
-        <p>Serie Galileo GIG: Tecnología LED avanzada para instalaciones que demandan precisión y rendimiento constante.</p>
-      </div>
-    </article>
-
-    <!-- ===== ILUMINACIÓN ===== -->
-    <div id="iluminacion"></div>
-
-    <!-- ===== ILUMINACIÓN SUBCATEGORÍA 1 ===== -->
-    <article class="modelo" id="ilum1" style="background-color: var(--bg-light); padding: 50px 40px; border-radius: 6px;">
-      <div class="modelo__contenido">
-        <h3>Iluminación - Subcategoría 1</h3>
-        <p>Soluciones de iluminación LED profesionales para diversos espacios y aplicaciones.</p>
-      </div>
-    </article>
-
-    <!-- ===== ILUMINACIÓN SUBCATEGORÍA 2 ===== -->
-    <article class="modelo" id="ilum2" style="background-color: var(--bg-light); padding: 50px 40px; border-radius: 6px;">
-      <div class="modelo__contenido">
-        <h3>Iluminación - Subcategoría 2</h3>
-        <p>Soluciones de iluminación LED profesionales para diversos espacios y aplicaciones.</p>
-      </div>
-    </article>
-
-    <!-- ===== ILUMINACIÓN SUBCATEGORÍA 3 ===== -->
-    <article class="modelo" id="ilum3" style="background-color: var(--bg-light); padding: 50px 40px; border-radius: 6px;">
-      <div class="modelo__contenido">
-        <h3>Iluminación - Subcategoría 3</h3>
-        <p>Soluciones de iluminación LED profesionales para diversos espacios y aplicaciones.</p>
-      </div>
-    </article>
-
-    <!-- ===== ILUMINACIÓN SUBCATEGORÍA 4 ===== -->
-    <article class="modelo" id="ilum4" style="background-color: var(--bg-light); padding: 50px 40px; border-radius: 6px;">
-      <div class="modelo__contenido">
-        <h3>Iluminación - Subcategoría 4</h3>
-        <p>Soluciones de iluminación LED profesionales para diversos espacios y aplicaciones.</p>
+        <h2>Serie GIG</h2>
+        <p>Modelo GIG de la Serie Galileo para instalaciones profesionales.</p>
       </div>
     </article>
 
     <!-- ===== SERIE SHELL ===== -->
-    <article class="modelo" style="background-color: var(--bg-light); padding: 50px 40px; border-radius: 6px;">
+    <article class="modelo" id="led-trucks" style="background-color: var(--bg-light); padding: 50px 40px; border-radius: 6px;">
       <figure class="modelo__video">
         <div class="video-container">
-          <video src="serie_shell_logo/shell.mp4" muted loop playsinline preload="metadata" controls="false"></video>
+          <video src="serie_shell_logo/shell.mp4" muted loop playsinline preload="metadata"></video>
           <div class="play-overlay">
             <div class="play-button"></div>
           </div>
         </div>
       </figure>
       <div class="modelo__contenido">
-        <h3>Serie Shell</h3>
-        <p>Pensada para quienes buscan impacto visual en movimiento, la Serie Shell ofrece pantallas LED de alta resolución, brillo superior y autonomía total.</p>
-        <p>Su diseño compacto y resistente la convierte en la opción ideal para vehículos, flotas y publicidad móvil, garantizando máxima visibilidad en todo tipo de condiciones.</p>
-        <p>Con sistemas de control vía Wi-Fi, USB o red 4G, permite actualizar contenidos en tiempo real de forma simple y segura.</p>
-        <p>Desarrollada para funcionar sin interrupciones, combina rendimiento profesional, bajo mantenimiento y tecnología confiable para que tu mensaje se vea, siempre.</p>
+        <h2>Serie Shell</h2>
+        <p>Pantalla LED compacta para vehículos, flotas y publicidad móvil.</p>
+        <p>El contenido puede actualizarse mediante Wi-Fi, USB o red 4G.</p>
       </div>
     </article>
 
     <!-- ===== BOTÓN FINAL ===== -->
-    <a href="https://wa.me/5491151531530" target="_blank" class="btn-final" style="display: inline-flex; align-items: center; gap: 8px;">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+    <a href="https://wa.me/5491151531530?text=Hola,%20quiero%20cotizar%20una%20pantalla%20LED." target="_blank" rel="noopener noreferrer" class="btn-final" data-conversion="whatsapp_product_page" data-conversion-placement="pantallas-final">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
         <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
       </svg>
       Consultar por WhatsApp
     </a>
   </section>
 
+  <div class="rtm-conversion-dock">
+    <a class="rtm-conversion-dock__link" href="https://wa.me/5491151531530?text=Hola,%20quiero%20cotizar%20una%20pantalla%20LED." target="_blank" rel="noopener noreferrer" aria-label="Cotizar una pantalla LED por WhatsApp" data-conversion="whatsapp_product_persistent" data-conversion-placement="pantallas-persistent">
+      Cotizar por WhatsApp
+    </a>
+  </div>
+
+  <script src="../js/conversion-tracking.js?v=20260805-conversion2" defer></script>
+  <script>
+    (() => {
+      const dock = document.querySelector('.rtm-conversion-dock');
+      const finalCta = document.querySelector('.btn-final');
+      if (!dock || !finalCta || !('IntersectionObserver' in window)) return;
+
+      new IntersectionObserver(([entry]) => {
+        dock.hidden = entry.isIntersecting;
+      }, { threshold: 0.2 }).observe(finalCta);
+    })();
+  </script>
   <script>
     // Funcionalidad de videos de productos
     function initProductVideos() {
@@ -470,6 +410,12 @@
         const overlay = item.querySelector('.play-overlay');
 
         if (!video || !overlay) return;
+
+        const modelName = item.closest('.modelo')?.querySelector('h2')?.textContent?.trim() || 'producto';
+        item.setAttribute('role', 'button');
+        item.setAttribute('tabindex', '0');
+        item.setAttribute('aria-label', `Reproducir o pausar video de ${modelName}`);
+        item.setAttribute('aria-pressed', 'false');
 
         // Asegurar que el video esté pausado al cargar
         video.pause();
@@ -488,19 +434,27 @@
           video.pause();
         });
 
-        // Click para play/pause
-        item.addEventListener('click', function() {
+        const togglePlayback = function() {
           if (video.paused) {
             video.play();
+            item.setAttribute('aria-pressed', 'true');
             overlay.style.display = 'none';
             overlay.style.opacity = '0';
             overlay.style.pointerEvents = 'none';
           } else {
             video.pause();
+            item.setAttribute('aria-pressed', 'false');
             overlay.style.display = 'flex';
             overlay.style.opacity = '1';
             overlay.style.pointerEvents = 'auto';
           }
+        };
+
+        item.addEventListener('click', togglePlayback);
+        item.addEventListener('keydown', function(event) {
+          if (event.key !== 'Enter' && event.key !== ' ') return;
+          event.preventDefault();
+          togglePlayback();
         });
 
         // Pausar otros videos cuando se reproduce uno
@@ -508,7 +462,9 @@
           document.querySelectorAll('.modelo__video video').forEach(otherVideo => {
             if (otherVideo !== video && !otherVideo.paused) {
               otherVideo.pause();
-              const otherOverlay = otherVideo.closest('.modelo__video').querySelector('.play-overlay');
+              const otherItem = otherVideo.closest('.modelo__video');
+              otherItem.setAttribute('aria-pressed', 'false');
+              const otherOverlay = otherItem.querySelector('.play-overlay');
               otherOverlay.style.display = 'flex';
               otherOverlay.style.opacity = '1';
               otherOverlay.style.pointerEvents = 'auto';

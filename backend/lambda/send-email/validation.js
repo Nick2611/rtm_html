@@ -10,10 +10,18 @@ const FIELD_LIMITS = Object.freeze({
     tipoSolucion: 120,
     consulta: 2000
 });
+const CONTEXT_LIMITS = Object.freeze({
+    page: 500,
+    product: 160,
+    category: 160,
+    referrer: 1000,
+    utm: 160
+});
 
 const NAME_PATTERN = /^[\p{L}\p{M}][\p{L}\p{M}'’ -]*$/u;
 const PHONE_PATTERN = /^\+?[0-9][0-9 ()-]*$/;
 const CONTROL_CHARACTER_PATTERN = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/;
+const CONTEXT_CONTROL_CHARACTER_PATTERN = /[\u0000-\u001F\u007F]/g;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function readText(source, field, errors, { collapseWhitespace = false } = {}) {
@@ -89,6 +97,117 @@ function validateMessage(value, errors) {
     }
 }
 
+function isRecord(value) {
+    return Boolean(value) && typeof value === 'object' && !Array.isArray(value);
+}
+
+function firstString(...values) {
+    return values.find(value => typeof value === 'string' && value.trim()) || '';
+}
+
+function sanitizeContextText(value, maxLength) {
+    if (typeof value !== 'string') return '';
+    return value
+        .replace(CONTEXT_CONTROL_CHARACTER_PATTERN, ' ')
+        .replace(/\s+/g, ' ')
+        .trim()
+        .slice(0, maxLength);
+}
+
+function sanitizeCommercialContext(body) {
+    if (!isRecord(body)) return {};
+
+    const suppliedContext = isRecord(body.context) ? body.context : {};
+    const suppliedUtm = isRecord(suppliedContext.utm) ? suppliedContext.utm : {};
+    const context = {};
+    const page = sanitizeContextText(
+        firstString(suppliedContext.page, body.page),
+        CONTEXT_LIMITS.page
+    );
+    const product = sanitizeContextText(
+        firstString(
+            suppliedContext.product,
+            suppliedContext.producto,
+            body.product,
+            body.producto
+        ),
+        CONTEXT_LIMITS.product
+    );
+    const category = sanitizeContextText(
+        firstString(
+            suppliedContext.category,
+            suppliedContext.categoria,
+            body.category,
+            body.categoria
+        ),
+        CONTEXT_LIMITS.category
+    );
+    const referrer = sanitizeContextText(
+        firstString(suppliedContext.referrer, body.referrer),
+        CONTEXT_LIMITS.referrer
+    );
+    const utm = {
+        source: sanitizeContextText(
+            firstString(
+                suppliedUtm.source,
+                suppliedUtm.utm_source,
+                suppliedContext.utmSource,
+                suppliedContext.utm_source,
+                body.utm_source
+            ),
+            CONTEXT_LIMITS.utm
+        ),
+        medium: sanitizeContextText(
+            firstString(
+                suppliedUtm.medium,
+                suppliedUtm.utm_medium,
+                suppliedContext.utmMedium,
+                suppliedContext.utm_medium,
+                body.utm_medium
+            ),
+            CONTEXT_LIMITS.utm
+        ),
+        campaign: sanitizeContextText(
+            firstString(
+                suppliedUtm.campaign,
+                suppliedUtm.utm_campaign,
+                suppliedContext.utmCampaign,
+                suppliedContext.utm_campaign,
+                body.utm_campaign
+            ),
+            CONTEXT_LIMITS.utm
+        ),
+        term: sanitizeContextText(
+            firstString(
+                suppliedUtm.term,
+                suppliedUtm.utm_term,
+                suppliedContext.utmTerm,
+                suppliedContext.utm_term,
+                body.utm_term
+            ),
+            CONTEXT_LIMITS.utm
+        ),
+        content: sanitizeContextText(
+            firstString(
+                suppliedUtm.content,
+                suppliedUtm.utm_content,
+                suppliedContext.utmContent,
+                suppliedContext.utm_content,
+                body.utm_content
+            ),
+            CONTEXT_LIMITS.utm
+        )
+    };
+
+    if (page) context.page = page;
+    if (product) context.product = product;
+    if (category) context.category = category;
+    if (referrer) context.referrer = referrer;
+    if (Object.values(utm).some(Boolean)) context.utm = utm;
+
+    return context;
+}
+
 function validateSubmission(body) {
     if (!body || typeof body !== 'object' || Array.isArray(body)) {
         return {
@@ -108,21 +227,18 @@ function validateSubmission(body) {
         tipoSolucion: readText(body, 'tipoSolucion', errors, { collapseWhitespace: true }),
         consulta: readText(body, 'consulta', errors)
     };
+    const context = sanitizeCommercialContext(body);
+    if (Object.keys(context).length > 0) value.context = context;
 
     validateName(value.nombre, 'nombre', true, errors);
     validateName(value.apellido, 'apellido', false, errors);
     validateText(value.empresa, 'empresa', errors);
     validateText(value.tipoCliente, 'tipoCliente', errors, {
-        requiredMessage: 'El tipo de cliente es obligatorio.',
         invalidMessage: 'Ingresá un tipo de cliente válido.'
     });
     validateText(value.otroTipoCliente, 'otroTipoCliente', errors);
-    if (value.tipoCliente === 'Otro' && !value.otroTipoCliente && !errors.otroTipoCliente) {
-        errors.otroTipoCliente = 'Especificá el tipo de cliente.';
-    }
     validatePhone(value.telefono, errors);
     validateText(value.tipoSolucion, 'tipoSolucion', errors, {
-        requiredMessage: 'La solución de interés es obligatoria.',
         invalidMessage: 'Ingresá una solución válida.'
     });
     validateMessage(value.consulta, errors);
@@ -146,6 +262,7 @@ function isValidEmailAddress(value) {
 module.exports = {
     hasValidationErrors,
     isValidEmailAddress,
+    sanitizeCommercialContext,
     toTelephoneUri,
     validateSubmission
 };

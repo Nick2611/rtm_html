@@ -1,0 +1,55 @@
+/* CTA persistente compartido por las páginas de producto independientes. */
+.rtm-conversion-dock {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 100;
+}
+
+.rtm-conversion-dock__link {
+  display: inline-flex;
+  min-height: 46px;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 15px;
+  border-radius: 999px;
+  background: #25d366;
+  color: #fff;
+  font-size: .88rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(0,0,0,.18);
+  transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+}
+
+.rtm-conversion-dock__link:hover {
+  background: #1fac54;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0,0,0,.22);
+}
+
+.rtm-conversion-dock__link:focus-visible {
+  outline: 3px solid #141416;
+  outline-offset: 3px;
+  box-shadow: 0 0 0 6px #fff;
+}
+
+@media (max-width: 720px) {
+  body.rtm-conversion-active { padding-bottom: 70px; }
+
+  .rtm-conversion-dock {
+    left: 10px;
+    right: 10px;
+    bottom: 8px;
+  }
+
+  .rtm-conversion-dock__link {
+    width: 100%;
+    min-height: 48px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rtm-conversion-dock__link { transition: none; }
+}

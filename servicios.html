@@ -6,12 +6,12 @@
   <title>Servicios — RTM Pantallas LED</title>
 
   <!-- Tipografía -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
   <!-- Iconos -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
 
   <!-- CSS Principal -->
-  <link rel="stylesheet" href="css/main.css?v=20260801-contact2">
+  <link rel="stylesheet" href="css/main.css?v=20260805-conversion2">
 
   <!-- Favicon -->
   <link rel="icon" href="favicon.ico" type="image/x-icon">
@@ -312,6 +312,7 @@
 
     /* Mostrar menú al hover sobre "Productos" o sobre el menú mismo */
     .menu-item-dropdown:hover .dropdown-menu,
+    .menu-item-dropdown:focus-within .dropdown-menu,
     .menu-item-dropdown:hover .dropdown-menu::before,
     .dropdown-menu:hover,
     .dropdown-menu:hover::before {
@@ -321,6 +322,7 @@
     }
 
     .menu-item-dropdown:hover .dropdown-menu,
+    .menu-item-dropdown:focus-within .dropdown-menu,
     .dropdown-menu:hover {
       transform: translateX(-50%) translateY(0);
     }
@@ -380,6 +382,7 @@
 
     /* Mostrar submenú al hover sobre la categoría o sobre el submenú mismo */
     .dropdown-menu-item:hover .submenu,
+    .dropdown-menu-item:focus-within .submenu,
     .dropdown-menu-item:hover .submenu::before,
     .submenu:hover,
     .submenu:hover::before {
@@ -389,6 +392,7 @@
     }
 
     .dropdown-menu-item:hover .submenu,
+    .dropdown-menu-item:focus-within .submenu,
     .submenu:hover {
       transform: translateY(0);
     }
@@ -499,7 +503,7 @@
     /* Ajustar CTA en móvil */
     @media (max-width: 900px) {
       .cta {
-        display: flex;
+        display: none;
         flex: 0 0 auto;
         order: 2;
       }
@@ -581,10 +585,24 @@
     .burger::before{ transform: translateY(calc(-50% - var(--burger-line-offset))); }
     .burger::after{ transform: translateY(calc(-50% + var(--burger-line-offset))); }
 
-    #nav-toggle{ display:none; }
+    #nav-toggle{
+      position:absolute;
+      width:1px;
+      height:1px;
+      padding:0;
+      margin:-1px;
+      overflow:hidden;
+      clip:rect(0 0 0 0);
+      clip-path:inset(50%);
+      white-space:nowrap;
+      border:0;
+      visibility:hidden;
+    }
+    #nav-toggle:focus-visible + .burger-wrap{ outline:3px solid #fff; outline-offset:3px; }
 
     /* Breakpoints adaptativos para el menú hamburguesa */
     @media (max-width: 1000px){
+      #nav-toggle{ visibility:visible; }
       nav.navbar {
         display: flex;
         justify-content: space-between;
@@ -593,6 +611,7 @@
         width: 100%;
       }
       .nav-center{ display:none; }
+      .cta{ display:none; }
       .burger-wrap{
         display: flex;
         z-index: 1001;
@@ -644,6 +663,7 @@
       max-height: 400px;
       opacity: 1;
       pointer-events: auto;
+      visibility: visible;
     }
     #nav-toggle:checked + label .burger::before{
       transform: translateY(-50%) rotate(45deg);
@@ -664,6 +684,7 @@
       overflow: hidden;
       opacity: 0;
       pointer-events: none;
+      visibility: hidden;
       transition: max-height .35s ease, opacity .25s ease;
       z-index: 1002;
       border-top: 1px solid rgba(255,255,255,0.1);
@@ -751,6 +772,38 @@
       margin-bottom: 40px;
       text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
     }
+
+    .hero-servicios__actions{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+    .hero-servicios__actions .btn-whatsapp{
+      display:inline-flex;
+      align-items:center;
+      padding:14px 24px;
+      min-height:48px;
+      border-radius:6px;
+      background:#25d366;
+      color:#fff;
+      font-weight:700;
+      text-decoration:none;
+    }
+    .hero-servicios__actions .btn-whatsapp:hover{ background:#1fac54; }
+    .hero-servicios__actions .btn-form{
+      display:inline-flex;
+      align-items:center;
+      min-height:48px;
+      padding:12px 22px;
+      border:2px solid #fff;
+      border-radius:6px;
+      color:#fff;
+      font-weight:700;
+      text-decoration:none;
+    }
+    .hero-servicios__actions .btn-form:hover{ background:#fff; color:#141416; }
 
     /* ======= SERVICIOS GRID ======= */
     section.servicios-grid{
@@ -1264,7 +1317,7 @@
     })(window, document, "clarity", "script", "xvo6v2qw7h");
   </script>
 </head>
-<body>
+<body class="conversion-dock-active">
 
   <!-- ================== HEADER ================== -->
   <header class="site-header" role="banner">
@@ -1278,9 +1331,9 @@
       <div class="nav-center">
         <ul class="menu" role="menubar">
           <li role="none"><a role="menuitem" href="index.html">Home</a></li>
-          <li role="none"><a role="menuitem" href="index.html#about">About</a></li>
+          <li role="none"><a role="menuitem" href="index.html#about">Nosotros</a></li>
           <li role="none" class="menu-item-dropdown">
-            <a role="menuitem" href="#productos">Productos</a>
+            <a role="menuitem" href="productos.html">Productos</a>
             <ul class="dropdown-menu" role="menu">
               <!-- Pantallas LED Outdoor -->
               <li class="dropdown-menu-item" role="none">
@@ -1322,12 +1375,12 @@
               </li>
               <!-- Iluminación -->
               <li class="dropdown-menu-item" role="none">
-                <a href="seccion_servicios/pantallas_led.html#iluminacion" role="menuitem">Iluminación</a>
+                <a href="productos.html?cat=iluminacion-profesional" role="menuitem">Iluminación</a>
                 <ul class="submenu" role="menu">
-                  <li role="none"><a href="seccion_servicios/pantallas_led.html#ilum1" role="menuitem">Subcategoría 1</a></li>
-                  <li role="none"><a href="seccion_servicios/pantallas_led.html#ilum2" role="menuitem">Subcategoría 2</a></li>
-                  <li role="none"><a href="seccion_servicios/pantallas_led.html#ilum3" role="menuitem">Subcategoría 3</a></li>
-                  <li role="none"><a href="seccion_servicios/pantallas_led.html#ilum4" role="menuitem">Subcategoría 4</a></li>
+                  <li role="none"><a href="productos.html?cat=iluminacion-profesional&amp;sub=beam" role="menuitem">Cabezales Beam</a></li>
+                  <li role="none"><a href="productos.html?cat=iluminacion-profesional&amp;sub=3en1" role="menuitem">Cabezales 3 en 1</a></li>
+                  <li role="none"><a href="productos.html?cat=iluminacion-profesional&amp;sub=barras-moviles" role="menuitem">Barras móviles</a></li>
+                  <li role="none"><a href="productos.html?cat=iluminacion-profesional&amp;sub=flashes" role="menuitem">Flashes</a></li>
                 </ul>
               </li>
               <!-- LED Trucks -->
@@ -1354,22 +1407,23 @@
 
       <!-- CTA derecha -->
       <div class="cta">
-        <a class="btn" href="index.html#contacto" role="button" aria-label="Ir a Contacto">CONTACTANOS</a>
+        <a class="btn" href="#contacto" role="button" aria-label="Pedir asesoramiento"
+           data-conversion="form_header" data-context="services">Pedir asesoramiento</a>
       </div>
 
       <!-- Hamburguesa (móvil) -->
-      <input type="checkbox" id="nav-toggle" aria-label="Abrir menú">
-      <label for="nav-toggle" class="burger-wrap" aria-hidden="true">
+      <input type="checkbox" id="nav-toggle" aria-label="Abrir o cerrar menú" aria-controls="mobile-menu" aria-expanded="false">
+      <label for="nav-toggle" class="burger-wrap">
         <div class="burger"><span></span></div>
       </label>
 
       <!-- Drawer móvil -->
-      <div class="drawer" aria-label="Menú móvil">
+      <div class="drawer" id="mobile-menu" aria-label="Menú móvil">
         <ul>
           <li><a href="index.html">Home</a></li>
-          <li><a href="index.html#about">About</a></li>
+          <li><a href="index.html#about">Nosotros</a></li>
           <li class="menu-item-dropdown">
-            <a href="#productos" class="dropdown-toggle-mobile">Productos <span class="dropdown-arrow">▼</span></a>
+            <a href="productos.html" class="dropdown-toggle-mobile" aria-expanded="false">Productos <span class="dropdown-arrow" aria-hidden="true">▼</span></a>
             <ul class="dropdown-menu">
               <!-- Pantallas LED Outdoor -->
               <li class="dropdown-menu-item">
@@ -1411,12 +1465,12 @@
               </li>
               <!-- Iluminación -->
               <li class="dropdown-menu-item">
-                <a href="seccion_servicios/pantallas_led.html#iluminacion">Iluminación <span class="submenu-arrow">›</span></a>
+                <a href="productos.html?cat=iluminacion-profesional">Iluminación <span class="submenu-arrow">›</span></a>
                 <ul class="submenu">
-                  <li><a href="seccion_servicios/pantallas_led.html#ilum1">Subcategoría 1</a></li>
-                  <li><a href="seccion_servicios/pantallas_led.html#ilum2">Subcategoría 2</a></li>
-                  <li><a href="seccion_servicios/pantallas_led.html#ilum3">Subcategoría 3</a></li>
-                  <li><a href="seccion_servicios/pantallas_led.html#ilum4">Subcategoría 4</a></li>
+                  <li><a href="productos.html?cat=iluminacion-profesional&amp;sub=beam">Cabezales Beam</a></li>
+                  <li><a href="productos.html?cat=iluminacion-profesional&amp;sub=3en1">Cabezales 3 en 1</a></li>
+                  <li><a href="productos.html?cat=iluminacion-profesional&amp;sub=barras-moviles">Barras móviles</a></li>
+                  <li><a href="productos.html?cat=iluminacion-profesional&amp;sub=flashes">Flashes</a></li>
                 </ul>
               </li>
               <!-- LED Trucks -->
@@ -1438,7 +1492,7 @@
           <li><a class="active" href="servicios.html">Servicios</a></li>
           <li><a href="index.html#clientes">Clientes</a></li>
           <li><a href="proyectos.html">Proyectos</a></li>
-          <li><a href="index.html#contacto">Contactanos</a></li>
+          <li><a href="#contacto" data-conversion="form_menu_mobile" data-context="services">Pedir asesoramiento</a></li>
         </ul>
       </div>
     </nav>
@@ -1449,10 +1503,19 @@
   <section class="hero-servicios">
     <div class="hero-servicios__wrap">
       <div class="hero-servicios__content">
-        <h1 class="hero-servicios__title">Nuestros Servicios</h1>
+        <h1 class="hero-servicios__title">Pantallas, tótems y cartelería LED</h1>
         <p class="hero-servicios__subtitle">
-          Soluciones LED profesionales para cada necesidad. Desde pantallas LED hasta tótems y pisos interactivos.
+          Equipos indoor y outdoor para instalaciones fijas, eventos y transporte.
         </p>
+        <div class="hero-servicios__actions">
+          <a class="btn-whatsapp"
+             href="https://wa.me/5491151531530?text=Hola,%20estoy%20viendo%20los%20servicios%20de%20RTM%20y%20quiero%20asesoramiento%20y%20cotizaci%C3%B3n"
+             target="_blank" rel="noopener noreferrer"
+             data-conversion="whatsapp_services_hero" data-context="services">
+            Pedir cotización
+          </a>
+          <a class="btn-form" href="#contacto" data-conversion="form_services_hero" data-context="services">Enviar consulta</a>
+        </div>
       </div>
     </div>
   </section>
@@ -1460,7 +1523,7 @@
   <!-- ================== SERVICIOS GRID ================== -->
   <section class="servicios-grid">
     <div class="servicios-container">
-      <h2 class="servicios-grid__title">Soluciones LED Profesionales</h2>
+      <h2 class="servicios-grid__title">Formatos disponibles</h2>
 
       <div class="servicios-grid__items">
         <!-- Pantallas LED -->
@@ -1471,9 +1534,9 @@
           <div class="servicio-card__content">
             <h3 class="servicio-card__title">Pantallas LED</h3>
             <p class="servicio-card__description">
-              Pantallas LED de alta calidad para interior y exterior. Soluciones personalizadas para eventos, publicidad y presentaciones corporativas.
+              Equipos indoor y outdoor para eventos, fachadas, locales y salas. Configuramos formato, pitch y montaje según el entorno.
             </p>
-            <a href="seccion_servicios/pantallas_led.html" class="servicio-card__btn">Ver Detalles</a>
+            <a href="seccion_servicios/pantallas_led.html" class="servicio-card__btn">Ver pantallas LED</a>
           </div>
         </div>
 
@@ -1485,9 +1548,9 @@
           <div class="servicio-card__content">
             <h3 class="servicio-card__title">Tótems LED</h3>
             <p class="servicio-card__description">
-              Tótems LED interactivos y modernos. Perfectos para centros comerciales, eventos y espacios corporativos.
+              Formato vertical para vidrieras, accesos, eventos y señalización. Hay versiones para interior y exterior.
             </p>
-            <a href="seccion_servicios/totems_led.html" class="servicio-card__btn">Ver Detalles</a>
+            <a href="seccion_servicios/totems_led.html" class="servicio-card__btn">Ver tótems LED</a>
           </div>
         </div>
 
@@ -1499,9 +1562,9 @@
           <div class="servicio-card__content">
             <h3 class="servicio-card__title">Pisos LED</h3>
             <p class="servicio-card__description">
-              Pisos LED interactivos y resistentes. Ideales para eventos, shows y experiencias inmersivas.
+              Módulos transitables para shows, eventos y experiencias interactivas con contenido bajo los pies.
             </p>
-            <a href="seccion_servicios/pisos_led.html" class="servicio-card__btn">Ver Detalles</a>
+            <a href="seccion_servicios/pisos_led.html" class="servicio-card__btn">Ver pisos LED</a>
           </div>
         </div>
 
@@ -1513,9 +1576,9 @@
           <div class="servicio-card__content">
             <h3 class="servicio-card__title">Ramaleros LED</h3>
             <p class="servicio-card__description">
-              Sistemas LED para transporte público. Carteles LED resistentes y eficientes para colectivos y vehículos.
+              Cartelería LED para mostrar recorridos y destinos en colectivos y otros vehículos.
             </p>
-            <a href="seccion_servicios/ramaleros_led.html" class="servicio-card__btn">Ver Detalles</a>
+            <a href="seccion_servicios/ramaleros_led.html" class="servicio-card__btn">Ver ramaleros LED</a>
           </div>
         </div>
 
@@ -1526,10 +1589,11 @@
   <!-- ================== CONTACTO ================== -->
   <section class="contacto" id="contacto" aria-labelledby="contacto-title">
     <div class="contacto__wrap">
-      <h3 id="contacto-title">¿Interesado en nuestros servicios?</h3>
-      <p>Completá tus datos y hablemos sobre tu próximo proyecto LED</p>
+      <h3 id="contacto-title">Contanos qué necesitás y te asesoramos</h3>
+      <p>No hace falta que conozcas el modelo ni las medidas exactas. Empecemos con tres datos.</p>
 
       <form class="contact-form" id="contact-form" data-contact-form novalidate>
+        <p class="form-product-context" data-form-product-context hidden></p>
         <div class="form-field">
           <label for="nombre" class="req">Nombre</label>
           <input id="nombre" name="nombre" type="text" placeholder="Tu nombre" autocomplete="given-name" minlength="2" maxlength="80" required>
@@ -1537,54 +1601,56 @@
         </div>
 
         <div class="form-field">
-          <label for="apellido">Apellido</label>
-          <input id="apellido" name="apellido" type="text" placeholder="Tu apellido" autocomplete="family-name" minlength="2" maxlength="80">
-          <span class="error-message" aria-live="polite">Revisá el apellido ingresado.</span>
-        </div>
-
-        <div class="form-field">
-          <label for="empresa">Empresa</label>
-          <input id="empresa" name="empresa" type="text" placeholder="Nombre de tu empresa (si corresponde)" minlength="2" maxlength="120" autocomplete="organization">
-          <span class="error-message" aria-live="polite">Revisá el nombre de la empresa.</span>
-        </div>
-
-        <div class="form-field">
-          <label for="tipo-cliente" class="req">Tipo de cliente</label>
-          <select id="tipo-cliente" name="tipoCliente" data-client-type-select required>
-            <option value="">Seleccionar tipo de cliente</option>
-          </select>
-          <span class="error-message" aria-live="polite">Seleccioná un tipo de cliente.</span>
-        </div>
-
-        <div class="form-field full" data-other-client-field hidden>
-          <label for="otro-tipo-cliente" class="req">Especificá el tipo de cliente</label>
-          <input id="otro-tipo-cliente" name="otroTipoCliente" type="text" placeholder="Contanos a qué actividad te dedicás" minlength="2" maxlength="80" disabled>
-          <span class="error-message" aria-live="polite">Especificá el tipo de cliente.</span>
-        </div>
-
-        <div class="form-field full">
-          <label for="telefono" class="req">Teléfono</label>
-          <input id="telefono" name="telefono" type="tel" placeholder="Tu número de teléfono" inputmode="tel" autocomplete="tel" maxlength="25" required>
+          <label for="telefono" class="req">Teléfono o WhatsApp</label>
+          <input id="telefono" name="telefono" type="tel" placeholder="+54 9 11 1234-5678" inputmode="tel" autocomplete="tel" maxlength="25" required>
+          <span class="field-hint">Usamos este número únicamente para responder tu consulta.</span>
           <span class="error-message" aria-live="polite">Ingresá un teléfono válido.</span>
         </div>
 
         <div class="form-field full">
-          <label for="tipo-solucion" class="req">Solución de interés</label>
-          <select id="tipo-solucion" name="tipoSolucion" data-solution-select required>
-            <option value="">Seleccionar tipo de solución</option>
-          </select>
-          <span class="error-message" aria-live="polite">Seleccioná un tipo de solución.</span>
-        </div>
-
-        <div class="form-field full">
-          <label for="consulta" class="req">Consulta</label>
-          <textarea id="consulta" name="consulta" placeholder="Contanos sobre tu proyecto LED..." minlength="10" maxlength="2000" required></textarea>
+          <label for="consulta" class="req">¿Qué necesitás?</label>
+          <textarea id="consulta" name="consulta" placeholder="Por ejemplo: dónde se instalaría, tamaño aproximado y para cuándo lo necesitás." minlength="10" maxlength="2000" required></textarea>
           <span class="error-message" aria-live="polite">Describí tu consulta.</span>
         </div>
 
+        <details class="form-optional">
+          <summary>Agregar más detalles <span>(opcional)</span></summary>
+          <div class="form-optional__grid">
+            <div class="form-field">
+              <label for="apellido">Apellido <span class="optional-label">(opcional)</span></label>
+              <input id="apellido" name="apellido" type="text" placeholder="Tu apellido" autocomplete="family-name" minlength="2" maxlength="80">
+              <span class="error-message" aria-live="polite">Revisá el apellido ingresado.</span>
+            </div>
+            <div class="form-field">
+              <label for="empresa">Empresa <span class="optional-label">(opcional)</span></label>
+              <input id="empresa" name="empresa" type="text" placeholder="Si corresponde" minlength="2" maxlength="120" autocomplete="organization">
+              <span class="error-message" aria-live="polite">Revisá el nombre de la empresa.</span>
+            </div>
+            <div class="form-field">
+              <label for="tipo-cliente">Tipo de cliente <span class="optional-label">(opcional)</span></label>
+              <select id="tipo-cliente" name="tipoCliente" data-client-type-select>
+                <option value="">Seleccionar tipo de cliente</option>
+              </select>
+              <span class="error-message" aria-live="polite">Revisá el tipo de cliente.</span>
+            </div>
+            <div class="form-field">
+              <label for="tipo-solucion">Solución de interés <span class="optional-label">(opcional)</span></label>
+              <select id="tipo-solucion" name="tipoSolucion" data-solution-select>
+                <option value="">Seleccionar tipo de solución</option>
+              </select>
+              <span class="error-message" aria-live="polite">Revisá la solución seleccionada.</span>
+            </div>
+            <div class="form-field full" data-other-client-field hidden>
+              <label for="otro-tipo-cliente">Especificá el tipo de cliente <span class="optional-label">(opcional)</span></label>
+              <input id="otro-tipo-cliente" name="otroTipoCliente" type="text" placeholder="Contanos a qué actividad te dedicás" minlength="2" maxlength="80" disabled>
+              <span class="error-message" aria-live="polite">Especificá el tipo de cliente.</span>
+            </div>
+          </div>
+        </details>
+
         <div class="form-actions">
           <button class="btn-submit" type="submit" id="submit-btn">
-            <span class="btn-text">Enviar</span>
+            <span class="btn-text">Pedir asesoramiento</span>
             <span class="btn-loading" style="display: none;">Enviando...</span>
           </button>
         </div>
@@ -1623,17 +1689,28 @@
   </footer>
 
   <!-- ================== POPUP DE CONFIRMACIÓN ================== -->
-  <div class="popup-overlay" id="popup-overlay">
+  <div class="popup-overlay" id="popup-overlay" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="services-success-title" aria-describedby="services-success-message">
     <div class="popup-content">
       <div class="popup-icon">
         <i class="fas fa-check"></i>
       </div>
-      <h3 class="popup-title">¡Consulta enviada!</h3>
-      <p class="popup-message">
-        Tu consulta ha sido enviada con éxito. Te contactaremos pronto para hablar sobre tu proyecto LED.
+      <h3 class="popup-title" id="services-success-title">Consulta enviada</h3>
+      <p class="popup-message" id="services-success-message">
+        Recibimos tu consulta. Te contactaremos para hablar sobre el proyecto LED.
       </p>
-      <button class="popup-close" onclick="closePopup()">Cerrar</button>
+      <button class="popup-close" type="button" onclick="closePopup()">Cerrar</button>
     </div>
+  </div>
+
+  <div class="floating-buttons" aria-label="Consulta por WhatsApp">
+    <a class="floating-btn floating-btn--whatsapp floating-btn--expanded"
+       href="https://wa.me/5491151531530?text=Hola,%20estoy%20viendo%20los%20servicios%20de%20RTM%20y%20quiero%20asesoramiento%20y%20cotizaci%C3%B3n"
+       target="_blank" rel="noopener noreferrer"
+       aria-label="Pedir cotización por WhatsApp"
+       data-conversion="whatsapp_services_persistent" data-conversion-placement="services-persistent">
+      <i class="fab fa-whatsapp" aria-hidden="true"></i>
+      <span class="floating-btn__label">Hablar con un asesor</span>
+    </a>
   </div>
 
   <!-- JavaScript para navegación suave -->
@@ -1655,6 +1732,7 @@
     // Cerrar menú móvil al hacer clic en un enlace
     document.querySelectorAll('.drawer a').forEach(link => {
       link.addEventListener('click', () => {
+        if (link.classList.contains('dropdown-toggle-mobile')) return;
         const navToggle = document.getElementById('nav-toggle');
         if (navToggle) {
           navToggle.checked = false;
@@ -1668,8 +1746,11 @@
     function showPopup() {
       const popup = document.getElementById('popup-overlay');
       if (popup) {
+        popup._rtmReturnFocus = document.activeElement;
         popup.classList.add('show');
+        popup.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
+        requestAnimationFrame(() => popup.querySelector('.popup-close')?.focus());
       }
     }
 
@@ -1677,7 +1758,10 @@
       const popup = document.getElementById('popup-overlay');
       if (popup) {
         popup.classList.remove('show');
+        popup.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = 'auto';
+        popup._rtmReturnFocus?.focus?.();
+        popup._rtmReturnFocus = null;
       }
     }
 
@@ -1685,6 +1769,14 @@
     document.getElementById('popup-overlay')?.addEventListener('click', function(e) {
       if (e.target === this) {
         closePopup();
+      }
+    });
+    document.addEventListener('keydown', function(e) {
+      const popup = document.getElementById('popup-overlay');
+      if (e.key === 'Escape' && popup?.classList.contains('show')) closePopup();
+      if (e.key === 'Tab' && popup?.classList.contains('show')) {
+        e.preventDefault();
+        popup.querySelector('.popup-close')?.focus();
       }
     });
 
@@ -1712,6 +1804,7 @@
               }
             });
             menuItem.classList.toggle('active');
+            this.setAttribute('aria-expanded', String(menuItem.classList.contains('active')));
           }
         });
       });
@@ -1721,10 +1814,46 @@
     document.addEventListener('DOMContentLoaded', function() {
       initProductosDropdown();
       initMobileDropdown();
+
+      const navToggle = document.getElementById('nav-toggle');
+      const drawer = document.getElementById('mobile-menu');
+      const syncMobileMenu = () => {
+        if (!navToggle || !drawer) return;
+        const open = navToggle.checked;
+        navToggle.setAttribute('aria-expanded', String(open));
+        drawer.style.visibility = open ? 'visible' : 'hidden';
+      };
+      navToggle?.addEventListener('change', syncMobileMenu);
+      document.addEventListener('keydown', event => {
+        if (event.key !== 'Escape' || !navToggle?.checked) return;
+        navToggle.checked = false;
+        syncMobileMenu();
+        navToggle.focus();
+      });
+      syncMobileMenu();
+
+      const conversionDock = document.querySelector('.floating-buttons');
+      const primaryActions = document.querySelectorAll(
+        '.hero-servicios [data-conversion^="whatsapp"], form[data-contact-form]'
+      );
+
+      if (conversionDock && primaryActions.length && 'IntersectionObserver' in window) {
+        const visibleActions = new Set();
+        const dockObserver = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) visibleActions.add(entry.target);
+            else visibleActions.delete(entry.target);
+          });
+          conversionDock.hidden = visibleActions.size > 0;
+        }, { threshold: 0.15 });
+
+        primaryActions.forEach(action => dockObserver.observe(action));
+      }
     });
   </script>
 
-  <script src="js/contact-form.js?v=20260801-contact3" defer></script>
+  <script src="js/conversion-tracking.js?v=20260805-conversion2" defer></script>
+  <script src="js/contact-form.js?v=20260805-conversion2" defer></script>
 
   <style>
     /* Debug: asegurar que el menú sea visible cuando está activo */

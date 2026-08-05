@@ -20,11 +20,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   <!-- Tipografía e Iconos -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
   <!-- CSS compartido -->
-  <link rel="stylesheet" href="css/main.css?v=20260801-contact2">
+  <link rel="stylesheet" href="css/main.css?v=20260805-conversion2">
 
   <style>
     /* ── Hero ── */
@@ -359,7 +359,7 @@
     })(window, document, "clarity", "script", "xvo6v2qw7h");
   </script>
 </head>
-<body>
+<body class="conversion-dock-active">
 
   <!-- ================== HEADER ================== -->
   <header class="site-header" role="banner">
@@ -385,15 +385,15 @@
       <div class="search-container">
         <div class="search-input-wrapper">
           <i class="fas fa-search"></i>
-          <input type="text" id="global-search" placeholder="Buscar productos...">
+          <input type="search" id="global-search" placeholder="Buscar productos..." aria-label="Buscar productos" autocomplete="off">
         </div>
         <div id="search-results"></div>
       </div>
-      <input type="checkbox" id="nav-toggle" aria-label="Abrir menú">
-      <label for="nav-toggle" class="burger-wrap" aria-hidden="true">
+      <input type="checkbox" id="nav-toggle" aria-label="Abrir o cerrar menú" aria-controls="mobile-menu" aria-expanded="false">
+      <label for="nav-toggle" class="burger-wrap">
         <div class="burger"><span></span></div>
       </label>
-      <div class="drawer" aria-label="Menú móvil">
+      <div class="drawer" id="mobile-menu" aria-label="Menú móvil">
         <ul>
           <li><a href="index.html">Home</a></li>
           <li><a href="index.html#about">Nosotros</a></li>
@@ -410,10 +410,12 @@
   <!-- ================== HERO ================== -->
   <div class="guia-hero" id="guia-productos">
     <h1>Guía de Productos RTM</h1>
-    <p>Todo lo que necesitás saber sobre nuestra línea de soluciones LED. Modelos, usos y cómo elegir la opción ideal para tu proyecto.</p>
+    <p>Compará tipos de pantallas, tótems, pisos y otras soluciones LED según el espacio y el uso.</p>
     <div class="guia-hero-btns">
-      <a href="#pantallas-led" class="btn-solid">Ver productos</a>
-      <a href="index.html#contacto" class="btn-outline">Hablar con un asesor</a>
+      <a href="https://wa.me/5491151531530?text=Hola,%20estoy%20viendo%20la%20gu%C3%ADa%20de%20RTM%20y%20necesito%20ayuda%20para%20elegir%20una%20soluci%C3%B3n%20LED"
+         class="btn-solid" target="_blank" rel="noopener noreferrer"
+         data-conversion="whatsapp_guide_hero" data-context="guide">Consultar qué equipo necesito</a>
+      <a href="#pantallas-led" class="btn-outline" data-conversion="products_guide_hero">Comparar productos</a>
     </div>
   </div>
 
@@ -441,7 +443,7 @@
         <div class="guia-cat__icon"><i class="fas fa-tv"></i></div>
         <div>
           <h2>Pantallas LED</h2>
-          <p>Soluciones de visualización de alto impacto para interiores y exteriores</p>
+          <p>Pantallas para instalaciones interiores y exteriores</p>
         </div>
       </div>
       <div class="guia-cat__desc">
@@ -453,12 +455,12 @@
         <div class="guia-models">
           <div class="guia-model-card">
             <div class="guia-model-name">IFI960</div>
-            <div class="guia-model-desc">Pantalla indoor de alta definición. Ideal para auditorios, salas de conferencia y espacios corporativos con distancias de visualización medias.</div>
+            <div class="guia-model-desc">Pantalla indoor de alta definición para auditorios, salas de conferencia y espacios corporativos con distancias de visualización medias.</div>
             <span class="guia-model-tag tag-indoor">Indoor</span>
           </div>
           <div class="guia-model-card">
             <div class="guia-model-name">RI640</div>
-            <div class="guia-model-desc">Pantalla indoor compacta con pitch fino. Perfecta para espacios reducidos donde se requiere alta resolución a corta distancia.</div>
+            <div class="guia-model-desc">Pantalla indoor compacta con pitch fino para espacios reducidos y visualización a corta distancia.</div>
             <span class="guia-model-tag tag-indoor">Indoor</span>
           </div>
           <div class="guia-model-card">
@@ -474,7 +476,7 @@
         <div class="guia-models">
           <div class="guia-model-card">
             <div class="guia-model-name">VP960</div>
-            <div class="guia-model-desc">Pantalla outdoor de alta luminosidad. Diseñada para visibilidad plena bajo la luz solar directa, ideal para fachadas y espacios abiertos.</div>
+            <div class="guia-model-desc">Pantalla outdoor de alta luminosidad para fachadas y espacios abiertos con luz solar directa.</div>
             <span class="guia-model-tag tag-outdoor">Outdoor</span>
           </div>
           <div class="guia-model-card">
@@ -595,7 +597,7 @@
         </div>
       </div>
       <div class="guia-cat__desc">
-        Los tótems LED son estructuras independientes que combinan soporte y pantalla en una sola unidad. No requieren instalación en pared ni estructura externa. Son ideales para señalización en espacios de tránsito, puntos de venta y stands de exhibición. Su diseño compacto y elegante los hace perfectos tanto para ambientes corporativos como para uso comercial.
+        Los tótems LED combinan soporte y pantalla en una unidad autoportante. Se usan en espacios de tránsito, puntos de venta, recepciones y stands.
       </div>
 
       <div class="guia-subcat">
@@ -603,12 +605,12 @@
         <div class="guia-models">
           <div class="guia-model-card">
             <div class="guia-model-name">TI520</div>
-            <div class="guia-model-desc">Tótem indoor compacto. Ideal para locales comerciales, recepciones y puntos de información en espacios reducidos.</div>
+            <div class="guia-model-desc">Tótem indoor compacto para locales comerciales, recepciones y puntos de información.</div>
             <span class="guia-model-tag tag-indoor">Indoor</span>
           </div>
           <div class="guia-model-card">
             <div class="guia-model-name">TI640</div>
-            <div class="guia-model-desc">Tótem indoor de tamaño medio. Equilibrio entre presencia visual e impacto sin ocupar demasiado espacio.</div>
+            <div class="guia-model-desc">Tótem indoor de tamaño medio para espacios comerciales y corporativos.</div>
             <span class="guia-model-tag tag-indoor">Indoor</span>
           </div>
         </div>
@@ -624,7 +626,7 @@
           </div>
           <div class="guia-model-card">
             <div class="guia-model-name">TE960-D</div>
-            <div class="guia-model-desc">Tótem outdoor doble cara. Permite mostrar contenido en ambas direcciones, maximizando el impacto en zonas de alto tránsito.</div>
+            <div class="guia-model-desc">Tótem outdoor doble cara para mostrar contenido en ambos sentidos de circulación.</div>
             <span class="guia-model-tag tag-outdoor">Outdoor</span>
           </div>
         </div>
@@ -652,7 +654,7 @@
         </div>
       </div>
       <div class="guia-cat__desc">
-        Los pisos LED de RTM están construidos para soportar el tránsito de personas y equipos, mientras proyectan imágenes y animaciones bajo los pies. Son la solución perfecta para discotecas, eventos de moda, shows artísticos y experiencias interactivas. Su construcción robusta garantiza durabilidad sin sacrificar calidad visual.
+        Los pisos LED reproducen imágenes y animaciones en una superficie transitable. Se utilizan en discotecas, eventos, shows y montajes interactivos.
       </div>
 
       <div class="guia-models">
@@ -695,7 +697,7 @@
         </div>
       </div>
       <div class="guia-cat__desc">
-        Los LED Trucks de RTM son vehículos completamente equipados con pantallas LED de alta luminosidad. Representan la solución ideal para publicidad móvil, campañas políticas, eventos itinerantes y activaciones de marca. RTM entrega el proyecto llave en mano: diseño, fabricación, instalación y puesta en marcha incluidos.
+        Los LED Trucks integran pantallas LED en vehículos para publicidad móvil, campañas, eventos itinerantes y activaciones. RTM realiza el diseño, la fabricación, la instalación y la puesta en marcha.
       </div>
 
       <div class="guia-usos">
@@ -721,7 +723,7 @@
         </div>
       </div>
       <div class="guia-cat__desc">
-        La línea de iluminación profesional de RTM complementa las soluciones LED con equipos de escena de última generación. Desde cabezales móviles hasta flashes, todos los productos están pensados para el mundo del espectáculo, la televisión y los eventos en vivo.
+        La línea incluye cabezales móviles, barras y flashes para espectáculos, televisión y eventos en vivo.
       </div>
 
       <div class="guia-subcat">
@@ -887,7 +889,7 @@
     <!-- ── CÓMO ELEGIR ── -->
     <section class="guia-elegir" id="como-elegir">
       <h2>¿Cómo elegir la solución correcta?</h2>
-      <p>Antes de decidir qué producto es el ideal para tu proyecto, tené en cuenta estos factores clave. Si tenés dudas, nuestro equipo te asesora sin cargo.</p>
+      <p>Antes de elegir, compará el entorno, la distancia de visualización, el tamaño y la frecuencia de montaje.</p>
 
       <div class="guia-elegir-grid">
         <div class="guia-elegir-item">
@@ -903,7 +905,7 @@
         <div class="guia-elegir-item">
           <i class="fas fa-expand-arrows-alt"></i>
           <h4>Tamaño de la pantalla</h4>
-          <p>Depende del espacio disponible y del impacto visual deseado. Te ayudamos a calcular el tamaño ideal según tu ubicación.</p>
+          <p>Depende del espacio disponible y de la distancia desde la que se verá el contenido.</p>
         </div>
         <div class="guia-elegir-item">
           <i class="fas fa-tools"></i>
@@ -923,8 +925,10 @@
       </div>
 
       <div class="guia-elegir-cta">
-        <p>¿Necesitás asesoramiento personalizado? Nuestro equipo te ayuda a elegir la mejor solución.</p>
-        <a href="index.html#contacto" class="btn">Hablar con un asesor</a>
+        <p>Indicá dónde se instalaría, la distancia de visualización y las medidas aproximadas.</p>
+        <a href="https://wa.me/5491151531530?text=Hola,%20ya%20revis%C3%A9%20la%20gu%C3%ADa%20de%20RTM%20y%20quiero%20que%20me%20recomienden%20una%20soluci%C3%B3n"
+           class="btn" target="_blank" rel="noopener noreferrer"
+           data-conversion="whatsapp_guide_final" data-context="guide_end">Consultar una recomendación</a>
       </div>
     </section>
 
@@ -957,7 +961,19 @@
     </div>
   </footer>
 
-  <script src="js/main.js?v=20260801-contact1" defer></script>
+  <div class="floating-buttons" aria-label="Consulta por WhatsApp">
+    <a href="https://wa.me/5491151531530?text=Hola,%20estoy%20viendo%20la%20gu%C3%ADa%20de%20RTM%20y%20necesito%20ayuda%20para%20elegir%20una%20soluci%C3%B3n%20LED"
+       class="floating-btn floating-btn--whatsapp floating-btn--expanded"
+       target="_blank" rel="noopener noreferrer"
+       aria-label="Consultar una solución por WhatsApp"
+       data-conversion="whatsapp_guide_persistent" data-conversion-placement="guide-persistent" data-context="guide">
+      <i class="fab fa-whatsapp" aria-hidden="true"></i>
+      <span class="floating-btn__label">Consultar por WhatsApp</span>
+    </a>
+  </div>
+
+  <script src="js/conversion-tracking.js?v=20260805-conversion2" defer></script>
+  <script src="js/main.js?v=20260805-conversion2" defer></script>
 
 </body>
 </html>

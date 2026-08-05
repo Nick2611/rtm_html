@@ -39,12 +39,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   <!-- Tipografía e Iconos -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
   <!-- CSS -->
-  <link rel="stylesheet" href="css/main.css?v=20260801-contact2">
-  <link rel="stylesheet" href="css/products.css?v=20260619-perf2">
+  <link rel="stylesheet" href="css/main.css?v=20260805-conversion2">
+  <link rel="stylesheet" href="css/products.css?v=20260805-conversion2">
   <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
@@ -53,7 +53,7 @@
     })(window, document, "clarity", "script", "xvo6v2qw7h");
   </script>
 </head>
-<body>
+<body class="conversion-dock-active">
 
   <!-- Header -->
   <header class="site-header">
@@ -81,17 +81,17 @@
       <div class="search-container">
         <div class="search-input-wrapper">
           <i class="fas fa-search"></i>
-          <input type="text" id="global-search" placeholder="Buscar productos...">
+          <input type="search" id="global-search" placeholder="Buscar productos..." aria-label="Buscar productos" autocomplete="off">
         </div>
         <div id="search-results"></div>
       </div>
 
-      <input type="checkbox" id="nav-toggle">
+      <input type="checkbox" id="nav-toggle" aria-label="Abrir o cerrar menú" aria-controls="mobile-menu" aria-expanded="false">
       <label for="nav-toggle" class="burger-wrap">
         <div class="burger"><span></span></div>
       </label>
 
-      <div class="drawer">
+      <div class="drawer" id="mobile-menu" aria-label="Menú móvil">
         <ul>
           <li><a href="index.html">Home</a></li>
           <li><a href="index.html#about">Nosotros</a></li>
@@ -110,8 +110,8 @@
     <div class="products-container" id="product-content">
       <div class="products-overview" id="products-overview">
         <div class="products-overview-header">
-          <h1>Nuestros Productos</h1>
-          <p>Explora nuestro catálogo completo de soluciones LED profesionales</p>
+          <h1>Productos LED</h1>
+          <p>Explorá modelos para interiores, exteriores, eventos e instalaciones fijas.</p>
         </div>
         <div class="categories-grid" id="categories-grid">
           <!-- Las categorías se cargan dinámicamente -->
@@ -150,8 +150,8 @@
         <h4>Contacto</h4>
         <ul>
           <li><a href="tel:+5491151531530"><i class="fas fa-phone"></i> +54 9 11 5153 1530</a></li>
-          <li><a href="mailto:info@rtmpantallasled.com"><i class="fas fa-envelope"></i> info@rtmpantallasled.com</a></li>
-          <li><a href="https://wa.me/5491151531530" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a></li>
+          <li><a href="mailto:info@pantallasledrtm.com"><i class="fas fa-envelope"></i> info@pantallasledrtm.com</a></li>
+          <li><a href="https://wa.me/5491151531530?text=Hola%2C%20estoy%20viendo%20el%20cat%C3%A1logo%20de%20RTM%20y%20quisiera%20recibir%20asesoramiento." target="_blank" rel="noopener noreferrer" data-conversion="whatsapp_click" data-conversion-placement="catalog-footer" data-context="catalog-footer"><i class="fab fa-whatsapp"></i> WhatsApp</a></li>
         </ul>
       </div>
     </div>
@@ -160,9 +160,27 @@
     </div>
   </footer>
 
+  <div class="floating-buttons" aria-label="Accesos rápidos">
+    <a id="catalog-whatsapp-cta"
+       class="floating-btn floating-btn--whatsapp floating-btn--expanded"
+       href="https://wa.me/5491151531530?text=Hola%2C%20estoy%20viendo%20el%20cat%C3%A1logo%20de%20RTM%20y%20quiero%20asesoramiento%20para%20elegir%20una%20soluci%C3%B3n%20LED."
+       target="_blank"
+       rel="noopener noreferrer"
+       aria-label="Consultar por WhatsApp para elegir una solución LED"
+       data-conversion="whatsapp_click"
+       data-conversion-placement="catalog-persistent"
+       data-context="catalog-persistent">
+      <i class="fab fa-whatsapp" aria-hidden="true"></i>
+      <span class="floating-btn__copy">
+        <span class="floating-btn__label" data-whatsapp-label>Cotizar por WhatsApp</span>
+      </span>
+    </a>
+  </div>
+
   <!-- Scripts -->
-  <script src="js/products.js?v=20260619-perf2"></script>
-  <script src="js/main.js?v=20260801-contact1" defer></script>
+  <script src="js/conversion-tracking.js?v=20260805-conversion2" defer></script>
+  <script src="js/products.js?v=20260805-conversion2"></script>
+  <script src="js/main.js?v=20260805-conversion2" defer></script>
 
 
   <script>

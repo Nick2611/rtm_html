@@ -682,14 +682,13 @@
       "isSpecialPage": true,
       "content": {
         "title": "LED Trucks - Publicidad Móvil",
-        "subtitle": "Impacto visual en movimiento",
-        "description": "Nuestros LED Trucks son la solución perfecta para campañas publicitarias móviles, eventos especiales y activaciones de marca. Equipados con pantallas LED de alta resolución, ofrecen máxima visibilidad y flexibilidad. RTM entrega el proyecto llave en mano: diseño, fabricación, instalación y puesta en marcha incluidos.",
+        "subtitle": "Pantallas móviles para campañas y eventos",
+        "description": "Camiones equipados con pantallas LED para campañas publicitarias, eventos y activaciones de marca. RTM realiza el diseño, la fabricación, la instalación y la puesta en marcha.",
         "features": [
           "Pantallas LED de alta resolución",
-          "Cobertura amplia en eventos y ciudades",
-          "Ideal para lanzamientos, campañas y activaciones",
+          "Formato móvil para recorridos y eventos",
           "Sonido profesional integrado",
-          "Proyecto llave en mano (diseño + fabricación + instalación)"
+          "Diseño, fabricación e instalación incluidos"
         ],
         "gallery": [
           {
@@ -878,7 +877,7 @@
     "company": "RTM Pantallas LED",
     "contact": {
       "phone": "+54 9 11 5153 1530",
-      "email": "info@rtmpantallasled.com",
+      "email": "info@pantallasledrtm.com",
       "address": "Av. Tte. Gral. Juan Domingo Perón 2915, Florencio Varela"
     }
   }

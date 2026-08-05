@@ -10,7 +10,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="../rtm_logo/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="../rtm_logo/favicon-16x16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="../rtm_logo/apple-touch-icon.png">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
   <style>
     :root{
       --container: 1200px;
@@ -40,11 +40,12 @@
       padding: 28px 20px 40px;
     }
 
-    .formulario h2{
+    .formulario h1{
       font-size: 1.25rem;
       font-weight: 700;
-      margin-bottom: 18px;
+      margin-bottom: 8px;
     }
+    .formulario > p{ color:var(--muted); margin-bottom:22px; }
 
     form.contact{
       display: grid;
@@ -56,6 +57,8 @@
       gap:8px;
     }
     .field[hidden]{ display:none; }
+    .field-hint{ color:var(--muted); font-size:.78rem; }
+    .optional-label{ color:var(--muted); font-size:.82rem; font-weight:500; }
     label{
       font-size:.95rem;
     }
@@ -107,19 +110,23 @@
     .form-status.error{ color:#b91c1c; }
     .form-status.success{ color:#166534; }
 
-    /* Tel con icono globo */
-    .phone-wrap{
-      position: relative;
+    .form-product-context{
+      margin:0;
+      padding:10px 0;
+      border-bottom:1px solid var(--border);
+      color:var(--ink);
+      font-weight:600;
     }
-    .phone-wrap::before{
-      content:"🌐";
-      position:absolute;
-      left:12px; top:50%;
-      transform:translateY(-50%);
-      font-size:1rem; opacity:.75;
-      pointer-events:none;
+    .form-product-context[hidden]{ display:none; }
+    .form-optional{ border-top:1px solid var(--border); }
+    .form-optional summary{
+      padding-top:16px;
+      cursor:pointer;
+      font-size:.92rem;
+      font-weight:700;
     }
-    .phone-wrap input{ padding-left: 40px; }
+    .form-optional summary span{ color:var(--muted); font-weight:500; }
+    .form-optional__grid{ display:grid; gap:18px; padding-top:18px; }
 
     /* Botón grande a todo el ancho */
     .actions{ margin-top: 6px; }
@@ -137,6 +144,8 @@
     .submit:hover{ background: var(--cta-hover); }
     .submit:active{ transform: translateY(1px); }
     .submit:disabled{ opacity:.7; cursor:not-allowed; }
+    .privacy-notice{ color:var(--muted); font-size:.78rem; line-height:1.5; }
+    .privacy-notice a{ color:inherit; }
 
     /* ================== FOOTER ================== */
     footer.site-footer{
@@ -189,59 +198,70 @@
 
   <!-- ================== FORMULARIO ================== -->
   <section class="formulario" id="cotizar" aria-labelledby="form-title">
-    <h2 id="form-title">¡Dejanos tu contacto y te contactaremos en la brevedad!</h2>
+    <h1 id="form-title">Cotizá tu proyecto</h1>
+    <p>Completá tres datos y te contactamos para definir la solución.</p>
 
     <form class="contact" id="product-contact-form" data-contact-form novalidate>
+      <p class="form-product-context" data-form-product-context hidden></p>
       <div class="field">
         <label for="nombre" class="req">Nombre</label>
-        <input id="nombre" name="nombre" type="text" placeholder="Tu nombre" required autocomplete="name" minlength="2" maxlength="80">
+        <input id="nombre" name="nombre" type="text" placeholder="Tu nombre" required autocomplete="given-name" minlength="2" maxlength="80">
         <span class="error-message" aria-live="polite">Ingresá tu nombre.</span>
       </div>
 
       <div class="field">
-        <label for="compania">Empresa u organización</label>
-        <input id="compania" name="empresa" type="text" placeholder="Si corresponde" autocomplete="organization" minlength="2" maxlength="120">
-        <span class="error-message" aria-live="polite">Revisá el nombre ingresado.</span>
-      </div>
-
-      <div class="field">
-        <label for="tipo-cliente" class="req">Tipo de cliente</label>
-        <select id="tipo-cliente" name="tipoCliente" data-client-type-select required>
-          <option value="">Seleccionar tipo de cliente</option>
-        </select>
-        <span class="error-message" aria-live="polite">Seleccioná un tipo de cliente.</span>
-      </div>
-
-      <div class="field" data-other-client-field hidden>
-        <label for="otro-tipo-cliente" class="req">Especificá el tipo de cliente</label>
-        <input id="otro-tipo-cliente" name="otroTipoCliente" type="text" placeholder="Contanos a qué actividad te dedicás" minlength="2" maxlength="80" disabled>
-        <span class="error-message" aria-live="polite">Especificá el tipo de cliente.</span>
-      </div>
-
-      <div class="field phone-wrap">
-        <label for="telefono" class="req">Teléfono</label>
-        <input id="telefono" name="telefono" type="tel" placeholder="+54 9 11 1234 5678" required inputmode="tel" autocomplete="tel" maxlength="25">
+        <label for="telefono" class="req">Teléfono o WhatsApp</label>
+        <input id="telefono" name="telefono" type="tel" placeholder="+54 9 11 1234-5678" required inputmode="tel" autocomplete="tel" maxlength="25">
+        <span class="field-hint">Usamos este número únicamente para responder tu consulta.</span>
         <span class="error-message" aria-live="polite">Ingresá un teléfono válido.</span>
       </div>
 
       <div class="field">
-        <label for="tipo-solucion" class="req">Solución de interés</label>
-        <select id="tipo-solucion" name="tipoSolucion" data-solution-select required>
-          <option value="">Seleccionar tipo de solución</option>
-        </select>
-        <span class="error-message" aria-live="polite">Seleccioná un tipo de solución.</span>
+        <label for="producto" class="req">¿Qué necesitás?</label>
+        <textarea id="producto" name="consulta" placeholder="Dónde se instalaría, tamaño aproximado y para cuándo lo necesitás." required minlength="10" maxlength="2000"></textarea>
+        <span class="error-message" aria-live="polite">Describí tu consulta.</span>
       </div>
 
-      <div class="field">
-        <label for="producto" class="req">Detalles de la cotización</label>
-        <textarea id="producto" name="consulta" placeholder="Contanos qué necesitás…" required minlength="10" maxlength="2000"></textarea>
-        <span class="error-message" aria-live="polite">Describí qué producto necesitás.</span>
-      </div>
+      <details class="form-optional">
+        <summary>Agregar más detalles <span>(opcional)</span></summary>
+        <div class="form-optional__grid">
+          <div class="field">
+            <label for="apellido">Apellido <span class="optional-label">(opcional)</span></label>
+            <input id="apellido" name="apellido" type="text" placeholder="Tu apellido" autocomplete="family-name" minlength="2" maxlength="80">
+            <span class="error-message" aria-live="polite">Revisá el apellido ingresado.</span>
+          </div>
+          <div class="field">
+            <label for="compania">Empresa u organización <span class="optional-label">(opcional)</span></label>
+            <input id="compania" name="empresa" type="text" placeholder="Si corresponde" autocomplete="organization" minlength="2" maxlength="120">
+            <span class="error-message" aria-live="polite">Revisá el nombre ingresado.</span>
+          </div>
+          <div class="field">
+            <label for="tipo-cliente">Tipo de cliente <span class="optional-label">(opcional)</span></label>
+            <select id="tipo-cliente" name="tipoCliente" data-client-type-select>
+              <option value="">Seleccionar tipo de cliente</option>
+            </select>
+            <span class="error-message" aria-live="polite">Revisá el tipo de cliente.</span>
+          </div>
+          <div class="field">
+            <label for="tipo-solucion">Solución de interés <span class="optional-label">(opcional)</span></label>
+            <select id="tipo-solucion" name="tipoSolucion" data-solution-select>
+              <option value="">Seleccionar tipo de solución</option>
+            </select>
+            <span class="error-message" aria-live="polite">Revisá la solución seleccionada.</span>
+          </div>
+          <div class="field" data-other-client-field hidden>
+            <label for="otro-tipo-cliente">Especificá el tipo de cliente <span class="optional-label">(opcional)</span></label>
+            <input id="otro-tipo-cliente" name="otroTipoCliente" type="text" placeholder="Contanos a qué actividad te dedicás" minlength="2" maxlength="80" disabled>
+            <span class="error-message" aria-live="polite">Especificá el tipo de cliente.</span>
+          </div>
+        </div>
+      </details>
 
       <div class="actions">
-        <button type="submit" class="submit">Enviar</button>
+        <button type="submit" class="submit">Pedir asesoramiento</button>
       </div>
       <p class="form-status" data-form-status role="status" aria-live="polite"></p>
+      <p class="privacy-notice">Al enviar aceptás el uso de tus datos para responder la consulta. <a href="../privacidad.html">Ver política de privacidad</a></p>
     </form>
   </section>
 
@@ -272,7 +292,8 @@
     </div>
   </footer>
 
-  <script src="../js/contact-form.js?v=20260801-contact3" defer></script>
+  <script src="../js/conversion-tracking.js?v=20260805-conversion2" defer></script>
+  <script src="../js/contact-form.js?v=20260805-conversion2" defer></script>
 
 </body>
 </html>
