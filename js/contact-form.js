@@ -43,6 +43,184 @@
     'Usuario particular / uso personal',
     'Otro'
   ]);
+  const OPTIONAL_FIELD_NAMES = new Set([
+    'apellido',
+    'empresa',
+    'tipoCliente',
+    'tipoSolucion'
+  ]);
+  const QUERY_PARAM_NAMES = Object.freeze({
+    product: ['producto', 'product', 'modelo', 'model'],
+    category: ['categoria', 'category', 'cat'],
+    subcategory: ['subcategoria', 'subcategory', 'sub'],
+    solution: ['tipoSolucion', 'tipo_solucion', 'solucion', 'solution']
+  });
+  const CATEGORY_SOLUTION_OPTIONS = Object.freeze({
+    'pantallas-led:indoor': 'Pantallas LED Indoor',
+    'pantallas-led:outdoor': 'Pantallas LED Outdoor',
+    'tour-series:indoor': 'Tour Series Indoor',
+    'tour-series:outdoor': 'Tour Series Outdoor',
+    'totems:indoor': 'Tótems LED Indoor',
+    'totems:outdoor': 'Tótems LED Outdoor',
+    'pisos-led': 'Pisos LED',
+    'led-trucks': 'LED Trucks / publicidad móvil',
+    'soluciones:unidades-colectivos': 'Cartelería LED para colectivos',
+    'soluciones:unidades-de-colectivos': 'Cartelería LED para colectivos',
+    'soluciones:unidades-comercios': 'Unidades LED para comercios',
+    'soluciones:porticos': 'Pórticos y señalización vial',
+    'soluciones:disenos-especiales': 'Diseños especiales y proyectos a medida',
+    'iluminacion-profesional:beam': 'Iluminación: cabezales móviles Beam',
+    'iluminacion-profesional:3en1': 'Iluminación: cabezales móviles 3 en 1',
+    'iluminacion-profesional:3-en-1': 'Iluminación: cabezales móviles 3 en 1',
+    'iluminacion-profesional:barras-moviles': 'Iluminación: barras móviles',
+    'iluminacion-profesional:flashes': 'Iluminación: flashes'
+  });
+
+  function sanitizeContextValue(value, maxLength = 500) {
+    if (typeof value !== 'string') return '';
+    return value
+      .replace(/[\u0000-\u001F\u007F]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .slice(0, maxLength);
+  }
+
+  function normalizeLookupValue(value) {
+    return sanitizeContextValue(value, 160)
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+  }
+
+  function locationUrl(locationLike) {
+    const href = typeof locationLike?.href === 'string' ? locationLike.href : '';
+    if (!href) return null;
+
+    try {
+      return new URL(href, 'https://pantallasledrtm.com');
+    } catch (_error) {
+      return null;
+    }
+  }
+
+  function queryValue(searchParams, names) {
+    for (const name of names) {
+      const value = sanitizeContextValue(searchParams.get(name), 160);
+      if (value) return value;
+    }
+    return '';
+  }
+
+  function deriveCommercialContext(locationLike = globalScope.location, documentLike = globalScope.document) {
+    const url = locationUrl(locationLike);
+    if (!url) return {};
+
+    const referrer = sanitizeContextValue(documentLike?.referrer, 1000);
+    const referrerUrl = referrer ? locationUrl({ href: referrer }) : null;
+    const product = queryValue(url.searchParams, QUERY_PARAM_NAMES.product)
+      || (referrerUrl ? queryValue(referrerUrl.searchParams, QUERY_PARAM_NAMES.product) : '');
+    const category = queryValue(url.searchParams, QUERY_PARAM_NAMES.category)
+      || (referrerUrl ? queryValue(referrerUrl.searchParams, QUERY_PARAM_NAMES.category) : '');
+    const page = sanitizeContextValue(url.pathname || '/', 500);
+    const marketingParam = name => (
+      sanitizeContextValue(url.searchParams.get(name), 160)
+      || sanitizeContextValue(referrerUrl?.searchParams.get(name), 160)
+    );
+    const utm = {
+      source: marketingParam('utm_source'),
+      medium: marketingParam('utm_medium'),
+      campaign: marketingParam('utm_campaign'),
+      term: marketingParam('utm_term'),
+      content: marketingParam('utm_content')
+    };
+    const context = { page };
+
+    if (product) context.product = product;
+    if (category) context.category = category;
+    if (referrer) context.referrer = referrer;
+    if (Object.values(utm).some(Boolean)) context.utm = utm;
+
+    return context;
+  }
+
+  function requestedSolution(locationLike = globalScope.location) {
+    const url = locationUrl(locationLike);
+    if (!url) return '';
+
+    const requestedValues = [
+      queryValue(url.searchParams, QUERY_PARAM_NAMES.solution),
+      queryValue(url.searchParams, QUERY_PARAM_NAMES.product)
+    ].filter(Boolean);
+
+    for (const requestedValue of requestedValues) {
+      const normalizedRequest = normalizeLookupValue(requestedValue);
+      const matchingOption = SOLUTION_OPTIONS.find(option => (
+        normalizeLookupValue(option) === normalizedRequest
+      ));
+      if (matchingOption) return matchingOption;
+    }
+
+    const category = normalizeLookupValue(queryValue(url.searchParams, QUERY_PARAM_NAMES.category));
+    const subcategory = normalizeLookupValue(queryValue(url.searchParams, QUERY_PARAM_NAMES.subcategory));
+    return CATEGORY_SOLUTION_OPTIONS[`${category}:${subcategory}`]
+      || CATEGORY_SOLUTION_OPTIONS[category]
+      || '';
+  }
+
+  function configureOptionalFields(form) {
+    OPTIONAL_FIELD_NAMES.forEach(fieldName => {
+      const field = form.elements.namedItem(fieldName);
+      if (!field || typeof field.removeAttribute !== 'function') return;
+
+      field.required = false;
+      field.removeAttribute('required');
+      const label = field.id
+        ? form.querySelector(`label[for="${field.id}"]`)
+        : null;
+      label?.classList.remove('req');
+    });
+  }
+
+  function applyQueryPrefill(form) {
+    const context = deriveCommercialContext();
+    const productContext = form.querySelector('[data-form-product-context]')
+      || globalScope.document?.querySelector('[data-form-product-context]');
+
+    if (productContext && context.product) {
+      productContext.textContent = `Estás consultando por: ${context.product}`;
+      productContext.hidden = false;
+    }
+
+    const solution = requestedSolution();
+    const solutionSelect = form.querySelector('[data-solution-select]');
+    if (solution && solutionSelect) solutionSelect.value = solution;
+  }
+
+  function trackingContext(form) {
+    const context = deriveCommercialContext();
+    return {
+      form: form.id || '',
+      page: context.page || '',
+      product: context.product || '',
+      category: context.category || ''
+    };
+  }
+
+  function trackConversion(eventName, details = {}) {
+    try {
+      globalScope.RTMConversion?.track?.(eventName, details);
+    } catch (_error) {
+      // La analítica nunca debe impedir que se envíe una consulta.
+    }
+  }
+
+  function markFormStarted(form) {
+    if (form.dataset.formStartTracked === 'true') return;
+    form.dataset.formStartTracked = 'true';
+    trackConversion('form_start', trackingContext(form));
+  }
 
   function sanitizePhoneInput(value) {
     const allowedCharacters = String(value).replace(/[^0-9+()\s-]/g, '');
@@ -141,7 +319,8 @@
     const shouldShow = clientType.value === 'Otro';
     otherContainer.hidden = !shouldShow;
     otherField.disabled = !shouldShow;
-    otherField.required = shouldShow;
+    otherField.required = false;
+    otherField.removeAttribute('required');
     clientType.setAttribute('aria-expanded', String(shouldShow));
 
     if (!shouldShow) {
@@ -161,6 +340,8 @@
     });
 
     if (firstInvalidField) {
+      const optionalGroup = firstInvalidField.closest('details');
+      if (optionalGroup) optionalGroup.open = true;
       firstInvalidField.scrollIntoView({ behavior: 'smooth', block: 'center' });
       firstInvalidField.focus();
       return false;
@@ -176,7 +357,7 @@
 
   function buildPayload(form) {
     const formData = new FormData(form);
-    return {
+    const payload = {
       nombre: getFormValue(formData, 'nombre'),
       apellido: getFormValue(formData, 'apellido'),
       empresa: getFormValue(formData, 'empresa'),
@@ -186,6 +367,9 @@
       tipoSolucion: getFormValue(formData, 'tipoSolucion'),
       consulta: getFormValue(formData, 'consulta')
     };
+    const context = deriveCommercialContext();
+    if (Object.keys(context).length > 0) payload.context = context;
+    return payload;
   }
 
   function findField(form, fieldName) {
@@ -203,7 +387,11 @@
       if (!firstInvalidField) firstInvalidField = field;
     });
 
-    firstInvalidField?.focus();
+    if (firstInvalidField) {
+      const optionalGroup = firstInvalidField.closest('details');
+      if (optionalGroup) optionalGroup.open = true;
+      firstInvalidField.focus();
+    }
   }
 
   function setFormStatus(form, message, type = '') {
@@ -235,8 +423,11 @@
   function showSuccess(form) {
     const popup = document.getElementById('popup-overlay');
     if (popup) {
+      popup._rtmReturnFocus = document.activeElement;
       popup.classList.add('show');
+      popup.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
+      globalScope.requestAnimationFrame?.(() => popup.querySelector('.popup-close')?.focus());
       return;
     }
 
@@ -249,12 +440,24 @@
     const form = event.currentTarget;
     const submitButton = form.querySelector('[type="submit"]');
     setFormStatus(form, '');
+    markFormStarted(form);
 
-    if (!validateForm(form)) return;
+    if (!validateForm(form)) {
+      const fields = Array.from(form.querySelectorAll('[aria-invalid="true"]'))
+        .map(field => field.name)
+        .filter(Boolean);
+      trackConversion('form_error', {
+        ...trackingContext(form),
+        action: 'validation',
+        component: fields.join(',')
+      });
+      return;
+    }
 
     setSubmitting(submitButton, true);
     const controller = new AbortController();
     const timeoutId = globalScope.setTimeout(() => controller.abort(), 12000);
+    let failureReason = 'network';
 
     try {
       const response = await fetch(API_ENDPOINT, {
@@ -269,19 +472,26 @@
       const result = await response.json().catch(() => ({}));
       if (!response.ok || result.success !== true) {
         applyServerErrors(form, result.fields);
+        failureReason = `http_${response.status}`;
         throw new Error(result.error || 'No pudimos enviar la consulta.');
       }
 
+      trackConversion('form_success', trackingContext(form));
       form.reset();
       syncOtherClientField(form);
       form.querySelectorAll('[aria-invalid]').forEach(field => setFieldError(field, ''));
       showSuccess(form);
     } catch (error) {
+      if (error.name === 'AbortError') failureReason = 'timeout';
       const message = error.name === 'AbortError'
         ? 'La solicitud tardó demasiado. Intentá nuevamente.'
         : error.message || 'No pudimos enviar la consulta. Intentá nuevamente.';
 
       setFormStatus(form, message, 'error');
+      trackConversion('form_error', {
+        ...trackingContext(form),
+        action: `submission_${failureReason}`
+      });
 
       if (!form.querySelector('[data-form-status]')) {
         globalScope.alert(message);
@@ -296,9 +506,13 @@
     if (form.dataset.contactFormReady === 'true') return;
     form.dataset.contactFormReady = 'true';
 
+    configureOptionalFields(form);
     populateSelect(form.querySelector('[data-solution-select]'), SOLUTION_OPTIONS);
     populateSelect(form.querySelector('[data-client-type-select]'), CLIENT_TYPE_OPTIONS);
+    applyQueryPrefill(form);
     syncOtherClientField(form);
+
+    form.addEventListener('focusin', () => markFormStarted(form), { once: true });
 
     form.querySelector('[data-client-type-select]')?.addEventListener('change', () => {
       syncOtherClientField(form);
@@ -330,6 +544,9 @@
   }
 
   const publicApi = {
+    deriveCommercialContext,
+    requestedSolution,
+    sanitizeContextValue,
     sanitizePhoneInput,
     validateMessage,
     validateName,

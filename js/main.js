@@ -3,7 +3,7 @@
  * JS compartido para todas las páginas
  */
 
-window.RTM_ASSET_VERSION = window.RTM_ASSET_VERSION || '20260619-perf2';
+window.RTM_ASSET_VERSION = window.RTM_ASSET_VERSION || '20260805-conversion2';
 window.RTM_GET_VERSIONED_DATA_PATH = window.RTM_GET_VERSIONED_DATA_PATH || function(path) {
   const separator = path.includes('?') ? '&' : '?';
   return `${path}${separator}v=${encodeURIComponent(window.RTM_ASSET_VERSION)}`;
@@ -45,13 +45,17 @@ function initMobileMenu() {
   const drawer    = document.querySelector('.drawer');
   if (!navToggle || !drawer) return;
 
-  navToggle.addEventListener('change', function() {
-    const open = this.checked;
+  const syncMenuState = () => {
+    const open = navToggle.checked;
     drawer.style.maxHeight     = open ? '100vh' : '0';
     drawer.style.opacity       = open ? '1' : '0';
     drawer.style.pointerEvents = open ? 'auto' : 'none';
+    drawer.style.visibility    = open ? 'visible' : 'hidden';
+    navToggle.setAttribute('aria-expanded', String(open));
     document.body.style.overflow = open ? 'hidden' : '';
-  });
+  };
+
+  navToggle.addEventListener('change', syncMenuState);
 
   drawer.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
@@ -59,6 +63,15 @@ function initMobileMenu() {
       navToggle.dispatchEvent(new Event('change'));
     });
   });
+
+  document.addEventListener('keydown', event => {
+    if (event.key !== 'Escape' || !navToggle.checked) return;
+    navToggle.checked = false;
+    syncMenuState();
+    navToggle.focus();
+  });
+
+  syncMenuState();
 }
 
 /* ===== DROPDOWN MÓVIL (servicios.html) ===== */
@@ -80,44 +93,178 @@ function initMobileDropdown() {
 function showPopup() {
   const popup = document.getElementById('popup-overlay');
   if (!popup) return;
+  popup._rtmReturnFocus = document.activeElement;
   popup.classList.add('show');
+  popup.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
+  requestAnimationFrame(() => popup.querySelector('.popup-close')?.focus());
 }
 
 function closePopup() {
   const popup = document.getElementById('popup-overlay');
   if (!popup) return;
   popup.classList.remove('show');
+  popup.setAttribute('aria-hidden', 'true');
   document.body.style.overflow = '';
+  popup._rtmReturnFocus?.focus?.();
+  popup._rtmReturnFocus = null;
 }
 
 function initPopup() {
   document.getElementById('popup-overlay')?.addEventListener('click', function(e) {
     if (e.target === this) closePopup();
   });
+  document.addEventListener('keydown', event => {
+    const popup = document.getElementById('popup-overlay');
+    if (event.key === 'Escape' && popup?.classList.contains('show')) closePopup();
+    if (event.key === 'Tab' && popup?.classList.contains('show')) {
+      event.preventDefault();
+      popup.querySelector('.popup-close')?.focus();
+    }
+  });
 }
 
-/* ===== LEAD POPUP (index.html) ===== */
-function initLeadPopup() {
-  const popup    = document.getElementById('lead-popup');
-  const closeBtn = document.getElementById('lead-popup-close');
-  if (!popup || sessionStorage.getItem('leadPopupShown')) return;
+/* ===== ACCESO PERSISTENTE A COTIZACIÓN ===== */
+const RTM_WHATSAPP_NUMBER = '5491151531530';
 
-  let triggered = false;
+function getConversionContext() {
+  const params = new URLSearchParams(window.location.search);
+  const pathname = window.location.pathname;
+  const product = params.get('producto') || params.get('model') || '';
+  const category = params.get('categoria') || params.get('cat') || '';
+  const subcategory = params.get('subcategoria') || params.get('sub') || '';
 
-  window.addEventListener('scroll', function onScroll() {
-    if (triggered) return;
-    const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
-    if (pct >= 50) {
-      popup.classList.add('show');
-      triggered = true;
-      sessionStorage.setItem('leadPopupShown', '1');
-      window.removeEventListener('scroll', onScroll);
+  return {
+    pathname,
+    product,
+    category,
+    subcategory,
+    origin: params.get('origen') || 'sitio'
+  };
+}
+
+function readableSlug(value) {
+  return String(value || '')
+    .replace(/[-_]+/g, ' ')
+    .replace(/\b\w/g, character => character.toUpperCase())
+    .trim();
+}
+
+function getConversionCopy(context) {
+  const productName = readableSlug(context.product);
+
+  if (productName) {
+    return {
+      label: 'Consultar este producto',
+      message: `Hola, estoy viendo ${productName} en la web de RTM y quiero consultar precio, disponibilidad y asesoramiento.`
+    };
+  }
+
+  if (context.pathname.includes('proyectos')) {
+    return {
+      label: 'Cotizar un proyecto similar',
+      message: 'Hola, vi los proyectos de RTM y quiero asesoramiento para una solución LED similar.'
+    };
+  }
+
+  if (context.pathname.includes('guia') || context.category) {
+    return {
+      label: 'Hablar con un asesor',
+      message: `Hola, estoy evaluando ${readableSlug(context.category) || 'soluciones LED'} y necesito ayuda para elegir la opción adecuada.`
+    };
+  }
+
+  return {
+    label: 'Hablar con un asesor',
+    message: 'Hola, quiero asesoramiento y cotización para una solución LED. Todavía no sé qué modelo necesito.'
+  };
+}
+
+function buildWhatsAppUrl(message) {
+  return `https://wa.me/${RTM_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+}
+
+function hideDockNearPrimaryActions(container) {
+  if (!('IntersectionObserver' in window)) return;
+
+  const targets = document.querySelectorAll([
+    '.hero [data-conversion^="whatsapp"]',
+    '.guia-hero [data-conversion^="whatsapp"]',
+    '.proyectos-cta',
+    '.guia-elegir-cta',
+    'form[data-contact-form]'
+  ].join(','));
+  if (!targets.length) return;
+
+  const visibleTargets = new Set();
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) visibleTargets.add(entry.target);
+      else visibleTargets.delete(entry.target);
+    });
+    container.hidden = visibleTargets.size > 0;
+  }, { threshold: 0.15 });
+
+  targets.forEach(target => observer.observe(target));
+}
+
+function initPersistentConversionDock() {
+  const context = getConversionContext();
+  if (context.pathname.includes('privacidad')) return;
+  const copy = getConversionCopy(context);
+  let container = document.querySelector('.floating-buttons');
+
+  if (!container) {
+    container = document.createElement('div');
+    container.className = 'floating-buttons';
+    container.setAttribute('aria-label', 'Acceso rápido a cotización');
+    document.body.appendChild(container);
+  }
+
+  container.querySelectorAll('.floating-btn:not(.floating-btn--whatsapp)').forEach(button => button.remove());
+
+  let whatsapp = container.querySelector('.floating-btn--whatsapp');
+  if (!whatsapp) {
+    whatsapp = document.createElement('a');
+    whatsapp.className = 'floating-btn floating-btn--whatsapp';
+    whatsapp.innerHTML = '<i class="fab fa-whatsapp" aria-hidden="true"></i>';
+    container.appendChild(whatsapp);
+  }
+
+  if (whatsapp.id === 'catalog-whatsapp-cta') {
+    whatsapp.classList.add('floating-btn--expanded');
+    document.body.classList.add('conversion-dock-active');
+    return;
+  }
+
+  whatsapp.classList.add('floating-btn--expanded');
+  whatsapp.href = buildWhatsAppUrl(copy.message);
+  whatsapp.target = '_blank';
+  whatsapp.rel = 'noopener noreferrer';
+  whatsapp.dataset.conversion = whatsapp.dataset.conversion || 'whatsapp_persistent';
+  whatsapp.dataset.context = context.product || context.category || context.pathname || 'site';
+  whatsapp.setAttribute('aria-label', copy.label);
+
+  let copyContainer = whatsapp.querySelector('.floating-btn__copy');
+  if (!copyContainer) {
+    copyContainer = document.createElement('span');
+    copyContainer.className = 'floating-btn__copy';
+    whatsapp.appendChild(copyContainer);
+  }
+
+  Array.from(whatsapp.children).forEach(child => {
+    if (child.classList.contains('floating-btn__label') || child.classList.contains('floating-btn__title')) {
+      child.remove();
     }
-  }, { passive: true });
+  });
+  copyContainer.replaceChildren();
+  const label = document.createElement('span');
+  label.className = 'floating-btn__label';
+  label.textContent = copy.label;
+  copyContainer.appendChild(label);
 
-  closeBtn?.addEventListener('click', () => popup.classList.remove('show'));
-  popup.addEventListener('click', e => { if (e.target === popup) popup.classList.remove('show'); });
+  document.body.classList.add('conversion-dock-active');
+  hideDockNearPrimaryActions(container);
 }
 
 /* ===== CARRUSEL (index.html) ===== */
@@ -157,6 +304,7 @@ function initCarousel() {
   });
 
   track.dataset.carouselReady = 'true';
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   scheduleStart();
 
   window.addEventListener('resize', () => {
@@ -193,7 +341,11 @@ function initProjectVideos() {
     const overlay   = item.querySelector('.play-overlay');
     if (!video || !thumbnail || !overlay) return;
 
-    item.addEventListener('click', () => {
+    item.setAttribute('role', 'button');
+    item.setAttribute('tabindex', '0');
+    item.setAttribute('aria-label', 'Reproducir o pausar video del proyecto');
+
+    const togglePlayback = () => {
       const isPlaying = thumbnail.style.display === 'none';
       if (isPlaying) {
         video.pause();
@@ -209,6 +361,13 @@ function initProjectVideos() {
         overlay.style.opacity      = '0';
         overlay.style.pointerEvents = 'none';
       }
+    };
+
+    item.addEventListener('click', togglePlayback);
+    item.addEventListener('keydown', event => {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      event.preventDefault();
+      togglePlayback();
     });
   });
 }
@@ -343,7 +502,8 @@ function normalize(str) {
 }
 
 function highlight(text, query) {
-  return text.replace(new RegExp(`(${query})`, 'gi'), '<mark>$1</mark>');
+  const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return text.replace(new RegExp(`(${escapedQuery})`, 'gi'), '<mark>$1</mark>');
 }
 
 /* ===== HERO VIDEOS (index.html) ===== */
@@ -413,7 +573,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initMobileMenu();
   initMobileDropdown();
   initPopup();
-  initLeadPopup();
+  initPersistentConversionDock();
   initCarousel();
   initProjectVideos();
   initHeroVideoSequence();

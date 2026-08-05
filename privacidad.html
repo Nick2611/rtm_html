@@ -21,11 +21,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   <!-- Tipografía e Iconos -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
   <!-- CSS compartido del sitio -->
-  <link rel="stylesheet" href="css/main.css?v=20260801-contact2">
+  <link rel="stylesheet" href="css/main.css?v=20260805-conversion2">
 
   <style>
     .privacidad-hero {
@@ -192,16 +192,16 @@
       <div class="search-container">
         <div class="search-input-wrapper">
           <i class="fas fa-search"></i>
-          <input type="text" id="global-search" placeholder="Buscar productos...">
+          <input type="search" id="global-search" placeholder="Buscar productos..." aria-label="Buscar productos" autocomplete="off">
         </div>
         <div id="search-results"></div>
       </div>
-      <input type="checkbox" id="nav-toggle" aria-label="Abrir menú">
-      <label for="nav-toggle" class="burger-wrap" aria-hidden="true">
+      <input type="checkbox" id="nav-toggle" aria-label="Abrir o cerrar menú" aria-controls="mobile-menu" aria-expanded="false">
+      <label for="nav-toggle" class="burger-wrap">
         <div class="burger"><span></span></div>
       </label>
 
-      <div class="drawer" aria-label="Menú móvil">
+      <div class="drawer" id="mobile-menu" aria-label="Menú móvil">
         <ul>
           <li><a href="index.html">Home</a></li>
           <li><a href="index.html#about">Nosotros</a></li>
@@ -219,7 +219,7 @@
   <!-- ================== HERO ================== -->
   <div class="privacidad-hero">
     <h1>Política de Privacidad</h1>
-    <p>Última actualización: enero de 2025</p>
+    <p>Última actualización: agosto de 2026</p>
   </div>
 
   <!-- ================== CONTENIDO ================== -->
@@ -232,11 +232,11 @@
 
       <!-- 1 -->
       <div class="privacidad-section">
-        <h2><span class="num">1</span> Responsable del tratamiento de datos</h2>
+        <h2><span class="num">1</span> Quién recibe los datos</h2>
         <p>
           RTM Sistemas S.R.L. ("RTM Pantallas LED"), con domicilio en Av. Tte. Gral. Juan Domingo Perón 2915,
-          B1888IUY Florencio Varela, Provincia de Buenos Aires, Argentina, es el responsable del tratamiento
-          de los datos personales recolectados a través de este sitio web.
+          B1888IUY Florencio Varela, Provincia de Buenos Aires, Argentina, recibe las consultas enviadas
+          desde este sitio.
         </p>
         <p style="margin-top:10px">
           Podés contactarnos en: <a href="mailto:info@pantallasledrtm.com" style="color:var(--accent)">info@pantallasledrtm.com</a>
@@ -248,41 +248,46 @@
       <!-- 2 -->
       <div class="privacidad-section">
         <h2><span class="num">2</span> Qué datos recopilamos</h2>
-        <p>Recopilamos únicamente los datos que vos nos proporcionás voluntariamente a través del formulario de contacto:</p>
+        <p>Los formularios solicitan tres datos obligatorios:</p>
         <ul>
-          <li>Nombre y apellido</li>
-          <li>Número de teléfono</li>
-          <li>Tipo de solución de interés</li>
-          <li>Mensaje o consulta</li>
+          <li>Nombre</li>
+          <li>Teléfono o WhatsApp</li>
+          <li>Necesidad o consulta</li>
         </ul>
-        <p style="margin-top:12px">No recopilamos datos sensibles, datos de tarjetas de crédito ni información bancaria.</p>
+        <p style="margin-top:12px">
+          De forma opcional, podés indicar apellido, empresa u organización, tipo de cliente y tipo de solución.
+          Si elegís "Otro" como tipo de cliente, también podés aclarar tu actividad.
+        </p>
+        <p style="margin-top:12px">
+          Al enviar el formulario también puede incorporarse contexto comercial disponible: página visitada,
+          producto, categoría, página de referencia y parámetros UTM de origen, medio, campaña, término y contenido.
+        </p>
+        <p style="margin-top:12px">No incluyas datos sensibles, datos de tarjetas ni información bancaria en la consulta.</p>
       </div>
       <hr class="divider">
 
       <!-- 3 -->
       <div class="privacidad-section">
         <h2><span class="num">3</span> Para qué usamos tus datos</h2>
-        <p>Los datos recopilados se utilizan exclusivamente para:</p>
+        <p>Usamos la información para:</p>
         <ul>
-          <li>Responder a tu consulta o solicitud de información</li>
-          <li>Contactarte para asesorarte sobre nuestros productos y servicios LED</li>
-          <li>Coordinar una reunión o visita comercial si así lo solicitás</li>
+          <li>Responder la consulta y preparar una orientación comercial</li>
+          <li>Entender qué producto, categoría o campaña originó el contacto</li>
+          <li>Coordinar una reunión o visita si lo solicitás</li>
         </ul>
-        <p style="margin-top:12px">No utilizamos tus datos para envío de publicidad no solicitada (spam) ni los compartimos con terceros con fines comerciales.</p>
       </div>
       <hr class="divider">
 
       <!-- 4 -->
       <div class="privacidad-section">
-        <h2><span class="num">4</span> Base legal del tratamiento</h2>
+        <h2><span class="num">4</span> Solicitud de contacto</h2>
         <p>
-          El tratamiento de tus datos se realiza en base a tu consentimiento explícito, otorgado al completar
-          y enviar el formulario de contacto, de conformidad con la <strong>Ley 25.326 de Protección de los
-          Datos Personales</strong> de la República Argentina y sus normas reglamentarias.
+          Cuando enviás el formulario, solicitás que RTM use esos datos para responderte y dar seguimiento
+          comercial a tu consulta.
         </p>
         <div class="privacidad-highlight">
-          La Dirección Nacional de Protección de Datos Personales (DNPDP) es el organismo de control
-          en Argentina. Podés consultar más información en
+          Podés consultar información oficial sobre protección de datos personales en el sitio de la
+          Agencia de Acceso a la Información Pública:
           <a href="https://www.argentina.gob.ar/aaip/datospersonales" target="_blank" rel="noopener noreferrer" style="color:var(--accent)">www.argentina.gob.ar/aaip/datospersonales</a>.
         </div>
       </div>
@@ -292,30 +297,18 @@
       <div class="privacidad-section">
         <h2><span class="num">5</span> Conservación de los datos</h2>
         <p>
-          Conservamos tus datos personales únicamente durante el tiempo necesario para dar respuesta a tu consulta
-          y, en caso de establecerse una relación comercial, durante la vigencia de dicha relación más el plazo
-          que exijan las obligaciones legales aplicables.
-        </p>
-        <p style="margin-top:10px">
-          Una vez cumplida la finalidad para la que fueron recopilados, los datos son eliminados de forma segura.
+          La información enviada se recibe en los canales comerciales de RTM y puede conservarse mientras sea
+          necesaria para atender la consulta, una relación comercial derivada de ella u obligaciones aplicables.
         </p>
       </div>
       <hr class="divider">
 
       <!-- 6 -->
       <div class="privacidad-section">
-        <h2><span class="num">6</span> Tus derechos</h2>
-        <p>De acuerdo con la Ley 25.326, tenés derecho a:</p>
-        <ul>
-          <li><strong>Acceso:</strong> solicitar información sobre los datos personales que tenemos sobre vos</li>
-          <li><strong>Rectificación:</strong> corregir datos inexactos o incompletos</li>
-          <li><strong>Supresión:</strong> solicitar la eliminación de tus datos cuando ya no sean necesarios</li>
-          <li><strong>Oposición:</strong> oponerte al tratamiento de tus datos en determinadas circunstancias</li>
-        </ul>
-        <p style="margin-top:12px">
-          Para ejercer cualquiera de estos derechos, podés contactarnos por mail a
+        <h2><span class="num">6</span> Solicitudes sobre tus datos</h2>
+        <p>
+          Para consultar, corregir o pedir la eliminación de datos asociados con tu contacto, escribinos a
           <a href="mailto:info@pantallasledrtm.com" style="color:var(--accent)">info@pantallasledrtm.com</a>.
-          Respondemos en un plazo máximo de 30 días hábiles.
         </p>
       </div>
       <hr class="divider">
@@ -324,20 +317,27 @@
       <div class="privacidad-section">
         <h2><span class="num">7</span> Seguridad</h2>
         <p>
-          Adoptamos medidas técnicas y organizativas adecuadas para proteger tus datos personales frente al
-          acceso no autorizado, la pérdida accidental o la divulgación indebida. El envío del formulario
-          se realiza mediante conexión cifrada (HTTPS).
+          El formulario se envía mediante una conexión HTTPS. Ningún servicio en línea ofrece seguridad
+          absoluta, por eso te pedimos que no incluyas información sensible o bancaria.
         </p>
       </div>
       <hr class="divider">
 
       <!-- 8 -->
       <div class="privacidad-section">
-        <h2><span class="num">8</span> Cookies</h2>
+        <h2><span class="num">8</span> Analítica, cookies e identificadores</h2>
         <p>
-          Este sitio web no utiliza cookies propias de seguimiento ni de publicidad. Podemos utilizar
-          cookies técnicas estrictamente necesarias para el funcionamiento del sitio. No compartimos
-          información de navegación con terceros.
+          Usamos Microsoft Clarity para analizar la interacción con el sitio, por ejemplo visitas, clics,
+          desplazamientos y navegación. Clarity puede utilizar cookies propias y de terceros e identificadores
+          seudónimos para relacionar páginas visitadas y sesiones.
+        </p>
+        <p style="margin-top:12px">
+          También enviamos eventos personalizados con contexto técnico y comercial, como página, sección,
+          producto, categoría y origen UTM. Esos eventos no incluyen los valores escritos en los campos del formulario.
+        </p>
+        <p style="margin-top:12px">
+          Consultá la
+          <a href="https://learn.microsoft.com/en-us/clarity/setup-and-installation/clarity-cookies" target="_blank" rel="noopener noreferrer" style="color:var(--accent)">documentación oficial sobre cookies de Microsoft Clarity</a>.
         </p>
       </div>
       <hr class="divider">
@@ -391,7 +391,8 @@
     </div>
   </footer>
 
-  <script src="js/main.js?v=20260801-contact1" defer></script>
+  <script src="js/conversion-tracking.js?v=20260805-conversion2" defer></script>
+  <script src="js/main.js?v=20260805-conversion2" defer></script>
 
 </body>
 </html>

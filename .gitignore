@@ -31,3 +31,4 @@ dev-scripts/
 docs/
 *.sh
 *.md
+!AGENTS.md

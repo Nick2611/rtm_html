@@ -3,7 +3,7 @@
  * Maneja la carga dinámica de productos, navegación y búsqueda
  */
 
-window.RTM_ASSET_VERSION = window.RTM_ASSET_VERSION || '20260619-perf2';
+window.RTM_ASSET_VERSION = window.RTM_ASSET_VERSION || '20260805-conversion2';
 window.RTM_GET_VERSIONED_DATA_PATH = window.RTM_GET_VERSIONED_DATA_PATH || function(path) {
   const separator = path.includes('?') ? '&' : '?';
   return `${path}${separator}v=${encodeURIComponent(window.RTM_ASSET_VERSION)}`;
@@ -32,6 +32,7 @@ class RTMProducts {
     this.data = null;
     this.currentCategory = null;
     this.currentSubcategory = null;
+    this.currentModel = null;
     this.currentFilter = 'all'; // 'all', 'indoor', 'outdoor'
     this.searchIndex = [];
     this.init();
@@ -44,6 +45,8 @@ class RTMProducts {
       this.renderMegaMenu();
       this.initSearch();
       await this.handleRouting();
+      this.updatePersistentWhatsAppCTA();
+      this.initPersistentCTASuppression();
     } catch (error) {
       console.error('Error initializing RTM Products:', error);
     }
@@ -72,6 +75,84 @@ class RTMProducts {
       .replace(/"/g, '&quot;')
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;');
+  }
+
+  buildWhatsAppUrl(message) {
+    return `https://wa.me/5491151531530?text=${encodeURIComponent(message)}`;
+  }
+
+  buildFormUrl(category = null, subcategory = null, model = null) {
+    const params = new URLSearchParams();
+    if (model?.name) params.set('producto', model.name);
+    if (category?.name) params.set('categoria', category.name);
+    if (subcategory?.name) params.set('subcategoria', subcategory.name);
+    params.set('origen', 'catalogo');
+    return `index.html?${params.toString()}#contacto`;
+  }
+
+  getModelQuoteMessage(model, category) {
+    return `Hola, quisiera cotizar el modelo ${model.name} de ${category.name}. El uso que tengo pensado es: `;
+  }
+
+  updatePersistentWhatsAppCTA() {
+    const link = document.getElementById('catalog-whatsapp-cta');
+    if (!link) return;
+
+    const label = link.querySelector('[data-whatsapp-label]');
+    const category = this.currentCategory;
+    const subcategory = this.currentSubcategory;
+    const model = this.currentModel;
+    let message = 'Hola, estoy viendo el catálogo de RTM y quiero asesoramiento para elegir una solución LED.';
+    let accessibleLabel = 'Consultar por WhatsApp para elegir una solución LED';
+    let context = 'catalog-persistent';
+
+    if (model) {
+      message = this.getModelQuoteMessage(model, category);
+      accessibleLabel = `Consultar por WhatsApp sobre el modelo ${model.name}`;
+      context = 'catalog-persistent-model';
+    } else if (subcategory) {
+      message = `Hola, estoy viendo ${subcategory.name} de ${category.name} y quiero solicitar una cotización.`;
+      accessibleLabel = `Consultar por WhatsApp sobre ${subcategory.name}`;
+      context = 'catalog-persistent-subcategory';
+    } else if (category) {
+      message = `Hola, estoy viendo ${category.name} y quiero asesoramiento para elegir un producto.`;
+      accessibleLabel = `Consultar por WhatsApp sobre ${category.name}`;
+      context = 'catalog-persistent-category';
+    }
+
+    if (label) label.textContent = 'Cotizar por WhatsApp';
+    link.href = this.buildWhatsAppUrl(message);
+    link.dataset.context = context;
+    link.dataset.conversionPlacement = context;
+    link.setAttribute('aria-label', accessibleLabel);
+
+    const contextAttributes = {
+      'data-category': category?.slug,
+      'data-subcategory': subcategory?.slug,
+      'data-model': model?.slug
+    };
+    Object.entries(contextAttributes).forEach(([attribute, value]) => {
+      if (value) link.setAttribute(attribute, value);
+      else link.removeAttribute(attribute);
+    });
+  }
+
+  initPersistentCTASuppression() {
+    const dock = document.getElementById('catalog-whatsapp-cta')?.closest('.floating-buttons');
+    const targets = document.querySelectorAll('footer, .model-actions, .special-actions');
+    if (!dock || targets.length === 0 || !('IntersectionObserver' in window)) return;
+
+    const visibleTargets = new Set();
+    this.persistentCTAObserver?.disconnect();
+    this.persistentCTAObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) visibleTargets.add(entry.target);
+        else visibleTargets.delete(entry.target);
+      });
+      dock.hidden = visibleTargets.size > 0;
+    }, { threshold: 0.01 });
+
+    targets.forEach(target => this.persistentCTAObserver.observe(target));
   }
 
   getModelImages(model) {
@@ -372,8 +453,12 @@ class RTMProducts {
   }
 
   highlightMatch(text, query) {
-    const regex = new RegExp(`(${query})`, 'gi');
-    return text.replace(regex, '<mark>$1</mark>');
+    const safeText = String(text ?? '');
+    const escapedQuery = String(query ?? '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    if (!escapedQuery) return safeText;
+
+    const regex = new RegExp(`(${escapedQuery})`, 'gi');
+    return safeText.replace(regex, '<mark>$1</mark>');
   }
 
   async handleRouting() {
@@ -388,6 +473,8 @@ class RTMProducts {
     const category = this.data.categories.find(c => c.slug === categorySlug);
     if (!category) { this.showNotFound(); return; }
     this.currentCategory = category;
+    this.currentSubcategory = null;
+    this.currentModel = null;
     if (category.isSpecialPage) { this.renderSpecialPage(category); return; }
     if (subcategorySlug) {
       const subcategory = category.subcategories.find(s => s.slug === subcategorySlug);
@@ -567,7 +654,7 @@ class RTMProducts {
              data-link="${modelUrl}"
              role="link"
              tabindex="0"
-             aria-label="Ver detalles de ${model.name}">
+             aria-label="Ver producto ${model.name}">
           ${this.renderProductMedia(model)}
           ${this.renderProductEnvironmentBadge(model, subcategory)}
         </div>
@@ -575,8 +662,14 @@ class RTMProducts {
           <h3 class="product-card-title">${model.name}</h3>
           <p class="product-card-description">${model.description}</p>
           ${model.pixelPitch ? `<span class="product-spec">Pixel Pitch: ${model.pixelPitch}</span>` : ''}
-          <a href="${modelUrl}" class="product-card-link">
-            Ver detalles <i class="fas fa-arrow-right"></i>
+          <a href="${modelUrl}"
+             class="product-card-link"
+             data-conversion="product_detail_click"
+             data-conversion-placement="product-card"
+             data-category="${this.escapeAttribute(category.slug)}"
+             data-subcategory="${this.escapeAttribute(subcategory.slug)}"
+             data-model="${this.escapeAttribute(model.slug)}">
+            Ver producto <i class="fas fa-arrow-right" aria-hidden="true"></i>
           </a>
         </div>
       </div>
@@ -586,6 +679,7 @@ class RTMProducts {
   async renderModelDetail(category, subcategory, modelSlug) {
     const model = subcategory.models.find(m => m.slug === modelSlug);
     if (!model) { await this.renderSubcategoryPage(category, subcategory); return; }
+    this.currentModel = model;
     const container = document.getElementById('product-content');
     if (!container) return;
     document.title = `${model.name} - ${category.name} — RTM Pantallas LED`;
@@ -598,6 +692,8 @@ class RTMProducts {
       }
       specsHTML += '</ul></div>';
     }
+    const quoteUrl = this.buildWhatsAppUrl(this.getModelQuoteMessage(model, category));
+    const formUrl = this.buildFormUrl(category, subcategory, model);
     const html = `
       <div class="category-header">
         <nav class="breadcrumb">
@@ -619,21 +715,31 @@ class RTMProducts {
           ${model.environment ? `<span class="model-env-badge env-${model.environment}">${model.environment}</span>` : ''}
           <p class="model-detail-description">${model.description}</p>
           ${model.pixelPitch ? `<p class="model-pixel-pitch"><strong>Pixel Pitch:</strong> ${model.pixelPitch}</p>` : ''}
-          ${specsHTML}
-          <div class="model-projects-cta">
-            <p>¿Querés verlo en un proyecto real? Visitá nuestra página de proyectos.</p>
-            <a href="proyectos.html" class="btn btn-projects">
-              <i class="fas fa-images"></i> Ver proyectos
-            </a>
-          </div>
           <div class="model-actions">
-            <a href="index.html#contacto" class="btn btn-primary">
-              <i class="fas fa-envelope"></i> Solicitar cotización
+            <a href="${quoteUrl}"
+               class="btn btn-whatsapp"
+               target="_blank"
+               rel="noopener noreferrer"
+               data-conversion="whatsapp_click"
+               data-conversion-placement="model-detail"
+               data-context="model-detail"
+               data-category="${this.escapeAttribute(category.slug)}"
+               data-subcategory="${this.escapeAttribute(subcategory.slug)}"
+               data-model="${this.escapeAttribute(model.slug)}">
+              <i class="fab fa-whatsapp" aria-hidden="true"></i> Cotizar por WhatsApp
             </a>
-            <a href="https://wa.me/5491151531530?text=Hola!%20Estoy%20interesado%20en%20el%20modelo%20${encodeURIComponent(model.name)}" class="btn btn-whatsapp" target="_blank">
-              <i class="fab fa-whatsapp"></i> Consultar por WhatsApp
+            <a href="${formUrl}"
+               class="btn btn-secondary"
+               data-conversion="form_cta_click"
+               data-conversion-placement="model-detail"
+               data-context="model-detail"
+               data-category="${this.escapeAttribute(category.slug)}"
+               data-subcategory="${this.escapeAttribute(subcategory.slug)}"
+               data-model="${this.escapeAttribute(model.slug)}">
+              Completar formulario
             </a>
           </div>
+          ${specsHTML}
         </div>
       </div>
     `;
@@ -646,6 +752,8 @@ class RTMProducts {
     if (!container) return;
     document.title = `${category.name} — RTM Pantallas LED`;
     const content = category.content;
+    const formUrl = this.buildFormUrl(category);
+    const quoteUrl = this.buildWhatsAppUrl(`Hola, estoy viendo ${category.name} y quisiera recibir información y una cotización. El uso que tengo pensado es: `);
     const imageErrorHandler = this.getImageErrorHandler();
     let galleryHTML = '';
     if (content.gallery && content.gallery.length > 0) {
@@ -690,17 +798,13 @@ class RTMProducts {
         </div>
         ${galleryHTML}
         <div class="special-cta">
-          <h3>¿Interesado en nuestros LED Trucks?</h3>
-          <p>Contáctanos para más información sobre disponibilidad y cotización.</p>
+          <h3>Cotizá un LED Truck</h3>
           <div class="special-actions">
-            <a href="index.html#contacto" class="btn btn-primary">
-              <i class="fas fa-envelope"></i> Contactar
+            <a href="${quoteUrl}" class="btn btn-whatsapp" target="_blank" rel="noopener noreferrer" data-conversion="whatsapp_click" data-conversion-placement="special-footer" data-context="special-footer" data-category="${this.escapeAttribute(category.slug)}">
+              <i class="fab fa-whatsapp" aria-hidden="true"></i> Cotizar por WhatsApp
             </a>
-            <a href="proyectos.html" class="btn btn-projects">
-              <i class="fas fa-images"></i> Ver proyectos
-            </a>
-            <a href="https://wa.me/5491151531530?text=Hola!%20Me%20interesa%20información%20sobre%20LED%20Trucks" class="btn btn-whatsapp" target="_blank">
-              <i class="fab fa-whatsapp"></i> WhatsApp
+            <a href="${formUrl}" class="btn btn-secondary" data-conversion="form_cta_click" data-conversion-placement="special-footer" data-context="special-footer" data-category="${this.escapeAttribute(category.slug)}">
+              Completar formulario
             </a>
           </div>
         </div>

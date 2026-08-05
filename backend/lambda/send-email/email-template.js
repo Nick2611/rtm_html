@@ -31,16 +31,47 @@ function detailRow(label, value, { href } = {}) {
         </tr>`;
 }
 
+function commercialContextEntries(context = {}) {
+    const safeContext = context && typeof context === 'object' && !Array.isArray(context)
+        ? context
+        : {};
+    return [
+        ['Página', safeContext.page],
+        ['Producto', safeContext.product],
+        ['Categoría', safeContext.category],
+        ['Referrer', safeContext.referrer],
+        ['UTM source', safeContext.utm?.source],
+        ['UTM medium', safeContext.utm?.medium],
+        ['UTM campaign', safeContext.utm?.campaign],
+        ['UTM term', safeContext.utm?.term],
+        ['UTM content', safeContext.utm?.content]
+    ].filter(([, value]) => Boolean(value));
+}
+
 function buildEmail(submission, now = new Date()) {
     const fullName = [submission.nombre, submission.apellido].filter(Boolean).join(' ');
     const company = submission.empresa || 'No especificada';
     const clientType = submission.tipoCliente === 'Otro' && submission.otroTipoCliente
         ? `Otro: ${submission.otroTipoCliente}`
-        : submission.tipoCliente;
-    const solution = submission.tipoSolucion;
+        : submission.tipoCliente || 'No especificado';
+    const solution = submission.tipoSolucion || 'No especificada';
     const submittedAt = formatDate(now);
     const telephoneUri = `tel:${toTelephoneUri(submission.telefono)}`;
     const formattedMessage = escapeHtml(submission.consulta).replace(/\n/g, '<br>');
+    const contextEntries = commercialContextEntries(submission.context);
+    const contextHtml = contextEntries.length > 0
+        ? `<tr>
+                        <td style="padding:0 32px 24px;">
+                            <p style="margin:0 0 8px;color:#6b7280;font-size:13px;font-weight:700;">Contexto comercial</p>
+                            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="border-collapse:collapse;">
+                                ${contextEntries.map(([label, value]) => detailRow(label, value)).join('')}
+                            </table>
+                        </td>
+                    </tr>`
+        : '';
+    const contextText = contextEntries.length > 0
+        ? `\nContexto comercial:\n${contextEntries.map(([label, value]) => `${label}: ${value}`).join('\n')}\n`
+        : '';
 
     const html = `<!doctype html>
 <html lang="es">
@@ -77,6 +108,7 @@ function buildEmail(submission, now = new Date()) {
                             <div style="padding:18px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:6px;color:#1f2937;font-size:14px;line-height:1.65;">${formattedMessage}</div>
                         </td>
                     </tr>
+                    ${contextHtml}
                     <tr>
                         <td style="padding:18px 32px;background:#f9fafb;border-top:1px solid #e5e7eb;color:#6b7280;font-size:12px;line-height:1.5;">
                             Recibido el ${escapeHtml(submittedAt)} mediante el formulario de pantallasledrtm.com.
@@ -100,7 +132,7 @@ Teléfono: ${submission.telefono}
 
 Consulta:
 ${submission.consulta}
-
+${contextText}
 Recibido el ${submittedAt} mediante el formulario de pantallasledrtm.com.`;
 
     return {
@@ -110,4 +142,4 @@ Recibido el ${submittedAt} mediante el formulario de pantallasledrtm.com.`;
     };
 }
 
-module.exports = { buildEmail, escapeHtml, formatDate };
+module.exports = { buildEmail, commercialContextEntries, escapeHtml, formatDate };
