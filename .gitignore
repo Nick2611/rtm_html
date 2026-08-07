@@ -1,34 +1,7 @@
-# Dependencies
-node_modules/
-npm-debug.log*
-
-# Build outputs
-dist/
-build/
-
-# Environment variables
-.env
-.env.local
-.env.production
-
-# IDE
-.vscode/
-.idea/
-
-# OS
 .DS_Store
-Thumbs.db
-
-# Logs
-*.log
-
-# Temporary files
-*.tmp
-*.temp
-
-# Development files
-dev-scripts/
-docs/
-*.sh
-*.md
-!AGENTS.md
+.env
+.claude/*
+.swarmforge/
+.worktrees/
+swarmforge/scripts/
+node_modules/
