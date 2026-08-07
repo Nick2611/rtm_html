@@ -754,7 +754,7 @@ nav.navbar {
 section.hero {
   background:
     linear-gradient(rgba(20,20,22,.85), rgba(15,20,32,.9)),
-    url('../background_hero/background_hero.jpeg') center/cover no-repeat;
+    url('../background_hero/background_hero.webp') center/cover no-repeat;
   padding: 120px 20px 100px;
   position: relative;
   overflow: hidden;
@@ -770,7 +770,7 @@ section.hero {
   overflow: hidden;
   background:
     linear-gradient(rgba(20,20,22,.85), rgba(15,20,32,.9)),
-    url('../background_hero/background_hero.jpeg') center/cover no-repeat;
+    url('../background_hero/background_hero.webp') center/cover no-repeat;
 }
 
 .hero__video {
@@ -1104,7 +1104,7 @@ section.servicios {
 section.hero-servicios {
   background:
     linear-gradient(rgba(20,20,22,.85), rgba(15,20,32,.9)),
-    url('../background_hero/background_hero.jpeg') center/cover no-repeat;
+    url('../background_hero/background_hero.webp') center/cover no-repeat;
   padding: 120px 20px 100px;
   position: relative;
   overflow: hidden;
@@ -2023,7 +2023,18 @@ footer:not(.site-footer) {
   #nav-toggle:checked + label .burger::after  { transform: translateY(-9px) rotate(-45deg); }
 
   /* Hero: botones uno abajo del otro */
-  section.hero { padding: 90px 16px 70px; min-height: auto; }
+  section.hero {
+    padding: 90px 16px 70px;
+    min-height: auto;
+    background:
+      linear-gradient(rgba(20,20,22,.85), rgba(15,20,32,.9)),
+      url('../background_hero/background_hero-mobile.webp') center/cover no-repeat;
+  }
+  .hero__video-container {
+    background:
+      linear-gradient(rgba(20,20,22,.85), rgba(15,20,32,.9)),
+      url('../background_hero/background_hero-mobile.webp') center/cover no-repeat;
+  }
   .hero__actions {
     flex-direction: column;
     align-items: center;

@@ -21,6 +21,10 @@
   const MAX_VALUE_LENGTH = 100;
   const UTM_STORAGE_KEY = 'rtm_conversion_utm';
   const LISTENER_FLAG = '__rtmConversionTrackingReady';
+  // Acción de conversión "Form submission" creada en Google Ads (categoría Submit lead form).
+  const ADS_CONVERSION_SEND_TO = Object.freeze({
+    form_success: 'AW-18364923277/iwS0CM_N9d0cEI37ibVE'
+  });
   const UTM_KEYS = Object.freeze([
     'utm_source',
     'utm_medium',
@@ -323,17 +327,34 @@
     }
   }
 
+  function emitAdsConversion(eventName) {
+    const sendTo = ADS_CONVERSION_SEND_TO[eventName];
+    if (!sendTo || sendTo.includes('CONVERSION_LABEL')) return false;
+
+    const gtagFn = globalScope?.gtag;
+    if (typeof gtagFn !== 'function') return false;
+
+    try {
+      gtagFn('event', 'conversion', { send_to: sendTo });
+      return true;
+    } catch (_error) {
+      return false;
+    }
+  }
+
   function track(name, detail) {
     const eventName = sanitizeEventName(name);
     if (!eventName) return null;
 
     const context = buildContext(detail);
     const claritySent = emitClarityEvent(eventName, context);
+    const adsSent = emitAdsConversion(eventName);
 
     return Object.freeze({
       name: eventName,
       detail: Object.freeze({ ...context }),
-      claritySent
+      claritySent,
+      adsSent
     });
   }
 
