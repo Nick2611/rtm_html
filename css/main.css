@@ -966,6 +966,31 @@ section.about::after {
   gap: 18px;
 }
 
+.about__capabilities {
+  list-style: none;
+  margin: 4px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(220px, 1fr));
+  gap: 12px 32px;
+  max-width: 980px;
+}
+.about__capabilities li {
+  position: relative;
+  padding-left: 20px;
+  font-size: clamp(.95rem, .2vw + .9rem, 1.05rem);
+  line-height: 1.4;
+}
+.about__capabilities li::before {
+  content: "";
+  position: absolute;
+  left: 0; top: .55em;
+  width: 0; height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 8px solid var(--bullet);
+}
+
 /* ============================================
    SERVICIOS SECTION (index.html)
    ============================================ */
@@ -1027,11 +1052,23 @@ section.servicios {
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: 24px;
 }
+.servicios-galeria__item {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  border-radius: 6px;
+}
+.servicios-galeria__item:focus-visible {
+  outline: 2px solid var(--text-dark);
+  outline-offset: 3px;
+}
 .servicios-galeria figure {
+  position: relative;
   overflow: hidden;
   border-radius: 6px;
   background-color: #ddd;
   aspect-ratio: 16/10;
+  margin: 0;
 }
 .servicios-galeria img {
   width: 100%; height: 100%;
@@ -1039,7 +1076,27 @@ section.servicios {
   transition: transform .4s ease;
   display: block;
 }
-.servicios-galeria figure:hover img { transform: scale(1.05); }
+.servicios-galeria__item:hover img,
+.servicios-galeria__item:focus-visible img { transform: scale(1.05); }
+
+.servicios-galeria figcaption {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  padding: 36px 20px 16px;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,.72) 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.servicios-galeria__title {
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.15rem;
+}
+.servicios-galeria__subtitle {
+  color: rgba(255,255,255,.85);
+  font-size: .9rem;
+}
 
 /* ============================================
    HERO SERVICIOS (servicios.html)
@@ -1982,6 +2039,7 @@ footer:not(.site-footer) {
   /* About */
   section.about { padding: 56px 16px; }
   section.about::after { left: 8px; }
+  .about__capabilities { grid-template-columns: 1fr; }
 
   /* Servicios index */
   section.servicios { padding: 60px 16px; }
