@@ -5,13 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Servicios — RTM Pantallas LED</title>
 
+  <!-- LCP: imagen de fondo del hero, precargada para no depender del parseo de CSS -->
+  <link rel="preload" as="image" href="background_hero/background_hero-mobile.webp" fetchpriority="high" media="(max-width: 768px)">
+  <link rel="preload" as="image" href="background_hero/background_hero.webp" fetchpriority="high" media="(min-width: 769px)">
+
   <!-- Tipografía -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet"></noscript>
   <!-- Iconos -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"></noscript>
 
   <!-- CSS Principal -->
-  <link rel="stylesheet" href="css/main.css?v=20260805-conversion2">
+  <link rel="stylesheet" href="css/main.css?v=20260807-lcp1">
 
   <!-- Favicon -->
   <link rel="icon" href="favicon.ico" type="image/x-icon">
@@ -716,7 +725,7 @@
     section.hero-servicios{
       background:
         linear-gradient(rgba(20, 20, 22, 0.85), rgba(15, 20, 32, 0.9)),
-        url('background_hero/background_hero.jpeg') center/cover no-repeat;
+        url('background_hero/background_hero.webp') center/cover no-repeat;
       padding: 120px 20px 100px;
       position: relative;
       overflow: hidden;
@@ -1217,6 +1226,12 @@
     }
 
     @media (max-width: 768px){
+      section.hero-servicios{
+        background:
+          linear-gradient(rgba(20, 20, 22, 0.85), rgba(15, 20, 32, 0.9)),
+          url('background_hero/background_hero-mobile.webp') center/cover no-repeat;
+      }
+
       /* Usar todo el ancho en móviles */
       nav.navbar,
       .servicios-container,
@@ -1315,6 +1330,15 @@
         t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "xvo6v2qw7h");
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18364923277"></script>
+  <script type="text/javascript">
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'AW-18364923277');
   </script>
 </head>
 <body class="conversion-dock-active">
@@ -1852,8 +1876,8 @@
     });
   </script>
 
-  <script src="js/conversion-tracking.js?v=20260805-conversion2" defer></script>
-  <script src="js/contact-form.js?v=20260805-conversion2" defer></script>
+  <script src="js/conversion-tracking.js?v=20260807-adsconv2" defer></script>
+  <script src="js/contact-form.js?v=20260807-adsconv1" defer></script>
 
   <style>
     /* Debug: asegurar que el menú sea visible cuando está activo */
