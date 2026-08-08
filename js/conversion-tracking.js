@@ -25,6 +25,12 @@
   const ADS_CONVERSION_SEND_TO = Object.freeze({
     form_success: 'AW-18364923277/iwS0CM_N9d0cEI37ibVE'
   });
+  // Acción de conversión "WhatsApp - clic" (categoría Contacto, secundaria).
+  // El clic solo confirma que el usuario abrió WhatsApp, no que haya enviado el mensaje.
+  // Aplica a cualquier evento data-conversion="whatsapp_*" vía el canal inferido en inferChannel().
+  const ADS_CHANNEL_CONVERSION_SEND_TO = Object.freeze({
+    whatsapp: 'AW-18364923277/SE7ZCOGiqd4cEI37ibVE'
+  });
   const UTM_KEYS = Object.freeze([
     'utm_source',
     'utm_medium',
@@ -327,9 +333,10 @@
     }
   }
 
-  function emitAdsConversion(eventName) {
-    const sendTo = ADS_CONVERSION_SEND_TO[eventName];
-    if (!sendTo || sendTo.includes('CONVERSION_LABEL')) return false;
+  function emitAdsConversion(eventName, context) {
+    const sendTo = ADS_CONVERSION_SEND_TO[eventName] ||
+      ADS_CHANNEL_CONVERSION_SEND_TO[context?.channel];
+    if (!sendTo || /CONVERSION_LABEL|REPLACE_WITH/.test(sendTo)) return false;
 
     const gtagFn = globalScope?.gtag;
     if (typeof gtagFn !== 'function') return false;
@@ -348,7 +355,7 @@
 
     const context = buildContext(detail);
     const claritySent = emitClarityEvent(eventName, context);
-    const adsSent = emitAdsConversion(eventName);
+    const adsSent = emitAdsConversion(eventName, context);
 
     return Object.freeze({
       name: eventName,
