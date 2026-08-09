@@ -5,6 +5,7 @@ const { buildEmail } = require('./email-template');
 const {
     hasValidationErrors,
     isValidEmailAddress,
+    parseEmailList,
     validateSubmission
 } = require('./validation');
 
@@ -92,10 +93,14 @@ exports.handler = async (event) => {
         });
     }
 
-    const recipientEmail = process.env.EMAIL_ADDRESS?.trim();
+    const recipientEmails = parseEmailList(process.env.EMAIL_ADDRESS);
     const senderEmail = process.env.SENDER_EMAIL?.trim();
 
-    if (!isValidEmailAddress(recipientEmail) || !isValidEmailAddress(senderEmail)) {
+    if (
+        recipientEmails.length === 0 ||
+        !recipientEmails.every(isValidEmailAddress) ||
+        !isValidEmailAddress(senderEmail)
+    ) {
         console.error(JSON.stringify({
             event: 'contact_email_configuration_error',
             requestId: event?.requestContext?.requestId
@@ -111,7 +116,7 @@ exports.handler = async (event) => {
     const command = new SendEmailCommand({
         Source: `"RTM Pantallas LED" <${senderEmail}>`,
         Destination: {
-            ToAddresses: [recipientEmail]
+            ToAddresses: recipientEmails
         },
         Message: {
             Subject: {

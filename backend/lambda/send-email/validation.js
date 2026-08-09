@@ -259,9 +259,21 @@ function isValidEmailAddress(value) {
     return typeof value === 'string' && EMAIL_PATTERN.test(value.trim());
 }
 
+function parseEmailList(value) {
+    if (typeof value !== 'string') return [];
+
+    return [...new Set(
+        value
+            .split(',')
+            .map(address => address.trim())
+            .filter(Boolean)
+    )];
+}
+
 module.exports = {
     hasValidationErrors,
     isValidEmailAddress,
+    parseEmailList,
     sanitizeCommercialContext,
     toTelephoneUri,
     validateSubmission
