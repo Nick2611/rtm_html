@@ -6,6 +6,7 @@ const assert = require('node:assert/strict');
 const { buildEmail } = require('./email-template');
 const {
     hasValidationErrors,
+    parseEmailList,
     sanitizeCommercialContext,
     validateSubmission
 } = require('./validation');
@@ -187,6 +188,16 @@ test('ignora valores de contexto no textuales y acepta aliases UTM planos', () =
             content: ''
         }
     });
+});
+
+test('parsea una lista de correos separados por coma, sin espacios ni duplicados', () => {
+    assert.deepEqual(
+        parseEmailList(' ventas@rtm.com, contacto@rtm.com ,ventas@rtm.com,,'),
+        ['ventas@rtm.com', 'contacto@rtm.com']
+    );
+    assert.deepEqual(parseEmailList('unico@rtm.com'), ['unico@rtm.com']);
+    assert.deepEqual(parseEmailList(''), []);
+    assert.deepEqual(parseEmailList(undefined), []);
 });
 
 test('el frontend deriva producto, categoría, referrer y UTM de la URL', () => {
