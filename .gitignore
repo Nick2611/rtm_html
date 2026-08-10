@@ -5,3 +5,5 @@
 .worktrees/
 swarmforge/scripts/
 node_modules/
+db_data/
+.mcp.json
