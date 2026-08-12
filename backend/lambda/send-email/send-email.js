@@ -1,7 +1,9 @@
 'use strict';
 
+const { randomUUID } = require('node:crypto');
 const { SESClient, SendEmailCommand } = require('@aws-sdk/client-ses');
 const { buildEmail } = require('./email-template');
+const { persistLead } = require('./lead-store');
 const {
     hasValidationErrors,
     isValidEmailAddress,
@@ -136,22 +138,71 @@ exports.handler = async (event) => {
         }
     });
 
+    const requestId = event?.requestContext?.requestId;
+    const leadId = randomUUID();
+    const receivedAt = new Date().toISOString();
+
+    /**
+     * Guarda el lead y registra el resultado. NUNCA lanza y NUNCA cambia lo que se le responde al
+     * navegador: el mail es el negocio y esto es instrumentación. `persistLead` ya atrapa todo,
+     * y este `try` es el segundo cinturón por si algo cambia ahí adentro.
+     *
+     * Se llama DESPUÉS de resolver el envío, en las dos ramas, porque el resultado del envío es
+     * parte del lead: una consulta que llegó pero cuyo mail falló es justamente la que hay que
+     * poder encontrar después, y sólo se sabe una vez que SES contestó.
+     */
+    const storeLead = async (sendStatus, extra = {}) => {
+        try {
+            const outcome = await persistLead(submission, {
+                leadId,
+                receivedAt,
+                requestId,
+                sendStatus,
+                ...extra
+            });
+
+            if (!outcome.stored) {
+                console.warn(JSON.stringify({
+                    event: 'contact_lead_not_persisted',
+                    reason: outcome.reason,
+                    leadId,
+                    requestId
+                }));
+            }
+        } catch (error) {
+            console.warn(JSON.stringify({
+                event: 'contact_lead_persist_threw',
+                errorName: error?.name,
+                leadId,
+                requestId
+            }));
+        }
+    };
+
     try {
         const result = await ses.send(command);
 
         console.info(JSON.stringify({
             event: 'contact_email_sent',
             messageId: result.MessageId,
-            requestId: event?.requestContext?.requestId
+            leadId,
+            requestId
         }));
+
+        await storeLead('sent', { sesMessageId: result.MessageId });
 
         return response(200, { success: true });
     } catch (error) {
         console.error(JSON.stringify({
             event: 'contact_email_send_failed',
             errorName: error.name,
-            requestId: event?.requestContext?.requestId
+            leadId,
+            requestId
         }));
+
+        // Se guarda igual. El mail falló, pero la consulta existió: perderla además sería convertir
+        // un problema de entrega en un lead que nadie va a volver a ver.
+        await storeLead('failed', { errorName: error.name });
 
         return response(500, {
             success: false,

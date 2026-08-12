@@ -76,6 +76,34 @@
     'iluminacion-profesional:flashes': 'Iluminación: flashes'
   });
 
+  /**
+   * Identificadores de clic publicitario que hay que conservar para poder atribuir un lead.
+   *
+   * `gclid` es el de siempre. `wbraid` y `gbraid` son los que Google usa cuando el usuario viene de
+   * iOS con seguimiento limitado: si sólo se busca `gclid`, se pierde entera la atribución del
+   * tráfico de iPhone, que en esta cuenta es tráfico pago igual de caro que el resto.
+   */
+  const CLICK_ID_PARAM_NAMES = Object.freeze(['gclid', 'wbraid', 'gbraid']);
+  const MARKETING_PARAM_NAMES = Object.freeze([
+    'utm_source',
+    'utm_medium',
+    'utm_campaign',
+    'utm_term',
+    'utm_content'
+  ]);
+  /**
+   * Clave propia, distinta de la de `conversion-tracking.js`.
+   *
+   * Los dos módulos guardan contexto de marketing y podría parecer duplicación, pero lo que guardan
+   * NO es lo mismo y mezclarlo sería un error: lo de `conversion-tracking.js` pasa por
+   * `looksSensitive()`, que descarta cualquier valor con ocho o más dígitos — exactamente lo que es
+   * un `gclid`. Ese filtro es correcto ahí, porque ese contexto va a Clarity y a Clarity no puede
+   * llegar nada que identifique a una persona. El `gclid` viaja por otro camino: va sólo en el
+   * cuerpo del formulario hacia la Lambda, nunca a la analítica.
+   */
+  const MARKETING_STORAGE_KEY = 'rtm_lead_attribution';
+  const MAX_CLICK_ID_LENGTH = 200;
+
   function sanitizeContextValue(value, maxLength = 500) {
     if (typeof value !== 'string') return '';
     return value
@@ -113,6 +141,88 @@
     return '';
   }
 
+  /**
+   * Un identificador de clic: alfanumérico, guiones bajos y guiones.
+   *
+   * Deliberadamente estricto. Este valor termina en una base de datos y en un join contra Google
+   * Ads, así que se acepta la forma que Google emite y nada más — un parámetro de URL manipulado no
+   * debe poder inyectar nada por esta vía.
+   */
+  function sanitizeClickId(value) {
+    if (typeof value !== 'string') return '';
+    const trimmed = value.trim();
+    // Se rechaza lo que excede el límite en vez de recortarlo, igual que en la Lambda: un
+    // identificador recortado tiene forma válida y no es el identificador real, así que no uniría
+    // con nada y encima parece un dato bueno.
+    if (!trimmed || trimmed.length > MAX_CLICK_ID_LENGTH) return '';
+    return /^[A-Za-z0-9_-]+$/.test(trimmed) ? trimmed : '';
+  }
+
+  function readStoredAttribution() {
+    try {
+      const stored = globalScope.sessionStorage?.getItem(MARKETING_STORAGE_KEY);
+      if (!stored) return {};
+      const parsed = JSON.parse(stored);
+      return parsed && typeof parsed === 'object' && !Array.isArray(parsed) ? parsed : {};
+    } catch (_error) {
+      return {};
+    }
+  }
+
+  function storeAttribution(attribution) {
+    try {
+      globalScope.sessionStorage?.setItem(MARKETING_STORAGE_KEY, JSON.stringify(attribution));
+    } catch (_error) {
+      // Con sessionStorage bloqueado se pierde la atribución entre páginas, no el formulario.
+    }
+  }
+
+  /**
+   * La atribución de la sesión: identificadores de clic y UTMs, persistidos.
+   *
+   * LA PERSISTENCIA ES EL PUNTO ENTERO. El `gclid` llega en la URL de aterrizaje, y casi nadie
+   * completa el formulario en esa misma vista: entra por `/?gclid=...`, mira productos, y recién
+   * después va a contacto. Para entonces la URL ya no tiene el `gclid` y el referrer es una página
+   * propia. Leerlo sólo de la URL actual, como hacía este módulo con los UTMs, significa capturarlo
+   * únicamente para quienes convierten sin navegar — es decir, casi nadie.
+   *
+   * El primer valor visto gana: si alguien vuelve a entrar por otro anuncio dentro de la misma
+   * sesión, el clic que originó la visita sigue siendo el primero.
+   */
+  function sessionAttribution(url, referrerUrl) {
+    const stored = readStoredAttribution();
+    const attribution = { ...stored };
+    let changed = false;
+
+    const readParam = name => sanitizeContextValue(
+      url?.searchParams.get(name) || referrerUrl?.searchParams.get(name) || '',
+      160
+    );
+
+    for (const name of CLICK_ID_PARAM_NAMES) {
+      if (attribution[name]) continue;
+      const value = sanitizeClickId(
+        url?.searchParams.get(name) || referrerUrl?.searchParams.get(name) || ''
+      );
+      if (value) {
+        attribution[name] = value;
+        changed = true;
+      }
+    }
+
+    for (const name of MARKETING_PARAM_NAMES) {
+      if (attribution[name]) continue;
+      const value = readParam(name);
+      if (value) {
+        attribution[name] = value;
+        changed = true;
+      }
+    }
+
+    if (changed) storeAttribution(attribution);
+    return attribution;
+  }
+
   function deriveCommercialContext(locationLike = globalScope.location, documentLike = globalScope.document) {
     const url = locationUrl(locationLike);
     if (!url) return {};
@@ -124,23 +234,31 @@
     const category = queryValue(url.searchParams, QUERY_PARAM_NAMES.category)
       || (referrerUrl ? queryValue(referrerUrl.searchParams, QUERY_PARAM_NAMES.category) : '');
     const page = sanitizeContextValue(url.pathname || '/', 500);
-    const marketingParam = name => (
-      sanitizeContextValue(url.searchParams.get(name), 160)
-      || sanitizeContextValue(referrerUrl?.searchParams.get(name), 160)
-    );
+    // Los UTMs y los identificadores de clic salen ahora de la atribución PERSISTIDA de la sesión,
+    // no sólo de la URL actual, por la razón explicada en `sessionAttribution`.
+    const attribution = sessionAttribution(url, referrerUrl);
     const utm = {
-      source: marketingParam('utm_source'),
-      medium: marketingParam('utm_medium'),
-      campaign: marketingParam('utm_campaign'),
-      term: marketingParam('utm_term'),
-      content: marketingParam('utm_content')
+      source: attribution.utm_source || '',
+      medium: attribution.utm_medium || '',
+      campaign: attribution.utm_campaign || '',
+      term: attribution.utm_term || '',
+      content: attribution.utm_content || ''
     };
+    const clickIds = {};
+    for (const name of CLICK_ID_PARAM_NAMES) {
+      if (attribution[name]) clickIds[name] = attribution[name];
+    }
+
     const context = { page };
 
     if (product) context.product = product;
     if (category) context.category = category;
     if (referrer) context.referrer = referrer;
     if (Object.values(utm).some(Boolean)) context.utm = utm;
+    // Van en su propio objeto y NO dentro de `utm`: un identificador de clic no es una etiqueta de
+    // campaña, se une contra Google Ads de otra forma, y mezclarlos haría que un `gclid` heredara
+    // los límites y el tratamiento de un UTM.
+    if (Object.keys(clickIds).length > 0) context.clickIds = clickIds;
 
     return context;
   }

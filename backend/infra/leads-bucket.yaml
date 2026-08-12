@@ -1,0 +1,126 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >
+  Buzon de leads de RTM. La Lambda del formulario escribe cada consulta validada como un objeto
+  JSON, y el worker leads del almacen de BI lo lee mas tarde. Existe porque la Lambda corre en AWS
+  y el almacen corre en una laptop sin direccion publica, asi que no hay ninguna ruta de red directa
+  entre las dos.
+
+Parameters:
+  BucketName:
+    Type: String
+    Default: rtm-leads-raw
+    Description: Nombre del bucket. Debe ser unico a nivel global en S3.
+  RetentionDays:
+    Type: Number
+    Default: 400
+    Description: >
+      Dias que se conserva un lead en el buzon. 400 cubre mas de un ano completo de comparaciones
+      interanuales y sigue siendo un limite real: el buzon es un punto de entrega, no el archivo
+      definitivo, que es la base de datos del almacen.
+  LambdaRoleName:
+    Type: String
+    Default: rtm-email-sender-role
+    Description: Rol de ejecucion existente de la Lambda del formulario, al que se le da permiso de escritura.
+
+Resources:
+  LeadsBucket:
+    Type: AWS::S3::Bucket
+    # Retain: un lead es una consulta comercial real de una persona real. Borrar el stack no puede
+    # llevarse los datos por delante.
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      BucketName: !Ref BucketName
+      # Un lead contiene datos personales: nombre, apellido, empresa y telefono.
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      VersioningConfiguration:
+        Status: Enabled
+      LifecycleConfiguration:
+        Rules:
+          - Id: expirar-leads-antiguos
+            Status: Enabled
+            Prefix: leads/
+            ExpirationInDays: !Ref RetentionDays
+            NoncurrentVersionExpirationInDays: 30
+          - Id: limpiar-multipart-incompletas
+            Status: Enabled
+            AbortIncompleteMultipartUpload:
+              DaysAfterInitiation: 7
+
+  # Deniega cualquier acceso que no viaje cifrado. Es la unica politica del bucket: el acceso se
+  # concede por rol de IAM, no por politica de bucket.
+  LeadsBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref LeadsBucket
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: DenegarTransporteInseguro
+            Effect: Deny
+            Principal: '*'
+            Action: 's3:*'
+            Resource:
+              - !GetAtt LeadsBucket.Arn
+              - !Sub '${LeadsBucket.Arn}/*'
+            Condition:
+              Bool:
+                'aws:SecureTransport': false
+
+  # Permiso de ESCRITURA para la Lambda del formulario, y nada mas. No puede leer ni listar: la
+  # Lambda solo deposita, y un permiso de lectura que nadie usa es superficie de ataque gratis.
+  LambdaWriteLeadsPolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      ManagedPolicyName: rtm-lambda-write-leads
+      Description: Permite a la Lambda del formulario depositar leads en el buzon.
+      Roles:
+        - !Ref LambdaRoleName
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: DepositarLead
+            Effect: Allow
+            Action: 's3:PutObject'
+            Resource: !Sub '${LeadsBucket.Arn}/leads/*'
+
+  # Usuario dedicado para el worker del ETL, que corre fuera de AWS y por lo tanto no puede usar un
+  # rol. Solo lectura, y solo bajo el prefijo leads/.
+  LeadsReaderUser:
+    Type: AWS::IAM::User
+    Properties:
+      UserName: rtm-bi-leads-reader
+      Policies:
+        - PolicyName: leer-buzon-de-leads
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Sid: ListarBuzon
+                Effect: Allow
+                Action: 's3:ListBucket'
+                Resource: !GetAtt LeadsBucket.Arn
+                Condition:
+                  StringLike:
+                    's3:prefix': 'leads/*'
+              - Sid: LeerLead
+                Effect: Allow
+                Action: 's3:GetObject'
+                Resource: !Sub '${LeadsBucket.Arn}/leads/*'
+
+Outputs:
+  BucketName:
+    Description: Valor para la variable de entorno LEADS_BUCKET de la Lambda.
+    Value: !Ref LeadsBucket
+  BucketArn:
+    Value: !GetAtt LeadsBucket.Arn
+  ReaderUserName:
+    Description: Usuario para el worker leads del ETL. Hay que crearle una clave de acceso aparte.
+    Value: !Ref LeadsReaderUser

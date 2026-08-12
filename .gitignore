@@ -7,3 +7,17 @@ swarmforge/scripts/
 node_modules/
 db_data/
 .mcp.json
+# Internal marketing BI warehouse + dashboard. It has its own private repository.
+bi/
+# Defense-in-depth for worktrees where the parent ignore is not consulted.
+bi/.env
+# Service-account keys and any other credential material. These are long-lived
+# credentials that Google does not let you re-download, and committing one means
+# rotating it - keep the whole directory out of git, not just the files in it today.
+bi/secrets/
+bi/**/*.pem
+bi/**/*-service-account.json
+bi/**/node_modules/
+bi/**/dist/
+bi/**/.next/
+bi/**/coverage/

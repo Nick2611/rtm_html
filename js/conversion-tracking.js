@@ -31,6 +31,111 @@
   const ADS_CHANNEL_CONVERSION_SEND_TO = Object.freeze({
     whatsapp: 'AW-18364923277/SE7ZCOGiqd4cEI37ibVE'
   });
+  /**
+   * La propiedad de GA4. El `send_to` es OBLIGATORIO y no es una optimización:
+   * la página carga un único `gtag.js` configurado con AW-18364923277 **y** con este id, así que
+   * un `gtag('event', ...)` sin `send_to` se difunde a los dos destinos y ensucia Google Ads con
+   * cada micro-evento del sitio. Acotarlo acá es lo que mantiene separadas las dos cuentas.
+   */
+  const GA4_MEASUREMENT_ID = 'G-6BP4Y1KSSK';
+  // GA4 descarta el evento entero si se pasa de estos límites, en silencio y sin error.
+  const GA4_MAX_EVENT_NAME_LENGTH = 40;
+  const GA4_MAX_PARAM_NAME_LENGTH = 40;
+  const GA4_MAX_PARAM_VALUE_LENGTH = 100;
+  const GA4_MAX_PARAMS = 25;
+  /**
+   * Nombres que GA4 se reserva. Enviar uno de estos no falla: GA4 lo acepta y lo descarta, que es
+   * la peor de las dos opciones porque el sitio parece estar midiendo algo que nunca llega.
+   */
+  const GA4_RESERVED_EVENT_NAMES = Object.freeze([
+    'ad_activeview', 'ad_click', 'ad_exposure', 'ad_impression', 'ad_query',
+    'adunit_exposure', 'app_clear_data', 'app_exception', 'app_remove', 'app_store_refund',
+    'app_store_subscription_cancel', 'app_store_subscription_convert',
+    'app_store_subscription_renew', 'app_update', 'app_upgrade', 'dynamic_link_app_open',
+    'dynamic_link_app_update', 'dynamic_link_first_open', 'error', 'first_open', 'first_visit',
+    'in_app_purchase', 'notification_dismiss', 'notification_foreground', 'notification_open',
+    'notification_receive', 'os_update', 'screen_view', 'session_start', 'user_engagement'
+  ]);
+
+  /*
+   * ---------------------------------------------------------------------------------------------
+   * TAXONOMÍA DE EVENTOS
+   *
+   * El sitio declara 20 valores distintos de `data-conversion` y son inconsistentes: trece formas
+   * de decir "clic en WhatsApp" (`whatsapp_header`, `whatsapp_hero`, `whatsapp_guide_final`...).
+   * Contar "clics de WhatsApp" hoy exige conocer las trece.
+   *
+   * La normalización se hace acá, con un mapa, y NO renombrando el marcado: los atributos están
+   * repartidos por todas las páginas y también en tarjetas que `js/products.js` genera en runtime,
+   * así que un renombrado masivo es mucha superficie para un cambio que este mapa resuelve en un
+   * solo lugar.
+   *
+   * SE APLICA SÓLO A GA4, Y ESO ES DELIBERADO. Clarity ya acumuló semanas de historia con los
+   * nombres crudos, y los hechos de Clarity en el almacén están indexados por esos nombres: cambiar
+   * el nombre ahora partiría cada métrica en dos series incomparables, sin poder reprocesar lo
+   * viejo. GA4, en cambio, no tiene historia — empieza acá — así que puede arrancar limpio. La
+   * conversión de crudo a canónico para Clarity es trabajo del transform del almacén, donde sí se
+   * puede reprocesar.
+   * ---------------------------------------------------------------------------------------------
+   */
+
+  /** Eventos que ya son canónicos y nunca deben ser reescritos por las reglas de prefijo. */
+  const CANONICAL_EVENT_NAMES = Object.freeze([
+    'whatsapp_click',
+    'form_cta_click',
+    'product_detail_click',
+    // Etapas del embudo del formulario. `form_start` empieza con `form_` pero NO es un clic en un
+    // CTA, y la regla de prefijo de abajo se lo tragaría.
+    'form_start',
+    'form_error',
+    'form_success'
+  ]);
+
+  const EVENT_TAXONOMY = Object.freeze({
+    whatsapp_header: { name: 'whatsapp_click', placement: 'header' },
+    whatsapp_menu_mobile: { name: 'whatsapp_click', placement: 'menu_mobile' },
+    whatsapp_hero: { name: 'whatsapp_click', placement: 'hero' },
+    whatsapp_floating: { name: 'whatsapp_click', placement: 'floating' },
+    whatsapp_guide_hero: { name: 'whatsapp_click', placement: 'guide_hero' },
+    whatsapp_guide_final: { name: 'whatsapp_click', placement: 'guide_final' },
+    whatsapp_guide_persistent: { name: 'whatsapp_click', placement: 'guide_persistent' },
+    whatsapp_projects_final: { name: 'whatsapp_click', placement: 'projects_final' },
+    whatsapp_services_hero: { name: 'whatsapp_click', placement: 'services_hero' },
+    whatsapp_services_persistent: { name: 'whatsapp_click', placement: 'services_persistent' },
+    whatsapp_product_page: { name: 'whatsapp_click', placement: 'product_page' },
+    whatsapp_product_persistent: { name: 'whatsapp_click', placement: 'product_persistent' },
+    form_header: { name: 'form_cta_click', placement: 'header' },
+    form_menu_mobile: { name: 'form_cta_click', placement: 'menu_mobile' },
+    form_services_hero: { name: 'form_cta_click', placement: 'services_hero' },
+    projects_hero: { name: 'content_cta_click', placement: 'projects_hero' },
+    products_guide_hero: { name: 'content_cta_click', placement: 'products_guide_hero' },
+    servicios_category_click: { name: 'category_click', placement: 'servicios' }
+  });
+
+  /**
+   * El nombre canónico de un evento y el emplazamiento que implicaba su nombre crudo.
+   *
+   * Las reglas de prefijo del final existen para que agregar `data-conversion="whatsapp_footer"` en
+   * una página nueva quede agrupado con los demás sin tocar este archivo. Sin ellas, cada
+   * emplazamiento nuevo aparecería como un evento suelto en GA4 hasta que alguien se acordara de
+   * mapearlo, que es exactamente cómo se llegó a trece nombres para una sola acción.
+   */
+  function canonicalEvent(rawName) {
+    const name = sanitizeEventName(rawName);
+    if (!name) return null;
+
+    if (CANONICAL_EVENT_NAMES.includes(name)) return { name, placement: '' };
+    if (hasOwn(EVENT_TAXONOMY, name)) return { ...EVENT_TAXONOMY[name] };
+
+    if (name.startsWith('whatsapp_')) {
+      return { name: 'whatsapp_click', placement: name.slice('whatsapp_'.length) };
+    }
+    if (name.startsWith('form_')) {
+      return { name: 'form_cta_click', placement: name.slice('form_'.length) };
+    }
+
+    return { name, placement: '' };
+  }
   const UTM_KEYS = Object.freeze([
     'utm_source',
     'utm_medium',
@@ -349,6 +454,63 @@
     }
   }
 
+  /**
+   * Los parámetros del evento, con los límites de GA4 aplicados antes de enviarlos.
+   *
+   * Se recortan acá y no en `sanitizeValue` porque los límites son de GA4, no del sitio: Clarity
+   * acepta claves y valores más largos, y truncar para todos degradaría los datos de Clarity para
+   * cumplir una regla que no es suya.
+   */
+  function ga4Params(context) {
+    const params = {};
+    let count = 0;
+
+    for (const [key, value] of Object.entries(context)) {
+      // `send_to` ocupa uno de los 25 lugares.
+      if (count >= GA4_MAX_PARAMS - 1) break;
+
+      const paramName = key.slice(0, GA4_MAX_PARAM_NAME_LENGTH);
+      const paramValue = String(value).slice(0, GA4_MAX_PARAM_VALUE_LENGTH);
+      if (!paramName || !paramValue) continue;
+
+      params[paramName] = paramValue;
+      count += 1;
+    }
+
+    return params;
+  }
+
+  /**
+   * Emite a GA4, y sólo a GA4.
+   *
+   * NOTA SOBRE LO QUE ESTO NO ARREGLA: la propiedad de GA4 no tiene ningún evento marcado como
+   * "evento clave", así que estos eventos van a llegar y GA4 va a seguir informando cero
+   * conversiones hasta que alguien los marque en GA4 Admin. Tampoco hay dimensiones personalizadas
+   * registradas, así que los parámetros de abajo no van a ser consultables por API hasta que se
+   * registren — y GA4 no rellena hacia atrás, así que conviene registrarlos antes de que empiece a
+   * llegar volumen. Las dos cosas son cambios en la propiedad, no en este archivo.
+   */
+  function emitGa4Event(eventName, context) {
+    if (GA4_RESERVED_EVENT_NAMES.includes(eventName)) return false;
+
+    const name = eventName.slice(0, GA4_MAX_EVENT_NAME_LENGTH);
+    if (!name) return false;
+
+    const gtagFn = globalScope?.gtag;
+    if (typeof gtagFn !== 'function') return false;
+
+    try {
+      gtagFn('event', name, {
+        ...ga4Params(context),
+        // Última propiedad a propósito: nada en el contexto puede pisarla.
+        send_to: GA4_MEASUREMENT_ID
+      });
+      return true;
+    } catch (_error) {
+      return false;
+    }
+  }
+
   function track(name, detail) {
     const eventName = sanitizeEventName(name);
     if (!eventName) return null;
@@ -357,11 +519,21 @@
     const claritySent = emitClarityEvent(eventName, context);
     const adsSent = emitAdsConversion(eventName, context);
 
+    // GA4 recibe el nombre NORMALIZADO; Clarity y Ads siguen recibiendo el crudo. Ver la nota
+    // sobre la taxonomía: Clarity tiene historia que se rompería, GA4 todavía no.
+    const canonical = canonicalEvent(eventName);
+    const ga4Context = canonical?.placement && !context.placement
+      ? { ...context, placement: canonical.placement }
+      : context;
+    const ga4Sent = canonical ? emitGa4Event(canonical.name, ga4Context) : false;
+
     return Object.freeze({
       name: eventName,
+      ga4Name: canonical?.name || '',
       detail: Object.freeze({ ...context }),
       claritySent,
-      adsSent
+      adsSent,
+      ga4Sent
     });
   }
 
@@ -398,7 +570,10 @@
     return true;
   }
 
-  const api = Object.freeze({ track, init });
+  // `canonicalEvent` y `EVENT_TAXONOMY` se exportan para que el transform del almacén pueda aplicar
+  // la MISMA normalización a los eventos crudos que Clarity ya tiene guardados. Una taxonomía
+  // definida dos veces es una taxonomía que va a divergir.
+  const api = Object.freeze({ track, init, canonicalEvent, EVENT_TAXONOMY });
   init();
   return api;
 });

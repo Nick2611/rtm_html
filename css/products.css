@@ -802,11 +802,39 @@
 /* ============================================
    Responsive Styles
    ============================================ */
+/* El header entra en modo móvil desde 1000 px; el catálogo adopta el mismo límite para que una
+   tarjeta nunca fuerce scroll horizontal en tablets chicas ni en viewports emulados.
+
+   VA ANTES DEL BLOQUE DE 768 px A PROPÓSITO. Las media queries de `max-width` se solapan: abajo de
+   768 px se aplican las dos, y con igual especificidad gana la última del archivo. Puesto después,
+   el `max-width: 100%` de acá pisaba el `max-width: 560px` con el que las tarjetas se centran en
+   teléfonos, y las dejaba a lo ancho de la pantalla entre 560 y 768 px. Ordenado de más ancho a más
+   angosto, cada bloque sólo agrega lo suyo y el más específico sigue mandando. */
+@media (max-width: 1000px) {
+  .products-grid,
+  .subcategories-grid {
+    grid-template-columns: minmax(0, 1fr);
+    width: 100%;
+  }
+
+  .product-card,
+  .subcategory-card {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .product-card-image,
+  .product-card-image > .product-media-frame,
+  .product-card-image > .product-carousel {
+    max-width: 100%;
+  }
+}
+
 @media (max-width: 768px) {
   .category-title {
     font-size: 2rem;
   }
-  
+
   .model-detail {
     grid-template-columns: 1fr;
     gap: 30px;

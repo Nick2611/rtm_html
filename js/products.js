@@ -3,7 +3,7 @@
  * Maneja la carga dinámica de productos, navegación y búsqueda
  */
 
-window.RTM_ASSET_VERSION = window.RTM_ASSET_VERSION || '20260805-conversion2';
+window.RTM_ASSET_VERSION = window.RTM_ASSET_VERSION || '20260811-catalog-repair1';
 window.RTM_GET_VERSIONED_DATA_PATH = window.RTM_GET_VERSIONED_DATA_PATH || function(path) {
   const separator = path.includes('?') ? '&' : '?';
   return `${path}${separator}v=${encodeURIComponent(window.RTM_ASSET_VERSION)}`;

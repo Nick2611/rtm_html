@@ -15,8 +15,20 @@ const CONTEXT_LIMITS = Object.freeze({
     product: 160,
     category: 160,
     referrer: 1000,
-    utm: 160
+    utm: 160,
+    clickId: 200
 });
+
+/**
+ * Identificadores de clic publicitario. `gclid` es el de siempre; `wbraid` y `gbraid` son los que
+ * Google emite cuando el usuario viene de iOS con seguimiento limitado, así que aceptar sólo
+ * `gclid` pierde entera la atribución del tráfico de iPhone.
+ *
+ * Este es el dato que hace posible unir un lead con el clic que lo originó. Hasta ahora no se
+ * guardaba en ningún lado, y por eso ninguna consulta recibida podía atribuirse a un anuncio.
+ */
+const CLICK_ID_NAMES = Object.freeze(['gclid', 'wbraid', 'gbraid']);
+const CLICK_ID_PATTERN = /^[A-Za-z0-9_-]+$/;
 
 const NAME_PATTERN = /^[\p{L}\p{M}][\p{L}\p{M}'’ -]*$/u;
 const PHONE_PATTERN = /^\+?[0-9][0-9 ()-]*$/;
@@ -199,13 +211,50 @@ function sanitizeCommercialContext(body) {
         )
     };
 
+    const clickIds = sanitizeClickIds(suppliedContext, body);
+
     if (page) context.page = page;
     if (product) context.product = product;
     if (category) context.category = category;
     if (referrer) context.referrer = referrer;
     if (Object.values(utm).some(Boolean)) context.utm = utm;
+    if (Object.keys(clickIds).length > 0) context.clickIds = clickIds;
 
     return context;
+}
+
+/**
+ * Los identificadores de clic, aceptados sólo con la forma que Google emite.
+ *
+ * Deliberadamente más estricto que `sanitizeContextText`, que se limita a limpiar y recortar. Este
+ * valor termina en una base de datos y en un join contra Google Ads: un parámetro de URL manipulado
+ * no debe poder entrar por acá, y un valor con la forma equivocada es preferible descartarlo antes
+ * que guardarlo y descubrirlo después como una fila que no une con nada.
+ *
+ * Se leen tanto de `context.clickIds` (lo que manda el formulario hoy) como del nivel superior del
+ * cuerpo, igual que hace el resto de este archivo con los UTMs: la Lambda no controla qué versión
+ * del sitio tiene cacheada el navegador que le está escribiendo.
+ */
+function sanitizeClickIds(suppliedContext, body) {
+    const supplied = isRecord(suppliedContext.clickIds) ? suppliedContext.clickIds : {};
+    const clickIds = {};
+
+    for (const name of CLICK_ID_NAMES) {
+        const candidate = firstString(
+            supplied[name],
+            suppliedContext[name],
+            isRecord(body) ? body[name] : ''
+        );
+        const value = candidate.trim();
+        // Se RECHAZA lo que excede el límite; no se recorta. Recortar un identificador de clic
+        // produce una cadena con forma perfectamente válida que no es el identificador real: no
+        // uniría con nada en Google Ads y, a diferencia de un campo ausente, parece un dato bueno.
+        // Un campo vacío es una atribución que falta; uno recortado es una atribución equivocada.
+        if (!value || value.length > CONTEXT_LIMITS.clickId) continue;
+        if (CLICK_ID_PATTERN.test(value)) clickIds[name] = value;
+    }
+
+    return clickIds;
 }
 
 function validateSubmission(body) {

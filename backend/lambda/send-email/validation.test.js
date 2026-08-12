@@ -226,3 +226,130 @@ test('el frontend deriva producto, categoría, referrer y UTM de la URL', () => 
     );
     assert.equal(frontendValidation.requestedSolution(locationLike), 'Pantallas LED Indoor');
 });
+
+/**
+ * Identificadores de clic publicitario.
+ *
+ * Este es el dato que hace posible unir una consulta recibida con el clic que la originó. Hasta
+ * ahora no se guardaba en ningún lado, y por eso ningún lead podía atribuirse a un anuncio.
+ */
+test('acepta gclid, wbraid y gbraid desde context.clickIds', () => {
+    const { value, errors } = validateSubmission({
+        ...validPayload,
+        context: {
+            page: '/contacto',
+            clickIds: { gclid: 'Cj0KCQjw_abc-123', wbraid: 'Aa1bB2cC3', gbraid: '0AAAAA_bc' }
+        }
+    });
+
+    assert.equal(hasValidationErrors(errors), false);
+    assert.deepEqual(value.context.clickIds, {
+        gclid: 'Cj0KCQjw_abc-123',
+        wbraid: 'Aa1bB2cC3',
+        gbraid: '0AAAAA_bc'
+    });
+});
+
+test('acepta un gclid enviado en el nivel superior del cuerpo', () => {
+    // La Lambda no controla qué versión del sitio tiene cacheada el navegador que le escribe.
+    const { value } = validateSubmission({ ...validPayload, gclid: 'Cj0KCQjw_abc-123' });
+    assert.equal(value.context.clickIds.gclid, 'Cj0KCQjw_abc-123');
+});
+
+test('descarta un identificador de clic con forma inválida en vez de guardarlo', () => {
+    // Un valor con la forma equivocada no une con nada en Google Ads. Es mejor no tenerlo que
+    // tenerlo y descubrirlo meses después como una fila que no cruza.
+    for (const invalido of ['<script>', 'abc def', "x'; drop table", 'a'.repeat(300), '']) {
+        const { value, errors } = validateSubmission({
+            ...validPayload,
+            context: { page: '/contacto', clickIds: { gclid: invalido } }
+        });
+        assert.equal(hasValidationErrors(errors), false, 'un click id inválido no debe rechazar la consulta');
+        assert.equal(value.context.clickIds, undefined);
+    }
+});
+
+test('una consulta sin identificador de clic sigue siendo válida', () => {
+    // La mayoría del tráfico no es pago. La ausencia de gclid nunca puede bloquear un lead.
+    const { value, errors } = validateSubmission(validPayload);
+    assert.equal(hasValidationErrors(errors), false);
+    assert.equal(value.context?.clickIds, undefined);
+});
+
+test('sanitizeCommercialContext tolera un contexto que no es objeto', () => {
+    assert.deepEqual(sanitizeCommercialContext({ ...validPayload, context: 'gclid=abc' }), {});
+});
+
+/**
+ * Persistencia de leads.
+ *
+ * La propiedad que se protege acá es una sola y manda sobre todo lo demás: **guardar un lead nunca
+ * puede impedir que se envíe la consulta.** El mail es el negocio; el almacén es instrumentación.
+ */
+const { leadKey, buildLeadRecord } = require('./lead-store');
+
+test('la clave del lead particiona por fecha UTC', () => {
+    // El worker del ETL lee por prefijo: sin partición, listar "lo de ayer" recorre el bucket
+    // entero y empeora con cada lead que entra.
+    const key = leadKey(new Date('2026-08-11T15:30:00Z'), 'abc-123');
+    assert.equal(key, 'leads/2026/08/11/abc-123.json');
+});
+
+test('la clave usa UTC y no la hora local', () => {
+    // 02:00 UTC del 12 es todavía el 11 en Buenos Aires. La partición es UTC a propósito y de forma
+    // declarada, para que el worker no tenga que adivinar en qué huso está el prefijo.
+    assert.match(leadKey(new Date('2026-08-12T02:00:00Z'), 'x'), /^leads\/2026\/08\/12\//);
+});
+
+test('dos leads del mismo instante no colisionan', () => {
+    // Dos consultas idénticas de la misma persona en el mismo minuto son dos leads reales.
+    const instante = new Date('2026-08-11T15:30:00Z');
+    assert.notEqual(leadKey(instante), leadKey(instante));
+});
+
+test('el registro guarda la consulta validada y el resultado del envío', () => {
+    const { value } = validateSubmission(validPayload);
+    const record = buildLeadRecord(value, {
+        leadId: 'lead-1',
+        receivedAt: '2026-08-11T15:30:00.000Z',
+        sendStatus: 'sent',
+        sesMessageId: 'ses-1',
+        requestId: 'req-1'
+    });
+
+    assert.equal(record.schemaVersion, 1);
+    assert.equal(record.delivery.status, 'sent');
+    assert.equal(record.delivery.sesMessageId, 'ses-1');
+    assert.equal(record.submission.nombre, 'Nicolás');
+});
+
+test('un envío fallido igual se guarda, con el estado en failed', () => {
+    // Una consulta que llegó pero cuyo mail falló es justamente la que hay que poder encontrar
+    // después. Perderla convertiría un problema de entrega en un lead que nadie vuelve a ver.
+    const record = buildLeadRecord({}, {
+        leadId: 'lead-2',
+        receivedAt: '2026-08-11T15:30:00.000Z',
+        sendStatus: 'failed',
+        errorName: 'MessageRejected'
+    });
+
+    assert.equal(record.delivery.status, 'failed');
+    assert.equal(record.delivery.errorName, 'MessageRejected');
+    assert.equal(record.delivery.sesMessageId, null);
+});
+
+test('el gclid capturado llega al registro que se guarda', () => {
+    // El recorrido completo: URL de aterrizaje -> formulario -> validación -> objeto en S3.
+    // Es lo que hace posible unir un lead con el clic que lo pagó.
+    const { value } = validateSubmission({
+        ...validPayload,
+        context: { page: '/contacto', clickIds: { gclid: 'Cj0KCQjw_abc-123' } }
+    });
+    const record = buildLeadRecord(value, {
+        leadId: 'lead-3',
+        receivedAt: '2026-08-11T15:30:00.000Z',
+        sendStatus: 'sent'
+    });
+
+    assert.equal(record.submission.context.clickIds.gclid, 'Cj0KCQjw_abc-123');
+});
