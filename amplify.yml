@@ -28,6 +28,8 @@ frontend:
       - privacidad.html
       - proyectos.html
       - 404.html
+      # Landings de categoría (una por categoría de producto)
+      - 'productos/**/*'
       # Assets y carpetas
       - 'rtm_logo/**/*'
       - 'css/**/*'

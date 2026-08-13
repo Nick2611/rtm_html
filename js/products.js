@@ -463,9 +463,21 @@ class RTMProducts {
 
   async handleRouting() {
     const params = new URLSearchParams(window.location.search);
-    const categorySlug = params.get('cat');
-    const subcategorySlug = params.get('sub');
+    let categorySlug = params.get('cat');
+    let subcategorySlug = params.get('sub');
     const modelSlug = params.get('model');
+
+    // Pórticos used to live under Soluciones. Preserve previously shared/bookmarked URLs while
+    // replacing the address with the current route so subsequent navigation stays canonical.
+    if (categorySlug === 'soluciones' && subcategorySlug === 'porticos') {
+      categorySlug = 'porticos';
+      subcategorySlug = modelSlug ? 'modelos' : null;
+      params.set('cat', categorySlug);
+      if (subcategorySlug) params.set('sub', subcategorySlug);
+      else params.delete('sub');
+      window.history.replaceState(null, '', `${window.location.pathname}?${params.toString()}${window.location.hash}`);
+    }
+
     if (categorySlug) await this.loadCategoryPage(categorySlug, subcategorySlug, modelSlug);
   }
 

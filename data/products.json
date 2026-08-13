@@ -531,64 +531,18 @@
       ]
     },
     {
-      "id": "soluciones",
-      "name": "Soluciones",
-      "slug": "soluciones",
-      "icon": "fa-lightbulb",
-      "description": "Soluciones LED especializadas para diferentes aplicaciones",
+      "id": "porticos",
+      "name": "Pórticos",
+      "slug": "porticos",
+      "icon": "fa-road",
+      "description": "Pórticos LED de señalización vial para rutas y avenidas",
       "hasEnvironmentFilter": false,
       "subcategories": [
         {
-          "id": "unidades-colectivos",
-          "name": "Unidades de Colectivos",
-          "slug": "unidades-colectivos",
-          "description": "Sistemas LED para transporte público",
-          "models": [
-            {
-              "id": "cartelera",
-              "name": "Cartelera",
-              "slug": "cartelera",
-              "description": "Pantalla LED frontal para colectivos, full RGB programable. Muestra el número de línea y el destino de manera clara y visible.",
-              "pixelPitch": "P3.076 / P4 / P5 / P8",
-              "specs": {
-                "brilloPorM2": "4500 - 5500 nits",
-                "frecuenciaDeRefresco": "3840 - 7680 Hz",
-                "tamañoDelPanel": "1600 x 320 mm",
-                "aplicacion": "Transporte público",
-                "tipo": "Cartelera frontal"
-              },
-              "image": "imagenes_productos/soluciones/CARTELERA.webp",
-              "images": [
-                "imagenes_productos/soluciones/CARTELERA.webp",
-                "imagenes_productos/soluciones/CARTELERA-2.webp"
-              ]
-            },
-            {
-              "id": "luneta-led",
-              "name": "Luneta de LED",
-              "slug": "luneta-led",
-              "description": "Display LED trasero para colectivos. Full color RGB, control por 4G y GPS",
-              "pixelPitch": "P2.5 / P3.076 / P4 / P5",
-              "specs": {
-                "brilloPorM2": "4500 - 5500 nits",
-                "frecuenciaDeRefresco": "3840 - 7680 Hz",
-                "tamañoDelPanel": "1600 x 480 mm",
-                "aplicacion": "Transporte público",
-                "tipo": "Cartelera trasera"
-              },
-              "image": "imagenes_productos/soluciones/LUNETA.webp",
-              "images": [
-                "imagenes_productos/soluciones/LUNETA.webp",
-                "imagenes_productos/soluciones/LUNETA-2.webp"
-              ]
-            }
-          ]
-        },
-        {
-          "id": "porticos",
-          "name": "Pórticos",
-          "slug": "porticos",
-          "description": "Pórticos LED para control vehicular",
+          "id": "porticos-modelos",
+          "name": "Modelos",
+          "slug": "modelos",
+          "description": "Todos los modelos de pórticos LED",
           "models": [
             {
               "id": "lpr-9648",
@@ -639,6 +593,62 @@
               "images": [
                 "imagenes_productos/soluciones/LPR1264.webp",
                 "imagenes_productos/soluciones/LPR1264-2.webp"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "soluciones",
+      "name": "Soluciones",
+      "slug": "soluciones",
+      "icon": "fa-lightbulb",
+      "description": "Carteleras y lunetas LED para transporte, y pantallas de diseño especial",
+      "hasEnvironmentFilter": false,
+      "subcategories": [
+        {
+          "id": "unidades-colectivos",
+          "name": "Unidades de Colectivos",
+          "slug": "unidades-colectivos",
+          "description": "Sistemas LED para transporte público",
+          "models": [
+            {
+              "id": "cartelera",
+              "name": "Cartelera",
+              "slug": "cartelera",
+              "description": "Pantalla LED frontal para colectivos, full RGB programable. Muestra el número de línea y el destino de manera clara y visible.",
+              "pixelPitch": "P3.076 / P4 / P5 / P8",
+              "specs": {
+                "brilloPorM2": "4500 - 5500 nits",
+                "frecuenciaDeRefresco": "3840 - 7680 Hz",
+                "tamañoDelPanel": "1600 x 320 mm",
+                "aplicacion": "Transporte público",
+                "tipo": "Cartelera frontal"
+              },
+              "image": "imagenes_productos/soluciones/CARTELERA.webp",
+              "images": [
+                "imagenes_productos/soluciones/CARTELERA.webp",
+                "imagenes_productos/soluciones/CARTELERA-2.webp"
+              ]
+            },
+            {
+              "id": "luneta-led",
+              "name": "Luneta de LED",
+              "slug": "luneta-led",
+              "description": "Display LED trasero para colectivos. Full color RGB, control por 4G y GPS",
+              "pixelPitch": "P2.5 / P3.076 / P4 / P5",
+              "specs": {
+                "brilloPorM2": "4500 - 5500 nits",
+                "frecuenciaDeRefresco": "3840 - 7680 Hz",
+                "tamañoDelPanel": "1600 x 480 mm",
+                "aplicacion": "Transporte público",
+                "tipo": "Cartelera trasera"
+              },
+              "image": "imagenes_productos/soluciones/LUNETA.webp",
+              "images": [
+                "imagenes_productos/soluciones/LUNETA.webp",
+                "imagenes_productos/soluciones/LUNETA-2.webp"
               ]
             }
           ]
@@ -742,9 +752,9 @@
                 "lampara": "MSD-260 - 2000 horas",
                 "ruedaDeColores": "14 colores + open",
                 "ruedaDeGobosFija": "13 gobos + open, efecto shake",
-                "prestaciones":"Foco zoom frost",
-                "ruedaDeEfectoDeColores":"Si",
-                "prisma":"Prisma 1, 24C"
+                "prestaciones": "Foco zoom frost",
+                "ruedaDeEfectoDeColores": "Si",
+                "prisma": "Prisma 1, 24C"
               },
               "image": "imagenes_productos/iluminacion_profesional/beam/cmb_7_r/cbm7r-1.webp",
               "images": [
@@ -764,9 +774,9 @@
                 "lampara": "MSD-380 - 2000 horas",
                 "ruedaDeColores": "14 colores + open",
                 "ruedaDeGobosFija": "13 gobos + open, efecto shake",
-                "prestaciones":"Foco zoom frost",
-                "ruedaDeEfectoDeColores":"Si",
-                "prisma":"Prisma 1, 8C / Prisma 2, 24C"
+                "prestaciones": "Foco zoom frost",
+                "ruedaDeEfectoDeColores": "Si",
+                "prisma": "Prisma 1, 8C / Prisma 2, 24C"
               },
               "image": "imagenes_productos/iluminacion_profesional/beam/cmb_20_r/cmb20r-1.webp",
               "images": [

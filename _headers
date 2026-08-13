@@ -36,6 +36,13 @@
   X-Frame-Options: DENY
   X-XSS-Protection: 1; mode=block
 
+# Landings de categoría: el patrón /*.html de arriba no alcanza rutas anidadas.
+/productos/*
+  Cache-Control: no-cache
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  X-XSS-Protection: 1; mode=block
+
 # CSS y JavaScript
 /css/*
   Cache-Control: public, max-age=31536000, immutable

@@ -21,3 +21,6 @@ bi/**/node_modules/
 bi/**/dist/
 bi/**/.next/
 bi/**/coverage/
+.check-tmp/
+__pycache__/
+*.pyc

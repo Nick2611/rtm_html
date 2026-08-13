@@ -46,7 +46,7 @@
   <noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"></noscript>
 
   <!-- CSS -->
-  <link rel="stylesheet" href="css/main.css?v=20260813-hero1">
+  <link rel="stylesheet" href="css/main.css?v=20260813-dock1">
   <link rel="stylesheet" href="css/products.css?v=20260812-responsive3">
   <!--
     Microsoft Clarity, sólo en producción.
@@ -154,12 +154,14 @@
       <div class="footer-links">
         <h4>Productos</h4>
         <ul>
-          <li><a href="productos.html?cat=pantallas-led">Pantallas LED</a></li>
-          <li><a href="productos.html?cat=tour-series">Tour Series</a></li>
-          <li><a href="productos.html?cat=totems">Totems</a></li>
-          <li><a href="productos.html?cat=pisos-led">Pisos LED</a></li>
-          <li><a href="productos.html?cat=soluciones">Soluciones</a></li>
-          <li><a href="productos.html?cat=iluminacion-profesional">Iluminación</a></li>
+          <li><a href="productos/pantallas-led.html">Pantallas LED</a></li>
+          <li><a href="productos/tour-series.html">Tour Series</a></li>
+          <li><a href="productos/totems.html">Totems</a></li>
+          <li><a href="productos/pisos-led.html">Pisos LED</a></li>
+          <li><a href="productos/porticos.html">Pórticos</a></li>
+          <li><a href="productos/soluciones.html">Soluciones</a></li>
+          <li><a href="productos/led-trucks.html">LED Trucks</a></li>
+          <li><a href="productos/iluminacion-profesional.html">Iluminación</a></li>
         </ul>
       </div>
       <div class="footer-links">
@@ -203,7 +205,7 @@
 
   <!-- Scripts -->
   <script src="js/conversion-tracking.js?v=20260813-beacon1" defer></script>
-  <script src="js/products.js?v=20260811-catalog-repair1"></script>
+  <script src="js/products.js?v=20260813-legacy-route1"></script>
   <script src="js/main.js?v=20260805-conversion2" defer></script>
 
 
@@ -220,15 +222,22 @@
       }
     });
 
+    /*
+      Cada tarjeta lleva a la landing de la categoría (productos/<slug>.html), no a la vista
+      ?cat= del catálogo. La landing explica para qué sirve la categoría y desde ahí se entra a
+      las fichas técnicas; el catálogo sigue siendo el que muestra modelo por modelo.
+      El slug de data/products.json es el nombre del archivo: si se agrega una categoría nueva,
+      hay que crear también su landing.
+    */
     function renderCategoriesOverview() {
       const container   = document.getElementById('categories-grid');
       const categories  = window.rtmProducts.getCategories();
       container.innerHTML = categories.map(cat => `
-        <a href="productos.html?cat=${cat.slug}" class="category-overview-card">
+        <a href="productos/${cat.slug}.html" class="category-overview-card">
           <div class="category-overview-icon"><i class="fas ${cat.icon || 'fa-cube'}"></i></div>
           <h3>${cat.name}</h3>
           <p>${cat.description}</p>
-          <span class="category-overview-link">Ver productos <i class="fas fa-arrow-right"></i></span>
+          <span class="category-overview-link">Ver categoría <i class="fas fa-arrow-right"></i></span>
         </a>`).join('');
     }
   </script>

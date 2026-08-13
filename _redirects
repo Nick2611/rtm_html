@@ -48,6 +48,27 @@
 /seccion_servicios/formulario_productos.html /seccion_servicios/formulario_productos.html 200
 /404.html /404.html 200
 
+# Landings de categoría (una por categoría de producto)
+/productos/pantallas-led.html /productos/pantallas-led.html 200
+/productos/tour-series.html /productos/tour-series.html 200
+/productos/totems.html /productos/totems.html 200
+/productos/pisos-led.html /productos/pisos-led.html 200
+/productos/porticos.html /productos/porticos.html 200
+/productos/soluciones.html /productos/soluciones.html 200
+/productos/led-trucks.html /productos/led-trucks.html 200
+/productos/iluminacion-profesional.html /productos/iluminacion-profesional.html 200
+
+# La URL canónica es la que termina en .html; la versión sin extensión redirige para que un link
+# compartido a mano no caiga en el 404.
+/productos/pantallas-led /productos/pantallas-led.html 301
+/productos/tour-series /productos/tour-series.html 301
+/productos/totems /productos/totems.html 301
+/productos/pisos-led /productos/pisos-led.html 301
+/productos/porticos /productos/porticos.html 301
+/productos/soluciones /productos/soluciones.html 301
+/productos/led-trucks /productos/led-trucks.html 301
+/productos/iluminacion-profesional /productos/iluminacion-profesional.html 301
+
 # ============================================
 # 404 - Rutas no encontradas (DEBE IR AL FINAL)
 # ============================================
