@@ -124,15 +124,41 @@
       }
     }
   </style>
+  <!--
+    Microsoft Clarity, sólo en producción.
+    El guard no es higiene: el 2026-08-12, 42 de 119 sesiones del día vinieron de 127.0.0.1:5500 y
+    localhost:8000 — 35 % de desarrollo propio mezclado con visitantes reales. Eso movía todos los
+    agregados (en "PC", 4,13 páginas por sesión eran mayormente el desarrollador) y no se puede
+    separar después, porque Clarity sólo conserva los últimos días.
+    Se acepta apex y subdominios de producción; cualquier otro host (local, preview, file://) no
+    carga la etiqueta. `emitClarityEvent` ya devuelve false en silencio cuando `clarity` no existe.
+  -->
   <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "xvo6v2qw7h");
+    if (/(^|\.)pantallasledrtm\.com$/i.test(location.hostname)) {
+      (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "xvo6v2qw7h");
+    }
+  </script>
+
+  <!--
+    Google tag (gtag.js).
+    Sin esto la página de error es invisible para GA4 y para Ads, y no hay forma de saber si un
+    clic pagado está aterrizando en un 404 — que es la peor plata de todas: se paga el clic y el
+    visitante no ve ni la oferta. La página lleva `noindex`, así que no cambia nada de SEO.
+  -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18364923277"></script>
+  <script type="text/javascript">
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'AW-18364923277');
+    gtag('config', 'G-6BP4Y1KSSK');
   </script>
 </head>
-<body>
+<body data-page="404">
   <div class="container">
     <img src="/rtm_logo/rtmLogo.png" alt="RTM Pantallas LED" class="logo">
     
@@ -143,14 +169,18 @@
       Te invitamos a explorar nuestros productos o volver al inicio.
     </p>
     
-    <a href="/" class="btn">Volver al inicio</a>
-    
+    <a href="/" class="btn" data-conversion="recovery_404" data-conversion-placement="home">Volver al inicio</a>
+
     <div class="links">
-      <a href="/productos.html">Productos</a>
-      <a href="/#about">Nosotros</a>
-      <a href="/#clientes">Clientes</a>
-      <a href="/#contacto">Contacto</a>
+      <a href="/productos.html" data-conversion="recovery_404" data-conversion-placement="productos">Productos</a>
+      <a href="/#about"         data-conversion="recovery_404" data-conversion-placement="nosotros">Nosotros</a>
+      <a href="/#clientes"      data-conversion="recovery_404" data-conversion-placement="clientes">Clientes</a>
+      <a href="/#contacto"      data-conversion="recovery_404" data-conversion-placement="contacto">Contacto</a>
     </div>
   </div>
+
+  <!-- Ruta absoluta a propósito: el servidor devuelve este archivo para CUALQUIER URL, así que una
+       ruta relativa se rompería en cuanto el 404 se sirva desde /algo/profundo/. -->
+  <script src="/js/conversion-tracking.js?v=20260813-beacon1" defer></script>
 </body>
 </html>

@@ -1,6 +1,234 @@
 # Handoff centralizado para Claude
 
-Última actualización: 2026-08-12
+Última actualización: 2026-08-13
+
+## Estado al 2026-08-13 (segunda sesión) — se ejecutó C1–C6 en código
+
+Todo lo que quedaba en "Cambios de código pendientes" está **hecho y verificado en navegador real**.
+Nada commiteado: el dueño revisa. Debajo, lo que cambió, lo que se descartó y lo único que sigue
+abierto.
+
+### Corrección importante sobre la sesión anterior
+
+**RTM no alquila.** Se había propuesto meter "Alquiler" en el H1 por message match con las keywords
+de Ads, y el dueño lo corrigió en el momento: RTM **fabrica, vende e instala**. Las keywords de
+alquiler las corrige él del lado de Ads. El H1 quedó en **"Fabricamos e instalamos pantallas LED
+para eventos, comercios y empresas"**, que es el diferencial real frente a un importador o un
+revendedor. Título, meta description, OG, Twitter y el `description` de schema.org quedaron **como
+estaban**, sin tocar. Ojo: "Sistemas rental para eventos y giras" sigue en Nosotros y en Servicios;
+es copy del dueño sobre la línea Tour Series (equipos de grado rental que se venden), no una oferta
+de alquiler.
+
+### C1 — Clarity con guard de hostname · HECHO
+
+Los 12 HTML (incluidos `servicios.html`, `proyectos.html` y los cinco de `seccion_servicios/`, que
+el handoff anterior no listaba) cargan Clarity sólo si
+`/(^|\.)pantallasledrtm\.com$/i.test(location.hostname)`. Se aceptan apex y subdominios; quedan
+afuera local, previews y `file://`. `emitClarityEvent` ya devolvía false en silencio sin `clarity`,
+así que no hay ruta rota.
+
+### C2 — `transport_type: 'beacon'` · HECHO
+
+`GTAG_TRANSPORT` en `js/conversion-tracking.js`, aplicado en `emitAdsConversion` **y** en
+`emitGa4Event`, siempre después del spread del contexto para que nada lo pise. `ga4Params` ahora
+reserva **dos** lugares de los 25 (`send_to` + `transport_type`), no uno; sin ese ajuste el evento
+se pasaba del límite de GA4 y GA4 lo descarta en silencio.
+**La hipótesis del beacon sigue sin probarse.** Se confirma mirando si el canal "Unassigned"
+desaparece de los `whatsapp_click` después de desplegar.
+
+### C3 — `404.html` · HECHO
+
+Tiene gtag (Ads + GA4), `body data-page="404"` y `conversion-tracking.js`. El script se referencia
+como **`/js/conversion-tracking.js`, ruta absoluta**: el servidor devuelve este archivo para
+cualquier URL, así que una ruta relativa se rompe en cuanto el 404 se sirve desde `/algo/profundo/`.
+Los cinco enlaces de recuperación emiten `recovery_404` con el destino en `placement`, para saber
+por dónde se rescata el que aterriza mal.
+
+### C4 — `privacidad.html` · HECHO
+
+Se agregó gtag. Antes cargaba `conversion-tracking.js` sin etiqueta, así que las dos `emit*`
+devolvían false en silencio y sólo funcionaba Clarity.
+
+### C5 — `tel:` y `mailto:` · HECHO
+
+Los **9 de 9** anclas tienen `data-conversion` (verificado parseando el marcado, no con grep de una
+línea: cuatro quedan con el atributo en el renglón siguiente). Se agregaron al módulo las reglas de
+prefijo `phone_` → `phone_click` y `email_` → `email_click`, y `inferChannel` ahora clasifica
+`tel:` como `phone` y `mailto:` como `email`. **Sólo viaja la palabra del canal**, nunca el número
+ni la dirección; hay un test que lo afirma. No disparan conversión de Ads porque no existe acción
+creada para esos canales — si se quiere contarlos como conversión, hay que crearla en Ads primero.
+
+### C6 — hero de `index.html` · HECHO (`cro` + `offers`)
+
+De los cuatro levers de la ecuación de valor, el que estaba peor era **esfuerzo**: para enterarse de
+algo había que abrir un chat con un desconocido. Los tres cambios atacan eso:
+
+1. **El mensaje de WhatsApp del hero viene prellenado con los tres datos con los que se cotiza**
+   (dónde va / medida aproximada / para cuándo). Antes abría un chat en blanco, y de 8 taps salieron
+   6 chats y ~3 consultas genuinas. Se cambió **sólo el del hero**, a propósito: el flotante y el del
+   header siguen con su mensaje corto, así se puede comparar.
+2. **CTA secundario `#proyectos` → `productos.html`** (`data-conversion="catalog_hero"`, mapeado a
+   `content_cta_click`). El ancla anterior no podía mover las 1,13 páginas por sesión ni contestar
+   "qué equipo necesito". El catálogo con fichas técnicas es lo único que el sitio puede dar **antes**
+   de pedir una conversación.
+3. **Fila de prueba `.hero__proof`**, con hechos que el sitio **ya afirmaba** más abajo: fabricación
+   e instalación propias en Florencio Varela, los clientes del carrusel nombrados, y los 34 modelos
+   con ficha. Va **debajo de los botones** a propósito, para no correr el CTA fuera del fold en una
+   página que es 98 % móvil. El carrusel de logos sigue apareciendo una sola vez (AGENTS.md §3): esto
+   es texto, no logos.
+
+**Lo que NO se hizo, y por qué:** no se agregó promesa de tiempo de respuesta ni rango de precio.
+Las dos son las piezas que más levantarían la conversión, y las dos son datos del dueño: inventarlas
+viola AGENTS.md §5. **Es lo primero que hay que pedirle.**
+
+### C7 — defecto encontrado al verificar: el `placement` estaba colapsado · CORREGIDO
+
+No estaba en la lista y es el hallazgo más importante de la sesión. `getElementContext` leía
+`placement` de `['conversionPlacement', 'context']`, y los cinco CTAs del home llevan
+`data-context="home"`: el clic del hero, el del header, el del menú y el flotante llegaban los cuatro
+como **`placement: "home"`**. Peor, `js/main.js:245` le escribe el pathname al flotante, así que ese
+reportaba `placement: "/index.html"`. Es decir: **no había forma de saber qué botón gana la
+consulta**, que es exactamente la pregunta de esta etapa.
+
+Ahora `placement` sale sólo de `data-conversion-placement`; si no hay atributo explícito gana el
+emplazamiento que implica el nombre del evento vía `canonicalEvent`. `data-context` sigue viajando,
+como `section`. **No se pierde nada**: en cada elemento donde `data-context` traía un emplazamiento
+real (`model-detail`, `special-footer`, `catalog-footer`, `catalog-persistent`) el mismo valor ya
+venía en `data-conversion-placement` — `js/products.js` escribe los dos.
+
+Verificado en navegador: los cuatro CTAs del home ahora emiten `hero`, `header`, `menu_mobile` y
+`floating`, distintos. Nota: esto **parte la serie de Clarity** de `rtm_placement`, pero lo que había
+antes era un único valor colapsado, o sea que no se pierde información real.
+
+### Verificación ejecutada (2026-08-13)
+
+- `node --check` sobre todo `js/` y `backend/lambda/send-email/`: correcto.
+- `node --test js/conversion-tracking.test.js backend/lambda/send-email/validation.test.js`:
+  **45/45** (eran 39; se agregaron 6 pruebas: beacon en las dos emisiones, contexto que no puede
+  pisar `transport_type`, taxonomía `phone_`/`email_`, canal sin PII, `tel:`/`mailto:` que no
+  disparan Ads, y `data-context` que no pisa el placement).
+- `git diff --check`, `git ls-files -u`, marcadores de conflicto, `git ls-files bi`: todo limpio.
+- **Navegador real** (Chrome headless nuevo vía CDP con `mobile:true`, que sí respeta
+  `<meta viewport>`): `index`, `productos`, `guia`, `proyectos`, `servicios`, `privacidad` y `404` a
+  **1440 / 900 / 700 / 600 / 390 / 375 / 360 / 320 px**. Sin overflow horizontal en ninguno. Los 8
+  elementos fuera de caja de `servicios.html` a 1440 px son el dropdown oculto del nav y son
+  **idénticos a la baseline de HEAD** — no es una regresión.
+- **Los dos CTAs del hero siguen arriba del fold en todos los tamaños** (el peor caso es 320×568:
+  el secundario termina en 548). El CTA primario bajó de 352 a 458 px en 375×667 por el subtítulo
+  más largo, y sigue holgadamente visible.
+- **Tracking probado con clics reales** (gtag espiado, sin navegar): hero, header, menú móvil,
+  flotante, `tel:` del footer y tarjeta de servicios. Los seis emiten con `transport_type: beacon`,
+  el `send_to` correcto y el `placement` correcto.
+- **Formulario probado sin enviar nada**: valida limpio, `form_start` emite con beacon, el submit se
+  interceptó y `fetch` se bloqueó. Los únicos requests salientes fueron los propios de gtag.
+- Versiones de assets: `main.css?v=20260813-hero1` y `conversion-tracking.js?v=20260813-beacon1` en
+  todas las páginas. La Lambda **no** se tocó, así que `send-email.zip` no se regeneró.
+
+### Lo único que sigue abierto
+
+1. **Pedirle al dueño el tiempo de respuesta y un rango de precio orientativo.** Es la palanca de
+   conversión más grande que queda y no se puede inventar.
+2. **GA4 sigue sin guard de tráfico local, y eso es deliberado.** Se comprobó en vivo: desde
+   `localhost:8123` gtag manda requests a `pagead/form-data`, `ccm/form-data` y `rmkt/collect` de
+   Google. Se dejó así porque guardarlo impediría verificar el tracking localmente — que es
+   exactamente lo que permitió encontrar C7. **El arreglo correcto es del lado de la propiedad**:
+   filtro de tráfico interno + exclusión de IP en GA4 Admin. Hacerlo.
+3. **`js/main.js:245`** le escribe el pathname al botón flotante (`context.pathname`). Desde C7 eso
+   ya no rompe el `placement`, pero deja `section: "/index.html"`, que es ruido. Cosmético.
+4. Sigue pendiente la verificación de Ads del handoff anterior: si Google rellenó hacia atrás la
+   columna *Conversions* del 9 al 12 de agosto.
+
+## Estado al 2026-08-13 — sesión de ads / analytics / marketing
+
+Esta sesión **no tocó código**. Fue diagnóstico sobre Google Ads, GA4 y Clarity, y todos los cambios
+se aplicaron en la cuenta de Ads por el dueño. Lo que queda para la próxima sesión es trabajo de
+código y de página. El detalle de la cuenta vive en la memoria del proyecto; acá va sólo lo que
+afecta al repositorio.
+
+### El número que ordena todo lo demás
+
+**395 clics de Ads → 8 taps de WhatsApp registrados → 6 chats reales → ~3 consultas genuinas → 0
+cerradas.** Gasto del 1 al 12 de agosto: **ARS 366.392**. Eso es **0,76 % de clics que terminan en
+una consulta real** y ~ARS 122.131 por consulta. La cuenta de Ads ya está saneada (keywords, negativas,
+objetivos de conversión, grupos de anuncios); **el cuello de botella ahora es la página, no la
+pauta**. Tráfico pagado: 1,13 páginas por sesión, 34 % de scroll, ~15 s activos, 98 % móvil.
+
+### Lo que la próxima sesión debe leer y usar
+
+**Usar estas skills del proyecto para la auditoría de página, en este orden:**
+
+1. **`cro`** — la palanca más grande que queda. 1,13 páginas por sesión y un formulario que empieza
+   por debajo del 34 % de scroll es un problema de landing, y cuesta más que el gasto desperdiciado
+   en anuncios. Ojo: **el CTA de WhatsApp ya está arriba del fold** (el botón `btn--primary` que dice
+   "Pedir cotización" en `index.html` es un enlace `wa.me`, no un ancla al formulario), así que **no
+   es un problema de ubicación del CTA** — es de mensaje, prueba y oferta.
+2. **`attribution`** — para el beacon de `whatsapp_click` y el canal "Unassigned" de GA4 (ver C2).
+3. **`offers`** — dar algo antes de pedir: rango de precio, promesa de tiempo de respuesta, garantía.
+   Es construcción de oferta, no redacción.
+
+Contexto adicional en `marketing-council`, `ads` y `analytics`, ya usadas en esta sesión.
+
+### Cambios de código pendientes, por prioridad
+
+**C1 — Excluir el tráfico local de Clarity.** El snippet de Clarity (`index.html:100-105`, y el mismo
+bloque en `productos.html`, `guia.html`, `404.html`, `privacidad.html`) se carga sin condición.
+El 2026-08-12, **42 de 119 sesiones (35 %) vinieron de `127.0.0.1:5500` y `localhost:8000`**, incluida
+una a `_tmp_old.html`. Eso contamina todos los agregados: "PC" muestra 4,13 páginas por sesión, y en
+su mayoría es el propio desarrollador. Envolver el snippet en un guard de hostname
+(`location.hostname === 'pantallasledrtm.com'`) o excluir la IP desde el panel de Clarity.
+
+**C2 — `transport_type: 'beacon'` en las dos emisiones a gtag.** En
+`js/conversion-tracking.js`, `emitAdsConversion` (línea ~450) y `emitGa4Event` (línea ~503) llaman a
+`gtag('event', …)` sin `transport_type` ni `event_callback`. `handleDelegatedClick` no hace
+`preventDefault`, así que el navegador se va a `wa.me` con los requests todavía en vuelo. En móvil
+—que es el **98 % del tráfico pagado**— el salto a la app de WhatsApp manda el navegador a segundo
+plano y el request se pierde. Evidencia: el 2026-08-12 Ads registró 3 `WhatsApp - clic` y GA4 sólo
+2 `whatsapp_click`, ambos con canal **"Unassigned"** y sesiones de 0,0002 s. `navigator.sendBeacon`
+(que es lo que activa `transport_type: 'beacon'`) sí está garantizado al descargar/segundo plano.
+Nota: el orden de scripts **no** es el problema — `gtag('config', …)` corre en el head
+(`index.html:109-115`) y `conversion-tracking.js` carga con `defer` (línea 549). La hipótesis del
+beacon es consistente con los datos pero **no está probada**; confirmarla mirando si "Unassigned"
+desaparece después del cambio.
+
+**C3 — `404.html` no tiene gtag ni carga `conversion-tracking.js`.** Cero coincidencias de `gtag` en
+ese archivo. Las páginas de error son invisibles para GA4 y Ads, así que no hay forma de saber si
+tráfico pagado está aterrizando en 404s.
+
+**C4 — `privacidad.html` carga `conversion-tracking.js` pero no tiene gtag.** Las dos funciones
+`emit*` chequean `typeof gtagFn !== 'function'` y devuelven `false` en silencio, así que ahí sólo
+funciona Clarity. Decidir: agregar gtag, o aceptarlo y documentarlo.
+
+**C5 — 9 enlaces `tel:` y `mailto:` sin `data-conversion`.** Cero de los nueve están trackeados.
+Son contactos que no se cuentan en ningún sistema.
+
+**C6 — La página no da nada antes de pedir.** El hero tiene título, subtítulo y dos botones: ni
+rango de precio, ni prueba social, ni promesa de respuesta, ni instalaciones hechas. El visitante
+que buscó `alquiler pantallas led para eventos precios` tiene que abrir un chat con un desconocido
+para averiguar un precio. Trabajo para `cro` + `offers`.
+
+### Lo que NO hay que volver a hacer
+
+- **No proponer dividir la campaña en varias.** Se evaluó y se descartó: con ARS 30.090/día y
+  **79,9 % de impresiones perdidas por presupuesto**, tres campañas son tres presupuestos que no se
+  prestan entre sí. El conflicto de negativas se resuelve con **negativas a nivel grupo de anuncios**.
+- **No proponer cambiar la estrategia de puja.** Sigue en `TARGET_SPEND` (Maximize clicks) con techo
+  de CPC de ARS 13.000, y está bien así. Todas las keywords tienen `cpc_bid_micros: 0`
+  (efectivo **ARS 0,01**), así que pasar a Manual CPC hoy **frena la entrega**. Revisar recién con
+  15–30 consultas reales atribuibles, y nunca pasar a Maximize Conversions mientras la señal
+  registrada (taps) sobreestime la realidad 2,7×.
+- **No agregar `interior`, `luces`, `luz` ni `focos` como negativas y volver a sacarlas.** Estado
+  correcto actual: `interior`/`luces`/`luz` **fuera** (bloqueaban `pantalla led interior` y el propio
+  set de iluminación profesional); `foco`/`focos` **dentro**, a nivel campaña, porque **RTM no vende
+  focos** — decisión del dueño, no revisarla.
+- **No volver a derivar el estado de la cuenta desde métricas.** Leer el estado real con
+  `google-ads-mcp` en el mismo turno en que se escribe la recomendación. En esta sesión se
+  recomendaron tres cosas ya configuradas.
+
+### Verificación pendiente
+
+Chequear si Google rellenó hacia atrás la columna *Conversions* del 9 al 12 de agosto después de que
+se pasara `CONTACT`/`WEBSITE` a `biddable: true` el 2026-08-12. Si siguen en 0, la línea base de
+conversiones arranca en la fecha del cambio, no en el lanzamiento de la campaña.
 
 ## Estado al 2026-08-12 (revisión de lo que dejó Codex + cierre de la fase dashboard)
 

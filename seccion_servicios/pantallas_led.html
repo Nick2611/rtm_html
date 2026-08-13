@@ -242,12 +242,23 @@
       }
     }
   </style>
+  <!--
+    Microsoft Clarity, sólo en producción.
+    El guard no es higiene: el 2026-08-12, 42 de 119 sesiones del día vinieron de 127.0.0.1:5500 y
+    localhost:8000 — 35 % de desarrollo propio mezclado con visitantes reales. Eso movía todos los
+    agregados (en "PC", 4,13 páginas por sesión eran mayormente el desarrollador) y no se puede
+    separar después, porque Clarity sólo conserva los últimos días.
+    Se acepta apex y subdominios de producción; cualquier otro host (local, preview, file://) no
+    carga la etiqueta. `emitClarityEvent` ya devuelve false en silencio cuando `clarity` no existe.
+  -->
   <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "xvo6v2qw7h");
+    if (/(^|\.)pantallasledrtm\.com$/i.test(location.hostname)) {
+      (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "xvo6v2qw7h");
+    }
   </script>
 
   <!-- Google tag (gtag.js) -->
@@ -401,7 +412,7 @@
     </a>
   </div>
 
-  <script src="../js/conversion-tracking.js?v=20260808-whatsappconv1" defer></script>
+  <script src="../js/conversion-tracking.js?v=20260813-beacon1" defer></script>
   <script>
     (() => {
       const dock = document.querySelector('.rtm-conversion-dock');

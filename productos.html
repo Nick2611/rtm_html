@@ -46,14 +46,25 @@
   <noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"></noscript>
 
   <!-- CSS -->
-  <link rel="stylesheet" href="css/main.css?v=20260807-lcp1">
+  <link rel="stylesheet" href="css/main.css?v=20260813-hero1">
   <link rel="stylesheet" href="css/products.css?v=20260812-responsive3">
+  <!--
+    Microsoft Clarity, sólo en producción.
+    El guard no es higiene: el 2026-08-12, 42 de 119 sesiones del día vinieron de 127.0.0.1:5500 y
+    localhost:8000 — 35 % de desarrollo propio mezclado con visitantes reales. Eso movía todos los
+    agregados (en "PC", 4,13 páginas por sesión eran mayormente el desarrollador) y no se puede
+    separar después, porque Clarity sólo conserva los últimos días.
+    Se acepta apex y subdominios de producción; cualquier otro host (local, preview, file://) no
+    carga la etiqueta. `emitClarityEvent` ya devuelve false en silencio cuando `clarity` no existe.
+  -->
   <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "xvo6v2qw7h");
+    if (/(^|\.)pantallasledrtm\.com$/i.test(location.hostname)) {
+      (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "xvo6v2qw7h");
+    }
   </script>
 
   <!-- Google tag (gtag.js) -->
@@ -162,8 +173,8 @@
       <div class="footer-links">
         <h4>Contacto</h4>
         <ul>
-          <li><a href="tel:+5491151531530"><i class="fas fa-phone"></i> +54 9 11 5153 1530</a></li>
-          <li><a href="mailto:info@pantallasledrtm.com"><i class="fas fa-envelope"></i> info@pantallasledrtm.com</a></li>
+          <li><a href="tel:+5491151531530" data-conversion="phone_footer" data-context="productos"><i class="fas fa-phone"></i> +54 9 11 5153 1530</a></li>
+          <li><a href="mailto:info@pantallasledrtm.com" data-conversion="email_footer" data-context="productos"><i class="fas fa-envelope"></i> info@pantallasledrtm.com</a></li>
           <li><a href="https://wa.me/5491151531530?text=Hola%2C%20estoy%20viendo%20el%20cat%C3%A1logo%20de%20RTM%20y%20quisiera%20recibir%20asesoramiento." target="_blank" rel="noopener noreferrer" data-conversion="whatsapp_click" data-conversion-placement="catalog-footer" data-context="catalog-footer"><i class="fab fa-whatsapp"></i> WhatsApp</a></li>
         </ul>
       </div>
@@ -191,7 +202,7 @@
   </div>
 
   <!-- Scripts -->
-  <script src="js/conversion-tracking.js?v=20260808-whatsappconv1" defer></script>
+  <script src="js/conversion-tracking.js?v=20260813-beacon1" defer></script>
   <script src="js/products.js?v=20260811-catalog-repair1"></script>
   <script src="js/main.js?v=20260805-conversion2" defer></script>
 

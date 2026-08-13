@@ -854,6 +854,43 @@ section.hero::before {
   align-items: center;
 }
 
+/*
+ * Prueba del hero. Va debajo de los botones para no correr el CTA fuera del fold en móvil, que es
+ * el 98 % del tráfico pagado. Es texto, no logos: el carrusel de clientes sigue siendo el único
+ * lugar donde aparecen los logos (AGENTS.md §3).
+ */
+.hero__proof {
+  list-style: none;
+  margin: 28px auto 0;
+  padding: 0;
+  max-width: 760px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 24px;
+  font-size: .92rem;
+  line-height: 1.5;
+  color: #dfe6ee;
+  text-shadow: 0 2px 4px rgba(0,0,0,.6);
+}
+
+.hero__proof li {
+  position: relative;
+  padding-left: 16px;
+  text-align: left;
+}
+
+.hero__proof li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: .58em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
 .btn--primary {
   background: var(--accent);
   color: #fff;
@@ -2047,6 +2084,15 @@ footer:not(.site-footer) {
     max-width: 300px;
     text-align: center;
     justify-content: center;
+  }
+  /* En una sola columna se lee como lista; en fila quedarían tres renglones cortados. */
+  .hero__proof {
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 340px;
+    gap: 10px;
+    margin-top: 24px;
+    font-size: .86rem;
   }
   /* About */
   section.about { padding: 56px 16px; }

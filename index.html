@@ -46,7 +46,7 @@
   <noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"></noscript>
 
   <!-- CSS -->
-  <link rel="stylesheet" href="css/main.css?v=20260807-lcp1">
+  <link rel="stylesheet" href="css/main.css?v=20260813-hero1">
 
   <!-- Sitemap -->
   <link rel="sitemap" type="application/xml" href="/sitemap.xml">
@@ -97,12 +97,23 @@
   }
   </script>
 
+  <!--
+    Microsoft Clarity, sólo en producción.
+    El guard no es higiene: el 2026-08-12, 42 de 119 sesiones del día vinieron de 127.0.0.1:5500 y
+    localhost:8000 — 35 % de desarrollo propio mezclado con visitantes reales. Eso movía todos los
+    agregados (en "PC", 4,13 páginas por sesión eran mayormente el desarrollador) y no se puede
+    separar después, porque Clarity sólo conserva los últimos días.
+    Se acepta apex y subdominios de producción; cualquier otro host (local, preview, file://) no
+    carga la etiqueta. `emitClarityEvent` ya devuelve false en silencio cuando `clarity` no existe.
+  -->
   <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "xvo6v2qw7h");
+    if (/(^|\.)pantallasledrtm\.com$/i.test(location.hostname)) {
+      (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "xvo6v2qw7h");
+    }
   </script>
 
   <!-- Google tag (gtag.js) -->
@@ -280,21 +291,51 @@
     </div>
     <div class="hero__wrap">
       <div class="hero__content" id="contenido">
+        <!--
+          RTM NO alquila: fabrica, vende e instala. El H1 lo dice de entrada porque es lo que
+          diferencia a RTM de un importador o un revendedor, y porque el visitante que llega
+          buscando un proveedor necesita saber con quién habla antes de abrir un chat.
+        -->
         <h1 class="hero__title">
-          Pantallas LED a medida para
-          <span class="hero__highlight">eventos, comercios y empresas</span>
+          Fabricamos e instalamos pantallas LED
+          <span class="hero__highlight">para eventos, comercios y empresas</span>
         </h1>
         <p class="hero__subtitle">
           Definimos el tamaño, la resolución y la instalación según el espacio y el uso.
+          Contanos dónde va, qué medida y para cuándo: con eso te pasamos modelo y presupuesto.
         </p>
         <div class="hero__actions">
-          <a href="https://wa.me/5491151531530?text=Hola,%20quiero%20asesoramiento%20y%20cotizaci%C3%B3n%20para%20una%20soluci%C3%B3n%20LED.%20Todav%C3%ADa%20no%20s%C3%A9%20qu%C3%A9%20modelo%20necesito"
+          <!--
+            El mensaje prellenado lleva los tres datos con los que se puede cotizar. Antes abría un
+            chat en blanco: el visitante tenía que adivinar qué decir, y de 8 taps salieron 6 chats y
+            ~3 consultas genuinas. Decir qué mandar baja el esfuerzo del primer paso, que es el lever
+            que estaba peor de los cuatro (dream outcome / probabilidad / demora / esfuerzo).
+          -->
+          <a href="https://wa.me/5491151531530?text=Hola%2C%20quiero%20cotizar%20una%20pantalla%20LED.%0A%0AD%C3%B3nde%20va%3A%20%0AMedida%20aproximada%3A%20%0APara%20cu%C3%A1ndo%3A%20"
              class="btn btn--primary" target="_blank" rel="noopener noreferrer"
              data-conversion="whatsapp_hero" data-context="home">
-            Pedir cotización
+            Pedir cotización por WhatsApp
           </a>
-          <a href="#proyectos" class="btn btn--secondary" data-conversion="projects_hero">Ver proyectos</a>
+          <!--
+            Antes era `#proyectos`, un ancla dentro de la misma página: no podía mover las 1,13
+            páginas por sesión ni resolver la duda de "qué equipo necesito". El catálogo con fichas
+            técnicas es lo único que el sitio puede dar ANTES de pedir una conversación.
+          -->
+          <a href="productos.html" class="btn btn--secondary" data-conversion="catalog_hero">Ver catálogo y fichas técnicas</a>
         </div>
+        <!--
+          La prueba va DESPUÉS de los botones a propósito: el CTA ya estaba arriba del fold y no se
+          puede empujar hacia abajo en una página que es 98 % móvil. Acá arriba sólo llega el 34 %
+          de scroll, así que la prueba que vivía en el carrusel de logos y en Nosotros no la veía
+          nadie. Son los mismos hechos que el sitio ya afirma, subidos de lugar; el carrusel de
+          logos sigue apareciendo una sola vez (AGENTS.md §3).
+          Los 34 modelos salen de `data/products.json`; si cambia el catálogo, cambiar este número.
+        -->
+        <ul class="hero__proof">
+          <li>Fabricación e instalación propias en Florencio Varela, Buenos Aires</li>
+          <li>Eligieron RTM: BCRA, Shell, TyC Sports y Aeropuertos Argentina 2000</li>
+          <li>34 modelos con ficha técnica: indoor, outdoor, Tour Series, tótems y pisos LED</li>
+        </ul>
       </div>
     </div>
   </section>
@@ -507,7 +548,8 @@
       <section class="footer__block" aria-labelledby="contactanos-title">
         <h4 id="contactanos-title">Contactanos</h4>
         <p class="footer__text">
-          <a href="tel:+5491151531530" style="color:var(--footer-ink);text-decoration:none">+54 9 11 5153 1530</a>
+          <a href="tel:+5491151531530" style="color:var(--footer-ink);text-decoration:none"
+             data-conversion="phone_footer" data-context="home">+54 9 11 5153 1530</a>
         </p>
         <p class="footer__text" style="margin-top:12px">
           Av. Tte. Gral. Juan Domingo Perón 2915,<br>
@@ -546,7 +588,7 @@
     </a>
   </div>
 
-  <script src="js/conversion-tracking.js?v=20260808-whatsappconv1" defer></script>
+  <script src="js/conversion-tracking.js?v=20260813-beacon1" defer></script>
   <script src="js/main.js?v=20260805-conversion2" defer></script>
   <script src="js/contact-form.js?v=20260807-adsconv1" defer></script>
 

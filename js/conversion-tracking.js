@@ -82,6 +82,8 @@
   /** Eventos que ya son canónicos y nunca deben ser reescritos por las reglas de prefijo. */
   const CANONICAL_EVENT_NAMES = Object.freeze([
     'whatsapp_click',
+    'phone_click',
+    'email_click',
     'form_cta_click',
     'product_detail_click',
     // Etapas del embudo del formulario. `form_start` empieza con `form_` pero NO es un clic en un
@@ -108,6 +110,7 @@
     form_menu_mobile: { name: 'form_cta_click', placement: 'menu_mobile' },
     form_services_hero: { name: 'form_cta_click', placement: 'services_hero' },
     projects_hero: { name: 'content_cta_click', placement: 'projects_hero' },
+    catalog_hero: { name: 'content_cta_click', placement: 'catalog_hero' },
     products_guide_hero: { name: 'content_cta_click', placement: 'products_guide_hero' },
     servicios_category_click: { name: 'category_click', placement: 'servicios' }
   });
@@ -129,6 +132,12 @@
 
     if (name.startsWith('whatsapp_')) {
       return { name: 'whatsapp_click', placement: name.slice('whatsapp_'.length) };
+    }
+    if (name.startsWith('phone_')) {
+      return { name: 'phone_click', placement: name.slice('phone_'.length) };
+    }
+    if (name.startsWith('email_')) {
+      return { name: 'email_click', placement: name.slice('email_'.length) };
     }
     if (name.startsWith('form_')) {
       return { name: 'form_cta_click', placement: name.slice('form_'.length) };
@@ -387,6 +396,11 @@
           /^(?:https?:\/\/)?api\.whatsapp\.com\//i.test(href)) {
         return 'whatsapp';
       }
+      // Sólo se clasifica el canal. El número y la dirección NUNCA salen de acá: lo que viaja es
+      // la palabra "phone" o "email", y `sanitizeValue` descarta cualquier valor con pinta de
+      // contacto aunque alguien lo declare a mano en un `data-conversion-channel`.
+      if (/^tel:/i.test(href)) return 'phone';
+      if (/^mailto:/i.test(href)) return 'email';
     } catch (_error) {
       // No se envía el destino; solo se intenta clasificar el canal.
     }
@@ -414,8 +428,25 @@
         'subcategory',
         'subcategoria'
       ]),
-      placement: nearestDatasetValue(element, ['conversionPlacement', 'context']),
-      section: nearestDatasetValue(element, ['conversionSection']),
+      /*
+       * `data-context` NO puede alimentar `placement`, y esto es un defecto medido, no una
+       * preferencia de estilo. En el home los cinco CTAs llevan `data-context="home"`, así que el
+       * clic del hero, el del header, el del menú y el flotante llegaban los cuatro como
+       * `placement: "home"`: imposible saber cuál de todos gana la consulta, que es justo la
+       * pregunta que hay que responder. Peor todavía, `js/main.js` le escribe el pathname al botón
+       * flotante, así que ese reportaba `placement: "/index.html"`.
+       *
+       * Con `placement` limitado a `data-conversion-placement`, cuando no hay atributo explícito
+       * gana el emplazamiento que implica el nombre del evento (hero, header, floating, …) vía
+       * `canonicalEvent`, que es la taxonomía que ya existe y ya está testeada.
+       *
+       * No se pierde nada: en cada elemento donde `data-context` traía un emplazamiento real
+       * (`model-detail`, `special-footer`, `catalog-footer`, `catalog-persistent`) el mismo valor
+       * ya venía en `data-conversion-placement` — `js/products.js` escribe los dos. El resto de los
+       * valores son nombres de página, y siguen viajando acá abajo como `section`.
+       */
+      placement: nearestDatasetValue(element, ['conversionPlacement']),
+      section: nearestDatasetValue(element, ['conversionSection', 'context']),
       component: nearestDatasetValue(element, ['conversionComponent']),
       variant: nearestDatasetValue(element, ['conversionVariant']),
       channel: inferChannel(element),
@@ -438,6 +469,22 @@
     }
   }
 
+  /**
+   * `beacon` no es una micro-optimización: es lo que hace que el evento sobreviva a la salida.
+   *
+   * Ningún `data-conversion` llama a `preventDefault`, así que el clic sigue su curso y el navegador
+   * se va a `wa.me` (o al marcador de teléfono) con el request todavía en vuelo. En escritorio suele
+   * llegar igual; en móvil —el 98 % del tráfico pagado— el salto a la app de WhatsApp manda el
+   * navegador a segundo plano y un XHR normal se cancela. `navigator.sendBeacon`, que es lo que
+   * activa este flag, está especificado para sobrevivir justamente a esa descarga.
+   *
+   * Evidencia que motivó el cambio: el 2026-08-12 Ads registró 3 `WhatsApp - clic` y GA4 sólo 2
+   * `whatsapp_click`, ambos con canal "Unassigned" y sesiones de 0,0002 s. Es consistente con
+   * requests que mueren en el camino, pero NO está probado; se confirma mirando si "Unassigned"
+   * desaparece después de desplegar esto.
+   */
+  const GTAG_TRANSPORT = Object.freeze({ transport_type: 'beacon' });
+
   function emitAdsConversion(eventName, context) {
     const sendTo = ADS_CONVERSION_SEND_TO[eventName] ||
       ADS_CHANNEL_CONVERSION_SEND_TO[context?.channel];
@@ -447,7 +494,7 @@
     if (typeof gtagFn !== 'function') return false;
 
     try {
-      gtagFn('event', 'conversion', { send_to: sendTo });
+      gtagFn('event', 'conversion', { ...GTAG_TRANSPORT, send_to: sendTo });
       return true;
     } catch (_error) {
       return false;
@@ -466,8 +513,8 @@
     let count = 0;
 
     for (const [key, value] of Object.entries(context)) {
-      // `send_to` ocupa uno de los 25 lugares.
-      if (count >= GA4_MAX_PARAMS - 1) break;
+      // `send_to` y `transport_type` ocupan dos de los 25 lugares.
+      if (count >= GA4_MAX_PARAMS - 2) break;
 
       const paramName = key.slice(0, GA4_MAX_PARAM_NAME_LENGTH);
       const paramValue = String(value).slice(0, GA4_MAX_PARAM_VALUE_LENGTH);
@@ -502,7 +549,8 @@
     try {
       gtagFn('event', name, {
         ...ga4Params(context),
-        // Última propiedad a propósito: nada en el contexto puede pisarla.
+        // Últimas dos propiedades a propósito: nada en el contexto puede pisarlas.
+        ...GTAG_TRANSPORT,
         send_to: GA4_MEASUREMENT_ID
       });
       return true;

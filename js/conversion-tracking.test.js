@@ -99,6 +99,33 @@ test('el evento de conversión de Ads sigue yendo a Ads y sólo para form_succes
   );
 });
 
+test('las dos emisiones viajan con transport_type beacon', () => {
+  // Sin esto el request muere cuando el navegador salta a WhatsApp, que es el 98 % del tráfico
+  // pagado. Es la diferencia entre medir el clic y no medirlo, no una preferencia de transporte.
+  const { gtag, calls } = recordingGtag();
+  const { api } = loadModule({ gtag });
+
+  // `channel` es lo que `inferChannel()` deduce del href en el navegador; acá se pasa explícito
+  // porque sin él no hay conversión de Ads que revisar.
+  api.track('whatsapp_hero', { placement: 'hero', channel: 'whatsapp' });
+
+  const adsCall = calls.find(([kind, name]) => kind === 'event' && name === 'conversion');
+  const ga4Call = calls.find(([kind, name]) => kind === 'event' && name === 'whatsapp_click');
+
+  assert.equal(adsCall[2].transport_type, 'beacon', 'la conversión de Ads viaja sin beacon');
+  assert.equal(ga4Call[2].transport_type, 'beacon', 'el evento de GA4 viaja sin beacon');
+});
+
+test('el contexto no puede pisar transport_type', () => {
+  const { gtag, calls } = recordingGtag();
+  const { api } = loadModule({ gtag });
+
+  api.track('whatsapp_hero', { placement: 'hero', transport_type: 'xhr' });
+
+  const ga4Call = calls.find(([kind, name]) => kind === 'event' && name === 'whatsapp_click');
+  assert.equal(ga4Call[2].transport_type, 'beacon');
+});
+
 test('los trece nombres de WhatsApp se agrupan en whatsapp_click para GA4', () => {
   const nombres = [
     'whatsapp_header', 'whatsapp_menu_mobile', 'whatsapp_hero', 'whatsapp_floating',
@@ -127,6 +154,27 @@ test('el emplazamiento sobrevive a la normalización', () => {
   assert.equal(ga4Call[2].placement, 'guide_final');
 });
 
+test('data-context no puede pisar el placement del hero, el header ni el flotante', () => {
+  // El defecto que esto protege: los cinco CTAs del home llevan `data-context="home"` y llegaban
+  // los cinco como `placement: "home"`. Sin esta separación no se puede saber qué botón convierte.
+  const { api } = loadModule();
+  const anchor = { nodeType: 1, dataset: { context: 'home' }, parentElement: null, closest: () => null };
+  const build = evento => {
+    const { gtag, calls } = recordingGtag();
+    const mod = loadModule({ gtag });
+    // Se emula lo que hace el listener: el contexto del elemento más el nombre del atributo.
+    mod.api.track(evento, { section: anchor.dataset.context });
+    return calls.find(([kind, name]) => kind === 'event' && name === 'whatsapp_click')[2];
+  };
+
+  assert.equal(build('whatsapp_hero').placement, 'hero');
+  assert.equal(build('whatsapp_header').placement, 'header');
+  assert.equal(build('whatsapp_floating').placement, 'floating');
+  // `data-context` sobrevive, sólo que como `section`.
+  assert.equal(build('whatsapp_hero').section, 'home');
+  assert.ok(api);
+});
+
 test('un placement explícito del marcado gana sobre el que implica el nombre', () => {
   const { gtag, calls } = recordingGtag();
   const { api } = loadModule({ gtag });
@@ -153,6 +201,42 @@ test('un data-conversion nuevo con prefijo conocido se agrupa solo', () => {
     name: 'whatsapp_click',
     placement: 'footer'
   });
+});
+
+test('los tel: y mailto: se agrupan en phone_click y email_click', () => {
+  const { api } = loadModule();
+  assert.deepEqual(api.canonicalEvent('phone_footer'), { name: 'phone_click', placement: 'footer' });
+  assert.deepEqual(api.canonicalEvent('email_footer'), { name: 'email_click', placement: 'footer' });
+  assert.deepEqual(api.canonicalEvent('phone_privacidad'), { name: 'phone_click', placement: 'privacidad' });
+  // Los canónicos no vuelven a pasar por la regla de prefijo.
+  assert.deepEqual(api.canonicalEvent('phone_click'), { name: 'phone_click', placement: '' });
+  assert.deepEqual(api.canonicalEvent('email_click'), { name: 'email_click', placement: '' });
+});
+
+test('el canal de un tel:/mailto: viaja sin el número ni la dirección', () => {
+  // El canal es la palabra "phone"/"email". El destino es PII y no puede salir (AGENTS.md §6).
+  const clarityCalls = [];
+  const { gtag, calls } = recordingGtag();
+  const { api } = loadModule({ gtag, clarity: (...args) => clarityCalls.push(args) });
+
+  api.track('phone_footer', { channel: 'phone' });
+  api.track('email_footer', { channel: 'email' });
+
+  const serializado = JSON.stringify({ clarityCalls, calls });
+  assert.ok(/"channel":"phone"/.test(serializado), 'el canal phone no llegó');
+  assert.ok(/"channel":"email"/.test(serializado), 'el canal email no llegó');
+  assert.ok(!/1530|pantallasledrtm\.com|tel:|mailto:/.test(serializado), 'salió un dato de contacto');
+});
+
+test('un tel: o un mailto: NO disparan una conversión de Ads', () => {
+  // No hay acción de conversión creada para esos canales; que no aparezca una silenciosamente.
+  const { gtag, calls } = recordingGtag();
+  const { api } = loadModule({ gtag });
+
+  api.track('phone_footer', { channel: 'phone' });
+  api.track('email_footer', { channel: 'email' });
+
+  assert.equal(calls.filter(([kind, name]) => kind === 'event' && name === 'conversion').length, 0);
 });
 
 test('un nombre desconocido pasa tal cual, sin inventarle una familia', () => {
