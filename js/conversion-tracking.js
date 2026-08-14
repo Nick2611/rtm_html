@@ -600,8 +600,125 @@
     return target?.closest?.('[data-conversion]') || null;
   }
 
+  /*
+   * ===============================================================================================
+   * MARCA DE ORIGEN EN EL TEXTO PRELLENADO DE WHATSAPP
+   * ===============================================================================================
+   *
+   * POR QUÉ EXISTE. El tag de "WhatsApp - clic" dispara cuando alguien toca el enlace `wa.me`, no
+   * cuando manda el mensaje. Ningún código del navegador puede saber lo segundo: una vez que el
+   * usuario salta a WhatsApp, la página no recibe nada más. El 2026-08-14 Ads registró 2 clics y al
+   * teléfono no llegó ningún mensaje, que es exactamente el hueco que esto mide.
+   *
+   * QUÉ HACE Y QUÉ NO HACE. No detecta el envío. Hace que los mensajes que SÍ llegan digan de dónde
+   * salieron, agregando una línea al final del texto prellenado: `(rtm: productos/pisos-led ·
+   * landing-hero)`. Con eso se comparan dos números que ya existen —los clics que reporta Ads y los
+   * mensajes que llegaron al teléfono— y se obtiene la tasa clic → mensaje, que hoy no se conoce.
+   *
+   * POR QUÉ ACÁ Y NO EN EL HTML. Hay 71 enlaces `wa.me` en 17 archivos, y 48 de ellos los ESCRIBE
+   * `scripts/build-landings.py`: editarlos a mano se pierde en la próxima corrida del generador.
+   * Reescribir el href en el clic cubre los 71 de una sola vez, y también cualquier enlace futuro,
+   * incluido el del dock flotante que `js/main.js` crea después de que este módulo ya arrancó.
+   *
+   * POR QUÉ AL FINAL DEL MENSAJE. La vista previa de la lista de chats de WhatsApp muestra los
+   * primeros caracteres. Una marca adelante arruinaría esa vista previa para el cliente y haría más
+   * probable que borre el texto entero antes de enviarlo.
+   */
+  const WHATSAPP_HREF_PATTERN = /^(?:https?:\/\/)?(?:(?:api\.)?wa\.me|api\.whatsapp\.com)\//i;
+  // Guarda el texto original la primera vez, para que N clics sobre el mismo enlace no apilen N
+  // marcas. Siempre se reconstruye desde esta base, nunca desde el href ya decorado.
+  const WHATSAPP_BASE_TEXT_KEY = 'rtmWaBaseText';
+  const WHATSAPP_REF_PREFIX = 'rtm: ';
+
+  /**
+   * El identificador de página. Incluye el directorio a propósito: `productos/pisos-led.html` y
+   * `seccion_servicios/pisos_led.html` colapsarían al mismo slug con sólo el nombre de archivo, y
+   * son dos páginas distintas que hay que poder distinguir en el teléfono.
+   */
+  function whatsappPageSlug(pathname) {
+    const segments = String(pathname || '').split('/').filter(Boolean);
+    const file = segments.pop() || '';
+    const directory = segments.pop() || '';
+    const base = file.replace(/\.html?$/i, '');
+    const normalize = value => value.replace(/_/g, '-').toLowerCase();
+
+    if (!base || base === 'index') return directory ? normalize(directory) : 'home';
+    return directory ? `${normalize(directory)}/${normalize(base)}` : normalize(base);
+  }
+
+  /**
+   * El emplazamiento se resuelve con LA MISMA precedencia que usa GA4 más abajo: gana
+   * `data-conversion-placement` y, si no está, el que implica el nombre del evento vía
+   * `canonicalEvent`. Si divergieran, el mensaje que llega al teléfono diría un origen y el informe
+   * de GA4 otro, que es peor que no tener marca.
+   */
+  function whatsappRef(element, pathname) {
+    const page = whatsappPageSlug(pathname);
+    const declared = nearestDatasetValue(element, ['conversionPlacement']);
+    const canonical = canonicalEvent(element?.getAttribute?.('data-conversion'));
+    const placement = declared || canonical?.placement || '';
+
+    return placement ? `${page} · ${String(placement).replace(/_/g, '-').toLowerCase()}` : page;
+  }
+
+  /**
+   * Reescribe el `text=` preservando cualquier otro parámetro.
+   *
+   * No se usa `URLSearchParams.toString()` a propósito: serializa los espacios como `+`, y WhatsApp
+   * los muestra literales en el cuadro de mensaje. `encodeURIComponent` los codifica como `%20`,
+   * que es lo que ya usan los 71 enlaces escritos a mano.
+   */
+  function whatsappHrefWithText(url, text) {
+    const params = [];
+    url.searchParams.forEach((value, key) => {
+      if (key !== 'text') params.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
+    });
+    params.push(`text=${encodeURIComponent(text)}`);
+
+    return `${url.origin}${url.pathname}?${params.join('&')}`;
+  }
+
+  /**
+   * Decora el enlace en fase de captura, antes de que el navegador resuelva la navegación: la
+   * acción por defecto lee el `href` recién cuando termina el despacho del evento, así que la
+   * marca llega a tiempo. Nada acá llama a `preventDefault`, igual que el resto del módulo.
+   */
+  function decorateWhatsAppLink(element, pathname) {
+    const anchor = element?.closest?.('a[href]');
+    if (!anchor) return null;
+
+    const href = anchor.getAttribute('href') || '';
+    if (!WHATSAPP_HREF_PATTERN.test(href)) return null;
+
+    let url;
+    try {
+      url = new URL(href, globalScope?.location?.href || 'https://pantallasledrtm.com/');
+    } catch (_error) {
+      return null;
+    }
+
+    const dataset = anchor.dataset;
+    const stored = dataset ? dataset[WHATSAPP_BASE_TEXT_KEY] : undefined;
+    const baseText = typeof stored === 'string' ? stored : (url.searchParams.get('text') || '');
+    if (dataset && typeof stored !== 'string') dataset[WHATSAPP_BASE_TEXT_KEY] = baseText;
+
+    const ref = whatsappRef(element, pathname);
+    if (!ref) return null;
+
+    const marked = `(${WHATSAPP_REF_PREFIX}${ref})`;
+    anchor.setAttribute('href', whatsappHrefWithText(url, baseText ? `${baseText}\n\n${marked}` : marked));
+
+    return ref;
+  }
+
   function handleDelegatedClick(event) {
     const element = findConversionElement(event);
+
+    // Se decora aunque el enlace no tenga `data-conversion`: la marca de origen no depende de que
+    // el clic además se trackee, y así un enlace nuevo queda cubierto sin acordarse del atributo.
+    const target = event?.target?.nodeType === 1 ? event.target : event?.target?.parentElement;
+    decorateWhatsAppLink(element || target, globalScope?.location?.pathname);
+
     if (!element) return;
 
     track(element.getAttribute('data-conversion'), getElementContext(element));
@@ -621,7 +738,17 @@
   // `canonicalEvent` y `EVENT_TAXONOMY` se exportan para que el transform del almacén pueda aplicar
   // la MISMA normalización a los eventos crudos que Clarity ya tiene guardados. Una taxonomía
   // definida dos veces es una taxonomía que va a divergir.
-  const api = Object.freeze({ track, init, canonicalEvent, EVENT_TAXONOMY });
+  const api = Object.freeze({
+    track,
+    init,
+    canonicalEvent,
+    EVENT_TAXONOMY,
+    // Se exportan por la misma razón que `canonicalEvent`: el conteo semanal de mensajes contra
+    // clics necesita poder reproducir exactamente la marca que se escribió en el enlace.
+    whatsappPageSlug,
+    whatsappRef,
+    decorateWhatsAppLink
+  });
   init();
   return api;
 });

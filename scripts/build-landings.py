@@ -9,7 +9,7 @@ data/products.json: no hay ninguna medida ni brillo escrito acá.
 
     python3 scripts/build-landings.py
 
-CUIDADO: sobrescribe los siete archivos de productos/. Si se editó el HTML a mano, ese cambio se
+CUIDADO: sobrescribe los ocho archivos de productos/. Si se editó el HTML a mano, ese cambio se
 pierde; lo que hay que editar es el diccionario CATEGORIES de este archivo, o css/landing.css si es
 puramente visual.
 """
@@ -24,7 +24,7 @@ OUT = os.path.join(ROOT, "productos")
 DATA = json.load(open(os.path.join(ROOT, "data", "products.json"), encoding="utf-8"))
 CATS_BY_SLUG = {c["slug"]: c for c in DATA["categories"]}
 
-CSS_V = "20260813-landing2"
+CSS_V = "20260814-landing3"
 TRACK_V = "20260813-beacon1"
 MAIN_JS_V = "20260805-conversion2"
 MAIN_CSS_V = "20260813-dock1"
@@ -88,31 +88,17 @@ CATEGORIES = [
                      "escenario y vehiculares. Definimos serie, pitch y medida según el lugar y el uso.",
         "h1": "Pantallas LED profesionales",
         "h1_span": "fabricación, venta e instalación",
-        "lead": "Producimos, configuramos e instalamos cada sistema según el lugar donde va a "
-                "funcionar, la distancia de visión y el uso diario que va a tener. No revendemos "
-                "equipos genéricos.",
+        "lead": "Definimos cada sistema según el espacio, la distancia de visión y el uso. "
+                "Fabricamos a medida e instalamos en todo el país.",
         "hero_image": "/proyectos_imagenes/proyecto_2.webp",
         "proof": [
-            "Fabricación e instalación propias en Florencio Varela",
+            "Fabricación propia e instalaciones en toda la Argentina",
             "Series para interior, exterior, escenario y vehículos",
             "Repuestos y servicio técnico posteriores a la instalación",
         ],
         "wa_hero": "Hola, quiero cotizar una pantalla LED.\n\nDónde va: \nMedida aproximada: \nUso previsto: ",
         "wa_final": "Hola, quiero cotizar una pantalla LED.\n\nUbicación: \nMedida aproximada: \nUso previsto: ",
         "wa_dock": "Hola, estoy viendo pantallas LED y quiero asesoramiento para elegir la serie y el pitch.",
-        "problem_title": "Comprar una pantalla LED sin saber qué se está comprando",
-        "problem_lead": "La mayoría de las consultas que recibimos llegan del mismo punto: alguien "
-                        "necesita una pantalla LED y se encuentra con una lista de precios sin criterio "
-                        "técnico detrás. El resultado es previsible y caro.",
-        "problems": [
-            ("Pitch equivocado.", "Granulado de cerca, o pitch fino que desde la calle nadie nota."),
-            ("Brillo insuficiente.", "Un panel de interior en un frente comercial queda ilegible al sol."),
-            ("Instalación sin responsable.", "El equipo llega en cajas: estructura, carga y puesta en marcha quedan del lado del cliente."),
-        ],
-        "closing": "Para un comercio, un salón de fiestas o una empresa, la pantalla no es un gasto "
-                   "decorativo: es un activo que tiene que funcionar todos los días, durante años, sin "
-                   "supervisión técnica permanente. Una decisión mal tomada en la etapa de compra se "
-                   "paga durante toda la vida útil del equipo.",
         "solution_title": "Un sistema definido para su aplicación, instalado y respaldado",
         "solution_lead": [
             "Primero definimos la aplicación —dónde va, desde qué distancia se mira, cuánta luz "
@@ -126,10 +112,8 @@ CATEGORIES = [
             "RE640": "Serie RE · Eventos y escenario",
             "RE960": "Serie RE · Eventos y escenario",
         },
-        "note": "También fabricamos la Serie Galileo (GIG / GIGO) para instalaciones profesionales que "
-                "requieren una configuración específica, y la Serie Shell para vehículos, flotas y "
-                "publicidad móvil, con actualización de contenido por Wi-Fi, USB o red 4G. "
-                "Consultanos si tu proyecto entra en alguno de esos casos.",
+        "note": "También fabricamos las series Galileo para configuraciones especiales y Shell para "
+                "vehículos o flotas. Consultanos si tu proyecto no entra en los modelos publicados.",
         "steps": [
             ("Relevamiento y definición técnica", "Medidas, distancia de visión y consumo eléctrico antes de cotizar."),
             ("Fabricación e instalación", "Armado en la medida y el pitch definidos, con estructura y puesta en marcha a cargo nuestro."),
@@ -159,18 +143,6 @@ CATEGORIES = [
         "wa_hero": "Hola, quiero cotizar una pantalla LED para eventos.\n\nMedida de escenario: \nInterior o exterior: \nFechas por año: ",
         "wa_final": "Hola, quiero cotizar una pantalla LED Tour Series.\n\nMedida de escenario: \nInterior o exterior: \nFechas por año: ",
         "wa_dock": "Hola, estoy viendo las Tour Series y quiero asesoramiento para elegir el gabinete y el pitch.",
-        "problem_title": "Un panel de escenario que no aguanta el ritmo del armado",
-        "problem_lead": "Una pantalla de evento se arma y se desarma decenas de veces por año, viaja en "
-                        "camión y se monta contrarreloj. Los problemas no aparecen el día de la compra: "
-                        "aparecen en el cuarto o quinto montaje.",
-        "problems": [
-            ("Peso y volumen.", "Un gabinete pesado suma gente, estructura y horas en cada fecha."),
-            ("Panel de interior a la intemperie.", "Sin protección IP65 frontal, una lluvia termina el evento."),
-            ("Sin repuestos a mano.", "Un módulo que tarda semanas deja la pantalla incompleta toda la gira."),
-        ],
-        "closing": "Para una productora o un proveedor de eventos, el equipo propio se paga con las "
-                   "fechas que puede tomar. Cada hora de armado y cada panel fuera de servicio salen "
-                   "del mismo lugar.",
         "solution_title": "Gabinetes pensados para el armado, no sólo para la imagen",
         "solution_lead": [
             "Definimos primero cómo se va a usar —escenario, medidas, si va al aire libre, cuántas "
@@ -179,8 +151,8 @@ CATEGORIES = [
             "traba rápida.",
         ],
         "series_labels": {},
-        "note": "Las versiones RIC y REC permiten ensamblados cóncavos y convexos. La RIF500 suma "
-                "mantenimiento 100 % frontal por imanes, para pantallas montadas contra estructura o pared.",
+        "note": "Hay versiones curvas RIC y REC, y una RIF500 con mantenimiento frontal para montar "
+                "contra pared o estructura.",
         "steps": [
             ("Definición del sistema", "Medidas de escenario, interior o exterior y fechas previstas por año."),
             ("Fabricación y prueba de armado", "Montaje completo antes de entregar, para verificar juntas, alimentación y señal."),
@@ -210,26 +182,14 @@ CATEGORIES = [
         "wa_hero": "Hola, quiero cotizar un tótem LED.\n\nDónde va: \nInterior o exterior: \nMedida aproximada: ",
         "wa_final": "Hola, quiero cotizar un tótem LED.\n\nUbicación: \nInterior o exterior: \nSimple o doble cara: ",
         "wa_dock": "Hola, estoy viendo tótems LED y quiero asesoramiento para elegir el modelo.",
-        "problem_title": "Cartelería que envejece y no se puede cambiar",
-        "problem_lead": "El tótem es lo primero que ve quien pasa por la puerta. Cuando el contenido es "
-                        "impreso o el equipo no está preparado para donde se instaló, deja de cumplir esa "
-                        "función a los pocos meses.",
-        "problems": [
-            ("Contenido fijo.", "Cada promoción nueva es reimprimir, coordinar y volver a instalar un gráfico."),
-            ("Ilegible al sol.", "Un display de interior puesto en la vereda queda lavado todo el día."),
-            ("Instalación sin responsable.", "Base, anclaje y alimentación eléctrica quedan del lado del cliente."),
-        ],
-        "closing": "Un tótem bien elegido cambia de mensaje todos los días y sigue funcionando años "
-                   "después, sin volver a llamar a un instalador.",
         "solution_title": "El tótem se define por dónde se para y desde dónde se mira",
         "solution_lead": [
             "Definimos si va adentro o afuera, a qué distancia se lee, si necesita una o dos caras y "
             "qué medida entra. De ahí salen el modelo y el pitch.",
         ],
         "series_labels": {},
-        "note": "Los modelos TE960 se fabrican en versión simple y doble cara, con vidrio laminado 3+3 y "
-                "protección IP65 para instalación a la intemperie. Los TI son de interior y admiten "
-                "pitch fino para lectura cercana.",
+        "note": "Los TE960 pueden ser de una o dos caras para exterior. Los TI son de interior y "
+                "admiten pitch fino para lectura cercana.",
         "steps": [
             ("Relevamiento del punto", "Ubicación, distancia de lectura, luz ambiente y medidas disponibles."),
             ("Fabricación e instalación", "Armado en la medida y el pitch definidos, con base, anclaje y puesta en marcha."),
@@ -259,26 +219,13 @@ CATEGORIES = [
         "wa_hero": "Hola, quiero cotizar un piso LED.\n\nMedida de la pista: \nFijo o por evento: \nQué quiero mostrar: ",
         "wa_final": "Hola, quiero cotizar un piso LED.\n\nMedida de la pista: \nFijo o por evento: \nQué quiero mostrar: ",
         "wa_dock": "Hola, estoy viendo pisos LED y quiero asesoramiento para elegir el modelo.",
-        "problem_title": "Una pista que tiene que aguantar la noche entera",
-        "problem_lead": "El piso LED es el único equipo del salón que la gente pisa, tropieza y moja. La "
-                        "diferencia entre un piso que dura años y uno que falla en la tercera fiesta está "
-                        "en la construcción, no en el efecto.",
-        "problems": [
-            ("Superficie que no resiste.", "Sin acabado para tránsito, el panel se raya y pierde brillo en pocos eventos."),
-            ("Sin protección contra líquidos.", "En un salón se vuelcan bebidas: falla justo donde más se usa."),
-            ("Video y efecto, confundidos.", "Un piso que reproduce video y uno de efectos RGB no se eligen igual."),
-        ],
-        "closing": "Para un salón, la pista es un diferencial que se muestra en cada visita comercial. "
-                   "Tiene que verse igual de bien en la fiesta número cien.",
         "solution_title": "El piso se elige por lo que va a mostrar y por cuánto se va a caminar",
         "solution_lead": [
             "Definimos el uso —video, efectos o ambos—, la medida de la pista y si queda fija o se "
             "arma por evento. Con eso elegimos modelo, pitch y terminación.",
         ],
         "series_labels": {},
-        "note": "El PDANCE reproduce video con acabado de vidrio templado de 10 mm. El P-60 DISCO y el "
-                "PI-RGB trabajan con efectos de luz integrados, para pistas donde no se busca imagen "
-                "sino ambiente.",
+        "note": "PDANCE reproduce video; P-60 DISCO y PI-RGB generan efectos de luz.",
         "steps": [
             ("Definición de la pista", "Medida, uso previsto y si queda fija o se arma por evento."),
             ("Fabricación e instalación", "Armado de los paneles, nivelación, terminación de bordes y puesta en marcha."),
@@ -308,17 +255,6 @@ CATEGORIES = [
         "wa_hero": "Hola, quiero consultar por un pórtico LED.\n\nDónde va: \nAncho disponible: \nVelocidad de paso: ",
         "wa_final": "Hola, quiero consultar por un pórtico LED.\n\nDónde va: \nAncho disponible: \nVelocidad de paso: ",
         "wa_dock": "Hola, estoy viendo los pórticos LED y quiero asesoramiento para mi proyecto vial.",
-        "problem_title": "Un cartel de ruta se lee en dos segundos, o no se lee",
-        "problem_lead": "Un pórtico no se mira: se cruza a ochenta o a cien por hora. El pitch, el brillo "
-                        "y el contraste no se eligen por catálogo, se eligen por la velocidad de paso y "
-                        "la distancia desde la que se empieza a leer.",
-        "problems": [
-            ("Pitch elegido sin distancia.", "Fino de más es plata que nadie ve; grueso de más deja el mensaje ilegible."),
-            ("Brillo que no le gana al sol.", "Por debajo de 4500 nits, al mediodía la ruta no lee nada."),
-            ("Medida forzada al pescante.", "Adaptar un panel estándar deja huecos o sobra estructura."),
-        ],
-        "closing": "Un pórtico se instala una vez y queda a la intemperie durante años. Lo que se define "
-                   "mal en el relevamiento se paga en cada cambio de mensaje y en cada visita de service.",
         "solution_title": "El equipo se define en el pescante, no en el catálogo",
         "solution_lead": [
             "Relevamos el pescante —ancho y alto, distancia y velocidad de lectura, alimentación— y "
@@ -355,26 +291,14 @@ CATEGORIES = [
         "wa_hero": "Hola, quiero consultar por una solución LED a medida.\n\nDónde se monta: \nQué tiene que mostrar: \nMedida aproximada: ",
         "wa_final": "Hola, quiero consultar por una solución LED a medida.\n\nDónde se monta: \nQué tiene que mostrar: \nMedida aproximada: ",
         "wa_dock": "Hola, estoy viendo las soluciones LED a medida y quiero asesoramiento para mi proyecto.",
-        "problem_title": "Cuando el proyecto no entra en un producto de catálogo",
-        "problem_lead": "Una cartelera de colectivo y una pantalla de doble cara a medida no comparten "
-                        "casi nada, salvo esto: las dos se definen por dónde se montan y qué tienen que "
-                        "resistir, no por una lista de precios.",
-        "problems": [
-            ("Medida que no existe en catálogo.", "Forzar un panel estándar deja huecos o sobra estructura."),
-            ("Montaje sobre vehículo.", "Vibración, peso y alimentación de la unidad condicionan todo el diseño."),
-            ("Contenido que se actualiza a mano.", "Sin control remoto, cada cambio obliga a subir a cada unidad de la flota."),
-        ],
-        "closing": "En estos proyectos el equipo se define antes de fabricarse. Por eso el relevamiento no "
-                   "es un trámite: es la parte que decide si la solución va a funcionar.",
         "solution_title": "Fabricación a medida con relevamiento previo",
         "solution_lead": [
             "Relevamos el punto de montaje, definimos medida, pitch, brillo y cómo se actualiza el "
             "contenido, y fabricamos el equipo para ese caso.",
         ],
         "series_labels": {},
-        "note": "Las lunetas LED para colectivos admiten control por red 4G y GPS, para cambiar el mensaje "
-                "sin subir a la unidad. Si tu proyecto es señalización vial sobre pescante, está en "
-                "Pórticos.",
+        "note": "Las lunetas para colectivos admiten actualización remota por 4G y GPS. Para señalización "
+                "vial sobre pescante, mirá Pórticos.",
         "steps": [
             ("Relevamiento del punto de montaje", "Unidad o estructura: medidas, alimentación y condiciones de lectura."),
             ("Fabricación e instalación", "Armado para ese proyecto, montaje y prueba en el lugar definitivo."),
@@ -408,16 +332,6 @@ CATEGORIES = [
         "wa_hero": "Hola, quiero consultar por un LED Truck.\n\nTengo unidad propia: \nTipo de campaña: \nZona de recorrido: ",
         "wa_final": "Hola, quiero consultar por un LED Truck.\n\nTengo unidad propia: \nTipo de campaña: \nZona de recorrido: ",
         "wa_dock": "Hola, estoy viendo los LED Trucks y quiero asesoramiento para mi campaña.",
-        "problem_title": "Un camión con pantalla no es una pantalla arriba de un camión",
-        "problem_lead": "El formato móvil suma variables que una instalación fija no tiene: el equipo "
-                        "viaja, vibra, se alimenta del vehículo y trabaja a la intemperie todo el día.",
-        "problems": [
-            ("Estructura improvisada.", "Paneles sobre una caja no calculada terminan en juntas abiertas y fallas por vibración."),
-            ("Brillo de interior en la calle.", "A pleno sol el recorrido se hace igual y no comunica nada."),
-            ("Responsabilidad repartida.", "Carrocero, proveedor de pantalla e instalador eléctrico, sin un responsable único."),
-        ],
-        "closing": "El LED Truck se contrata para que salga a la calle todos los días de la campaña. Todo "
-                   "lo demás es secundario.",
         "solution_title": "Diseño, fabricación e instalación del conjunto",
         "solution_lead": [
             "Trabajamos sobre el vehículo completo: estructura, pantalla, alimentación y sonido. "
@@ -454,17 +368,6 @@ CATEGORIES = [
         "wa_hero": "Hola, quiero cotizar equipos de iluminación.\n\nTipo de espacio: \nAltura de montaje: \nEquipos que ya tengo: ",
         "wa_final": "Hola, quiero cotizar equipos de iluminación.\n\nTipo de espacio: \nAltura de montaje: \nEquipos que ya tengo: ",
         "wa_dock": "Hola, estoy viendo los equipos de iluminación y quiero asesoramiento para armar el rig.",
-        "problem_title": "Equipos de show comprados sin respaldo posterior",
-        "problem_lead": "En iluminación de espectáculo el problema no suele ser la compra: es lo que pasa "
-                        "seis meses después, cuando hay que reemplazar una lámpara o reparar un cabezal "
-                        "antes de una fecha.",
-        "problems": [
-            ("Sin repuestos disponibles.", "Una lámpara o una placa que hay que importar deja el equipo parado semanas."),
-            ("Sin servicio técnico local.", "Un cabezal sin quien lo repare se transforma en equipo de descarte."),
-            ("Potencia mal elegida.", "Un beam corto no llega en un escenario grande; uno de más encandila en un salón."),
-        ],
-        "closing": "Un equipo de iluminación se amortiza en fechas. Lo que define si conviene no es el "
-                   "precio inicial, sino cuántas noches puede salir a trabajar.",
         "solution_title": "Equipos elegidos por el tipo de espacio y de show",
         "solution_lead": [
             "Definimos el espacio —altura, distancia, tipo de producción— y con eso armamos el rig: "
@@ -597,10 +500,6 @@ def build(cfg):
     )
 
     proof = "\n".join(f"          <li>{e(p)}</li>" for p in cfg["proof"])
-    problems = "\n".join(
-        f"        <li><strong>{e(t)}</strong><span>{e(d)}</span></li>"
-        for t, d in cfg["problems"][:3]
-    )
     solution_leads = "\n".join(
         f'        <p class="lp-lead">{e(p)}</p>' for p in cfg["solution_lead"][:1]
     )
@@ -632,12 +531,6 @@ def build(cfg):
             "            Ver modelos y fichas técnicas\n"
             "          </a>\n"
         )
-
-    related = "\n".join(
-        f'          <li><a href="/productos/{o["slug"]}.html">{e(o["nav"])}</a></li>'
-        for o in CATEGORIES
-        if o["slug"] != slug
-    )
 
     footer_products = "\n".join(
         f'          <li><a href="/productos/{o["slug"]}.html">{e(o["nav"])}</a></li>'
@@ -853,18 +746,6 @@ def build(cfg):
       </div>
     </section>
 
-    <!-- ================== PROBLEMA ================== -->
-    <section class="lp-section" aria-labelledby="problema-title">
-      <div class="lp-section__wrap">
-        <p class="lp-eyebrow">El problema</p>
-        <h2 class="lp-title" id="problema-title">{e(cfg["problem_title"])}</h2>
-
-        <ul class="lp-problems">
-{problems}
-        </ul>
-      </div>
-    </section>
-
     <!-- ================== CIERRE ================== -->
     <section class="lp-cta" id="cotizar" aria-labelledby="cta-title">
       <div class="lp-cta__wrap">
@@ -889,16 +770,6 @@ def build(cfg):
       </div>
     </section>
 
-    <!-- ================== OTRAS CATEGORÍAS ================== -->
-    <nav class="lp-related" aria-labelledby="otras-title">
-      <div class="lp-related__wrap">
-        <h2 id="otras-title">Otras categorías</h2>
-        <ul>
-{related}
-        </ul>
-      </div>
-    </nav>
-
   </main>
 
   <!-- ================== FOOTER ================== -->
@@ -906,7 +777,7 @@ def build(cfg):
     <div class="footer-content">
       <div class="footer-brand">
         <img src="/rtm_logo/rtmLogo.png" alt="RTM Pantallas LED" loading="lazy">
-        <p>Especialistas en desarrollo, fabricación e instalación de pantallas LED profesionales.</p>
+        <p>Fabricación, instalación y servicio técnico en toda la Argentina.</p>
       </div>
       <div class="footer-links">
         <h4>Productos</h4>

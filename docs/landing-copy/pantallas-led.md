@@ -2,30 +2,13 @@
 
 ## Fabricación, venta e instalación
 
-RTM Sistemas fabrica, vende e instala pantallas LED para uso interior, exterior, vehicular y de escenario. No revendemos equipos genéricos: producimos, configuramos e instalamos cada sistema según el lugar donde va a funcionar, la distancia de visión y el uso diario que va a tener.
-
----
-
-## El problema: comprar una pantalla LED sin saber qué se está comprando
-
-La mayoría de las consultas que recibimos llegan del mismo punto: alguien necesita una pantalla LED y se encuentra con una lista de precios sin criterio técnico detrás.
-
-El resultado es previsible y caro:
-
-- **Pitch equivocado.** Se compra una pantalla de pitch alto para un salón donde el público está a tres metros, y la imagen se ve granulada. O se paga un pitch fino para una cartelera vista desde la calle, donde nadie va a notar la diferencia.
-- **Brillo insuficiente.** Un panel pensado para interior colocado en un frente comercial queda ilegible al sol. El equipo funciona; simplemente no se ve.
-- **Gabinete no apto para intemperie.** Sin el sellado ni la disipación correctos, la humedad y el calor acortan la vida útil del equipo en meses, no en años.
-- **Mantenimiento imposible.** Pantallas montadas contra una pared sin acceso frontal: cada módulo con falla obliga a desmontar la estructura.
-- **Instalación sin responsable.** El equipo llega en cajas y la estructura, el cálculo de carga, la alimentación eléctrica y la puesta en marcha quedan a cargo del cliente.
-- **Sin respaldo posterior.** Cuando falla una fuente o un módulo, no hay repuestos ni quién los coloque.
-
-Para un comercio, un salón de fiestas o una empresa, la pantalla no es un gasto decorativo: es un activo que tiene que funcionar todos los días, durante años, sin supervisión técnica permanente. Una decisión mal tomada en la etapa de compra se paga durante toda la vida útil del equipo.
+Definimos cada sistema según el espacio, la distancia de visión y el uso. Fabricamos a medida e instalamos en todo el país.
 
 ---
 
 ## La solución: un sistema definido para su aplicación, instalado y respaldado
 
-Trabajamos al revés que un catálogo. Primero definimos la aplicación —ubicación, distancia mínima de visión, exposición solar, horas diarias de uso, medidas disponibles— y recién después la serie, el pitch y el tipo de gabinete. La cotización sale de esa definición, no de una lista genérica.
+Primero definimos la aplicación —dónde va, desde qué distancia se mira y cuánta luz recibe— y recién después la serie, el pitch y el gabinete.
 
 ### Nuestras series
 
@@ -50,14 +33,8 @@ Pantalla compacta para vehículos, flotas y publicidad móvil. El contenido se a
 ### Qué incluye el trabajo
 
 1. **Relevamiento y definición técnica.** Medidas, distancia de visión, condiciones de luz y consumo eléctrico antes de cotizar.
-2. **Fabricación y configuración.** Armado del sistema en la medida y el pitch definidos.
-3. **Instalación.** Estructura, montaje, conexionado y puesta en marcha a cargo nuestro.
-4. **Capacitación de uso.** El personal del cliente queda en condiciones de cargar y programar contenido.
-5. **Repuestos y servicio técnico.** Módulos, fuentes y placas disponibles; soporte posterior a la instalación.
-
-### Para quién
-
-Comercios y locales que necesitan visibilidad en la vía pública. Salones de fiestas y centros de eventos que quieren dejar de contratar pantalla por evento. Empresas, templos, clubes e instituciones con necesidad de comunicación permanente. Productoras y proveedores de eventos que requieren equipo propio de escenario.
+2. **Fabricación e instalación.** Armado en la medida y el pitch definidos, con estructura y puesta en marcha a cargo nuestro.
+3. **Repuestos y servicio técnico.** Módulos, fuentes y placas disponibles después de la instalación.
 
 ---
 

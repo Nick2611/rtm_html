@@ -155,43 +155,6 @@
 .lp-section--dark .lp-lead { color: var(--ink-soft); }
 
 /* ============================================
-   PROBLEMA
-   ============================================ */
-.lp-problems {
-  list-style: none;
-  margin: 40px 0 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
-  gap: 26px 44px;
-}
-.lp-problems li {
-  border-left: 3px solid var(--accent);
-  padding-left: 18px;
-}
-.lp-problems strong {
-  display: block;
-  color: var(--text-dark);
-  font-weight: 600;
-  margin-bottom: 5px;
-}
-.lp-problems span {
-  color: #4b5563;
-  font-size: .97rem;
-  line-height: 1.6;
-}
-
-.lp-closing {
-  margin-top: 40px;
-  max-width: 860px;
-  font-size: clamp(1rem, .25vw + .95rem, 1.1rem);
-  line-height: 1.65;
-  color: var(--text-dark);
-  border-top: 1px solid var(--border);
-  padding-top: 26px;
-}
-
-/* ============================================
    SERIES Y MODELOS
    ============================================ */
 .lp-models {
@@ -457,49 +420,6 @@
 }
 
 /* ============================================
-   OTRAS CATEGORÍAS
-   ============================================ */
-.lp-related {
-  background: #fff;
-  padding: 40px 20px;
-  border-top: 1px solid var(--border);
-}
-.lp-related__wrap {
-  max-width: var(--container);
-  margin: 0 auto;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 10px 20px;
-}
-.lp-related h2 {
-  font-size: .88rem;
-  font-weight: 600;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  color: #6b7280;
-  margin: 0;
-}
-.lp-related ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 22px;
-}
-.lp-related a {
-  color: var(--text-dark);
-  text-decoration: none;
-  font-size: .95rem;
-  border-bottom: 1px solid transparent;
-}
-.lp-related a:hover {
-  color: var(--accent);
-  border-bottom-color: var(--accent);
-}
-
-/* ============================================
    RESPONSIVE
    ============================================ */
 @media (max-width: 900px) {
@@ -537,7 +457,6 @@
     text-align: center;
   }
   .lp-models { grid-template-columns: 1fr; }
-  .lp-problems { gap: 22px; }
   .lp-steps { gap: 24px; }
 }
 

@@ -72,7 +72,7 @@ algo había que abrir un chat con un desconocido. Los tres cambios atacan eso:
    "qué equipo necesito". El catálogo con fichas técnicas es lo único que el sitio puede dar **antes**
    de pedir una conversación.
 3. **Fila de prueba `.hero__proof`**, con hechos que el sitio **ya afirmaba** más abajo: fabricación
-   e instalación propias en Florencio Varela, los clientes del carrusel nombrados, y los 34 modelos
+   propia e instalaciones en toda la Argentina, los clientes del carrusel nombrados, y los 34 modelos
    con ficha. Va **debajo de los botones** a propósito, para no correr el CTA fuera del fold en una
    página que es 98 % móvil. El carrusel de logos sigue apareciendo una sola vez (AGENTS.md §3): esto
    es texto, no logos.

@@ -324,3 +324,139 @@ test('Clarity sigue recibiendo el nombre CRUDO, no el normalizado', () => {
   const eventos = clarityCalls.filter(([kind]) => kind === 'event').map(([, name]) => name);
   assert.deepEqual(eventos, ['whatsapp_guide_final']);
 });
+
+/**
+ * Marca de origen en el texto prellenado de WhatsApp.
+ *
+ * Lo que protegen estas pruebas, en orden de gravedad si se rompen:
+ *
+ *   1. La marca no puede apilarse. El mismo enlace se puede tocar varias veces (volver atrás desde
+ *      WhatsApp y volver a tocar es normal en móvil), y un `href` que acumula `(rtm: …)(rtm: …)`
+ *      llega al cliente como un mensaje roto.
+ *   2. Los espacios viajan como `%20`, no como `+`. `URLSearchParams.toString()` serializa `+` y
+ *      WhatsApp lo muestra literal en el cuadro de mensaje.
+ *   3. El emplazamiento sale de la misma precedencia que usa GA4. Si divergen, el mensaje que llega
+ *      al teléfono dice un origen y el informe dice otro.
+ */
+
+/** Ancla mínima compatible con `closest`, `dataset` y `nearestDatasetValue`. */
+function fakeAnchor(href, dataset = {}, parent = null) {
+  const anchor = {
+    nodeType: 1,
+    dataset: { ...dataset },
+    parentElement: parent,
+    attributes: { href },
+    getAttribute(name) {
+      return name === 'href' ? this.attributes.href : (this.dataset[toDatasetKey(name)] ?? null);
+    },
+    setAttribute(name, value) {
+      if (name === 'href') this.attributes.href = value;
+    },
+    closest(selector) {
+      return selector === 'a[href]' && this.attributes.href ? this : null;
+    }
+  };
+  return anchor;
+}
+
+function toDatasetKey(attributeName) {
+  return attributeName
+    .replace(/^data-/, '')
+    .replace(/-([a-z])/g, (_match, letter) => letter.toUpperCase());
+}
+
+const WA_BASE = 'https://wa.me/5491151531530?text=Hola%2C%20quiero%20cotizar%20un%20piso%20LED.';
+
+test('el slug de página distingue dos rutas con el mismo nombre de archivo', () => {
+  const { api } = loadModule();
+
+  assert.equal(api.whatsappPageSlug('/index.html'), 'home');
+  assert.equal(api.whatsappPageSlug('/'), 'home');
+  assert.equal(api.whatsappPageSlug('/productos/pisos-led.html'), 'productos/pisos-led');
+  // El caso que motiva incluir el directorio: sólo con el nombre de archivo ambos serían 'pisos-led'.
+  assert.equal(
+    api.whatsappPageSlug('/seccion_servicios/pisos_led.html'),
+    'seccion-servicios/pisos-led'
+  );
+});
+
+test('el emplazamiento explícito gana sobre el que implica el nombre del evento', () => {
+  const { api } = loadModule();
+  const anchor = fakeAnchor(WA_BASE, {
+    conversion: 'whatsapp_hero',
+    conversionPlacement: 'landing_modelos'
+  });
+
+  assert.equal(api.whatsappRef(anchor, '/productos/pisos-led.html'), 'productos/pisos-led · landing-modelos');
+});
+
+test('sin atributo explícito, el emplazamiento sale de canonicalEvent', () => {
+  const { api } = loadModule();
+  const anchor = fakeAnchor(WA_BASE, { conversion: 'whatsapp_hero' });
+
+  assert.equal(api.whatsappRef(anchor, '/index.html'), 'home · hero');
+});
+
+test('un whatsapp_click sin emplazamiento cae al slug de página solo', () => {
+  const { api } = loadModule();
+  const anchor = fakeAnchor(WA_BASE, { conversion: 'whatsapp_click' });
+
+  assert.equal(api.whatsappRef(anchor, '/guia.html'), 'guia');
+});
+
+test('la marca se agrega al final y conserva el texto original', () => {
+  const { api } = loadModule();
+  const anchor = fakeAnchor(WA_BASE, { conversion: 'whatsapp_click', conversionPlacement: 'landing_hero' });
+
+  api.decorateWhatsAppLink(anchor, '/productos/pisos-led.html');
+  const text = new URL(anchor.getAttribute('href')).searchParams.get('text');
+
+  assert.ok(text.startsWith('Hola, quiero cotizar un piso LED.'), 'el mensaje del cliente va primero');
+  assert.ok(text.endsWith('(rtm: productos/pisos-led · landing-hero)'), 'la marca va al final');
+});
+
+test('los espacios se codifican como %20 y nunca como +', () => {
+  const { api } = loadModule();
+  const anchor = fakeAnchor(WA_BASE, { conversion: 'whatsapp_click' });
+
+  api.decorateWhatsAppLink(anchor, '/index.html');
+  const href = anchor.getAttribute('href');
+
+  assert.ok(href.includes('%20'), 'se esperaba codificación porcentual');
+  assert.ok(!href.includes('+'), 'un + llega literal al cuadro de mensaje de WhatsApp');
+});
+
+test('tocar el mismo enlace dos veces no apila la marca', () => {
+  const { api } = loadModule();
+  const anchor = fakeAnchor(WA_BASE, { conversion: 'whatsapp_click', conversionPlacement: 'landing_hero' });
+
+  api.decorateWhatsAppLink(anchor, '/productos/pisos-led.html');
+  const once = anchor.getAttribute('href');
+  api.decorateWhatsAppLink(anchor, '/productos/pisos-led.html');
+  const twice = anchor.getAttribute('href');
+
+  assert.equal(once, twice);
+  const text = new URL(twice).searchParams.get('text');
+  assert.equal(text.match(/\(rtm: /g).length, 1);
+});
+
+test('un enlace sin texto prellenado recibe sólo la marca', () => {
+  const { api } = loadModule();
+  const anchor = fakeAnchor('https://wa.me/5491151531530', { conversion: 'whatsapp_floating' });
+
+  api.decorateWhatsAppLink(anchor, '/index.html');
+  const text = new URL(anchor.getAttribute('href')).searchParams.get('text');
+
+  assert.equal(text, '(rtm: home · floating)');
+});
+
+test('los enlaces que no son de WhatsApp no se tocan', () => {
+  const { api } = loadModule();
+  const tel = fakeAnchor('tel:+5491151531530', { conversion: 'phone_footer' });
+  const internal = fakeAnchor('/productos/totems.html', { conversion: 'content_cta_click' });
+
+  assert.equal(api.decorateWhatsAppLink(tel, '/index.html'), null);
+  assert.equal(tel.getAttribute('href'), 'tel:+5491151531530');
+  assert.equal(api.decorateWhatsAppLink(internal, '/index.html'), null);
+  assert.equal(internal.getAttribute('href'), '/productos/totems.html');
+});
