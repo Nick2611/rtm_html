@@ -50,6 +50,7 @@
 
 # Landings de categoría (una por categoría de producto)
 /productos/pantallas-led.html /productos/pantallas-led.html 200
+/productos/letreros-led.html /productos/letreros-led.html 200
 /productos/tour-series.html /productos/tour-series.html 200
 /productos/totems.html /productos/totems.html 200
 /productos/pisos-led.html /productos/pisos-led.html 200
@@ -61,6 +62,7 @@
 # La URL canónica es la que termina en .html; la versión sin extensión redirige para que un link
 # compartido a mano no caiga en el 404.
 /productos/pantallas-led /productos/pantallas-led.html 301
+/productos/letreros-led /productos/letreros-led.html 301
 /productos/tour-series /productos/tour-series.html 301
 /productos/totems /productos/totems.html 301
 /productos/pisos-led /productos/pisos-led.html 301

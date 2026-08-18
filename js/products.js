@@ -275,6 +275,18 @@ class RTMProducts {
         });
       }
     });
+    // Landing pages that present existing hardware for a different use.
+    // They are not catalogue categories, so they carry their own synonyms.
+    (this.data.landings || []).forEach(lp => {
+      this.searchIndex.push({
+        type: 'landing',
+        slug: lp.slug,
+        name: lp.name,
+        description: lp.description,
+        keywords: lp.keywords || '',
+        url: lp.url
+      });
+    });
   }
 
   renderMegaMenu() {
@@ -427,9 +439,11 @@ class RTMProducts {
       const normalizedName = stripDiacritics(item.name.toLowerCase()).replace(/\s+/g, '');
       const normalizedDesc = stripDiacritics((item.description || '').toLowerCase()).replace(/\s+/g, '');
       const normalizedCategory = stripDiacritics((item.categoryName || '').toLowerCase()).replace(/\s+/g, '');
+      const normalizedKeywords = stripDiacritics((item.keywords || '').toLowerCase()).replace(/\s+/g, '');
       return normalizedName.includes(normalizedQuery) ||
              normalizedDesc.includes(normalizedQuery) ||
-             normalizedCategory.includes(normalizedQuery);
+             normalizedCategory.includes(normalizedQuery) ||
+             normalizedKeywords.includes(normalizedQuery);
     }).slice(0, 10);
     if (results.length === 0) {
       resultsContainer.innerHTML = '<div class="search-no-results">No se encontraron resultados</div>';
@@ -448,7 +462,7 @@ class RTMProducts {
   }
 
   getTypeLabel(type) {
-    const labels = { category: 'Categoría', subcategory: 'Familia', model: 'Modelo' };
+    const labels = { category: 'Categoría', subcategory: 'Familia', model: 'Modelo', landing: 'Página' };
     return labels[type] || type;
   }
 

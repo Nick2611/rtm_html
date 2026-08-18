@@ -881,6 +881,15 @@
       ]
     }
   ],
+  "landings": [
+    {
+      "slug": "letreros-led",
+      "name": "Letreros y carteles LED",
+      "description": "Pantallas LED montadas como letrero para fachadas, vidrieras y frentes de local.",
+      "url": "/productos/letreros-led.html",
+      "keywords": "cartel carteles cartelera carteleria cartelería letrero letreros cartel luminoso carteles luminosos cartel led carteles led letrero luminoso letreros luminosos letrero led letreros led luminoso luminosos frente de local fachada vidriera marquesina cartel programable carteles programables publicidad para locales"
+    }
+  ],
   "metadata": {
     "version": "2.0.0",
     "lastUpdated": "2026-06-18",

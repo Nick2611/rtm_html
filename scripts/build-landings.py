@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Genera las ocho landings de categoría en productos/<slug>.html.
+Genera las nueve landings de categoría en productos/<slug>.html.
 
-Las ocho páginas comparten cabecera, pie, dock y estructura de secciones, así que el HTML sale de
+Las nueve páginas comparten cabecera, pie, dock y estructura de secciones, así que el HTML sale de
 una sola plantilla en lugar de siete archivos copiados a mano. Las specs de cada modelo se leen de
 data/products.json: no hay ninguna medida ni brillo escrito acá.
 
     python3 scripts/build-landings.py
 
-CUIDADO: sobrescribe los ocho archivos de productos/. Si se editó el HTML a mano, ese cambio se
+CUIDADO: sobrescribe los nueve archivos de productos/. Si se editó el HTML a mano, ese cambio se
 pierde; lo que hay que editar es el diccionario CATEGORIES de este archivo, o css/landing.css si es
 puramente visual.
 """
@@ -114,6 +114,12 @@ CATEGORIES = [
         },
         "note": "También fabricamos las series Galileo para configuraciones especiales y Shell para "
                 "vehículos o flotas. Consultanos si tu proyecto no entra en los modelos publicados.",
+        "see_also": {
+            "lead": "Si lo que buscás es un cartel o letrero para el frente de tu local, "
+                    "el mismo equipo lo presentamos como",
+            "href": "/productos/letreros-led.html",
+            "label": "Letreros LED",
+        },
         "steps": [
             ("Relevamiento y definición técnica", "Medidas, distancia de visión y consumo eléctrico antes de cotizar."),
             ("Fabricación e instalación", "Armado en la medida y el pitch definidos, con estructura y puesta en marcha a cargo nuestro."),
@@ -122,6 +128,61 @@ CATEGORIES = [
         "cta_title": "Solicitar una cotización",
         "cta_lead": "Indicanos la ubicación, la medida aproximada y el uso previsto. Devolvemos una "
                     "propuesta con serie, pitch, medida final y valor.",
+    },
+    {
+        # Letreros LED no es un producto nuevo: es la misma pantalla del catálogo entrando por la
+        # palabra que usa el cliente. El 69 % de la inversión en Ads viene de búsquedas tipo "cartel
+        # luminoso", "letrero led" o "carteles para negocios", y esa gente caía en pantallas-led.html,
+        # que abre con pitch, IP y vidrio laminado: lenguaje de pantalla, no de cartelería. Por eso
+        # `cat` apunta a pantallas-led —mismo catálogo, mismas fichas, sin inventar modelos— y lo
+        # único que cambia es el vocabulario y el orden en que se cuenta.
+        "slug": "letreros-led",
+        "cat": "pantallas-led",
+        "cat_name": "Letreros LED",
+        "nav": "Letreros LED",
+        # De las seis pantallas del catálogo sólo se muestran las dos de instalación fija: son las
+        # que se montan en un frente. Las RI/RE son gabinetes de evento y acá sólo confundirían.
+        "models": ["vp960", "ifi960"],
+        "meta_title": "Letreros y carteles luminosos LED para negocios | RTM",
+        "meta_desc": "Letreros LED para fachadas, vidrieras y frentes de local: pantallas de "
+                     "fabricación propia, exterior IP65 y 4500 a 5500 nits. Fabricamos, instalamos "
+                     "y damos servicio técnico en toda la Argentina.",
+        "h1": "Letreros luminosos LED",
+        "h1_span": "para fachadas, vidrieras y frentes de local",
+        "lead": "Un letrero LED es una pantalla LED montada como cartel: en vez de imprimir un cartel "
+                "nuevo cada vez, cambiás lo que dice cuando querés. La fabricamos en la medida de tu "
+                "frente y la instalamos.",
+        "hero_image": "/proyectos_imagenes/conjunto_4_2.webp",
+        "proof": [
+            "Módulos de 960×960 mm: en fachada, lo más chico ronda los 2 m²",
+            "Exterior IP65 frontal, 4500 a 5500 nits: se lee a pleno sol",
+            "El contenido se cambia sin imprimir nada nuevo",
+        ],
+        "wa_hero": "Hola, quiero cotizar un letrero LED.\n\nDónde va (fachada, vidriera, interior): \nMedida aproximada del frente: \nQué quiero mostrar: ",
+        "wa_final": "Hola, quiero cotizar un letrero LED.\n\nUbicación: \nMedida aproximada del frente: \nQué quiero mostrar: ",
+        "wa_dock": "Hola, estoy viendo los letreros LED y quiero asesoramiento para elegir la medida y el pitch.",
+        "solution_title": "El letrero se define por el frente y por desde dónde se lee",
+        "solution_lead": [
+            "Definimos primero dónde va —fachada a la calle, vidriera, interior del local—, desde qué "
+            "distancia se lee y cuánto sol recibe. De ahí salen la serie, el pitch y la medida final, "
+            "que siempre es múltiplo del módulo de 960×960 mm: en una fachada, lo más chico que tiene "
+            "sentido ronda los 2 m².",
+        ],
+        "series_labels": {
+            "VP960": "Serie VP · Exterior, fachada y frente de local",
+            "IFI960": "Serie IFI · Interior, vidriera y salón",
+        },
+        "note": "Es el mismo equipo que publicamos como Pantallas LED, presentado para uso en "
+                "cartelería: las demás series, incluidas las de interior con pitch fino, están en esa "
+                "página. Si el cartel va parado en la vereda o en un lobby, mirá Tótems.",
+        "steps": [
+            ("Relevamiento del frente", "Medida disponible, distancia de lectura, luz que recibe y alimentación eléctrica."),
+            ("Fabricación e instalación", "Armado en la medida y el pitch definidos, con estructura, montaje y puesta en marcha a cargo nuestro."),
+            ("Repuestos y servicio técnico", "Módulos, fuentes y placas disponibles después de la instalación."),
+        ],
+        "cta_title": "Cotizar un letrero LED",
+        "cta_lead": "Indicanos dónde va, la medida aproximada del frente y qué querés mostrar. "
+                    "Devolvemos una propuesta con serie, pitch, medida final y valor.",
     },
     {
         "slug": "tour-series",
@@ -399,56 +460,72 @@ NAV = [
 def model_cards(cfg):
     """Fichas de modelo tomadas de data/products.json: nada de specs escritas a mano."""
     cat = CATS_BY_SLUG[cfg["cat"]]
+    cat_name = cfg.get("cat_name") or cat["name"]
     order = SPEC_ORDER.get(cfg["cat"], [])
     labels = cfg.get("series_labels") or {}
+
+    pairs = [
+        (sub, m)
+        for sub in (cat.get("subcategories") or [])
+        for m in (sub.get("models") or [])
+    ]
+    # Una landing puede mostrar sólo parte del catálogo de su categoría, en el orden que le sirva:
+    # letreros-led usa las pantallas de instalación fija y deja afuera los gabinetes de evento.
+    wanted = cfg.get("models")
+    if wanted:
+        by_slug = {m["slug"]: (sub, m) for sub, m in pairs}
+        faltan = [s for s in wanted if s not in by_slug]
+        if faltan:
+            raise KeyError(f'{cfg["slug"]}: modelos inexistentes en {cat["slug"]}: {faltan}')
+        pairs = [by_slug[s] for s in wanted]
+
     out = []
-    for sub in cat.get("subcategories") or []:
-        for m in sub.get("models") or []:
-            serie = labels.get(m["name"])
-            if serie is None and sub["slug"] != "modelos":
-                serie = sub["name"]
+    for sub, m in pairs:
+        serie = labels.get(m["name"])
+        if serie is None and sub["slug"] != "modelos":
+            serie = sub["name"]
 
-            specs = []
-            if m.get("pixelPitch"):
-                specs.append(("Pitch", m["pixelPitch"]))
-            for key in order:
-                if len(specs) >= 3:
-                    break
-                if m.get("specs", {}).get(key):
-                    specs.append((SPEC_LABELS.get(key, key), m["specs"][key]))
+        specs = []
+        if m.get("pixelPitch"):
+            specs.append(("Pitch", m["pixelPitch"]))
+        for key in order:
+            if len(specs) >= 3:
+                break
+            if m.get("specs", {}).get(key):
+                specs.append((SPEC_LABELS.get(key, key), m["specs"][key]))
 
-            img = m.get("image")
-            media = ""
-            if img:
-                media = (
-                    '        <div class="lp-model__media">\n'
-                    f'          <img src="/{ea(img.lstrip("/"))}" alt="{ea(m["name"])} — {ea(cat["name"])}" '
-                    'loading="lazy" decoding="async">\n'
-                    "        </div>\n"
-                )
-
-            spec_rows = ""
-            if specs:
-                rows = "".join(
-                    f"            <dt>{e(k)}</dt><dd>{e(v)}</dd>\n" for k, v in specs
-                )
-                spec_rows = f'          <dl class="lp-model__specs">\n{rows}          </dl>\n'
-
-            url = f'/productos.html?cat={cat["slug"]}&amp;sub={sub["slug"]}&amp;model={m["slug"]}'
-            serie_html = (
-                f'<span class="lp-model__serie">{e(serie)}</span>' if serie else ""
-            )
-            out.append(
-                "      <li class=\"lp-model\">\n"
-                f"{media}"
-                '        <div class="lp-model__body">\n'
-                f'          <h3 class="lp-model__name">{serie_html}{e(m["name"])}</h3>\n'
-                f'          <p class="lp-model__text">{e(m.get("description", ""))}</p>\n'
-                f"{spec_rows}"
-                f'          <a class="lp-model__link" href="{url}">Ver ficha técnica</a>\n'
+        img = m.get("image")
+        media = ""
+        if img:
+            media = (
+                '        <div class="lp-model__media">\n'
+                f'          <img src="/{ea(img.lstrip("/"))}" alt="{ea(m["name"])} — {ea(cat_name)}" '
+                'loading="lazy" decoding="async">\n'
                 "        </div>\n"
-                "      </li>"
             )
+
+        spec_rows = ""
+        if specs:
+            rows = "".join(
+                f"            <dt>{e(k)}</dt><dd>{e(v)}</dd>\n" for k, v in specs
+            )
+            spec_rows = f'          <dl class="lp-model__specs">\n{rows}          </dl>\n'
+
+        url = f'/productos.html?cat={cat["slug"]}&amp;sub={sub["slug"]}&amp;model={m["slug"]}'
+        serie_html = (
+            f'<span class="lp-model__serie">{e(serie)}</span>' if serie else ""
+        )
+        out.append(
+            "      <li class=\"lp-model\">\n"
+            f"{media}"
+            '        <div class="lp-model__body">\n'
+            f'          <h3 class="lp-model__name">{serie_html}{e(m["name"])}</h3>\n'
+            f'          <p class="lp-model__text">{e(m.get("description", ""))}</p>\n'
+            f"{spec_rows}"
+            f'          <a class="lp-model__link" href="{url}">Ver ficha técnica</a>\n'
+            "        </div>\n"
+            "      </li>"
+        )
     return out
 
 
@@ -481,6 +558,10 @@ def nav_html(active_href, indent):
 def build(cfg):
     slug = cfg["slug"]
     cat = CATS_BY_SLUG[cfg["cat"]]
+    # Nombre visible de la categoría. Casi siempre es el de products.json, pero una landing que
+    # reutiliza otro catálogo (letreros-led sobre pantallas-led) necesita su propio rótulo en las
+    # migas, el breadcrumb de schema.org y los alt.
+    cat_name = cfg.get("cat_name") or cat["name"]
     url = f"https://pantallasledrtm.com/productos/{slug}.html"
     og_image = (
         f'https://pantallasledrtm.com{cfg["hero_image"]}'
@@ -522,6 +603,15 @@ def build(cfg):
         f'\n      <p class="lp-note">{e(cfg["note"])}</p>' if cfg.get("note") else ""
     )
 
+    # Optional cross-link to a sibling landing that presents the same hardware
+    # for a different use. Text is escaped; only the <a> is markup.
+    sa = cfg.get("see_also")
+    if sa:
+        note += (
+            f'\n      <p class="lp-note">{e(sa["lead"])} '
+            f'<a href="{ea(sa["href"])}">{e(sa["label"])}</a>.</p>'
+        )
+
     hero_secondary = ""
     if cfg.get("hero_secondary", True):
         hero_secondary = (
@@ -546,7 +636,7 @@ def build(cfg):
                  "item": "https://pantallasledrtm.com/"},
                 {"@type": "ListItem", "position": 2, "name": "Productos",
                  "item": "https://pantallasledrtm.com/productos.html"},
-                {"@type": "ListItem", "position": 3, "name": cat["name"], "item": url},
+                {"@type": "ListItem", "position": 3, "name": cat_name, "item": url},
             ],
         },
         ensure_ascii=False,
@@ -684,7 +774,7 @@ def build(cfg):
           <span class="separator" aria-hidden="true">/</span>
           <a href="/productos.html">Productos</a>
           <span class="separator" aria-hidden="true">/</span>
-          <span aria-current="page">{e(cat["name"])}</span>
+          <span aria-current="page">{e(cat_name)}</span>
         </nav>
 
         <h1 class="lp-hero__title">{e(cfg["h1"])} <span>{e(cfg["h1_span"])}</span></h1>
@@ -820,7 +910,7 @@ def build(cfg):
        class="floating-btn floating-btn--whatsapp floating-btn--expanded"
        href="{wa(cfg['wa_dock'])}"
        target="_blank" rel="noopener noreferrer"
-       aria-label="Consultar por WhatsApp sobre {ea(cat['name'])}"
+       aria-label="Consultar por WhatsApp sobre {ea(cat_name)}"
        data-conversion="whatsapp_click"
        data-conversion-placement="landing_persistent"
        data-context="{slug}">

@@ -584,6 +584,7 @@ nav.navbar {
 .search-type-category    { background: rgba(232,74,69,.2); color: var(--accent); }
 .search-type-subcategory { background: rgba(52,152,219,.2); color: #3498db; }
 .search-type-model       { background: rgba(46,204,113,.2); color: #2ecc71; }
+.search-type-landing     { background: rgba(241,196,15,.2); color: #d4a017; }
 
 .search-result-content { display: flex; flex-direction: column; gap: 2px; }
 .search-result-name { color: #fff; font-weight: 500; font-size: .9rem; }

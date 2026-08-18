@@ -420,6 +420,11 @@ function buildSearchIndex(data) {
       });
     });
   });
+  // Landing pages that present existing hardware for a different use.
+  // They are not catalogue categories, so they carry their own synonyms.
+  data.landings?.forEach(lp => {
+    searchIndex.push({ type: 'landing', name: lp.name, keywords: lp.keywords || '', url: lp.url });
+  });
 }
 
 function initMegaMenuSearch() {
@@ -478,10 +483,11 @@ function renderSearchResults(query, container) {
   const q    = normalize(query).replace(/\s+/g, '');
   const hits = searchIndex.filter(item =>
     normalize(item.name).replace(/\s+/g, '').includes(q) ||
-    normalize(item.categoryName || '').replace(/\s+/g, '').includes(q)
+    normalize(item.categoryName || '').replace(/\s+/g, '').includes(q) ||
+    normalize(item.keywords || '').replace(/\s+/g, '').includes(q)
   ).slice(0, 8);
 
-  const labels = { category: 'Categoría', subcategory: 'Familia', model: 'Modelo' };
+  const labels = { category: 'Categoría', subcategory: 'Familia', model: 'Modelo', landing: 'Página' };
 
   container.innerHTML = hits.length
     ? hits.map(r => `
