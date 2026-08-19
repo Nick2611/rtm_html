@@ -107,6 +107,57 @@
 }
 
 /* ============================================
+   PRUEBA FOTOGRÁFICA (franja compacta bajo el hero)
+   ============================================ */
+/*
+  Va entre el hero y los modelos a propósito, angosta y sin lightbox propio: agrega prueba real
+  de instalaciones sin correr el catálogo fuera de la ventana de scroll del tráfico pagado (ver
+  nota en MODELOS de cada landing). El clic lleva a /proyectos.html, que ya tiene el visor
+  completo — no se duplica esa lógica acá. Sólo se usa en landings con fotos reales de esa
+  categoría; si no existen (Iluminación Profesional, Pórticos), no se fuerza ninguna.
+*/
+.lp-proof-photos { padding: 26px 20px; background: var(--bg-light); }
+.lp-proof-photos__wrap { max-width: var(--container); margin: 0 auto; }
+.lp-proof-photos__row {
+  list-style: none;
+  display: flex;
+  gap: 10px;
+  margin: 0 0 12px;
+  padding: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.lp-proof-photos__row::-webkit-scrollbar { display: none; }
+.lp-proof-photos__row li { flex: 0 0 auto; }
+.lp-proof-photos__row a {
+  display: block;
+  width: 150px;
+  aspect-ratio: 4 / 3;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.lp-proof-photos__row img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .3s ease;
+}
+.lp-proof-photos__row a:hover img { transform: scale(1.04); }
+.lp-proof-photos__more {
+  font-size: .88rem;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+}
+.lp-proof-photos__more:hover { color: var(--accent); border-color: var(--accent); }
+
+@media (max-width: 560px) {
+  .lp-proof-photos { padding: 20px 20px; }
+  .lp-proof-photos__row a { width: 116px; }
+}
+
+/* ============================================
    BANDAS DE CONTENIDO
    ============================================ */
 .lp-section { padding: 76px 20px; }
