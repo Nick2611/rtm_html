@@ -196,11 +196,15 @@
     <section class="lp-proof-photos" aria-labelledby="proof-photos-title">
       <div class="lp-proof-photos__wrap">
         <p class="lp-eyebrow" id="proof-photos-title">Instalado y funcionando</p>
-        <ul class="lp-proof-photos__row">
-          <li><a href="/proyectos.html"><img src="/proyectos_imagenes/conjunto_3_1.webp" alt="Tótem LED indoor de piso a techo" loading="lazy" decoding="async"></a></li>
-          <li><a href="/proyectos.html"><img src="/proyectos_imagenes/conjunto_3_2.webp" alt="Tótem LED indoor, detalle de contenido" loading="lazy" decoding="async"></a></li>
-          <li><a href="/proyectos.html"><img src="/proyectos_imagenes/conjunto_4_1.webp" alt="Tótem LED outdoor en espacio público" loading="lazy" decoding="async"></a></li>
-        </ul>
+        <div class="lp-carousel" data-carousel>
+          <button type="button" class="lp-carousel__arrow lp-carousel__arrow--prev" aria-label="Foto anterior">‹</button>
+          <ul class="lp-carousel__track">
+            <li class="lp-carousel__item"><button type="button" class="lp-carousel__item-btn"><img src="/proyectos_imagenes/conjunto_3_1.webp" alt="Tótem LED indoor de piso a techo" loading="lazy" decoding="async"></button></li>
+            <li class="lp-carousel__item"><button type="button" class="lp-carousel__item-btn"><img src="/proyectos_imagenes/conjunto_3_2.webp" alt="Tótem LED indoor, detalle de contenido" loading="lazy" decoding="async"></button></li>
+            <li class="lp-carousel__item"><button type="button" class="lp-carousel__item-btn"><img src="/proyectos_imagenes/conjunto_4_1.webp" alt="Tótem LED outdoor en espacio público" loading="lazy" decoding="async"></button></li>
+          </ul>
+          <button type="button" class="lp-carousel__arrow lp-carousel__arrow--next" aria-label="Foto siguiente">›</button>
+        </div>
         <a class="lp-proof-photos__more" href="/proyectos.html">Ver más proyectos instalados →</a>
       </div>
     </section>
@@ -404,6 +408,7 @@
 
   <script src="/js/conversion-tracking.js?v=20260813-beacon1" defer></script>
   <script src="/js/main.js?v=20260805-conversion2" defer></script>
+  <script src="/js/proof-carousel.js?v=20260820-carousel1" defer></script>
   <script>
     // El dock se esconde cerca de cualquier CTA principal: dos veces la misma acción en pantalla no
     // agrega una decisión (AGENTS.md §3).
