@@ -140,7 +140,7 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  height: 240px;
+  height: 340px;
   margin: 0 0 14px;
 }
 .lp-carousel__track {
@@ -148,16 +148,16 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  width: 190px;
-  height: 210px;
+  width: 300px;
+  height: 300px;
   touch-action: pan-y;
 }
 .lp-carousel__item {
   position: absolute;
   top: 0;
   left: 0;
-  width: 190px;
-  height: 210px;
+  width: 300px;
+  height: 300px;
   transition: transform .45s ease, filter .45s ease, opacity .45s ease;
 }
 .lp-carousel__item-btn {
@@ -201,8 +201,8 @@
 
 @media (max-width: 560px) {
   .lp-proof-photos { padding: 20px 20px; }
-  .lp-carousel { height: 190px; gap: 4px; }
-  .lp-carousel__track, .lp-carousel__item { width: 132px; height: 160px; }
+  .lp-carousel { height: 250px; gap: 4px; }
+  .lp-carousel__track, .lp-carousel__item { width: 220px; height: 220px; }
 }
 
 /*

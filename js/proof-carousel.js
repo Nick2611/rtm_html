@@ -45,28 +45,30 @@
     var nextBtn = root.querySelector('.lp-carousel__arrow--next');
     var active = Math.floor((items.length - 1) / 2);
 
+    var n = items.length;
+
     function render() {
-      var spacing = root.clientWidth < 560 ? 96 : 150;
+      var spacing = root.clientWidth < 560 ? 160 : 240;
       items.forEach(function (item, i) {
         var offset = i - active;
+        if (offset > n / 2) offset -= n;
+        if (offset < -n / 2) offset += n;
         var dist = Math.abs(offset);
         var scale = dist === 0 ? 1 : dist === 1 ? .82 : .68;
         item.style.transform = 'translateX(' + offset * spacing + 'px) scale(' + scale + ')';
         item.style.filter = dist === 0 ? 'blur(0)' : 'blur(' + Math.min(dist * 1.5 + 1, 4) + 'px)';
         item.style.opacity = dist > 2 ? '0' : dist === 0 ? '1' : '0.6';
-        item.style.zIndex = String(items.length - dist);
+        item.style.zIndex = String(n - dist);
         item.style.pointerEvents = dist > 2 ? 'none' : 'auto';
         item.classList.toggle('is-active', dist === 0);
         item.setAttribute('aria-hidden', dist === 0 ? 'false' : 'true');
         var btn = item.querySelector('button');
         if (btn) btn.tabIndex = dist === 0 ? 0 : -1;
       });
-      prevBtn.disabled = active === 0;
-      nextBtn.disabled = active === items.length - 1;
     }
 
     function goTo(index) {
-      active = Math.max(0, Math.min(items.length - 1, index));
+      active = ((index % n) + n) % n;
       render();
     }
 
