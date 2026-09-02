@@ -500,6 +500,44 @@ html.lp-lightbox-open { overflow: hidden; }
 }
 
 /* ============================================
+   QUÉ ES / QUÉ NO ES
+   ============================================ */
+.lp-vs {
+  margin: 44px 0 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(290px, 100%), 1fr));
+  gap: 30px 40px;
+}
+.lp-vs__head {
+  font-weight: 600;
+  color: var(--text-dark);
+  margin: 0 0 14px;
+}
+.lp-vs ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.lp-vs li {
+  position: relative;
+  padding-left: 28px;
+  color: #4b5563;
+  font-size: .97rem;
+  line-height: 1.6;
+}
+.lp-vs li::before {
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-weight: 700;
+}
+.lp-vs__col--yes li::before { content: "\2713"; color: var(--accent); }
+.lp-vs__col--no li::before  { content: "\2715"; color: #9ca3af; }
+.lp-vs__col--no li          { color: #6b7280; }
+
+/* ============================================
    PARA QUIÉN
    ============================================ */
 .lp-audience {
