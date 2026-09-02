@@ -257,13 +257,26 @@
     function renderCategoriesOverview() {
       const container   = document.getElementById('categories-grid');
       const categories  = window.rtmProducts.getCategories();
-      container.innerHTML = categories.map(cat => `
-        <a href="productos/${cat.slug}.html" class="category-overview-card">
-          <div class="category-overview-icon"><i class="fas ${cat.icon || 'fa-cube'}"></i></div>
-          <h3>${cat.name}</h3>
-          <p>${cat.description}</p>
+
+      /*
+        Las landings van en la misma grilla pero no son categorías: presentan hardware que ya
+        está en el catálogo para un uso distinto, así que no tienen modelos propios ni vista
+        ?cat=. Por eso el enlace sale de lp.url y no se arma con el slug.
+      */
+      const landings = window.rtmProducts.getLandings();
+
+      const card = (href, icon, name, description) => `
+        <a href="${href}" class="category-overview-card">
+          <div class="category-overview-icon"><i class="fas ${icon || 'fa-cube'}"></i></div>
+          <h3>${name}</h3>
+          <p>${description}</p>
           <span class="category-overview-link">Ver categoría <i class="fas fa-arrow-right"></i></span>
-        </a>`).join('');
+        </a>`;
+
+      container.innerHTML = [
+        ...categories.map(cat => card(`productos/${cat.slug}.html`, cat.icon, cat.name, cat.description)),
+        ...landings.map(lp => card(lp.url, lp.icon, lp.name, lp.description)),
+      ].join('');
     }
   </script>
 
