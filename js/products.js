@@ -919,6 +919,10 @@ class RTMProducts {
 
   getCategories() { return this.data ? this.data.categories : []; }
 
+  // Las landings no son categorías del catálogo (no tienen modelos propios ni vista ?cat=),
+  // pero sí son puertas de entrada y la grilla de productos las lista junto a las categorías.
+  getLandings() { return this.data ? (this.data.landings || []) : []; }
+
   search(query) {
     return this.searchIndex.filter(item => {
       const normalizedQuery = query.toLowerCase();
