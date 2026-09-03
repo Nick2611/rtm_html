@@ -176,7 +176,10 @@ function getConversionCopy(context) {
 
   return {
     label: 'Hablar con un asesor',
-    message: 'Hola, quiero asesoramiento y cotización para una solución LED. Todavía no sé qué modelo necesito.'
+    message: 'Hola, quiero asesoramiento para una pantalla o letrero LED.\n\n'
+      + 'Qué necesito (pantalla, letrero, tótem, piso, pórtico): \n'
+      + 'Dónde va instalado: \n'
+      + 'Medida aproximada: '
   };
 }
 
