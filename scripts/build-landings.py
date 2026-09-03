@@ -415,16 +415,16 @@ CATEGORIES = [
         "nav": "Iluminación Profesional",
         "meta_title": "Iluminación profesional para escenarios y eventos | RTM",
         "meta_desc": "Cabezales móviles beam y 3 en 1, barras móviles y flashes LED para shows, salones y "
-                     "producciones. Venta con repuestos y servicio técnico en Argentina.",
+                     "producciones. Servicio técnico y repuestos posventa en Argentina.",
         "h1": "Iluminación profesional",
         "h1_span": "para escenarios, salones y producciones",
-        "lead": "Cabezales móviles, barras y flashes para show en vivo, con repuestos y servicio técnico "
-                "local. El mismo respaldo que damos en pantallas.",
+        "lead": "Cabezales móviles, barras y flashes para show en vivo, con servicio técnico y "
+                "repuestos posventa. El mismo respaldo que damos en pantallas.",
         "hero_image": None,
         "proof": [
             "Cabezales beam 7R y 20R",
             "Cabezales 3 en 1: beam, spot y wash",
-            "Repuestos y servicio técnico en Argentina",
+            "Servicio técnico y repuestos posventa en Argentina",
         ],
         "wa_hero": "Hola, quiero cotizar equipos de iluminación.\n\nTipo de espacio: \nAltura de montaje: \nEquipos que ya tengo: ",
         "wa_final": "Hola, quiero cotizar equipos de iluminación.\n\nTipo de espacio: \nAltura de montaje: \nEquipos que ya tengo: ",
@@ -439,7 +439,7 @@ CATEGORIES = [
         "steps": [
             ("Definición del rig", "Espacio, altura de montaje, tipo de show y equipos que ya tenés."),
             ("Selección y entrega", "Cantidad, potencia y tipo de cabezal, verificados antes de entregar."),
-            ("Repuestos y servicio técnico", "Lámparas, placas y repuestos disponibles; reparación local."),
+            ("Repuestos y servicio técnico", "Lámparas, placas y repuestos para los equipos que entregamos, con reparación local."),
         ],
         "cta_title": "Cotizar equipos de iluminación",
         "cta_lead": "Contanos el tipo de espacio, la altura de montaje y qué equipos ya tenés. Devolvemos "
