@@ -396,8 +396,8 @@
     Dock persistente. Lleva el id `catalog-whatsapp-cta` a propósito: con ese id `main.js`
     (initPersistentConversionDock) respeta el enlace y el texto que están acá en lugar de
     reescribirlos con el mensaje genérico del sitio, y así el chat arranca con el contexto de
-    la categoría. Por el mismo motivo main.js no engancha su IntersectionObserver, así que esta
-    página oculta el dock cuando cualquiera de sus acciones principales está a la vista.
+    la categoría. El dock ya no se oculta al hacer scroll: AGENTS.md §3 pide acceso a WhatsApp
+    *persistente* y prohíbe los mensajes que siguen al usuario, no el botón fijo.
   -->
   <div class="floating-buttons" aria-label="Accesos rápidos">
     <a id="catalog-whatsapp-cta"
@@ -416,28 +416,8 @@
   </div>
 
   <script src="/js/conversion-tracking.js?v=20260813-beacon1" defer></script>
-  <script src="/js/main.js?v=20260805-conversion2" defer></script>
+  <script src="/js/main.js?v=20260909-dockpersist1" defer></script>
   <script src="/js/proof-carousel.js?v=20260820-carousel4" defer></script>
-  <script>
-    // El dock se esconde cerca de cualquier CTA principal: dos veces la misma acción en pantalla no
-    // agrega una decisión (AGENTS.md §3).
-    (() => {
-      const dock = document.querySelector('.floating-buttons');
-      const targets = document.querySelectorAll('.lp-hero__actions, .lp-inline-cta, .lp-cta');
-      if (!dock || targets.length === 0 || !('IntersectionObserver' in window)) return;
-
-      const visibleTargets = new Set();
-      const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) visibleTargets.add(entry.target);
-          else visibleTargets.delete(entry.target);
-        });
-        dock.hidden = visibleTargets.size > 0;
-      }, { threshold: 0.15 });
-
-      targets.forEach(target => observer.observe(target));
-    })();
-  </script>
 
 </body>
 </html>
