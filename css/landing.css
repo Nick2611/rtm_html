@@ -54,7 +54,7 @@
 }
 .lp-breadcrumb a:hover { color: #fff; text-decoration: underline; }
 .lp-breadcrumb .separator { color: #6b7280; }
-.lp-breadcrumb [aria-current="page"] { color: var(--nav-text-dim); }
+.lp-breadcrumb [aria-current="page"] { color: var(--nav-text-dim); cursor: default; }
 
 .lp-hero__title {
   font-size: clamp(2.1rem, 3.4vw + .8rem, 3.5rem);

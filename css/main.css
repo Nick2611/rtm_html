@@ -1824,6 +1824,13 @@ footer:not(.site-footer) {
   font-size: .85rem;
   color: #999;
 }
+.footer-bottom a {
+  color: #bbb;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.footer-bottom a:hover,
+.footer-bottom a:focus-visible { color: #fff; }
 
 /* ============================================
    UTILITY CLASSES
