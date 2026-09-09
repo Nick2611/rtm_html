@@ -139,7 +139,11 @@ class RTMProducts {
 
   initPersistentCTASuppression() {
     const dock = document.getElementById('catalog-whatsapp-cta')?.closest('.floating-buttons');
-    const targets = document.querySelectorAll('footer, .model-actions, .special-actions');
+    // El footer NO va acá. Es chrome de página, no una acción primaria: su link de WhatsApp es
+    // un item de lista, no un sustituto del boton verde. Con threshold 0.01 el dock desaparecia
+    // apenas asomaba el borde superior del footer, con su link todavia debajo del fold, asi que
+    // el usuario se quedaba sin ninguna de las dos vias de contacto justo al final de la pagina.
+    const targets = document.querySelectorAll('.model-actions, .special-actions');
     if (!dock || targets.length === 0 || !('IntersectionObserver' in window)) return;
 
     const visibleTargets = new Set();
