@@ -187,30 +187,6 @@ function buildWhatsAppUrl(message) {
   return `https://wa.me/${RTM_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 }
 
-function hideDockNearPrimaryActions(container) {
-  if (!('IntersectionObserver' in window)) return;
-
-  const targets = document.querySelectorAll([
-    '.hero [data-conversion^="whatsapp"]',
-    '.guia-hero [data-conversion^="whatsapp"]',
-    '.proyectos-cta',
-    '.guia-elegir-cta',
-    'form[data-contact-form]'
-  ].join(','));
-  if (!targets.length) return;
-
-  const visibleTargets = new Set();
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) visibleTargets.add(entry.target);
-      else visibleTargets.delete(entry.target);
-    });
-    container.hidden = visibleTargets.size > 0;
-  }, { threshold: 0.15 });
-
-  targets.forEach(target => observer.observe(target));
-}
-
 function initPersistentConversionDock() {
   const context = getConversionContext();
   if (context.pathname.includes('privacidad')) return;
@@ -267,7 +243,6 @@ function initPersistentConversionDock() {
   copyContainer.appendChild(label);
 
   document.body.classList.add('conversion-dock-active');
-  hideDockNearPrimaryActions(container);
 }
 
 /* ===== CARRUSEL (index.html) ===== */

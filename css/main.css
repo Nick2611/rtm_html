@@ -1723,11 +1723,10 @@ input:focus, select:focus, textarea:focus {
 }
 
 /*
-  `display: flex` le gana a la regla `[hidden] { display: none }` del user agent. Sin esta línea,
-  poner `dock.hidden = true` no ocultaba nada, y los tres observers que existen para eso
-  —hideDockNearPrimaryActions en main.js, initPersistentCTASuppression en products.js y el de las
-  landings de categoría— quedaban sin efecto: el dock se superponía al CTA principal justo cuando
-  el usuario llegaba a él.
+  `display: flex` le gana a la regla `[hidden] { display: none }` del user agent, así que sin esta
+  línea `dock.hidden = true` no ocultaría nada. Los tres observers que la usaban se eliminaron el
+  2026-09-09 (el dock es persistente por AGENTS.md §3); la regla queda por si algo vuelve a setear
+  el atributo.
 */
 .floating-buttons[hidden] { display: none; }
 
