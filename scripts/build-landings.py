@@ -114,12 +114,6 @@ CATEGORIES = [
         },
         "note": "También fabricamos las series Galileo para configuraciones especiales y Shell para "
                 "vehículos o flotas. Consultanos si tu proyecto no entra en los modelos publicados.",
-        "see_also": {
-            "lead": "Si lo que buscás es un cartel o letrero para el frente de tu local, "
-                    "el mismo equipo lo presentamos como",
-            "href": "/productos/letreros-led.html",
-            "label": "Letreros LED",
-        },
         "steps": [
             ("Relevamiento y definición técnica", "Medidas, distancia de visión y consumo eléctrico antes de cotizar."),
             ("Fabricación e instalación", "Armado en la medida y el pitch definidos, con estructura y puesta en marcha a cargo nuestro."),
@@ -137,6 +131,10 @@ CATEGORIES = [
         # `cat` apunta a pantallas-led —mismo catálogo, mismas fichas, sin inventar modelos— y lo
         # único que cambia es el vocabulario y el orden en que se cuenta.
         "slug": "letreros-led",
+        # Dada de baja el 2026-09-15: traía consultas por cartelería tradicional. El archivo
+        # productos/letreros-led.html es ahora una redirección a pantallas-led hecha a mano;
+        # `retired` la saca del footer y evita que main() la pise. Borrar la marca para volver.
+        "retired": True,
         "cat": "pantallas-led",
         "cat_name": "Letreros LED",
         "nav": "Letreros LED",
@@ -624,7 +622,7 @@ def build(cfg):
 
     footer_products = "\n".join(
         f'          <li><a href="/productos/{o["slug"]}.html">{e(o["nav"])}</a></li>'
-        for o in CATEGORIES
+        for o in CATEGORIES if not o.get("retired")
     )
 
     breadcrumb_ld = json.dumps(
@@ -976,6 +974,8 @@ def build(cfg):
 def main():
     os.makedirs(OUT, exist_ok=True)
     for cfg in CATEGORIES:
+        if cfg.get("retired"):
+            continue
         path = os.path.join(OUT, f"{cfg['slug']}.html")
         with open(path, "w", encoding="utf-8") as fh:
             fh.write(build(cfg))
