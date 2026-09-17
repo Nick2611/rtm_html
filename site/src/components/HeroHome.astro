@@ -1,0 +1,160 @@
+---
+/**
+ * Hero de la home: los cuatro videos de instalaciones que ya usa producción, encadenados.
+ * NO se reemplaza por una foto: es lo primero que ve el visitante y es la única prueba en
+ * movimiento del sitio.
+ * CONTRATO Ads/GA4: `whatsapp_hero` (contexto home, sin placement) y `catalog_hero` (sin contexto).
+ * El H1, el subtítulo y la lista de prueba son los de producción: los mide el check D1.
+ */
+import Icon from './Icon.astro';
+import { wa } from '../data/site';
+
+const videos = ['video_1.mp4', 'video_2.mp4', 'video_3.mp4', 'video_5.mp4'];
+const quote = 'Hola, quiero cotizar una pantalla LED.\n\nDónde va: \nMedida aproximada: \nPara cuándo: ';
+---
+<section class="hero-home">
+  <div class="hero-home__media" aria-hidden="true">
+    {videos.map((file, i) => (
+      <video class="hero-home__video" muted playsinline preload={i === 0 ? 'metadata' : 'none'}>
+        {i === 0 ? <source src={`/background_hero/${file}`} type="video/mp4" />
+                 : <source data-src={`/background_hero/${file}`} type="video/mp4" />}
+      </video>
+    ))}
+    <div class="hero-home__fade" data-hero-fade></div>
+  </div>
+
+  <div class="wrap hero-home__content" id="contenido">
+    <h1 class="t-hero">
+      Fabricamos e instalamos pantallas LED{' '}
+      <span class="hero-home__accent">para eventos, comercios y empresas</span>
+    </h1>
+    <p class="t-lead hero-home__lead">
+      Definimos el tamaño, la resolución y la instalación según el espacio y el uso.
+      Contanos dónde va, qué medida y para cuándo: con eso te pasamos modelo y presupuesto.
+    </p>
+
+    <div class="hero-home__actions">
+      <a class="btn btn--primary" href={wa(quote)} target="_blank" rel="noopener noreferrer"
+         data-conversion="whatsapp_hero" data-context="home">
+        <Icon name="whatsapp-logo" />Pedir cotización por WhatsApp
+      </a>
+      <a class="btn btn--secondary" href="/productos.html" data-conversion="catalog_hero">
+        Ver catálogo y fichas técnicas
+      </a>
+    </div>
+
+    <ul class="hero-home__proof">
+      <li>Fabricación propia e instalaciones en toda la Argentina</li>
+      <li>Eligieron RTM: BCRA, Shell, TyC Sports y Aeropuertos Argentina 2000</li>
+      <li>34 modelos con ficha técnica: indoor, outdoor, Tour Series, tótems y pisos LED</li>
+    </ul>
+  </div>
+</section>
+
+<script>
+  // Encadena los videos con un fundido, igual que js/main.js en producción. El primero trae su
+  // <source>; los demás lo tienen en data-src y se cargan recién cuando les toca.
+  const videos = Array.from(document.querySelectorAll<HTMLVideoElement>('.hero-home__video'));
+  const fade = document.querySelector<HTMLElement>('[data-hero-fade]');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const saveData = (navigator as any).connection?.saveData;
+
+  if (videos.length && fade && !reduced && !saveData) {
+    const FADE_MS = 800;
+    const FADE_BEFORE_END = 0.8;
+    let current = 0;
+
+    const load = (video: HTMLVideoElement) => {
+      const pending = video.querySelector<HTMLSourceElement>('source[data-src]');
+      if (!pending) return;
+      pending.src = pending.dataset.src!;
+      pending.removeAttribute('data-src');
+      video.preload = 'auto';
+      video.load();
+    };
+
+    const play = (index: number) => {
+      videos.forEach((video, i) => {
+        video.classList.toggle('is-active', i === index);
+        if (i !== index) { video.pause(); video.currentTime = 0; }
+      });
+      const video = videos[index];
+      load(video);
+      video.currentTime = 0;
+      fade.classList.remove('is-out');
+      video.play().catch(() => {});
+    };
+
+    videos.forEach(video => {
+      video.addEventListener('timeupdate', () => {
+        if (!video.duration || Number.isNaN(video.duration)) return;
+        if (video.currentTime >= video.duration - FADE_BEFORE_END) fade.classList.add('is-out');
+      });
+      video.addEventListener('ended', () => {
+        fade.classList.add('is-out');
+        window.setTimeout(() => { current = (current + 1) % videos.length; play(current); }, FADE_MS / 4);
+      });
+    });
+
+    play(current);
+  }
+</script>
+
+<style>
+  .hero-home {
+    position: relative;
+    display: grid;
+    align-items: end;
+    min-height: min(88vh, 760px);
+    padding-block: clamp(80px, 12vw, 140px);
+    background: var(--ink) url('/background_hero/background_hero.webp') center / cover no-repeat;
+    color: var(--white);
+    overflow: clip;
+  }
+  @media (max-width: 768px) {
+    .hero-home { background-image: url('/background_hero/background_hero-mobile.webp'); }
+  }
+
+  .hero-home__media { position: absolute; inset: 0; }
+  .hero-home__video {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+  }
+  .hero-home__video.is-active { opacity: 1; }
+  /* Velo: el texto necesita AA sobre cualquier fotograma. */
+  .hero-home__media::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to top, rgb(20 20 22 / 0.96) 0%, rgb(20 20 22 / 0.86) 45%, rgb(20 20 22 / 0.45) 100%);
+  }
+  .hero-home__fade {
+    position: absolute; inset: 0; z-index: 1;
+    background: var(--ink);
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    pointer-events: none;
+  }
+  .hero-home__fade.is-out { opacity: 1; }
+
+  .hero-home__content { position: relative; z-index: 2; }
+  .hero-home__accent { color: var(--red); display: block; }
+  .hero-home__lead { margin-top: 24px; max-width: 54ch; color: var(--muted-dark); }
+  .hero-home__actions { margin-top: 32px; display: flex; flex-wrap: wrap; gap: 16px; }
+  .hero-home__actions :global(.btn) { min-height: 52px; }
+
+  .hero-home__proof {
+    margin: 32px 0 0; padding: 0; list-style: none;
+    display: grid; gap: 10px;
+    font-size: var(--fs-small); color: var(--muted-dark);
+  }
+  .hero-home__proof li { position: relative; padding-left: 18px; }
+  .hero-home__proof li::before {
+    content: ''; position: absolute; left: 0; top: 0.55em;
+    width: 6px; height: 6px; border-radius: 999px; background: var(--red);
+  }
+  @media (min-width: 900px) {
+    .hero-home__proof { grid-template-columns: repeat(3, 1fr); gap: 12px 32px; }
+  }
+</style>

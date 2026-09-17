@@ -8,17 +8,24 @@ interface Props {
   path: string;
   ogImage: string;
   breadcrumb: Crumb[];
-  trackingVersion: string;
+  trackingVersion?: string;
+  /** Datos estructurados extra. CONTRATO SEO (check D2): la home lleva Organization + WebSite y
+   *  el catálogo Organization, igual que producción. */
+  jsonLd?: Record<string, unknown>[];
 }
-const { title, description, path, ogImage, breadcrumb, trackingVersion } = Astro.props;
+const { title, description, path, ogImage, breadcrumb, trackingVersion, jsonLd = [] } = Astro.props;
 const url = new URL(path, Astro.site).href;
-const breadcrumbLd = {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: breadcrumb.map((c, i) => ({
-    '@type': 'ListItem', position: i + 1, name: c.name, item: new URL(c.path, Astro.site).href,
-  })),
-};
+// Sin migas no se emite BreadcrumbList: un itemListElement vacío no aporta y rompe la paridad con producción.
+const schemas = [
+  ...(breadcrumb.length ? [{
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: breadcrumb.map((c, i) => ({
+      '@type': 'ListItem', position: i + 1, name: c.name, item: new URL(c.path, Astro.site).href,
+    })),
+  }] : []),
+  ...jsonLd,
+];
 ---
 <!doctype html>
 <html lang="es">
@@ -41,7 +48,7 @@ const breadcrumbLd = {
   <link rel="icon" type="image/png" sizes="32x32" href="/rtm_logo/favicon-32x32.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/rtm_logo/apple-touch-icon.png">
 
-  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />
+  {schemas.map(schema => <script type="application/ld+json" set:html={JSON.stringify(schema)} />)}
 
   <!-- Etiquetas de medición copiadas tal cual de las landings: todas con guard de producción. -->
   <script is:inline>
@@ -85,6 +92,6 @@ const breadcrumbLd = {
   <a href="#contenido" class="skip-link">Saltar al contenido</a>
   <slot />
   <!-- Enlaces wa.me reales + este módulo: marca de origen, código de referencia y conversión. -->
-  <script is:inline src={`/js/conversion-tracking.js?v=${trackingVersion}`} defer></script>
+  <script is:inline src="/js/conversion-tracking.js?v=20260917-ref-review1" defer></script>
 </body>
 </html>

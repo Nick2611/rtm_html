@@ -1,80 +1,323 @@
 ---
+/**
+ * Header único: arriba de todo es una barra ancha con mega-menú; a medida que se baja se contrae
+ * en una pastilla flotante translúcida. NO son dos estados con un salto: todo lo que cambia
+ * (ancho, alto, radio, opacidad, blur, sombra, tamaño del logo) se interpola con una sola
+ * variable `--hdr-t` que va de 0 a 1 en los primeros 140 px de scroll.
+ *
+ * `--hdr-t` la mueve la animación ligada al scroll (`animation-timeline: scroll()`), que corre en
+ * el compositor y sigue al dedo sin un solo listener. Donde no existe (Safari, Firefox viejo) la
+ * mueve el fallback de JS con requestAnimationFrame. Los estilos son los mismos en los dos casos:
+ * hay un solo juego de reglas, no dos caminos que se desincronizan.
+ * OJO: esto depende de `cssMinify: 'esbuild'` en astro.config.mjs — lightningcss fusiona
+ * `animation` con `animation-timeline` en un shorthand que Chrome descarta entero.
+ *
+ * Los enlaces de producto salen de lib/menu.ts: la subcategoría ancla en el bloque de modelos de
+ * la landing, no en el catálogo viejo.
+ * CONTRATO Ads/GA4: cada página conserva su nombre de evento. Las landings usan
+ * whatsapp_click|landing_header; la home, whatsapp_header sin placement; el catálogo y proyectos
+ * no miden el header.
+ */
 import Icon from './Icon.astro';
-import { nav, wa } from '../data/site';
+import { wa } from '../data/site';
+import { menuCategories } from '../lib/menu';
 
-interface Props { context: string; advice: string; current?: string }
-const { context, advice, current } = Astro.props;
+interface Cta { conversion: string; placement?: string; context?: string }
+interface Props {
+  context: string;
+  advice: string;
+  current?: string;
+  cta?: Cta | null;
+  mobileCta?: Cta | null;
+}
+const {
+  context, advice, current,
+  cta = { conversion: 'whatsapp_click', placement: 'landing_header' },
+  mobileCta = null,
+} = Astro.props;
+
+const sections = [
+  { label: 'Proyectos', href: '/proyectos.html' },
+  { label: 'Nosotros', href: '/index.html#about' },
+];
 ---
-<header class="header">
-  <div class="wrap header__bar">
-    <a class="header__brand" href="/index.html" aria-label="RTM Pantallas LED, inicio">
+<header class="hdr">
+  <div class="hdr__bar">
+    <a class="hdr__brand" href="/index.html" aria-label="RTM Pantallas LED, inicio">
       <img src="/rtm_logo/rtmLogo-transparente.png" alt="RTM Pantallas LED" width="300" height="60">
     </a>
 
-    <nav class="header__nav" aria-label="Principal">
-      {nav.map(item => <a href={item.href} aria-current={item.href === current ? 'page' : undefined}>{item.label}</a>)}
+    <nav class="hdr__nav" aria-label="Principal">
+      <a href="/index.html" aria-current={current === '/index.html' ? 'page' : undefined}>Inicio</a>
+      <button type="button" class="hdr__products" aria-expanded="false" aria-controls="hdr-panel"
+              aria-current={current === '/productos.html' ? 'page' : undefined}>
+        Productos<Icon name="arrow-down" />
+      </button>
+      {sections.map(s => (
+        <a href={s.href} aria-current={s.href === current ? 'page' : undefined}>{s.label}</a>
+      ))}
     </nav>
 
-    <a class="btn btn--primary header__cta" href={wa(advice)} target="_blank" rel="noopener noreferrer"
-       data-conversion="whatsapp_click" data-conversion-placement="landing_header" data-context={context}>
-      <Icon name="whatsapp-logo" />Pedir cotización
-    </a>
+    <div class="hdr__end">
+      <a class="btn btn--primary hdr__cta" href={wa(advice)} target="_blank" rel="noopener noreferrer"
+         data-conversion={cta?.conversion}
+         data-conversion-placement={cta?.placement || undefined}
+         data-context={cta ? (cta.context ?? context) : undefined}>
+        <Icon name="whatsapp-logo" /><span class="hdr__cta-long">Pedir cotización</span><span class="hdr__cta-short">Cotizar</span>
+      </a>
 
-    <details class="header__menu">
-      <summary aria-label="Abrir menú"><Icon name="list" /></summary>
-      <nav aria-label="Menú móvil">
-        {nav.map(item => <a href={item.href}>{item.label}</a>)}
-      </nav>
-    </details>
+      <button type="button" class="hdr__burger" aria-expanded="false" aria-controls="hdr-drawer"
+              aria-label="Abrir menú">
+        <Icon name="list" />
+      </button>
+    </div>
+  </div>
+
+  <!-- Mega-menú (escritorio). Acompaña la contracción: de ancho completo a tarjeta redondeada. -->
+  <div class="hdr__panel" id="hdr-panel" hidden>
+    <div class="hdr__panel-inner">
+      <div class="hdr__grid">
+        {menuCategories.map(cat => (
+          <div class="hdr__cat">
+            <a class="hdr__cat-title" href={cat.href}>{cat.label}<Icon name="arrow-up-right" /></a>
+            {cat.items.length > 0 && (
+              <ul>{cat.items.map(item => <li><a href={item.href}>{item.label}</a></li>)}</ul>
+            )}
+          </div>
+        ))}
+      </div>
+      <a class="hdr__panel-all" href="/productos.html">Ver el catálogo completo<Icon name="arrow-right" /></a>
+    </div>
+  </div>
+
+  <!-- Menú móvil, pantalla completa. -->
+  <div class="hdr__drawer" id="hdr-drawer" hidden>
+    <div class="hdr__drawer-inner">
+      <p class="hdr__drawer-label">Productos</p>
+      <ul class="hdr__drawer-products">
+        {menuCategories.map(cat => <li><a href={cat.href}>{cat.label}</a></li>)}
+      </ul>
+      <p class="hdr__drawer-label">Secciones</p>
+      <ul class="hdr__drawer-links">
+        <li><a href="/index.html">Inicio</a></li>
+        <li><a href="/productos.html">Catálogo completo</a></li>
+        {sections.map(s => <li><a href={s.href}>{s.label}</a></li>)}
+      </ul>
+      {mobileCta && (
+        <a class="btn btn--primary hdr__drawer-cta" href={wa(advice)} target="_blank" rel="noopener noreferrer"
+           data-conversion={mobileCta.conversion}
+           data-conversion-placement={mobileCta.placement || undefined}
+           data-context={mobileCta.context ?? context}>
+          Cotizar por WhatsApp
+        </a>
+      )}
+    </div>
   </div>
 </header>
+<!-- El header es fijo: este hueco evita que tape el primer bloque de la página. -->
+<div class="hdr-spacer" aria-hidden="true"></div>
 
-<style>
-  .header {
-    position: sticky; top: 0; z-index: 50;
-    background: var(--ink);
-    color: var(--white);
-  }
-  .header__bar { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: var(--header-h); }
-  /* rtmLogo-transparente.png: el PNG original trae fondo #141416, que se veía como recuadro sobre las fotos. */
-  .header__brand img { width: 150px; height: auto; }
-  .header__nav { display: none; gap: 40px; }
-  .header__nav a { font-size: var(--fs-small); text-decoration: none; color: var(--muted-dark); transition: color 0.3s var(--ease); }
-  .header__nav a:hover, .header__nav a[aria-current] { color: var(--white); }
-  .header__cta { display: none; min-height: 48px; padding: 0 22px; font-size: 1.0625rem; }
-  .header__cta :global(svg) { width: 20px; height: 20px; }
+<script>
+  const header = document.querySelector<HTMLElement>('.hdr');
+  if (header) {
+    const panel = header.querySelector<HTMLElement>('.hdr__panel')!;
+    const panelBtn = header.querySelector<HTMLButtonElement>('.hdr__products')!;
+    const drawer = header.querySelector<HTMLElement>('.hdr__drawer')!;
+    const burger = header.querySelector<HTMLButtonElement>('.hdr__burger')!;
 
-  .header__menu { margin-left: auto; position: relative; }
-  .header__menu summary {
-    list-style: none; display: grid; place-items: center;
-    width: 48px; height: 48px; border-radius: 999px; cursor: pointer;
-    background: rgb(255 255 255 / 0.08);
-  }
-  .header__menu summary::-webkit-details-marker { display: none; }
-  .header__menu summary :global(svg) { width: 24px; height: 24px; }
-  .header__menu nav {
-    position: absolute; right: 0; top: calc(100% + 12px); min-width: 240px;
-    display: grid; padding: 10px; background: var(--ink); border: 1px solid var(--line-dark); border-radius: var(--radius);
-  }
-  .header__menu nav a { padding: 14px 16px; border-radius: var(--radius-sm); text-decoration: none; font-size: var(--fs-body); }
+    const toggle = (el: HTMLElement, btn: HTMLButtonElement, open: boolean) => {
+      el.hidden = !open;
+      btn.setAttribute('aria-expanded', String(open));
+      if (el === drawer) document.documentElement.style.overflow = open ? 'hidden' : '';
+    };
 
-  /* Sobre el hero el header es transparente; al bajar toma fondo. Sigue al scroll, no lo intercepta. */
-  @media (prefers-reduced-motion: no-preference) {
-    @supports (animation-timeline: scroll()) {
-      .header {
-        animation: header-solid linear both;
-        animation-timeline: scroll(root);
-        animation-range: 0 160px;
-      }
+    panelBtn.addEventListener('click', () => toggle(panel, panelBtn, panel.hidden));
+    burger.addEventListener('click', () => toggle(drawer, burger, drawer.hidden));
+
+    document.addEventListener('keydown', event => {
+      if (event.key !== 'Escape') return;
+      if (!panel.hidden) { toggle(panel, panelBtn, false); panelBtn.focus(); }
+      if (!drawer.hidden) { toggle(drawer, burger, false); burger.focus(); }
+    });
+    document.addEventListener('click', event => {
+      const target = event.target as Element;
+      if (!panel.hidden && !panel.contains(target) && !panelBtn.contains(target)) toggle(panel, panelBtn, false);
+      if (target.closest('.hdr__panel a')) toggle(panel, panelBtn, false);
+      if (target.closest('.hdr__drawer a')) toggle(drawer, burger, false);
+    });
+
+    // Fallback donde no hay animación ligada al scroll: la misma variable, movida a mano.
+    // Con rAF se actualiza una vez por cuadro, no una por evento de scroll.
+    if (!CSS.supports('animation-timeline', 'scroll()')) {
+      const RANGE = 140;
+      let ticking = false;
+      const update = () => {
+        ticking = false;
+        const t = Math.min(1, Math.max(0, window.scrollY / RANGE));
+        header.style.setProperty('--hdr-t', String(t));
+      };
+      update();
+      window.addEventListener('scroll', () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(update);
+      }, { passive: true });
     }
   }
-  @keyframes header-solid { from { background: rgb(20 20 22 / 0); } to { background: var(--ink); } }
+</script>
 
-  /* Desktop: logo | menú centrado | botón. Las columnas laterales iguales centran el menú de verdad. */
-  @media (min-width: 960px) {
-    .header__bar { display: grid; grid-template-columns: 1fr auto 1fr; }
-    .header__nav { display: inline-flex; }
-    .header__cta { display: inline-flex; justify-self: end; }
-    .header__menu { display: none; }
+<style>
+  /* Registrada para poder animarla: sin @property el navegador no interpola una custom property. */
+  @property --hdr-t {
+    syntax: '<number>';
+    inherits: true;
+    initial-value: 0;
   }
+
+  .hdr {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 60;
+    color: var(--white);
+    --hdr-t: 0;
+  }
+  .hdr-spacer { height: var(--header-h); }
+
+  /* Arriba de todo la barra llega a los dos bordes: ese fondo a sangre es esta capa, que se
+     desvanece justo mientras la pastilla toma su propio fondo translúcido. Las dos son del mismo
+     color, así que en el medio se lee como una sola superficie. */
+  .hdr::before {
+    content: '';
+    position: absolute; inset: 0 0 auto 0;
+    height: var(--header-h);
+    background: var(--ink);
+    opacity: calc(1 - var(--hdr-t));
+    pointer-events: none;
+  }
+
+  @supports (animation-timeline: scroll()) {
+    .hdr {
+      animation: hdr-morph linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 140px;
+    }
+  }
+  @keyframes hdr-morph { from { --hdr-t: 0; } to { --hdr-t: 1; } }
+
+  /* ---------- La barra: todo lo que se contrae ---------- */
+  .hdr__bar {
+    position: relative;
+    box-sizing: border-box;
+    display: flex; align-items: center; gap: 20px;
+    width: calc(100% - var(--hdr-t) * 32px);
+    max-width: calc(var(--wrap) - var(--hdr-t) * 180px);
+    margin-inline: auto;
+    margin-top: calc(var(--hdr-t) * 12px);
+    height: calc(var(--header-h) - var(--hdr-t) * 12px);
+    padding-inline: calc(var(--gutter) - var(--hdr-t) * 8px);
+    border: 1px solid rgb(255 255 255 / calc(var(--hdr-t) * 0.12));
+    border-radius: calc(var(--hdr-t) * 999px);
+    background: rgb(20 20 22 / calc(var(--hdr-t) * 0.72));
+    backdrop-filter: blur(calc(var(--hdr-t) * 16px)) saturate(calc(100% + var(--hdr-t) * 60%));
+    box-shadow: 0 calc(var(--hdr-t) * 16px) calc(var(--hdr-t) * 40px) rgb(0 0 0 / calc(var(--hdr-t) * 0.34));
+  }
+
+  .hdr__brand { display: inline-flex; flex: none; }
+  .hdr__brand img { width: calc(150px - var(--hdr-t) * 18px); height: auto; }
+
+  .hdr__nav { display: none; align-items: center; gap: 28px; margin-inline: auto; }
+  .hdr__nav a, .hdr__products {
+    display: inline-flex; align-items: center; gap: 6px; min-height: 44px;
+    font-family: inherit; font-size: var(--fs-small);
+    color: var(--muted-dark); text-decoration: none;
+    background: none; border: 0; padding: 0; cursor: pointer;
+    transition: color 0.3s var(--ease);
+  }
+  .hdr__nav a:hover, .hdr__products:hover,
+  .hdr__nav a[aria-current], .hdr__products[aria-current] { color: var(--white); }
+  .hdr__products :global(svg) { width: 16px; height: 16px; transition: transform 0.3s var(--ease); }
+  .hdr__products[aria-expanded='true'] :global(svg) { transform: rotate(180deg); }
+
+  .hdr__end { display: flex; align-items: center; gap: 10px; margin-left: auto; }
+  /* El CTA se ve también en móvil: por ahí entra casi todo el tráfico y es el evento
+     whatsapp_header / landing_header que mide GA4. */
+  .hdr__cta {
+    min-height: calc(48px - var(--hdr-t) * 10px);
+    padding-inline: calc(22px - var(--hdr-t) * 8px);
+    font-size: calc(1rem - var(--hdr-t) * 0.0625rem);
+    gap: calc(10px - var(--hdr-t) * 2px);
+  }
+  .hdr__cta :global(svg) { width: calc(20px - var(--hdr-t) * 3px); height: calc(20px - var(--hdr-t) * 3px); }
+  .hdr__cta-long { display: none; }
+
+  .hdr__burger {
+    display: grid; place-items: center;
+    width: 44px; height: 44px; flex: none;
+    border: 0; border-radius: 999px; cursor: pointer;
+    background: rgb(255 255 255 / 0.1); color: var(--white);
+  }
+  .hdr__burger :global(svg) { width: 22px; height: 22px; }
+
+  /* En teléfonos chicos el logo cede ancho: logo + CTA + botón tienen que entrar en 375 px. */
+  @media (max-width: 520px) {
+    .hdr__brand img { width: calc(120px - var(--hdr-t) * 12px); }
+    .hdr__bar { gap: 12px; }
+  }
+
+  /* Con flex y `margin: auto` el menú se centra en el espacio sobrante, y como el logo y el botón
+     no miden lo mismo queda corrido. Tres columnas con los laterales iguales lo centran de verdad. */
+  @media (min-width: 1100px) {
+    .hdr__bar { display: grid; grid-template-columns: 1fr auto 1fr; }
+    .hdr__nav { display: inline-flex; margin-inline: 0; justify-self: center; }
+    .hdr__end { justify-self: end; margin-left: 0; }
+    .hdr__burger { display: none; }
+    .hdr__cta-long { display: inline; }
+    .hdr__cta-short { display: none; }
+  }
+
+  /* ---------- Mega-menú ---------- */
+  .hdr__panel {
+    position: absolute; left: 50%; transform: translateX(-50%);
+    top: calc(100% + var(--hdr-t) * 10px);
+    box-sizing: border-box;
+    width: calc(100% - var(--hdr-t) * 32px);
+    /* Arriba de todo llega a los bordes; contraído se frena en el ancho de la pastilla.
+       El +100vw es lo que deja que ese tope se mueva de forma continua. */
+    max-width: calc(var(--wrap) - 180px + (1 - var(--hdr-t)) * 100vw);
+    border: 1px solid rgb(255 255 255 / calc(var(--hdr-t) * 0.12));
+    border-top: 1px solid var(--line-dark);
+    border-radius: calc(var(--hdr-t) * var(--radius-lg));
+    background: rgb(20 20 22 / calc(1 - 0.06 * var(--hdr-t)));
+    backdrop-filter: blur(calc(var(--hdr-t) * 16px));
+    box-shadow: 0 calc(var(--hdr-t) * 20px) calc(var(--hdr-t) * 50px) rgb(0 0 0 / calc(var(--hdr-t) * 0.4));
+  }
+  .hdr__panel-inner {
+    width: 100%; max-width: var(--wrap); margin-inline: auto;
+    padding: 36px var(--gutter) 40px;
+  }
+  .hdr__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px 40px; }
+  .hdr__cat-title {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: var(--fs-body); font-weight: 600; color: var(--white); text-decoration: none;
+  }
+  .hdr__cat-title :global(svg) { width: 18px; height: 18px; opacity: 0.55; }
+  .hdr__cat ul { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 8px; }
+  .hdr__cat ul a { font-size: var(--fs-small); color: var(--muted-dark); text-decoration: none; }
+  .hdr__cat ul a:hover { color: var(--white); }
+  .hdr__panel-all {
+    display: inline-flex; align-items: center; gap: 8px; margin-top: 32px;
+    color: var(--white); text-decoration: none; font-size: var(--fs-small);
+  }
+  .hdr__panel-all :global(svg) { width: 18px; height: 18px; }
+
+  /* ---------- Menú de pantalla completa ---------- */
+  .hdr__drawer { position: fixed; inset: 0; background: var(--ink); overflow-y: auto; }
+  .hdr__drawer-inner {
+    width: 100%; max-width: var(--wrap); margin-inline: auto;
+    padding: calc(var(--header-h) + 24px) var(--gutter) 48px;
+  }
+  .hdr__drawer-label { font-size: var(--fs-small); color: var(--muted-dark); margin: 28px 0 8px; }
+  .hdr__drawer-inner ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+  .hdr__drawer-inner a { color: var(--white); text-decoration: none; display: block; padding: 10px 0; }
+  .hdr__drawer-products a { font-size: clamp(1.375rem, 5vw, 1.75rem); font-weight: 600; }
+  .hdr__drawer-links a { font-size: var(--fs-body); color: var(--muted-dark); }
+  .hdr__drawer-cta { margin-top: 32px; width: 100%; }
 </style>

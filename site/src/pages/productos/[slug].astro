@@ -68,52 +68,20 @@ const logos = [
       lead={l.hero.lead}
       context={context}
       quoteHref={wa(l.wa.quote)}
-      catalogHref={groups.length ? catalog : undefined}
+      catalogHref={groups.length ? "#modelos-title" : undefined}
       image={image(l.hero.image)}
       focus={l.hero.focus}
     />
-
-    <!-- CLIENTES · blanco. Logos y nada más. -->
-    <section class="logos band band--white" aria-labelledby="logos-title">
-      <div class="wrap">
-        <h2 id="logos-title" class="logos__title muted reveal">Empresas e instituciones que eligieron RTM</h2>
-        <ul class="logos__row reveal">
-          {logos.map(logo => <li><Image src={logo.img} alt={logo.alt} height={56} densities={[1, 2]} /></li>)}
-        </ul>
-      </div>
-    </section>
-
-    <!-- INTRO · blanco, sigue a los logos. Frase del producto + acción + 3 datos. Puente entre prueba y oferta. -->
-    <section class="intro band--white" aria-labelledby="intro-title">
-      <div class="wrap">
-        <div class="intro__grid">
-          <h2 class="intro__statement t-display" id="intro-title">
-            {l.statement.split(' ').map(w => <span class="w">{w} </span>)}
-          </h2>
-          <div class="intro__actions reveal">
-            <a class="btn btn--primary" href={wa(l.wa.quote)} target="_blank" rel="noopener noreferrer"
-               data-conversion="whatsapp_click" data-conversion-placement="landing_modelos" data-context={context}>
-              <Icon name="whatsapp-logo" />Pedir cotización
-            </a>
-            <a class="link-arrow" href="#modelos-title">{groups.length ? 'Ver modelos' : 'Ver cómo es'}<Icon name="arrow-down" /></a>
-          </div>
-        </div>
-        <ul class="intro__facts">
-          {l.facts.map((f, i) => (
-            <li class="reveal" style={`--i: ${i}`}><Icon name={f.icon} /><span>{f.text}</span></li>
-          ))}
-        </ul>
-      </div>
-    </section>
 
     <!-- MODELOS · gris claro. Ancla #modelos-title (sitelinks de Google Ads). -->
     <section class="models band band--mist" aria-labelledby="modelos-title">
       <div class="wrap">
         <h2 class="t-h2 reveal" id="modelos-title">{l.models.title}</h2>
+        <p class="models__intro muted">{l.statement}</p>
 
         {groups.map(group => (
           <div class="models__group">
-            {groups.length > 1 && <h3 class="models__group-name t-h3 reveal">{group.name}</h3>}
+            {groups.length > 1 && <h3 class="models__group-name t-h3 reveal" id={`modelos-${group.slug}`}>{group.name}</h3>}
             <ul class="models__grid" tabindex="0" aria-label={`Modelos: ${group.name}`} style={`--cols: ${Math.min(3, group.models.length)}`}>
               {group.models.map(m => (
                 <li class="model reveal">
@@ -149,24 +117,25 @@ const logos = [
         )}
 
         {l.models.note && <p class="models__note muted reveal">{l.models.note}</p>}
+
+        <!-- CTA de modelos · placement landing_modelos: existe en producción y lo mide GA4. No sacar. -->
+        <div class="models__cta reveal">
+          <a class="btn btn--primary" href={wa(l.wa.quote)} target="_blank" rel="noopener noreferrer"
+             data-conversion="whatsapp_click" data-conversion-placement="landing_modelos" data-context={context}>
+            <Icon name="whatsapp-logo" />Pedir cotización
+          </a>
+          <span class="muted">Te pasamos modelo, medida y valor.</span>
+        </div>
       </div>
     </section>
 
-    <!-- PROCESO · azul noche. Ancla #proceso-title (sitelinks de Google Ads). -->
-    <section class="process band band--ink" aria-labelledby="proceso-title">
-      <div class="wrap process__grid">
-        <div class="process__head">
-          <h2 class="t-h2 reveal" id="proceso-title">Qué incluye el trabajo</h2>
-          {l.process.lead && <p class="t-lead muted reveal">{l.process.lead}</p>}
-        </div>
-        <ol class="process__steps">
-          {l.process.steps.map(s => (
-            <li class="reveal">
-              <h3 class="t-h3">{s.title}</h3>
-              <p class="muted">{s.text}</p>
-            </li>
-          ))}
-        </ol>
+    <!-- CLIENTES · blanco. Logos y nada más. -->
+    <section class="logos band band--white" aria-labelledby="logos-title">
+      <div class="wrap">
+        <h2 id="logos-title" class="logos__title muted reveal">Empresas e instituciones que eligieron RTM</h2>
+        <ul class="logos__row reveal">
+          {logos.map(logo => <li><Image src={logo.img} alt={logo.alt} height={56} densities={[1, 2]} /></li>)}
+        </ul>
       </div>
     </section>
 
@@ -190,18 +159,36 @@ const logos = [
       </div>
     </section>
 
+    <!-- PROCESO · azul noche. Ancla #proceso-title (sitelinks de Google Ads). -->
+    <section class="process band band--white" aria-labelledby="proceso-title">
+      <div class="wrap process__grid">
+        <div class="process__head">
+          <h2 class="t-h2 reveal" id="proceso-title">Qué incluye el trabajo</h2>
+          {l.process.lead && <p class="t-lead muted reveal">{l.process.lead}</p>}
+        </div>
+        <ol class="process__steps">
+          {l.process.steps.map(s => (
+            <li class="reveal">
+              <h3 class="t-h3">{s.title}</h3>
+              <p class="muted">{s.text}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
     <!-- CIERRE · el único bloque rojo. Ancla #cotizar (sitelinks de Google Ads). -->
     <section class="closing" id="cotizar" aria-labelledby="cta-title">
       <div class="wrap">
-        <div class="closing__panel band--red">
+        <div class="closing__panel band--mist">
           <h2 class="t-display" id="cta-title">{l.closing.title}</h2>
           <p class="t-lead">{l.closing.lead}</p>
           <div class="closing__actions">
-            <a class="btn btn--light" href={wa(l.wa.quote)} target="_blank" rel="noopener noreferrer"
+            <a class="btn btn--primary" href={wa(l.wa.quote)} target="_blank" rel="noopener noreferrer"
                data-conversion="whatsapp_click" data-conversion-placement="landing_final" data-context={context}>
               <Icon name="whatsapp-logo" />Pedir cotización
             </a>
-            <a class="btn btn--ghost" href="/proyectos.html"
+            <a class="link-arrow" href="/proyectos.html"
                data-conversion="content_cta_click" data-conversion-placement="landing_final_proyectos" data-context={context}>
               Ver proyectos
             </a>
@@ -231,50 +218,15 @@ const logos = [
   }
   .logos__row li:hover :global(img) { filter: none; opacity: 1; }
 
-  /* ---------- Intro ---------- */
-  .intro { padding-block: clamp(8px, 1.5vw, 16px) var(--section); }
-  .intro__grid { display: grid; gap: 28px; align-items: end; }
-  .intro__statement { max-width: 16ch; }
-  .intro__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; }
-  /* Datos: tres filas separadas por una línea fina; en desktop, tres columnas. Sin tarjetas. */
-  .intro__facts {
-    list-style: none; margin: clamp(32px, 4vw, 48px) 0 0; padding: 0;
-    display: grid; border-top: 1px solid var(--line-light);
-  }
-  .intro__facts li {
-    display: flex; align-items: center; gap: 14px;
-    padding: 18px 0; border-bottom: 1px solid var(--line-light);
-    font-size: var(--fs-body); font-weight: 600;
-  }
-  .intro__facts :global(svg) { width: 30px; height: 30px; flex: none; color: var(--red-strong); }
-  @media (max-width: 599px) { .intro__actions .btn { width: 100%; } }
-  @media (min-width: 900px) {
-    .intro__grid { grid-template-columns: 7fr 5fr; gap: 48px; }
-    .intro__actions { justify-content: flex-end; padding-bottom: 6px; }
-    .intro__facts { grid-template-columns: repeat(3, 1fr); border-top: none; }
-    .intro__facts li { border-bottom: none; border-top: 1px solid var(--line-light); padding: 22px 24px 0 0; }
-  }
-  /* La frase se ilumina al leerla; los datos entran uno detrás del otro. Sin JS, bajo reduced-motion. */
-  @media (prefers-reduced-motion: no-preference) {
-    @supports (animation-timeline: view()) {
-      .intro__statement .w {
-        animation: light-up linear both;
-        animation-timeline: view();
-        animation-range: cover 10% cover 38%;
-      }
-      .intro__facts li { animation-range: entry calc(var(--i) * 12%) entry calc(60% + var(--i) * 12%); }
-    }
-  }
-  @keyframes light-up { from { color: color-mix(in srgb, var(--ink) 62%, var(--white)); } to { color: var(--ink); } }
-
   /* ---------- Modelos ---------- */
-  .models .t-h2 { max-width: 18ch; }
+  .models .t-h2 { max-width: 24ch; }
+  .models__intro { margin-top: 16px; }
   .models__group { margin-top: clamp(28px, 3vw, 40px); }
   .models__group-name { padding-top: 18px; border-top: 1px solid var(--line); margin-bottom: 28px; }
   /* Mobile: fila deslizable con la tarjeta siguiente asomando. Desktop: grilla de 3. */
   .models__grid {
-    list-style: none; margin: 0 calc(var(--gutter) * -1); padding: 0 var(--gutter) 8px;
-    display: grid; grid-auto-flow: column; grid-auto-columns: 78%; gap: 14px;
+    list-style: none; margin: 0; padding: 0;
+    display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px;
     overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--gutter);
     scrollbar-width: none;
   }
@@ -299,6 +251,8 @@ const logos = [
   .model__specs dt { color: var(--muted); min-width: 64px; }
   .model__specs dd { margin: 0; font-weight: 600; }
   .models__note { margin-top: clamp(24px, 3vw, 36px); }
+  .models__cta { margin-top: clamp(28px, 3.5vw, 44px); display: flex; flex-wrap: wrap; align-items: center; gap: 16px 20px; }
+  .models__cta span { font-size: var(--fs-small); }
 
   .gallery { list-style: none; margin: clamp(40px, 5vw, 64px) 0 0; padding: 0; display: grid; gap: 24px; }
   .gallery figure { margin: 0; display: grid; gap: 12px; }
@@ -308,7 +262,7 @@ const logos = [
 
   @media (min-width: 900px) {
     /* Tantas columnas como modelos (máx. 3): con 2 modelos no queda una columna vacía. */
-    .models__grid { grid-auto-flow: row; grid-template-columns: repeat(var(--cols, 3), minmax(0, 360px)); gap: 24px; margin: 0; padding: 0; overflow: visible; }
+    .models__grid { grid-auto-flow: row; grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr)); gap: 24px; margin: 0; padding: 0; overflow: visible; }
     .model { padding: 28px; gap: 24px; }
     .gallery { grid-template-columns: repeat(2, 1fr); }
   }
@@ -322,7 +276,7 @@ const logos = [
     content: ''; position: absolute; left: 0; top: 6px; bottom: 6px; width: 2px;
   }
   .process__steps::before { background: var(--line); }
-  .process__steps::after { background: var(--red); transform-origin: top; }
+  .process__steps::after { background: var(--red-strong); transform-origin: top; }
   .process__steps li { display: grid; gap: 10px; }
   .process__steps p { max-width: 40ch; }
 

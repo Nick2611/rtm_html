@@ -1,0 +1,86 @@
+        <form class="contact-form" id="contact-form" data-contact-form novalidate>
+          <p class="form-product-context" data-form-product-context hidden></p>
+          <div class="form-field">
+            <label for="nombre" class="req">Nombre</label>
+            <input id="nombre" name="nombre" type="text" placeholder="Tu nombre" autocomplete="given-name" minlength="2" maxlength="80" required>
+            <span class="error-message" aria-live="polite">Ingresá tu nombre.</span>
+          </div>
+          <div class="form-field">
+            <label for="telefono" class="req">Teléfono o WhatsApp</label>
+            <input id="telefono" name="telefono" type="tel" placeholder="+54 9 11 1234-5678" inputmode="tel" autocomplete="tel" maxlength="25" required>
+            <span class="field-hint">Usamos este número únicamente para responder tu consulta.</span>
+            <span class="error-message" aria-live="polite">Ingresá un teléfono válido.</span>
+          </div>
+          <div class="form-field full">
+            <label for="mensaje" class="req">¿Qué necesitás?</label>
+            <textarea id="mensaje" name="consulta" placeholder="Por ejemplo: dónde se instalaría, tamaño aproximado y para cuándo lo necesitás." rows="5" minlength="10" maxlength="2000" required></textarea>
+            <span class="error-message" aria-live="polite">Describí tu consulta.</span>
+          </div>
+
+          <details class="form-optional">
+            <summary>Agregar más detalles <span>(opcional)</span></summary>
+            <div class="form-optional__grid">
+              <div class="form-field">
+                <label for="apellido">Apellido <span class="optional-label">(opcional)</span></label>
+                <input id="apellido" name="apellido" type="text" placeholder="Tu apellido" autocomplete="family-name" minlength="2" maxlength="80">
+                <span class="error-message" aria-live="polite">Revisá el apellido ingresado.</span>
+              </div>
+              <div class="form-field">
+                <label for="empresa">Empresa u organización <span class="optional-label">(opcional)</span></label>
+                <input id="empresa" name="empresa" type="text" placeholder="Si corresponde" autocomplete="organization" minlength="2" maxlength="120">
+                <span class="error-message" aria-live="polite">Revisá el nombre ingresado.</span>
+              </div>
+              <div class="form-field">
+                <label for="tipo-cliente">Tipo de cliente <span class="optional-label">(opcional)</span></label>
+                <select id="tipo-cliente" name="tipoCliente" data-client-type-select>
+                  <option value="">Seleccionar tipo de cliente</option>
+                </select>
+                <span class="error-message" aria-live="polite">Revisá el tipo de cliente.</span>
+              </div>
+              <div class="form-field">
+                <label for="tipo-solucion">Solución de interés <span class="optional-label">(opcional)</span></label>
+                <select id="tipo-solucion" name="tipoSolucion" data-solution-select>
+                  <option value="">Seleccionar tipo de solución</option>
+                </select>
+                <span class="error-message" aria-live="polite">Revisá la solución seleccionada.</span>
+              </div>
+              <div class="form-field full" data-other-client-field hidden>
+                <label for="otro-tipo-cliente">Especificá el tipo de cliente <span class="optional-label">(opcional)</span></label>
+                <input id="otro-tipo-cliente" name="otroTipoCliente" type="text" placeholder="Contanos a qué actividad te dedicás" minlength="2" maxlength="80" disabled>
+                <span class="error-message" aria-live="polite">Especificá el tipo de cliente.</span>
+              </div>
+            </div>
+          </details>
+          <div class="form-actions">
+            <button class="btn btn--primary" type="submit" id="submit-btn" aria-label="Solicitar asesoramiento para el proyecto">
+              <span class="btn-text">Pedir asesoramiento</span>
+              <span class="btn-loading" style="display:none">Enviando...</span>
+            </button>
+          </div>
+          <p class="form-status" data-form-status role="status" aria-live="polite"></p>
+          <div class="privacy-notice">
+            Al enviar este formulario, aceptás que RTM Pantallas LED procese tus datos de contacto para responder a tu consulta.
+            <a href="privacidad.html">Ver política de privacidad</a>
+          </div>
+        </form>
+<script is:inline src="/js/contact-form.js?v=20260917-ui1" defer></script>
+<style>
+.contact-form { display: grid; gap: 24px; min-width: 0; }
+.form-field { display: grid; gap: 8px; }
+label { font-weight: 600; }
+.req::after { content: ' *'; color: var(--red-strong); }
+input, textarea, select { width: 100%; min-width: 0; padding: 14px 16px; min-height: 54px; border: 1px solid var(--line-light); border-radius: var(--radius-sm); background: var(--white); color: var(--ink); font: inherit; }
+textarea { resize: vertical; }
+input::placeholder, textarea::placeholder { color: var(--muted-light); opacity: 1; }
+.error-message { display: none; color: var(--red-strong); }
+.error .error-message { display: block; }
+.error input, .error textarea { border-color: var(--red-strong); }
+.field-hint, .privacy-notice, .optional-label, summary span { font-size: var(--fs-small); color: var(--muted-light); }
+.form-optional summary { padding-block: 12px; min-height: 48px; cursor: pointer; }
+.form-optional__grid { display: grid; gap: 20px; padding-top: 20px; }
+.privacy-notice a { display: inline-block; text-underline-offset: 4px; }
+.form-status:empty { display: none; }
+.form-status { border-left: 3px solid var(--ink); padding-left: 16px; }
+.form-status.error { border-color: var(--red-strong); }
+@media (min-width: 700px) { .form-optional__grid { grid-template-columns: 1fr 1fr; } .full { grid-column: 1 / -1; } }
+</style>

@@ -2,8 +2,17 @@
 import Icon from './Icon.astro';
 import { EMAIL, PHONE, PHONE_LABEL, products, wa } from '../data/site';
 
-interface Props { context: string; advice: string }
-const { context, advice } = Astro.props;
+/**
+ * CONTRATO Ads/GA4: el footer de producción no es igual en todas las páginas. La home y proyectos
+ * sólo miden el teléfono; el catálogo usa catalog-footer. Por eso el mail y el WhatsApp son opcionales.
+ */
+interface Props {
+  context: string;
+  advice: string;
+  email?: boolean;
+  wa?: { placement: string; context?: string } | null;
+}
+const { context, advice, email = true, wa: waLink = { placement: 'landing_footer' } } = Astro.props;
 ---
 <footer class="footer">
   <div class="wrap">
@@ -27,9 +36,10 @@ const { context, advice } = Astro.props;
       <div>
         <h2 class="footer__label">Contacto</h2>
         <a href={`tel:+${PHONE}`} data-conversion="phone_footer" data-context={context}><Icon name="phone" />{PHONE_LABEL}</a>
-        <a href={`mailto:${EMAIL}`} data-conversion="email_footer" data-context={context}><Icon name="envelope-simple" />{EMAIL}</a>
-        <a href={wa(advice)} target="_blank" rel="noopener noreferrer"
-           data-conversion="whatsapp_click" data-conversion-placement="landing_footer" data-context={context}><Icon name="whatsapp-logo" />WhatsApp</a>
+        {email && <a href={`mailto:${EMAIL}`} data-conversion="email_footer" data-context={context}><Icon name="envelope-simple" />{EMAIL}</a>}
+        {waLink && <a href={wa(advice)} target="_blank" rel="noopener noreferrer"
+           data-conversion="whatsapp_click" data-conversion-placement={waLink.placement}
+           data-context={waLink.context ?? context}><Icon name="whatsapp-logo" />WhatsApp</a>}
       </div>
     </div>
 

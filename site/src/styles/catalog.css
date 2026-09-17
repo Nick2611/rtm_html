@@ -1,0 +1,42 @@
+/* Adaptador del catálogo existente: conserva rutas, filtros y fichas. */
+:root { --accent: var(--red-strong); --env-indoor: var(--ink); --env-outdoor: var(--ink); --product-card-shadow: none; --product-card-shadow-hover: none; --product-card-radius: var(--radius); }
+.products-page { background: var(--white); min-height: 70vh; }
+.products-container { max-width: var(--wrap); padding: 32px var(--gutter) var(--section); }
+.products-overview-header { text-align: left; margin-bottom: 40px; }
+.products-overview-header h1, .category-title { font-size: var(--fs-display); line-height: 1.12; letter-spacing: -.03em; }
+.products-overview-header p, .category-description { color: var(--muted-light); max-width: 58ch; font-size: var(--fs-body); line-height: 1.6; }
+.catalog-search { padding-top: 40px; }
+.catalog-search label { display: block; font-weight: 600; margin-bottom: 8px; }
+.search-container { position: relative; max-width: 580px; }
+#global-search { width: 100%; min-height: 56px; padding: 14px 18px; border: 1px solid var(--line-light); border-radius: var(--radius-sm); color: var(--ink); background: var(--white); }
+#global-search::placeholder { color: var(--muted-light); }
+#search-results { position: absolute; z-index: 20; top: 100%; width: 100%; max-height: 420px; overflow-y: auto; background: var(--white); border-radius: var(--radius-sm); }
+#search-results:empty { display: none; }
+.catalog-categories { display: grid; gap: 40px 32px; }
+.catalog-category { text-decoration: none; min-width: 0; }
+.catalog-category > img { width: 100%; aspect-ratio: 16/10; object-fit: cover; border-radius: var(--radius); }
+.catalog-category > div { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 20px; }
+.catalog-category h2 { font-size: var(--fs-h3); }
+.catalog-category svg { width: 24px; height: 24px; }
+.catalog-category p { color: var(--muted-light); margin-top: 8px; }
+.product-card, .subcategory-card, .model-detail-image { box-shadow: none; border: 1px solid var(--line-light); border-radius: var(--radius); }
+.product-card:hover, .subcategory-card:hover { transform: none; box-shadow: none; }
+.product-card-title, .subcategory-card-title { font-size: var(--fs-h3); }
+.product-card-description, .product-spec, .product-card-link, .breadcrumb, .filter-btn, .subcategory-card-description, .model-env-badge, .product-env-badge, .subcategory-env-badge, .model-specs, .model-detail-description { font-size: var(--fs-small); line-height: 1.6; }
+.breadcrumb a { display: inline-flex; align-items: center; min-height: 44px; }
+.filter-btn { min-height: 48px; padding: 10px 20px; }
+.filter-btn.active { background: var(--ink); color: var(--white); border-color: var(--ink); }
+.model-detail-title { font-size: var(--fs-display); }
+.model-actions { display: flex; flex-wrap: wrap; gap: 16px; }
+.model-actions .btn { min-height: 56px; font-size: var(--fs-body); }
+.model-actions .btn-whatsapp { background: var(--red-strong); color: var(--white); }
+.model-actions .btn-secondary { background: var(--white); color: var(--ink); border: 1px solid var(--line-light); }
+.model-specs { box-shadow: none; background: var(--mist); border-radius: var(--radius-sm); }
+.products-page .fas, .products-page .fab { display: none; }
+.carousel-nav { min-width: 44px; min-height: 44px; }
+.carousel-prev::before { content: '‹'; font-size: 30px; }
+.carousel-next::before { content: '›'; font-size: 30px; }
+.carousel-indicator { min-width: 28px; min-height: 28px; border-radius: 50%; border: 8px solid white; background: var(--muted-light); }
+.carousel-indicator.active { background: var(--red-strong); }
+@media (min-width: 768px) { .catalog-categories { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 599px) { .model-actions .btn { width: 100%; white-space: normal; } }

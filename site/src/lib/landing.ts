@@ -57,7 +57,9 @@ export function shortSpec(value: string): string {
 export interface ModelCard {
   name: string; group: string; href: string; image: ImageMetadata; specs: [string, string][];
 }
-export function modelGroups(l: Landing): { name: string; models: ModelCard[] }[] {
+/** `slug` es el de la subcategoría: la plantilla lo usa como ancla #modelos-<slug> y el menú de
+ *  productos enlaza ahí, para que "Indoor" caiga en el bloque Indoor de la landing. */
+export function modelGroups(l: Landing): { name: string; slug: string; models: ModelCard[] }[] {
   const category = products.categories.find(c => c.slug === l.category);
   if (!category) throw new Error(`Categoría inexistente en products.json: ${l.category}`);
   return (category.subcategories ?? [])
@@ -66,6 +68,7 @@ export function modelGroups(l: Landing): { name: string; models: ModelCard[] }[]
       const name = l.models.groups?.[sub.slug] ?? sub.name;
       return {
         name,
+        slug: sub.slug,
         models: sub.models.map((m: any) => ({
           name: m.name,
           group: name,

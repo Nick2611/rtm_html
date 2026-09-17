@@ -1,0 +1,139 @@
+---
+/**
+ * Home. El hero de videos, el carrusel de marcas y los textos son los de producción: acá el
+ * refactor cambia la forma, no el contenido ni la medición.
+ * CONTRATO Ads/GA4 de esta página (check C2): whatsapp_hero||home, catalog_hero||,
+ * whatsapp_header||home, whatsapp_menu_mobile||home, whatsapp_floating||home, phone_footer||home,
+ * servicios_category_click|servicios_home|.
+ */
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import HeroHome from '../components/HeroHome.astro';
+import Footer from '../components/Footer.astro';
+import Dock from '../components/Dock.astro';
+import Icon from '../components/Icon.astro';
+import Clients from '../components/Clients.astro';
+import ContactForm from '../components/ContactForm.astro';
+import Placeholder from '../components/Placeholder.astro';
+import { organization, website } from '../data/schema';
+
+const advice = 'Hola, quiero asesoramiento para una pantalla LED. La necesito para: ';
+
+// Las fotos de estas cards quedaron pendientes: las elige Nicolás. `hint` dice qué buscar.
+const offer = [
+  { slug: 'pantallas-led', name: 'Pantallas LED', copy: 'Para locales, fachadas y espacios corporativos.', hint: 'instalación en local o fachada' },
+  { slug: 'tour-series', name: 'Tour Series', copy: 'Sistemas modulares para escenarios y giras.', hint: 'pantalla de escenario' },
+  { slug: 'led-trucks', name: 'LED Trucks', copy: 'Pantallas que acompañan tu campaña.', hint: 'camión con pantalla en la calle' },
+];
+---
+<Base
+  title="Pantallas LED para empresas y eventos | RTM"
+  description="Especialistas en desarrollo, fabricación e instalación de pantallas LED para interior y exterior. Soluciones profesionales y a medida."
+  path="/"
+  ogImage="/proyectos_imagenes/proyecto_18.webp"
+  breadcrumb={[]}
+  jsonLd={[organization, website]}
+>
+  <Header
+    context="home"
+    advice={advice}
+    current="/index.html"
+    cta={{ conversion: 'whatsapp_header' }}
+    mobileCta={{ conversion: 'whatsapp_menu_mobile' }}
+  />
+
+  <main>
+    <HeroHome />
+
+    <section class="band band--white" id="servicios" aria-labelledby="oferta-title">
+      <div class="wrap">
+        <h2 class="t-h2" id="oferta-title">Una pantalla para cada espacio</h2>
+        <p class="section-lead muted">Elegí según el uso. Te orientamos con las medidas y la resolución.</p>
+
+        <div class="offer">
+          {offer.map(item => (
+            <a class="offer__item reveal" href={`/productos/${item.slug}.html`}
+               data-conversion="servicios_category_click" data-conversion-category={item.slug}
+               data-conversion-placement="servicios_home">
+              <Placeholder label={item.name} ratio="4/3" hint={item.hint} />
+              <div class="offer__caption">
+                <div><h3 class="t-h3">{item.name}</h3><p class="muted">{item.copy}</p></div>
+                <Icon name="arrow-up-right" />
+              </div>
+            </a>
+          ))}
+        </div>
+
+        <a class="link-arrow all-products" href="/productos.html">Ver todos los productos<Icon name="arrow-right" /></a>
+      </div>
+    </section>
+
+    <Clients />
+
+    <section class="band band--white" id="proyectos" aria-labelledby="proyectos-title">
+      <div class="wrap proof">
+        <div class="proof__photo">
+          <Placeholder label="Instalación terminada" ratio="4/3" hint="pantalla encendida en un local o salón" />
+        </div>
+        <div class="proof__text">
+          <h2 class="t-h2" id="proyectos-title">Del proyecto a la pantalla encendida</h2>
+          <p class="muted">Locales, salones y escenarios. Mirá cómo quedan nuestros equipos en instalaciones reales.</p>
+          <a class="link-arrow" href="/proyectos.html">Ver proyectos<Icon name="arrow-right" /></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="band band--mist" id="about" aria-labelledby="about-title">
+      <div class="wrap about">
+        <div>
+          <h2 class="t-h2" id="about-title">Nos ocupamos de la instalación completa</h2>
+          <p class="section-lead muted">Somos RTM Sistemas. Desarrollamos pantallas LED y acompañamos cada proyecto desde la elección del equipo.</p>
+        </div>
+        <dl class="about__details">
+          <div><dt>Definición del equipo</dt><dd>Medidas, luz del ambiente y distancia de visión para elegir la pantalla.</dd></div>
+          <div><dt>Fabricación e instalación</dt><dd>Estructura, montaje y puesta en marcha en el lugar.</dd></div>
+          <div><dt>Servicio técnico</dt><dd>Repuestos y soporte después de la instalación.</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="band band--white" id="contacto" aria-labelledby="contacto-title">
+      <div class="wrap contact">
+        <div class="contact__intro">
+          <h2 class="t-h2" id="contacto-title">Contanos qué tenés en mente</h2>
+          <p class="section-lead muted">Dónde va la pantalla, para qué la necesitás y qué medida imaginás. No hace falta tener todo definido.</p>
+        </div>
+        <ContactForm />
+      </div>
+    </section>
+  </main>
+
+  <Footer context="home" advice={advice} email={false} wa={null} />
+  <Dock context="home" advice={advice} product="pantallas LED" conversion="whatsapp_floating" placement="" />
+</Base>
+
+<style>
+  .section-lead { max-width: 48ch; margin-top: 20px; }
+
+  /* Tres cards iguales. La grilla anterior estiraba la primera a 640 px de alto y recortaba la foto. */
+  .offer { margin-top: 40px; display: grid; gap: 32px; }
+  .offer__item { text-decoration: none; min-width: 0; }
+  .offer__caption { display: flex; justify-content: space-between; align-items: start; gap: 20px; margin-top: 20px; }
+  .offer__caption p { margin-top: 8px; }
+  .offer__caption :global(svg) { width: 28px; height: 28px; flex: none; }
+  .all-products { margin-top: 32px; }
+
+  .proof, .about, .contact { display: grid; gap: 40px; align-items: start; }
+  .proof__text { display: grid; gap: 24px; align-self: center; }
+  .about__details { margin: 0; display: grid; gap: 28px; }
+  .about__details > div { border-top: 1px solid var(--line-light); padding-top: 24px; }
+  dt { font-size: var(--fs-h3); font-weight: 600; }
+  dd { margin: 8px 0 0; color: var(--muted-light); }
+
+  @media (min-width: 900px) {
+    .offer { grid-template-columns: repeat(3, 1fr); gap: 32px; }
+    .proof { grid-template-columns: 1.3fr 1fr; gap: 72px; }
+    .about, .contact { grid-template-columns: 1fr 1.1fr; gap: 96px; }
+    .contact__intro { position: sticky; top: 120px; }
+  }
+</style>

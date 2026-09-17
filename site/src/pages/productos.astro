@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Dock from '../components/Dock.astro';
+import Icon from '../components/Icon.astro';
+import Placeholder from '../components/Placeholder.astro';
+import { organization } from '../data/schema';
+import { type Landing } from '../lib/landing';
+import '@repo/css/products.css';
+import '../styles/catalog.css';
+const landings = Object.values(import.meta.glob<{ default: Landing }>('../data/landings/*.ts', { eager: true })).map(x => x.default);
+const advice = 'Hola, estoy viendo el catálogo de RTM y quiero asesoramiento para elegir un equipo.';
+---
+<Base title="Productos — RTM Pantallas LED" description="Catálogo completo de productos RTM: Pantallas LED, Tour Series, Totems, Pisos LED, Soluciones especiales, LED Trucks e Iluminación Profesional." path="/productos.html" ogImage="/rtm_logo/rtmLogo.png" breadcrumb={[]} jsonLd={[organization]}>
+  <Header context="productos" advice={advice} current="/productos.html" cta={null} />
+  <main id="contenido" class="products-page">
+    <div class="wrap catalog-search">
+      <label for="global-search">Buscar un equipo</label>
+      <div class="search-container"><input type="search" id="global-search" placeholder="Nombre o modelo, por ejemplo IFI960" autocomplete="off" aria-controls="search-results" /><div id="search-results" aria-live="polite"></div></div>
+    </div>
+    <div class="products-container" id="product-content">
+      <div class="products-overview" id="products-overview">
+        <div class="products-overview-header"><h1>Productos LED</h1><p>Equipos para instalaciones fijas, eventos y publicidad móvil.</p></div>
+        <div class="catalog-categories">
+          {landings.map(l => <a href={`/productos/${l.slug}.html`} class="catalog-category">
+            <Placeholder label={l.product} ratio="4/3" />
+            <div><h2>{l.product}</h2><Icon name="arrow-up-right" /></div><p>{l.hero.lead}</p>
+          </a>)}
+        </div>
+      </div>
+    </div>
+  </main>
+  <Footer context="productos" advice={advice} wa={{ placement: 'catalog-footer', context: 'catalog-footer' }} />
+  <Dock context="productos" advice={advice} product="productos LED"
+        placement="catalog-persistent" trackedContext="catalog-persistent" id="catalog-whatsapp-cta" />
+  <script is:inline src="/js/products.js?v=20260917-catalog1" defer></script>
+</Base>

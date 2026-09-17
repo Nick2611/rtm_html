@@ -1,0 +1,91 @@
+---
+/**
+ * Carrusel de marcas. Son los nueve logos de producción y se mueven: la grilla estática de seis
+ * que había acá antes perdía tres clientes y el movimiento que hace que la sección se mire.
+ * El loop es CSS puro (dos grupos idénticos, translateX -50%): no necesita el clonado por JS.
+ *
+ * DOS COSAS QUE NO SE PUEDEN TOCAR, porque cada una rompía el loop:
+ * 1. `loading="eager"`. Con lazy, los logos que el track deja fuera de la ventana NUNCA se cargan:
+ *    quedan en 0 px de ancho, el track cambia de largo cuando alguno entra, y ese cambio mueve a
+ *    dónde cae el -50% → se ve como un tirón y un reinicio. (js/main.js en producción forzaba
+ *    eager por este mismo motivo.)
+ * 2. Las medidas van en el HTML. Por eso se usa <Image> de Astro y no un <img> a mano: emite
+ *    width/height, así cada hueco mide lo que tiene que medir desde el primer cuadro.
+ */
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+const files = import.meta.glob<{ default: ImageMetadata }>('@repo/logos_clientes/*.webp', { eager: true });
+const logo = (file: string) =>
+  Object.entries(files).find(([path]) => path.endsWith('/' + file))![1].default;
+
+const clients: [string, string][] = [
+  ['BCRA_logo.svg.webp', 'Banco Central de la República Argentina'],
+  ['Mincienciaarg.webp', 'Ministerio de Ciencia, Tecnología e Innovación'],
+  ['Logo-Shell.webp', 'Shell'],
+  ['logo_ee_v2-01.webp', 'Municipio de Esteban Echeverría'],
+  ['TyCSp.webp', 'TyC Sports'],
+  ['2560px-Aerop_arg_2000_logo.svg.webp', 'Aeropuertos Argentina 2000'],
+  ['Logotipo_de_la_Ciudad_de_Buenos_Aires.svg.webp', 'Ciudad de Buenos Aires'],
+  ['logo-speed.webp', 'Speed Lider'],
+  ['Olympic_rings_without_rims.svg.webp', 'Comité Olímpico'],
+];
+---
+<section class="clients" id="clientes" aria-labelledby="clientes-title">
+  <h2 id="clientes-title" class="clients__title">Empresas e instituciones que eligieron RTM</h2>
+
+  <div class="clients__viewport">
+    <div class="clients__track">
+      <ul class="clients__group">
+        {clients.map(([file, name]) => (
+          <li><Image src={logo(file)} alt={name} height={52} densities={[1, 2]} loading="eager" decoding="async" /></li>
+        ))}
+      </ul>
+      <ul class="clients__group" aria-hidden="true">
+        {clients.map(([file]) => (
+          <li><Image src={logo(file)} alt="" height={52} densities={[1, 2]} loading="eager" decoding="async" /></li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .clients { padding-block: clamp(48px, 6vw, 72px); overflow: clip; }
+  .clients__title {
+    font-size: var(--fs-small); font-weight: 500; text-align: center; color: var(--muted-light);
+  }
+
+  .clients__viewport { margin-top: 36px; overflow: hidden; }
+  .clients__track { display: flex; width: max-content; }
+  .clients__group {
+    display: flex; align-items: center; gap: clamp(40px, 6vw, 72px);
+    padding-right: clamp(40px, 6vw, 72px);
+    margin: 0; padding-block: 0; padding-left: 0; list-style: none;
+  }
+  .clients__group img {
+    height: 52px; width: auto; max-width: 170px; object-fit: contain;
+    filter: grayscale(1); opacity: 0.75;
+    transition: filter 0.3s var(--ease), opacity 0.3s var(--ease);
+    /* El logo no es un enlace ni se arrastra: el puntero lo atraviesa y pega en el <li>, que es
+       quien tiene el :hover. Así no se puede clickear ni seleccionar, y el color igual aparece. */
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+  .clients__group li:hover img { filter: grayscale(0); opacity: 1; }
+
+  /* La marquesina NO se frena al pasar por encima: pausarla se veía como un corte y un salto al
+     volver. Lo único que hace el hover es devolverle el color al logo. */
+  @media (prefers-reduced-motion: no-preference) {
+    .clients__track { animation: clients-marquee 45s linear infinite; }
+  }
+  @keyframes clients-marquee { to { transform: translateX(-50%); } }
+
+  /* Sin movimiento: se ven los nueve envueltos y centrados, sin recorte. */
+  @media (prefers-reduced-motion: reduce) {
+    .clients__track { width: 100%; justify-content: center; }
+    .clients__group { flex-wrap: wrap; justify-content: center; padding-right: 0; }
+    .clients__group[aria-hidden='true'] { display: none; }
+  }
+</style>

@@ -2,13 +2,30 @@
 import Icon from './Icon.astro';
 import { wa } from '../data/site';
 
-interface Props { context: string; advice: string; product: string }
-const { context, advice, product } = Astro.props;
+/**
+ * CONTRATO Ads/GA4: el botón persistente se llama distinto según la página en producción
+ * (whatsapp_floating en home y proyectos, whatsapp_click|landing_persistent en las landings,
+ * catalog-persistent en el catálogo). No unificar los nombres sin aprobación.
+ */
+interface Props {
+  context: string;
+  advice: string;
+  product: string;
+  conversion?: string;
+  placement?: string;
+  trackedContext?: string;
+  id?: string;
+}
+const {
+  context, advice, product,
+  conversion = 'whatsapp_click', placement = 'landing_persistent', trackedContext, id,
+} = Astro.props;
 ---
-<a class="dock" href={wa(advice)} target="_blank" rel="noopener noreferrer"
+<a id={id} class="dock" href={wa(advice)} target="_blank" rel="noopener noreferrer"
    aria-label={`Pedir cotización por WhatsApp sobre ${product}`}
-   data-conversion="whatsapp_click" data-conversion-placement="landing_persistent" data-context={context}>
-  <Icon name="whatsapp-logo" /><span>Pedir cotización</span>
+   data-conversion={conversion} data-conversion-placement={placement || undefined}
+   data-context={trackedContext ?? context}>
+  <Icon name="whatsapp-logo" /><span data-whatsapp-label>Hablar con un asesor</span>
 </a>
 
 <style>

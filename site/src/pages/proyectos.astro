@@ -1,0 +1,37 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Dock from '../components/Dock.astro';
+import { image } from '../lib/landing';
+import { wa } from '../data/site';
+const advice = 'Hola, vi los proyectos de RTM y quiero cotizar una instalación LED.';
+const photos = [2, 16, 3, 15, 17, 18, 1, 8, 9, 10, 11, 12, 13, 14];
+const captions: Record<number, string> = { 1: 'LED Truck', 2: 'Estación de servicio', 3: 'Escenario de evento', 15: 'Salón de eventos', 16: 'Showroom de vehículos', 17: 'Hall corporativo', 18: 'Instalación de pantalla LED' };
+---
+<Base title="Proyectos — RTM Pantallas LED" description="Galería de proyectos realizados por RTM Pantallas LED: instalaciones de pantallas LED para eventos, comercios, transmisiones y espacios corporativos." path="/proyectos.html" ogImage="/proyectos_imagenes/proyecto_2.webp" breadcrumb={[]}>
+  <Header context="proyectos" advice={advice} current="/proyectos.html" cta={null} />
+  <main id="contenido">
+    <section class="band band--white"><div class="wrap">
+      <h1 class="t-display">Nuestros Proyectos</h1><p class="lead muted">Instalaciones de RTM en comercios, empresas y eventos.</p>
+      <div class="projects-gallery">{photos.map((n, i) => <figure class="reveal-media"><Image src={image(`proyectos_imagenes/proyecto_${n}.webp`)} alt={captions[n] || 'Proyecto de instalación LED de RTM'} widths={[480, 960, 1400]} sizes="(min-width: 900px) 50vw, 100vw" loading={i < 2 ? 'eager' : 'lazy'} /><figcaption>{captions[n] || 'Instalación LED de RTM'}</figcaption></figure>)}</div>
+    </div></section>
+    <section class="band band--mist"><div class="wrap"><h2 class="t-h2">Mirá las pantallas en funcionamiento</h2><div class="videos">{[['bruno', 'Pantalla para evento'], ['speed_mini', 'Instalación Speed'], ['salon_leones', 'Salón de Leones']].map(([file, label]) => <figure><video controls playsinline preload="none" poster={`/miniaturas_videos/${file}.jpg`} aria-label={label}><source src={`/proyectos_videos/${file}.mp4`} type="video/mp4" />Tu navegador no permite reproducir este video.</video><figcaption>{label}</figcaption></figure>)}</div></div></section>
+    <section class="band band--white"><div class="wrap closing"><h2 class="t-h2">Tu próxima instalación empieza acá</h2><p class="muted">Contanos el espacio y el uso que tenés pensado.</p><a class="btn btn--primary" href={wa(advice)} target="_blank" rel="noopener noreferrer" data-conversion="whatsapp_projects_final" data-context="projects_end">Pedir cotización</a></div></section>
+  </main>
+  <Footer context="proyectos" advice={advice} email={false} wa={null} />
+  <Dock context="proyectos" advice={advice} product="instalaciones LED"
+        conversion="whatsapp_floating" placement="projects-persistent" trackedContext="projects" />
+</Base>
+<style>
+  .lead { margin-top: 20px; }
+  .projects-gallery { display: grid; gap: 40px 28px; margin-top: 48px; }
+  figure { margin: 0; min-width: 0; }
+  figure :global(img) { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: var(--radius); }
+  figcaption { margin-top: 12px; font-size: var(--fs-small); color: var(--muted-light); }
+  .videos { display: grid; gap: 28px; margin-top: 40px; }
+  video { display: block; width: 100%; aspect-ratio: 4/3; object-fit: contain; background: var(--ink); border-radius: var(--radius); }
+  .closing { display: grid; gap: 24px; justify-items: start; }
+  @media (min-width: 900px) { .projects-gallery { grid-template-columns: 1.2fr 1fr; } .projects-gallery figure:nth-child(even) { margin-top: 64px; } .videos { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+</style>
