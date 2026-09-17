@@ -154,9 +154,9 @@ const statement = 'Primero definimos dónde va, desde qué distancia se mira y c
             <ul class="models__grid" tabindex="0" aria-label={`Modelos de ${group.name.toLowerCase()}`}>
               {group.models.map(m => (
                 <li class="model reveal">
-                  <a class="model__media" href={m.href} tabindex="-1" aria-hidden="true">
+                  <div class="model__media">
                     <Image src={m.img} alt="" widths={[360, 640]} sizes="(min-width: 900px) 30vw, 40vw" />
-                  </a>
+                  </div>
                   <div class="model__body">
                     <p class="model__serie muted">{m.serie}</p>
                     <h4 class="model__name">{m.name}</h4>
@@ -166,7 +166,7 @@ const statement = 'Primero definimos dónde va, desde qué distancia se mira y c
                       <div><dt>Brillo</dt><dd>{m.nits}</dd></div>
                       <div><dt>Panel</dt><dd>{m.panel}</dd></div>
                     </dl>
-                    <a class="link-arrow" href={m.href}>Ver ficha técnica<span class="sr-only"> de {m.name}</span><Icon name="arrow-right" /></a>
+                    <a class="link-arrow model__link" href={m.href}>Ver ficha técnica<span class="sr-only"> de {m.name}</span><Icon name="arrow-right" /></a>
                   </div>
                 </li>
               ))}
@@ -266,7 +266,11 @@ const statement = 'Primero definimos dónde va, desde qué distancia se mira y c
   .hero__copy { display: grid; gap: 28px; }
   .hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; }
   .hero__media { margin-inline: calc(var(--gutter) * -1); }
-  .hero__media :global(img) { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+  .hero__media :global(img) {
+    width: 100%; aspect-ratio: 4 / 3; object-fit: cover;
+    -webkit-mask-image: radial-gradient(ellipse closest-side, #000 58%, transparent 100%);
+    mask-image: radial-gradient(ellipse closest-side, #000 58%, transparent 100%);
+  }
 
   @media (max-width: 599px) {
     .hero__actions .btn { width: 100%; }
@@ -331,8 +335,17 @@ const statement = 'Primero definimos dónde va, desde qué distancia se mira y c
     scrollbar-width: none;
   }
   .models__grid::-webkit-scrollbar { display: none; }
-  .model { display: grid; grid-template-rows: auto 1fr; gap: 20px; background: var(--white); padding: 22px; scroll-snap-align: start; }
-  .model__media { display: block; background: var(--white); overflow: clip; align-self: start; }
+  .model {
+    position: relative; display: grid; grid-template-rows: auto 1fr; gap: 20px;
+    background: var(--white); padding: 22px; border-radius: var(--radius); scroll-snap-align: start;
+    outline: 1.5px solid transparent; transition: outline-color 0.3s var(--ease);
+  }
+  .model:hover, .model:focus-within { outline-color: var(--line); }
+  /* Toda la tarjeta lleva a la ficha: blanco grande para tocar, un solo link para lectores de pantalla. */
+  .model__link::after { content: ''; position: absolute; inset: 0; border-radius: inherit; }
+  .model__link:focus-visible { outline: none; }
+  .model__link:focus-visible::after { outline: 3px solid var(--red); outline-offset: 3px; }
+  .model__media { display: block; background: var(--white); border-radius: var(--radius-sm); overflow: clip; align-self: start; }
   .model__media :global(img) { width: 100%; aspect-ratio: 4 / 3; object-fit: contain; transition: transform 0.7s var(--ease); }
   .model:hover .model__media :global(img) { transform: scale(1.05); }
   .model__body { display: grid; gap: 8px; align-content: start; }
@@ -382,7 +395,7 @@ const statement = 'Primero definimos dónde va, desde qué distancia se mira y c
   /* ---------- Proyectos ---------- */
   .projects__bento { list-style: none; margin: clamp(40px, 5vw, 64px) 0 0; padding: 0; display: grid; gap: 28px; }
   .projects__cell figure { margin: 0; display: grid; gap: 12px; }
-  .projects__frame { overflow: clip; }
+  .projects__frame { overflow: clip; border-radius: var(--radius); }
   .projects__frame :global(img) { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; transition: transform 0.9s var(--ease); }
   .projects__cell:hover .projects__frame :global(img) { transform: scale(1.04); }
   .projects__cell figcaption { font-size: var(--fs-small); }
@@ -404,7 +417,7 @@ const statement = 'Primero definimos dónde va, desde qué distancia se mira y c
 
   /* ---------- Cierre ---------- */
   .closing { background: var(--white); padding-bottom: var(--section); }
-  .closing__panel { padding: clamp(40px, 7vw, 104px) clamp(24px, 6vw, 96px); display: grid; gap: 28px; }
+  .closing__panel { padding: clamp(40px, 7vw, 104px) clamp(24px, 6vw, 96px); display: grid; gap: 28px; border-radius: var(--radius-lg); }
   .closing__panel .t-display { max-width: 16ch; }
   .closing__actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 8px; }
   @media (max-width: 599px) { .closing__actions .btn { width: 100%; } }

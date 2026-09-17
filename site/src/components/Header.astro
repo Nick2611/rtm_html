@@ -53,9 +53,9 @@ const { context, advice, current } = Astro.props;
   .header__menu summary :global(svg) { width: 24px; height: 24px; }
   .header__menu nav {
     position: absolute; right: 0; top: calc(100% + 12px); min-width: 240px;
-    display: grid; padding: 10px; background: var(--ink); border: 1px solid var(--line-dark);
+    display: grid; padding: 10px; background: var(--ink); border: 1px solid var(--line-dark); border-radius: var(--radius);
   }
-  .header__menu nav a { padding: 14px 16px; text-decoration: none; font-size: var(--fs-body); }
+  .header__menu nav a { padding: 14px 16px; border-radius: var(--radius-sm); text-decoration: none; font-size: var(--fs-body); }
 
   /* Sobre el hero el header es transparente; al bajar toma fondo. Sigue al scroll, no lo intercepta. */
   @media (prefers-reduced-motion: no-preference) {

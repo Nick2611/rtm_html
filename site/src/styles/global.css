@@ -4,9 +4,11 @@
   jerarquía por cambio de superficie). Colores: los de css/main.css, que no se negocian.
 
   Reglas que mantienen la cohesión en todo el sitio:
-  - Bandas: ink (#0f1420), white, mist (#f3f4fa), red (UNA por página, el bloque destacado), footer (#141416).
-  - Forma: lo interactivo es pill; paneles e imágenes, 0 radio.
+  - Bandas: black (#141416), ink (#0f1420), white, mist (#f3f4fa), red (UNA por página), footer (#141416).
+  - Forma: botones pill; tarjetas y fotos --radius (20px); bloques grandes --radius-lg (28px);
+    elementos chicos dentro de tarjetas --radius-sm (14px). Nada con puntas.
   - Acento: rojo. Botón #cf3d39 con texto blanco (4.79:1). #e84a45 sólo sobre fondos oscuros.
+  - Verde WhatsApp (#25d366, texto #141416, 9.28:1) sólo en el botón fijo de WhatsApp.
   - Texto: nunca por debajo de 17px. Público de 50+.
 */
 @import '@fontsource-variable/inter-tight/wght.css';
@@ -22,6 +24,12 @@
   --muted-dark: #aab3bf;
   --line-light: #d3d6da;
   --line-dark: rgb(255 255 255 / 0.12);
+  --wa: #25d366;
+  --wa-hover: #1da851;
+
+  --radius-sm: 14px;
+  --radius: 20px;
+  --radius-lg: 28px;
 
   --font: 'Inter Tight Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   --fs-hero: clamp(2.75rem, 1rem + 7.2vw, 7.25rem);

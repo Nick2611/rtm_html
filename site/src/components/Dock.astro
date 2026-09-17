@@ -12,38 +12,29 @@ const { context, advice, product } = Astro.props;
 </a>
 
 <style>
+  /* Botón fijo de WhatsApp: visible siempre, en todos los tamaños. Verde para que se reconozca sin leer. */
   .dock {
     position: fixed; z-index: 40;
     left: 16px; right: 16px; bottom: max(16px, env(safe-area-inset-bottom));
     display: flex; align-items: center; justify-content: center; gap: 12px;
     min-height: 60px; border-radius: 999px;
-    background: var(--red-strong); color: var(--white);
-    font-weight: 600; font-size: 1.125rem; text-decoration: none;
-    transition: transform 0.2s var(--ease), filter 0.3s var(--ease);
+    background: var(--wa); color: var(--ink);
+    font-weight: 700; font-size: 1.125rem; text-decoration: none;
+    transition: transform 0.2s var(--ease), background-color 0.3s var(--ease);
   }
-  .dock:hover { filter: brightness(0.92); }
+  .dock:hover { background: var(--wa-hover); }
   .dock:active { transform: scale(0.98); }
-  .dock :global(svg) { width: 26px; height: 26px; }
+  .dock :global(svg) { width: 28px; height: 28px; }
+  /* Reserva para que el botón nunca tape el final de la página. */
   :global(body) { padding-bottom: 92px; }
 
-  /* Aparece cuando el botón del hero sale de pantalla: dos botones iguales a la vista sería ruido. */
   @media (prefers-reduced-motion: no-preference) {
-    @supports (animation-timeline: scroll()) {
-      .dock {
-        animation: dock-in linear both;
-        animation-timeline: scroll(root);
-        animation-range: 40vh 70vh;
-      }
-    }
+    .dock { animation: dock-in 0.7s var(--ease) 0.9s both; }
   }
-  @keyframes dock-in {
-    from { opacity: 0; transform: translateY(24px); visibility: hidden; }
-    to { opacity: 1; transform: none; visibility: visible; }
-  }
+  @keyframes dock-in { from { opacity: 0; transform: translateY(24px); } }
 
   @media (min-width: 960px) {
-    /* En desktop el header fijo ya tiene el botón: el dock sería un segundo botón idéntico a la vista. */
-    .dock { display: none; }
+    .dock { left: auto; right: 32px; bottom: 32px; padding: 0 28px 0 22px; }
     :global(body) { padding-bottom: 0; }
   }
 </style>
