@@ -1,0 +1,1050 @@
+{
+  "pages": {
+    "404.html": {
+      "title": "404 - Página no encontrada | RTM Pantallas LED",
+      "description": null,
+      "canonical": "https://pantallasledrtm.com/404.html",
+      "robots": "noindex, nofollow",
+      "h1": [
+        "404"
+      ],
+      "jsonLdTypes": [],
+      "tags": {
+        "googleAds": "unguarded",
+        "ga4": "unguarded",
+        "clarity": "guarded",
+        "metaPixel": "guarded"
+      },
+      "hasTrackingScript": true,
+      "conversions": [
+        "recovery_404|clientes|",
+        "recovery_404|contacto|",
+        "recovery_404|home|",
+        "recovery_404|nosotros|",
+        "recovery_404|productos|"
+      ],
+      "waLinks": 0,
+      "redirect": null
+    },
+    "guia.html": {
+      "title": "Guía de Productos — RTM Pantallas LED",
+      "description": "Guía completa de productos RTM Pantallas LED. Conocé cada solución, sus modelos y cómo elegir la mejor opción para tu proyecto.",
+      "canonical": "https://pantallasledrtm.com/guia.html",
+      "robots": null,
+      "h1": [
+        "Guía de Productos RTM"
+      ],
+      "jsonLdTypes": [],
+      "tags": {
+        "googleAds": "unguarded",
+        "ga4": "unguarded",
+        "clarity": "guarded",
+        "metaPixel": "guarded"
+      },
+      "hasTrackingScript": true,
+      "conversions": [
+        "phone_footer||guia",
+        "products_guide_hero||",
+        "whatsapp_guide_final||guide_end",
+        "whatsapp_guide_hero||guide",
+        "whatsapp_guide_persistent|guide-persistent|guide"
+      ],
+      "waLinks": 3,
+      "redirect": null
+    },
+    "index.html": {
+      "title": "Pantallas LED para empresas y eventos | RTM",
+      "description": "Especialistas en desarrollo, fabricación e instalación de pantallas LED para interior y exterior. Soluciones profesionales y a medida.",
+      "canonical": "https://pantallasledrtm.com/",
+      "robots": null,
+      "h1": [
+        "Fabricamos e instalamos pantallas LED para eventos, comercios y empresas"
+      ],
+      "jsonLdTypes": [
+        "Organization",
+        "WebSite"
+      ],
+      "tags": {
+        "googleAds": "unguarded",
+        "ga4": "unguarded",
+        "clarity": "guarded",
+        "metaPixel": "guarded"
+      },
+      "hasTrackingScript": true,
+      "conversions": [
+        "catalog_hero||",
+        "phone_footer||home",
+        "servicios_category_click|servicios_home|",
+        "whatsapp_floating||home",
+        "whatsapp_header||home",
+        "whatsapp_hero||home",
+        "whatsapp_menu_mobile||home"
+      ],
+      "waLinks": 4,
+      "redirect": null
+    },
+    "privacidad.html": {
+      "title": "Política de Privacidad — RTM Pantallas LED",
+      "description": "Política de privacidad y protección de datos personales de RTM Pantallas LED.",
+      "canonical": null,
+      "robots": "noindex, follow",
+      "h1": [
+        "Política de Privacidad"
+      ],
+      "jsonLdTypes": [],
+      "tags": {
+        "googleAds": "unguarded",
+        "ga4": "unguarded",
+        "clarity": "guarded",
+        "metaPixel": "guarded"
+      },
+      "hasTrackingScript": true,
+      "conversions": [
+        "email_derechos||privacidad",
+        "email_privacidad||privacidad",
+        "phone_footer||privacidad",
+        "phone_privacidad||privacidad"
+      ],
+      "waLinks": 0,
+      "redirect": null
+    },
+    "productos.html": {
+      "title": "Productos — RTM Pantallas LED",
+      "description": "Catálogo completo de productos RTM: Pantallas LED, Tour Series, Totems, Pisos LED, Soluciones especiales, LED Trucks e Iluminación Profesional.",
+      "canonical": "https://pantallasledrtm.com/productos.html",
+      "robots": null,
+      "h1": [
+        "Productos LED"
+      ],
+      "jsonLdTypes": [
+        "Organization"
+      ],
+      "tags": {
+        "googleAds": "unguarded",
+        "ga4": "unguarded",
+        "clarity": "guarded",
+        "metaPixel": "guarded"
+      },
+      "hasTrackingScript": true,
+      "conversions": [
+        "email_footer||productos",
+        "phone_footer||productos",
+        "whatsapp_click|catalog-footer|catalog-footer",
+        "whatsapp_click|catalog-persistent|catalog-persistent"
+      ],
+      "waLinks": 2,
+      "redirect": null
+    },
+    "proyectos.html": {
+      "title": "Proyectos — RTM Pantallas LED",
+      "description": "Galería de proyectos realizados por RTM Pantallas LED: instalaciones de pantallas LED para eventos, comercios, transmisiones y espacios corporativos.",
+      "canonical": "https://pantallasledrtm.com/proyectos.html",
+      "robots": null,
+      "h1": [
+        "Nuestros Proyectos"
+      ],
+      "jsonLdTypes": [],
+      "tags": {
+        "googleAds": "unguarded",
+        "ga4": "unguarded",
+        "clarity": "guarded",
+        "metaPixel": "guarded"
+      },
+      "hasTrackingScript": true,
+      "conversions": [
+        "phone_footer||proyectos",
+        "whatsapp_floating|projects-persistent|projects",
+        "whatsapp_projects_final||projects_end"
+      ],
+      "waLinks": 2,
+      "redirect": null
+    },
+    "servicios.html": {
+      "title": "Servicios — RTM Pantallas LED",
+      "description": "Servicios RTM: diseño, fabricación e instalación de pantallas LED indoor y outdoor a medida para eventos, comercios y empresas en Argentina.",
+      "canonical": "https://pantallasledrtm.com/servicios.html",
+      "robots": null,
+      "h1": [
+        "Pantallas, tótems y cartelería LED"
+      ],
+      "jsonLdTypes": [],
+      "tags": {
+        "googleAds": "unguarded",
+        "ga4": "unguarded",
+        "clarity": "guarded",
+        "metaPixel": "guarded"
+      },
+      "hasTrackingScript": true,
+      "conversions": [
+        "form_header||services",
+        "form_menu_mobile||services",
+        "form_services_hero||services",
+        "whatsapp_services_hero||services",
+        "whatsapp_services_persistent|services-persistent|"
+      ],
+      "waLinks": 2,
+      "redirect": null
+    },
+    "productos/iluminacion-profesional.html": {
+      "title": "Iluminación profesional para escenarios y eventos | RTM",
+      "description": "Cabezales móviles beam y 3 en 1, barras móviles y flashes LED para shows, salones y producciones. Servicio técnico y repuestos posventa en Argentina.",
+      "canonical": "https://pantallasledrtm.com/productos/iluminacion-profesional.html",
+      "robots": null,
+      "h1": [
+        "Iluminación profesional para escenarios, salones y producciones"
+      ],
+      "jsonLdTypes": [
+        "BreadcrumbList"
+      ],
+      "tags": {
+        "googleAds": "guarded",
+        "ga4": "guarded",
+        "clarity": "guarded",
+        "metaPixel": "guarded"
+      },
+      "hasTrackingScript": true,
+      "conversions": [
+        "content_cta_click|landing_final_proyectos|iluminacion-profesional",
+        "content_cta_click|landing_hero_catalogo|iluminacion-profesional",
+        "email_footer||iluminacion-profesional",
+        "phone_footer||iluminacion-profesional",
+        "whatsapp_click|landing_final|iluminacion-profesional",
+        "whatsapp_click|landing_footer|iluminacion-profesional",
+        "whatsapp_click|landing_header|iluminacion-profesional",
+        "whatsapp_click|landing_hero|iluminacion-profesional",
+        "whatsapp_click|landing_modelos|iluminacion-profesional",
+        "whatsapp_click|landing_persistent|iluminacion-profesional"
+      ],
+      "waLinks": 6,
+      "redirect": null
+    },
+    "productos/led-trucks.html": {
+      "title": "LED Trucks: camiones con pantalla LED para publicidad móvil | RTM",
+      "description": "Camiones equipados con pantallas LED para campañas, eventos y activaciones. RTM realiza el diseño, la fabricación, la instalación y la puesta en marcha.",
+      "canonical": "https://pantallasledrtm.com/productos/led-trucks.html",
+      "robots": null,
+      "h1": [
+        "LED Trucks publicidad móvil sobre camión"
+      ],
+      "jsonLdTypes": [
+        "BreadcrumbList"
+      ],
+      "tags": {
+        "googleAds": "guarded",
+        "ga4": "guarded",
+        "clarity": "guarded",
+        "metaPixel": "guarded"
+      },
+      "hasTrackingScript": true,
+      "conversions": [
+        "content_cta_click|landing_final_proyectos|led-trucks",
+        "email_footer||led-trucks",
+        "phone_footer||led-trucks",
+        "whatsapp_click|landing_final|led-trucks",
+        "whatsapp_click|landing_footer|led-trucks",
+        "whatsapp_click|landing_header|led-trucks",
+        "whatsapp_click|landing_hero|led-trucks",
+        "whatsapp_click|landing_modelos|led-trucks",
+        "whatsapp_click|landing_persistent|led-trucks"
+      ],
+      "waLinks": 6,
+      "redirect": null
+    },
+    "productos/letreros-led.html": {
+      "title": "Pantallas LED | RTM",
+      "description": null,
+      "canonical": "https://pantallasledrtm.com/productos/pantallas-led.html",
+      "robots": "noindex, follow",
+      "h1": [],
+      "jsonLdTypes": [],
+      "tags": {
+        "googleAds": "absent",
+        "ga4": "absent",
+        "clarity": "absent",
+        "metaPixel": "absent"
+      },
+      "hasTrackingScript": false,
+      "conversions": [],
+      "waLinks": 0,
+      "redirect": {
+        "preservesQuery": true,
+        "preservesHash": true
+      }
+    },
+    "productos/pantallas-led.html": {
+      "title": "Pantallas LED para interior y exterior — Fabricación e instalación | RTM",
+      "description": "Fabricamos, vendemos e instalamos pantallas LED de interior, exterior, escenario y vehiculares. Definimos serie, pitch y medida según el lugar y el uso.",
+      "canonical": "https://pantallasledrtm.com/productos/pantallas-led.html",
+      "robots": null,
+      "h1": [
+        "Pantallas LED profesionales fabricación, venta e instalación"
+      ],
+      "jsonLdTypes": [
+        "BreadcrumbList"
+      ],
+      "tags": {
+        "googleAds": "guarded",
+        "ga4": "guarded",
+        "clarity": "guarded",
+        "metaPixel": "guarded"
+      },
+      "hasTrackingScript": true,
+      "conversions": [
+        "content_cta_click|landing_final_proyectos|pantallas-led",
+        "content_cta_click|landing_hero_catalogo|pantallas-led",
+        "email_footer||pantallas-led",
+        "phone_footer||pantallas-led",
+        "whatsapp_click|landing_final|pantallas-led",
+        "whatsapp_click|landing_footer|pantallas-led",
+        "whatsapp_click|landing_header|pantallas-led",
+        "whatsapp_click|landing_hero|pantallas-led",
+        "whatsapp_click|landing_modelos|pantallas-led",
+        "whatsapp_click|landing_persistent|pantallas-led"
+      ],
+      "waLinks": 6,
+      "redirect": null
+    },
+    "productos/pisos-led.html": {
+      "title": "Pisos LED para eventos, salones y pistas de baile | RTM",
+      "description": "Pisos LED transitables para salones, discotecas y eventos: reproducción de video, efectos RGB y superficie resistente al impacto y al agua.",
+      "canonical": "https://pantallasledrtm.com/productos/pisos-led.html",
+      "robots": null,
+      "h1": [
+        "Pisos LED transitables para salones, pistas y escenarios"
+      ],
+      "jsonLdTypes": [
+        "BreadcrumbList"
+      ],
+      "tags": {
+        "googleAds": "guarded",
+        "ga4": "guarded",
+        "clarity": "guarded",
+        "metaPixel": "guarded"
+      },
+      "hasTrackingScript": true,
+      "conversions": [
+        "content_cta_click|landing_final_proyectos|pisos-led",
+        "content_cta_click|landing_hero_catalogo|pisos-led",
+        "email_footer||pisos-led",
+        "phone_footer||pisos-led",
+        "whatsapp_click|landing_final|pisos-led",
+        "whatsapp_click|landing_footer|pisos-led",
+        "whatsapp_click|landing_header|pisos-led",
+        "whatsapp_click|landing_hero|pisos-led",
+        "whatsapp_click|landing_modelos|pisos-led",
+        "whatsapp_click|landing_persistent|pisos-led"
+      ],
+      "waLinks": 6,
+      "redirect": null
+    },
+    "productos/porticos.html": {
+      "title": "Pórticos LED de señalización vial para rutas y avenidas | RTM",
+      "description": "Pórticos LED de mensajería variable para rutas, autopistas y avenidas. Fabricación a medida del pescante, instalación y servicio técnico en Argentina.",
+      "canonical": "https://pantallasledrtm.com/productos/porticos.html",
+      "robots": null,
+      "h1": [
+        "Pórticos LED de señalización vial para rutas, autopistas y avenidas"
+      ],
+      "jsonLdTypes": [
+        "BreadcrumbList"
+      ],
+      "tags": {
+        "googleAds": "guarded",
+        "ga4": "guarded",
+        "clarity": "guarded",
+        "metaPixel": "guarded"
+      },
+      "hasTrackingScript": true,
+      "conversions": [
+        "content_cta_click|landing_final_proyectos|porticos",
+        "content_cta_click|landing_hero_catalogo|porticos",
+        "email_footer||porticos",
+        "phone_footer||porticos",
+        "whatsapp_click|landing_final|porticos",
+        "whatsapp_click|landing_footer|porticos",
+        "whatsapp_click|landing_header|porticos",
+        "whatsapp_click|landing_hero|porticos",
+        "whatsapp_click|landing_modelos|porticos",
+        "whatsapp_click|landing_persistent|porticos"
+      ],
+      "waLinks": 6,
+      "redirect": null
+    },
+    "productos/soluciones.html": {
+      "title": "Carteleras LED para colectivos y pantallas de diseño especial | RTM",
+      "description": "Carteleras y lunetas LED para transporte público, con control por red 4G y GPS, y pantallas de diseño especial fabricadas a medida.",
+      "canonical": "https://pantallasledrtm.com/productos/soluciones.html",
+      "robots": null,
+      "h1": [
+        "Soluciones LED a medida transporte y proyectos especiales"
+      ],
+      "jsonLdTypes": [
+        "BreadcrumbList"
+      ],
+      "tags": {
+        "googleAds": "guarded",
+        "ga4": "guarded",
+        "clarity": "guarded",
+        "metaPixel": "guarded"
+      },
+      "hasTrackingScript": true,
+      "conversions": [
+        "content_cta_click|landing_final_proyectos|soluciones",
+        "content_cta_click|landing_hero_catalogo|soluciones",
+        "email_footer||soluciones",
+        "phone_footer||soluciones",
+        "whatsapp_click|landing_final|soluciones",
+        "whatsapp_click|landing_footer|soluciones",
+        "whatsapp_click|landing_header|soluciones",
+        "whatsapp_click|landing_hero|soluciones",
+        "whatsapp_click|landing_modelos|soluciones",
+        "whatsapp_click|landing_persistent|soluciones"
+      ],
+      "waLinks": 6,
+      "redirect": null
+    },
+    "productos/totems.html": {
+      "title": "Tótems LED publicitarios para interior y exterior | RTM",
+      "description": "Tótems LED de formato vertical para comercios, lobbies, shoppings y vía pública. Indoor de alta definición y outdoor IP65 con vidrio laminado 3+3.",
+      "canonical": "https://pantallasledrtm.com/productos/totems.html",
+      "robots": null,
+      "h1": [
+        "Tótems LED verticales para comercios, lobbies y vía pública"
+      ],
+      "jsonLdTypes": [
+        "BreadcrumbList"
+      ],
+      "tags": {
+        "googleAds": "guarded",
+        "ga4": "guarded",
+        "clarity": "guarded",
+        "metaPixel": "guarded"
+      },
+      "hasTrackingScript": true,
+      "conversions": [
+        "content_cta_click|landing_final_proyectos|totems",
+        "content_cta_click|landing_hero_catalogo|totems",
+        "email_footer||totems",
+        "phone_footer||totems",
+        "whatsapp_click|landing_final|totems",
+        "whatsapp_click|landing_footer|totems",
+        "whatsapp_click|landing_header|totems",
+        "whatsapp_click|landing_hero|totems",
+        "whatsapp_click|landing_modelos|totems",
+        "whatsapp_click|landing_persistent|totems"
+      ],
+      "waLinks": 6,
+      "redirect": null
+    },
+    "productos/tour-series.html": {
+      "title": "Tour Series — Pantallas LED para eventos y giras | RTM",
+      "description": "Pantallas LED de gabinete liviano para eventos, escenarios y giras: 500×500 y 1000×500 mm, versiones curvas, indoor y outdoor con IP65 frontal.",
+      "canonical": "https://pantallasledrtm.com/productos/tour-series.html",
+      "robots": null,
+      "h1": [
+        "Pantallas LED para eventos montaje rápido y traslado permanente"
+      ],
+      "jsonLdTypes": [
+        "BreadcrumbList"
+      ],
+      "tags": {
+        "googleAds": "guarded",
+        "ga4": "guarded",
+        "clarity": "guarded",
+        "metaPixel": "guarded"
+      },
+      "hasTrackingScript": true,
+      "conversions": [
+        "content_cta_click|landing_final_proyectos|tour-series",
+        "content_cta_click|landing_hero_catalogo|tour-series",
+        "email_footer||tour-series",
+        "phone_footer||tour-series",
+        "whatsapp_click|landing_final|tour-series",
+        "whatsapp_click|landing_footer|tour-series",
+        "whatsapp_click|landing_header|tour-series",
+        "whatsapp_click|landing_hero|tour-series",
+        "whatsapp_click|landing_modelos|tour-series",
+        "whatsapp_click|landing_persistent|tour-series"
+      ],
+      "waLinks": 6,
+      "redirect": null
+    }
+  },
+  "sitemap": [
+    "https://pantallasledrtm.com/",
+    "https://pantallasledrtm.com/guia.html",
+    "https://pantallasledrtm.com/privacidad.html",
+    "https://pantallasledrtm.com/productos.html",
+    "https://pantallasledrtm.com/productos/iluminacion-profesional.html",
+    "https://pantallasledrtm.com/productos/led-trucks.html",
+    "https://pantallasledrtm.com/productos/pantallas-led.html",
+    "https://pantallasledrtm.com/productos/pisos-led.html",
+    "https://pantallasledrtm.com/productos/porticos.html",
+    "https://pantallasledrtm.com/productos/soluciones.html",
+    "https://pantallasledrtm.com/productos/totems.html",
+    "https://pantallasledrtm.com/productos/tour-series.html",
+    "https://pantallasledrtm.com/proyectos.html",
+    "https://pantallasledrtm.com/seccion_servicios/pantallas_led.html",
+    "https://pantallasledrtm.com/seccion_servicios/pisos_led.html",
+    "https://pantallasledrtm.com/seccion_servicios/ramaleros_led.html",
+    "https://pantallasledrtm.com/seccion_servicios/totems_led.html",
+    "https://pantallasledrtm.com/servicios.html"
+  ],
+  "brokenRefs": [],
+  "takenFrom": "/Users/nicolasmendez/Documents/GitHub/rtm_html-wa-ref",
+  "takenAt": "2026-09-17T04:24:33.820Z",
+  "tests": {
+    "B3-tests-conversion-tracking": 44,
+    "B3-tests-lambda": 38,
+    "B3-tests-subir-conversiones": 15
+  },
+  "lighthouse": {
+    "index.html": {
+      "performance": 79,
+      "accessibility": 97,
+      "seo": 100,
+      "lcpMs": 4952,
+      "cls": 0.099,
+      "tbtMs": 31
+    },
+    "productos/iluminacion-profesional.html": {
+      "performance": 94,
+      "accessibility": 95,
+      "seo": 100,
+      "lcpMs": 2401,
+      "cls": 0.115,
+      "tbtMs": 0
+    },
+    "productos/led-trucks.html": {
+      "performance": 92,
+      "accessibility": 95,
+      "seo": 100,
+      "lcpMs": 3302,
+      "cls": 0,
+      "tbtMs": 0
+    },
+    "productos/pantallas-led.html": {
+      "performance": 86,
+      "accessibility": 95,
+      "seo": 100,
+      "lcpMs": 4202,
+      "cls": 0,
+      "tbtMs": 0
+    },
+    "productos/pisos-led.html": {
+      "performance": 87,
+      "accessibility": 95,
+      "seo": 100,
+      "lcpMs": 3977,
+      "cls": 0.054,
+      "tbtMs": 0
+    },
+    "productos/porticos.html": {
+      "performance": 98,
+      "accessibility": 95,
+      "seo": 100,
+      "lcpMs": 2401,
+      "cls": 0,
+      "tbtMs": 0
+    },
+    "productos/totems.html": {
+      "performance": 96,
+      "accessibility": 95,
+      "seo": 100,
+      "lcpMs": 2702,
+      "cls": 0.059,
+      "tbtMs": 0
+    },
+    "productos.html": {
+      "performance": 97,
+      "accessibility": 94,
+      "seo": 100,
+      "lcpMs": 2417,
+      "cls": 0.003,
+      "tbtMs": 28
+    }
+  },
+  "behaviour": {
+    "index.html": [
+      {
+        "conversion": "whatsapp_header",
+        "placement": "",
+        "whatsapp": true,
+        "ref": "home · header",
+        "ga4Placement": "header"
+      },
+      {
+        "conversion": "whatsapp_menu_mobile",
+        "placement": "",
+        "whatsapp": true,
+        "ref": "home · menu-mobile",
+        "ga4Placement": "menu_mobile"
+      },
+      {
+        "conversion": "whatsapp_hero",
+        "placement": "",
+        "whatsapp": true,
+        "ref": "home · hero",
+        "ga4Placement": "hero"
+      },
+      {
+        "conversion": "catalog_hero",
+        "placement": "",
+        "whatsapp": false
+      },
+      {
+        "conversion": "servicios_category_click",
+        "placement": "servicios_home",
+        "whatsapp": false
+      },
+      {
+        "conversion": "servicios_category_click",
+        "placement": "servicios_home",
+        "whatsapp": false
+      },
+      {
+        "conversion": "servicios_category_click",
+        "placement": "servicios_home",
+        "whatsapp": false
+      },
+      {
+        "conversion": "phone_footer",
+        "placement": "",
+        "whatsapp": false
+      },
+      {
+        "conversion": "whatsapp_floating",
+        "placement": "",
+        "whatsapp": true,
+        "ref": "home · floating",
+        "ga4Placement": "floating"
+      }
+    ],
+    "productos/iluminacion-profesional.html": [
+      {
+        "conversion": "whatsapp_click",
+        "placement": "landing_header",
+        "whatsapp": true,
+        "ref": "productos/iluminacion-profesional · landing-header",
+        "ga4Placement": "landing_header"
+      },
+      {
+        "conversion": "whatsapp_click",
+        "placement": "landing_hero",
+        "whatsapp": true,
+        "ref": "productos/iluminacion-profesional · landing-hero",
+        "ga4Placement": "landing_hero"
+      },
+      {
+        "conversion": "content_cta_click",
+        "placement": "landing_hero_catalogo",
+        "whatsapp": false
+      },
+      {
+        "conversion": "whatsapp_click",
+        "placement": "landing_modelos",
+        "whatsapp": true,
+        "ref": "productos/iluminacion-profesional · landing-modelos",
+        "ga4Placement": "landing_modelos"
+      },
+      {
+        "conversion": "whatsapp_click",
+        "placement": "landing_final",
+        "whatsapp": true,
+        "ref": "productos/iluminacion-profesional · landing-final",
+        "ga4Placement": "landing_final"
+      },
+      {
+        "conversion": "content_cta_click",
+        "placement": "landing_final_proyectos",
+        "whatsapp": false
+      },
+      {
+        "conversion": "phone_footer",
+        "placement": "",
+        "whatsapp": false
+      },
+      {
+        "conversion": "email_footer",
+        "placement": "",
+        "whatsapp": false
+      },
+      {
+        "conversion": "whatsapp_click",
+        "placement": "landing_footer",
+        "whatsapp": true,
+        "ref": "productos/iluminacion-profesional · landing-footer",
+        "ga4Placement": "landing_footer"
+      },
+      {
+        "conversion": "whatsapp_click",
+        "placement": "landing_persistent",
+        "whatsapp": true,
+        "ref": "productos/iluminacion-profesional · landing-persistent",
+        "ga4Placement": "landing_persistent"
+      }
+    ],
+    "productos/led-trucks.html": [
+      {
+        "conversion": "whatsapp_click",
+        "placement": "landing_header",
+        "whatsapp": true,
+        "ref": "productos/led-trucks · landing-header",
+        "ga4Placement": "landing_header"
+      },
+      {
+        "conversion": "whatsapp_click",
+        "placement": "landing_hero",
+        "whatsapp": true,
+        "ref": "productos/led-trucks · landing-hero",
+        "ga4Placement": "landing_hero"
+      },
+      {
+        "conversion": "whatsapp_click",
+        "placement": "landing_modelos",
+        "whatsapp": true,
+        "ref": "productos/led-trucks · landing-modelos",
+        "ga4Placement": "landing_modelos"
+      },
+      {
+        "conversion": "whatsapp_click",
+        "placement": "landing_final",
+        "whatsapp": true,
+        "ref": "productos/led-trucks · landing-final",
+        "ga4Placement": "landing_final"
+      },
+      {
+        "conversion": "content_cta_click",
+        "placement": "landing_final_proyectos",
+        "whatsapp": false
+      },
+      {
+        "conversion": "phone_footer",
+        "placement": "",
+        "whatsapp": false
+      },
+      {
+        "conversion": "email_footer",
+        "placement": "",
+        "whatsapp": false
+      },
+      {
+        "conversion": "whatsapp_click",
+        "placement": "landing_footer",
+        "whatsapp": true,
+        "ref": "productos/led-trucks · landing-footer",
+        "ga4Placement": "landing_footer"
+      },
+      {
+        "conversion": "whatsapp_click",
+        "placement": "landing_persistent",
+        "whatsapp": true,
+        "ref": "productos/led-trucks · landing-persistent",
+        "ga4Placement": "landing_persistent"
+      }
+    ],
+    "productos/pantallas-led.html": [
+      {
+        "conversion": "whatsapp_click",
+        "placement": "landing_header",
+        "whatsapp": true,
+        "ref": "productos/pantallas-led · landing-header",
+        "ga4Placement": "landing_header"
+      },
+      {
+        "conversion": "whatsapp_click",
+        "placement": "landing_hero",
+        "whatsapp": true,
+        "ref": "productos/pantallas-led · landing-hero",
+        "ga4Placement": "landing_hero"
+      },
+      {
+        "conversion": "content_cta_click",
+        "placement": "landing_hero_catalogo",
+        "whatsapp": false
+      },
+      {
+        "conversion": "whatsapp_click",
+        "placement": "landing_modelos",
+        "whatsapp": true,
+        "ref": "productos/pantallas-led · landing-modelos",
+        "ga4Placement": "landing_modelos"
+      },
+      {
+        "conversion": "whatsapp_click",
+        "placement": "landing_final",
+        "whatsapp": true,
+        "ref": "productos/pantallas-led · landing-final",
+        "ga4Placement": "landing_final"
+      },
+      {
+        "conversion": "content_cta_click",
+        "placement": "landing_final_proyectos",
+        "whatsapp": false
+      },
+      {
+        "conversion": "phone_footer",
+        "placement": "",
+        "whatsapp": false
+      },
+      {
+        "conversion": "email_footer",
+        "placement": "",
+        "whatsapp": false
+      },
+      {
+        "conversion": "whatsapp_click",
+        "placement": "landing_footer",
+        "whatsapp": true,
+        "ref": "productos/pantallas-led · landing-footer",
+        "ga4Placement": "landing_footer"
+      },
+      {
+        "conversion": "whatsapp_click",
+        "placement": "landing_persistent",
+        "whatsapp": true,
+        "ref": "productos/pantallas-led · landing-persistent",
+        "ga4Placement": "landing_persistent"
+      }
+    ],
+    "productos/pisos-led.html": [
+      {
+        "conversion": "whatsapp_click",
+        "placement": "landing_header",
+        "whatsapp": true,
+        "ref": "productos/pisos-led · landing-header",
+        "ga4Placement": "landing_header"
+      },
+      {
+        "conversion": "whatsapp_click",
+        "placement": "landing_hero",
+        "whatsapp": true,
+        "ref": "productos/pisos-led · landing-hero",
+        "ga4Placement": "landing_hero"
+      },
+      {
+        "conversion": "content_cta_click",
+        "placement": "landing_hero_catalogo",
+        "whatsapp": false
+      },
+      {
+        "conversion": "whatsapp_click",
+        "placement": "landing_modelos",
+        "whatsapp": true,
+        "ref": "productos/pisos-led · landing-modelos",
+        "ga4Placement": "landing_modelos"
+      },
+      {
+        "conversion": "whatsapp_click",
+        "placement": "landing_final",
+        "whatsapp": true,
+        "ref": "productos/pisos-led · landing-final",
+        "ga4Placement": "landing_final"
+      },
+      {
+        "conversion": "content_cta_click",
+        "placement": "landing_final_proyectos",
+        "whatsapp": false
+      },
+      {
+        "conversion": "phone_footer",
+        "placement": "",
+        "whatsapp": false
+      },
+      {
+        "conversion": "email_footer",
+        "placement": "",
+        "whatsapp": false
+      },
+      {
+        "conversion": "whatsapp_click",
+        "placement": "landing_footer",
+        "whatsapp": true,
+        "ref": "productos/pisos-led · landing-footer",
+        "ga4Placement": "landing_footer"
+      },
+      {
+        "conversion": "whatsapp_click",
+        "placement": "landing_persistent",
+        "whatsapp": true,
+        "ref": "productos/pisos-led · landing-persistent",
+        "ga4Placement": "landing_persistent"
+      }
+    ],
+    "productos/porticos.html": [
+      {
+        "conversion": "whatsapp_click",
+        "placement": "landing_header",
+        "whatsapp": true,
+        "ref": "productos/porticos · landing-header",
+        "ga4Placement": "landing_header"
+      },
+      {
+        "conversion": "whatsapp_click",
+        "placement": "landing_hero",
+        "whatsapp": true,
+        "ref": "productos/porticos · landing-hero",
+        "ga4Placement": "landing_hero"
+      },
+      {
+        "conversion": "content_cta_click",
+        "placement": "landing_hero_catalogo",
+        "whatsapp": false
+      },
+      {
+        "conversion": "whatsapp_click",
+        "placement": "landing_modelos",
+        "whatsapp": true,
+        "ref": "productos/porticos · landing-modelos",
+        "ga4Placement": "landing_modelos"
+      },
+      {
+        "conversion": "whatsapp_click",
+        "placement": "landing_final",
+        "whatsapp": true,
+        "ref": "productos/porticos · landing-final",
+        "ga4Placement": "landing_final"
+      },
+      {
+        "conversion": "content_cta_click",
+        "placement": "landing_final_proyectos",
+        "whatsapp": false
+      },
+      {
+        "conversion": "phone_footer",
+        "placement": "",
+        "whatsapp": false
+      },
+      {
+        "conversion": "email_footer",
+        "placement": "",
+        "whatsapp": false
+      },
+      {
+        "conversion": "whatsapp_click",
+        "placement": "landing_footer",
+        "whatsapp": true,
+        "ref": "productos/porticos · landing-footer",
+        "ga4Placement": "landing_footer"
+      },
+      {
+        "conversion": "whatsapp_click",
+        "placement": "landing_persistent",
+        "whatsapp": true,
+        "ref": "productos/porticos · landing-persistent",
+        "ga4Placement": "landing_persistent"
+      }
+    ],
+    "productos/totems.html": [
+      {
+        "conversion": "whatsapp_click",
+        "placement": "landing_header",
+        "whatsapp": true,
+        "ref": "productos/totems · landing-header",
+        "ga4Placement": "landing_header"
+      },
+      {
+        "conversion": "whatsapp_click",
+        "placement": "landing_hero",
+        "whatsapp": true,
+        "ref": "productos/totems · landing-hero",
+        "ga4Placement": "landing_hero"
+      },
+      {
+        "conversion": "content_cta_click",
+        "placement": "landing_hero_catalogo",
+        "whatsapp": false
+      },
+      {
+        "conversion": "whatsapp_click",
+        "placement": "landing_modelos",
+        "whatsapp": true,
+        "ref": "productos/totems · landing-modelos",
+        "ga4Placement": "landing_modelos"
+      },
+      {
+        "conversion": "whatsapp_click",
+        "placement": "landing_final",
+        "whatsapp": true,
+        "ref": "productos/totems · landing-final",
+        "ga4Placement": "landing_final"
+      },
+      {
+        "conversion": "content_cta_click",
+        "placement": "landing_final_proyectos",
+        "whatsapp": false
+      },
+      {
+        "conversion": "phone_footer",
+        "placement": "",
+        "whatsapp": false
+      },
+      {
+        "conversion": "email_footer",
+        "placement": "",
+        "whatsapp": false
+      },
+      {
+        "conversion": "whatsapp_click",
+        "placement": "landing_footer",
+        "whatsapp": true,
+        "ref": "productos/totems · landing-footer",
+        "ga4Placement": "landing_footer"
+      },
+      {
+        "conversion": "whatsapp_click",
+        "placement": "landing_persistent",
+        "whatsapp": true,
+        "ref": "productos/totems · landing-persistent",
+        "ga4Placement": "landing_persistent"
+      }
+    ],
+    "productos.html": [
+      {
+        "conversion": "phone_footer",
+        "placement": "",
+        "whatsapp": false
+      },
+      {
+        "conversion": "email_footer",
+        "placement": "",
+        "whatsapp": false
+      },
+      {
+        "conversion": "whatsapp_click",
+        "placement": "catalog-footer",
+        "whatsapp": true,
+        "ref": "productos · catalog-footer",
+        "ga4Placement": "catalog-footer"
+      },
+      {
+        "conversion": "whatsapp_click",
+        "placement": "catalog-persistent",
+        "whatsapp": true,
+        "ref": "productos · catalog-persistent",
+        "ga4Placement": "catalog-persistent"
+      }
+    ],
+    "proyectos.html": [
+      {
+        "conversion": "whatsapp_projects_final",
+        "placement": "",
+        "whatsapp": true,
+        "ref": "proyectos · projects-final",
+        "ga4Placement": "projects_final"
+      },
+      {
+        "conversion": "phone_footer",
+        "placement": "",
+        "whatsapp": false
+      },
+      {
+        "conversion": "whatsapp_floating",
+        "placement": "projects-persistent",
+        "whatsapp": true,
+        "ref": "proyectos · projects-persistent",
+        "ga4Placement": "projects-persistent"
+      }
+    ]
+  }
+}

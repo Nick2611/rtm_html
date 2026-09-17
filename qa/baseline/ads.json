@@ -1,0 +1,463 @@
+{
+  "takenAt": "2026-09-17",
+  "customer": {
+    "autoTagging": true,
+    "finalUrlSuffix": "",
+    "trackingUrlTemplate": ""
+  },
+  "ads": [
+    {
+      "campaign": "Formulario",
+      "adGroup": "Competidores",
+      "adId": "820127964177",
+      "serving": false,
+      "finalUrls": [
+        "https://pantallasledrtm.com/"
+      ],
+      "finalUrlSuffix": "",
+      "trackingUrlTemplate": ""
+    },
+    {
+      "campaign": "Formulario",
+      "adGroup": "Iluminación profesional",
+      "adId": "820806176862",
+      "serving": true,
+      "finalUrls": [
+        "https://pantallasledrtm.com/productos/iluminacion-profesional.html"
+      ],
+      "finalUrlSuffix": "utm_source=google&utm_medium=cpc&utm_campaign=formulario&utm_content=iluminacion_profesional&utm_term={keyword}&matchtype={matchtype}&device={device}&adgroupid={adgroupid}&creative={creative}",
+      "trackingUrlTemplate": ""
+    },
+    {
+      "campaign": "Formulario",
+      "adGroup": "Iluminación y Pórticos",
+      "adId": "820165833076",
+      "serving": false,
+      "finalUrls": [
+        "https://pantallasledrtm.com/"
+      ],
+      "finalUrlSuffix": "",
+      "trackingUrlTemplate": ""
+    },
+    {
+      "campaign": "Formulario",
+      "adGroup": "LED Trucks",
+      "adId": "820167430447",
+      "serving": true,
+      "finalUrls": [
+        "https://pantallasledrtm.com/productos/led-trucks.html"
+      ],
+      "finalUrlSuffix": "utm_source=google&utm_medium=cpc&utm_campaign=formulario&utm_content=led_trucks&utm_term={keyword}&matchtype={matchtype}&device={device}&adgroupid={adgroupid}&creative={creative}",
+      "trackingUrlTemplate": ""
+    },
+    {
+      "campaign": "Formulario",
+      "adGroup": "Letreros LED",
+      "adId": "821327062966",
+      "serving": false,
+      "finalUrls": [
+        "https://pantallasledrtm.com/productos/letreros-led.html"
+      ],
+      "finalUrlSuffix": "utm_source=google&utm_medium=cpc&utm_campaign=formulario&utm_content=letreros_led&utm_term={keyword}&matchtype={matchtype}&device={device}&adgroupid={adgroupid}&creative={creative}",
+      "trackingUrlTemplate": ""
+    },
+    {
+      "campaign": "Formulario",
+      "adGroup": "Pantallas LED",
+      "adId": "820123971357",
+      "serving": false,
+      "finalUrls": [
+        "https://pantallasledrtm.com/"
+      ],
+      "finalUrlSuffix": "",
+      "trackingUrlTemplate": ""
+    },
+    {
+      "campaign": "Formulario",
+      "adGroup": "Pantallas LED",
+      "adId": "820947479657",
+      "serving": true,
+      "finalUrls": [
+        "https://pantallasledrtm.com/productos/pantallas-led.html"
+      ],
+      "finalUrlSuffix": "utm_source=google&utm_medium=cpc&utm_campaign=formulario&utm_content=pantallas_led&utm_term={keyword}&matchtype={matchtype}&device={device}&adgroupid={adgroupid}&creative={creative}",
+      "trackingUrlTemplate": ""
+    },
+    {
+      "campaign": "Formulario",
+      "adGroup": "Pisos LED",
+      "adId": "820835784621",
+      "serving": true,
+      "finalUrls": [
+        "https://pantallasledrtm.com/productos/pisos-led.html"
+      ],
+      "finalUrlSuffix": "utm_source=google&utm_medium=cpc&utm_campaign=formulario&utm_content=pisos_led&utm_term={keyword}&matchtype={matchtype}&device={device}&adgroupid={adgroupid}&creative={creative}",
+      "trackingUrlTemplate": ""
+    },
+    {
+      "campaign": "Formulario",
+      "adGroup": "Pórticos",
+      "adId": "820806218340",
+      "serving": true,
+      "finalUrls": [
+        "https://pantallasledrtm.com/productos/porticos.html"
+      ],
+      "finalUrlSuffix": "utm_source=google&utm_medium=cpc&utm_campaign=formulario&utm_content=porticos&utm_term={keyword}&matchtype={matchtype}&device={device}&adgroupid={adgroupid}&creative={creative}",
+      "trackingUrlTemplate": ""
+    },
+    {
+      "campaign": "Formulario",
+      "adGroup": "Tótems LED",
+      "adId": "820876583200",
+      "serving": true,
+      "finalUrls": [
+        "https://pantallasledrtm.com/productos/totems.html"
+      ],
+      "finalUrlSuffix": "utm_source=google&utm_medium=cpc&utm_campaign=formulario&utm_content=totems_led&utm_term={keyword}&matchtype={matchtype}&device={device}&adgroupid={adgroupid}&creative={creative}",
+      "trackingUrlTemplate": ""
+    },
+    {
+      "campaign": "Formulario",
+      "adGroup": "Tótems y Pisos LED",
+      "adId": "820123651149",
+      "serving": false,
+      "finalUrls": [
+        "https://pantallasledrtm.com/"
+      ],
+      "finalUrlSuffix": "",
+      "trackingUrlTemplate": ""
+    }
+  ],
+  "sitelinks": [
+    {
+      "level": "ad_group",
+      "owner": "Iluminación profesional",
+      "serving": true,
+      "assetId": "407548828316",
+      "text": "Barras Móviles",
+      "finalUrls": [
+        "https://pantallasledrtm.com/productos.html?cat=iluminacion-profesional&sub=barras-moviles"
+      ]
+    },
+    {
+      "level": "ad_group",
+      "owner": "Iluminación profesional",
+      "serving": true,
+      "assetId": "407548828319",
+      "text": "Todos los Modelos",
+      "finalUrls": [
+        "https://pantallasledrtm.com/productos.html?cat=iluminacion-profesional"
+      ]
+    },
+    {
+      "level": "ad_group",
+      "owner": "Iluminación profesional",
+      "serving": true,
+      "assetId": "407548830818",
+      "text": "Cabezales 3 en 1",
+      "finalUrls": [
+        "https://pantallasledrtm.com/productos.html?cat=iluminacion-profesional&sub=3en1"
+      ]
+    },
+    {
+      "level": "ad_group",
+      "owner": "Iluminación profesional",
+      "serving": true,
+      "assetId": "407647298587",
+      "text": "Cabezales Beam",
+      "finalUrls": [
+        "https://pantallasledrtm.com/productos.html?cat=iluminacion-profesional&sub=beam"
+      ]
+    },
+    {
+      "level": "ad_group",
+      "owner": "Iluminación profesional",
+      "serving": true,
+      "assetId": "407647298617",
+      "text": "Flashes LED",
+      "finalUrls": [
+        "https://pantallasledrtm.com/productos.html?cat=iluminacion-profesional&sub=flashes"
+      ]
+    },
+    {
+      "level": "ad_group",
+      "owner": "LED Trucks",
+      "serving": true,
+      "assetId": "407551752380",
+      "text": "Qué Incluye el Trabajo",
+      "finalUrls": [
+        "https://pantallasledrtm.com/productos/led-trucks.html#proceso-title"
+      ]
+    },
+    {
+      "level": "ad_group",
+      "owner": "LED Trucks",
+      "serving": true,
+      "assetId": "407650163290",
+      "text": "Diseño e Instalación",
+      "finalUrls": [
+        "https://pantallasledrtm.com/productos/led-trucks.html#modelos-title"
+      ]
+    },
+    {
+      "level": "ad_group",
+      "owner": "LED Trucks",
+      "serving": true,
+      "assetId": "407650163293",
+      "text": "Proyectos Instalados",
+      "finalUrls": [
+        "https://pantallasledrtm.com/proyectos.html"
+      ]
+    },
+    {
+      "level": "ad_group",
+      "owner": "LED Trucks",
+      "serving": true,
+      "assetId": "407726818107",
+      "text": "Cotizar un LED Truck",
+      "finalUrls": [
+        "https://pantallasledrtm.com/productos/led-trucks.html#cotizar"
+      ]
+    },
+    {
+      "level": "ad_group",
+      "owner": "Letreros LED",
+      "serving": false,
+      "assetId": "407650163293",
+      "text": "Proyectos Instalados",
+      "finalUrls": [
+        "https://pantallasledrtm.com/proyectos.html"
+      ]
+    },
+    {
+      "level": "ad_group",
+      "owner": "Letreros LED",
+      "serving": false,
+      "assetId": "409462994174",
+      "text": "Ver modelos y medidas",
+      "finalUrls": [
+        "https://pantallasledrtm.com/productos/letreros-led.html#modelos-title"
+      ]
+    },
+    {
+      "level": "ad_group",
+      "owner": "Letreros LED",
+      "serving": false,
+      "assetId": "409462994183",
+      "text": "Qué incluye el trabajo",
+      "finalUrls": [
+        "https://pantallasledrtm.com/productos/letreros-led.html#proceso-title"
+      ]
+    },
+    {
+      "level": "ad_group",
+      "owner": "Letreros LED",
+      "serving": false,
+      "assetId": "409462994186",
+      "text": "Pedir cotización",
+      "finalUrls": [
+        "https://pantallasledrtm.com/productos/letreros-led.html#cotizar"
+      ]
+    },
+    {
+      "level": "ad_group",
+      "owner": "Pantallas LED",
+      "serving": true,
+      "assetId": "407520056522",
+      "text": "Modelos Indoor",
+      "finalUrls": [
+        "https://pantallasledrtm.com/productos.html?cat=pantallas-led&sub=indoor"
+      ]
+    },
+    {
+      "level": "ad_group",
+      "owner": "Pantallas LED",
+      "serving": true,
+      "assetId": "407618344699",
+      "text": "Fichas Técnicas",
+      "finalUrls": [
+        "https://pantallasledrtm.com/productos.html?cat=pantallas-led"
+      ]
+    },
+    {
+      "level": "ad_group",
+      "owner": "Pantallas LED",
+      "serving": true,
+      "assetId": "407618378695",
+      "text": "Proyectos Realizados",
+      "finalUrls": [
+        "https://pantallasledrtm.com/proyectos.html"
+      ]
+    },
+    {
+      "level": "ad_group",
+      "owner": "Pantallas LED",
+      "serving": true,
+      "assetId": "407694818247",
+      "text": "Modelos Outdoor",
+      "finalUrls": [
+        "https://pantallasledrtm.com/productos.html?cat=pantallas-led&sub=outdoor"
+      ]
+    },
+    {
+      "level": "ad_group",
+      "owner": "Pisos LED",
+      "serving": true,
+      "assetId": "407633228911",
+      "text": "Modelo PDANCE",
+      "finalUrls": [
+        "https://pantallasledrtm.com/productos.html?cat=pisos-led&sub=modelos&model=pdance"
+      ]
+    },
+    {
+      "level": "ad_group",
+      "owner": "Pisos LED",
+      "serving": true,
+      "assetId": "407709567378",
+      "text": "Modelo PI-RGB",
+      "finalUrls": [
+        "https://pantallasledrtm.com/productos.html?cat=pisos-led&sub=modelos&model=pi-rgb"
+      ]
+    },
+    {
+      "level": "ad_group",
+      "owner": "Pisos LED",
+      "serving": true,
+      "assetId": "407709574518",
+      "text": "Modelo P-60 DISCO",
+      "finalUrls": [
+        "https://pantallasledrtm.com/productos.html?cat=pisos-led&sub=modelos&model=p60-disco"
+      ]
+    },
+    {
+      "level": "ad_group",
+      "owner": "Pisos LED",
+      "serving": true,
+      "assetId": "407709574527",
+      "text": "Cotizar un Piso LED",
+      "finalUrls": [
+        "https://pantallasledrtm.com/productos/pisos-led.html#cotizar"
+      ]
+    },
+    {
+      "level": "ad_group",
+      "owner": "Pórticos",
+      "serving": true,
+      "assetId": "407640136258",
+      "text": "Modelo LPR-9648",
+      "finalUrls": [
+        "https://pantallasledrtm.com/productos.html?cat=porticos&sub=modelos&model=lpr-9648"
+      ]
+    },
+    {
+      "level": "ad_group",
+      "owner": "Pórticos",
+      "serving": true,
+      "assetId": "407716495398",
+      "text": "Modelos de Pórticos",
+      "finalUrls": [
+        "https://pantallasledrtm.com/productos.html?cat=porticos"
+      ]
+    },
+    {
+      "level": "ad_group",
+      "owner": "Pórticos",
+      "serving": true,
+      "assetId": "407716499451",
+      "text": "Modelo LPR-1264",
+      "finalUrls": [
+        "https://pantallasledrtm.com/productos.html?cat=porticos&sub=modelos&model=lpr-1264"
+      ]
+    },
+    {
+      "level": "ad_group",
+      "owner": "Pórticos",
+      "serving": true,
+      "assetId": "407716504149",
+      "text": "Modelo LPR-1248",
+      "finalUrls": [
+        "https://pantallasledrtm.com/productos.html?cat=porticos&sub=modelos&model=lpr-1248"
+      ]
+    },
+    {
+      "level": "ad_group",
+      "owner": "Pórticos",
+      "serving": true,
+      "assetId": "407716504152",
+      "text": "Proyectos Instalados",
+      "finalUrls": [
+        "https://pantallasledrtm.com/proyectos.html"
+      ]
+    },
+    {
+      "level": "ad_group",
+      "owner": "Tótems LED",
+      "serving": true,
+      "assetId": "407529562532",
+      "text": "Modelos Outdoor",
+      "finalUrls": [
+        "https://pantallasledrtm.com/productos.html?cat=totems&sub=outdoor"
+      ]
+    },
+    {
+      "level": "ad_group",
+      "owner": "Tótems LED",
+      "serving": true,
+      "assetId": "407529562538",
+      "text": "Cotizar un Tótem",
+      "finalUrls": [
+        "https://pantallasledrtm.com/productos/totems.html#cotizar"
+      ]
+    },
+    {
+      "level": "ad_group",
+      "owner": "Tótems LED",
+      "serving": true,
+      "assetId": "407627901808",
+      "text": "Modelos Indoor",
+      "finalUrls": [
+        "https://pantallasledrtm.com/productos.html?cat=totems&sub=indoor"
+      ]
+    },
+    {
+      "level": "ad_group",
+      "owner": "Tótems LED",
+      "serving": true,
+      "assetId": "407704490376",
+      "text": "Fichas Técnicas",
+      "finalUrls": [
+        "https://pantallasledrtm.com/productos.html?cat=totems"
+      ]
+    },
+    {
+      "level": "campaign",
+      "owner": "Formulario",
+      "serving": true,
+      "assetId": "404650486319",
+      "text": "Comunicarse con un asesor",
+      "finalUrls": [
+        "https://api.whatsapp.com/send/?phone=5491151531530&text=Hola%2C+quiero+asesoramiento+y+cotizaci%C3%B3n+para+una+soluci%C3%B3n+LED&type=phone_number&app_absent=0"
+      ]
+    },
+    {
+      "level": "campaign",
+      "owner": "Formulario",
+      "serving": true,
+      "assetId": "404751634432",
+      "text": "Sobre Nosotros",
+      "finalUrls": [
+        "https://pantallasledrtm.com/index.html#about"
+      ]
+    },
+    {
+      "level": "campaign",
+      "owner": "Formulario",
+      "serving": true,
+      "assetId": "407618378695",
+      "text": "Proyectos Realizados",
+      "finalUrls": [
+        "https://pantallasledrtm.com/proyectos.html"
+      ]
+    }
+  ]
+}

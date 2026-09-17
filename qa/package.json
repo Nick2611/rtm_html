@@ -1,0 +1,16 @@
+{
+  "name": "rtm-qa",
+  "private": true,
+  "type": "module",
+  "description": "Suite de validación del refactor: el contrato con Google Ads, el tracking y el SEO no pueden cambiar sin aprobación.",
+  "scripts": {
+    "ads:snapshot": "node ads-snapshot.mjs",
+    "baseline": "node run.mjs --write-baseline",
+    "check": "node run.mjs"
+  },
+  "dependencies": {
+    "lighthouse": "^13.4.1",
+    "node-html-parser": "^9.0.4",
+    "playwright-core": "^1.63.0"
+  }
+}
