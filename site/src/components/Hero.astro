@@ -10,17 +10,18 @@ interface Props {
   lead: string;
   context: string;
   quoteHref: string;
-  catalogHref: string;
+  catalogHref?: string;  // sin modelos (LED Trucks) no hay link al catálogo: el contrato no lo tiene
   image: ImageMetadata;
+  focus?: string;        // object-position de la foto
 }
-const { crumbs, title, sub, lead, context, quoteHref, catalogHref, image } = Astro.props;
+const { crumbs, title, sub, lead, context, quoteHref, catalogHref, image, focus } = Astro.props;
 // H1 largos (algunos del contrato tienen 8-10 palabras) bajan de escala para no pasar de 3-4 líneas.
 const long = title.join(' ').length > 30;
 ---
 <!-- Hero: instalación real a pantalla completa con velo; el texto va encima con contraste AA medido. -->
 <section class="hero band--black">
   <div class="hero__bg" aria-hidden="true">
-    <Image src={image} alt="" widths={[640, 1024, 1600]} sizes="100vw" loading="eager" fetchpriority="high" />
+    <Image src={image} alt="" widths={[640, 1024, 1600]} sizes="100vw" loading="eager" fetchpriority="high" style={focus ? `object-position: ${focus}` : undefined} />
   </div>
 
   <div class="wrap hero__text">
@@ -46,10 +47,12 @@ const long = title.join(' ').length > 30;
          data-conversion="whatsapp_click" data-conversion-placement="landing_hero" data-context={context}>
         <Icon name="whatsapp-logo" />Pedir cotización
       </a>
-      <a class="link-arrow" href={catalogHref}
-         data-conversion="content_cta_click" data-conversion-placement="landing_hero_catalogo" data-context={context}>
-        Ver modelos y fichas técnicas<Icon name="arrow-right" />
-      </a>
+      {catalogHref && (
+        <a class="link-arrow" href={catalogHref}
+           data-conversion="content_cta_click" data-conversion-placement="landing_hero_catalogo" data-context={context}>
+          Ver modelos y fichas técnicas<Icon name="arrow-right" />
+        </a>
+      )}
     </div>
   </div>
 </section>

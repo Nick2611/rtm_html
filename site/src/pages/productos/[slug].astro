@@ -34,6 +34,7 @@ const context = l.slug;
 const path = `/productos/${l.slug}.html`;
 const groups = modelGroups(l);
 const catalog = `/productos.html?cat=${l.category}`;
+const ModelHeading = groups.length > 1 ? 'h4' : 'h3';
 
 const logos = [
   { img: aa2000, alt: 'Aeropuertos Argentina 2000' },
@@ -67,8 +68,9 @@ const logos = [
       lead={l.hero.lead}
       context={context}
       quoteHref={wa(l.wa.quote)}
-      catalogHref={catalog}
+      catalogHref={groups.length ? catalog : undefined}
       image={image(l.hero.image)}
+      focus={l.hero.focus}
     />
 
     <!-- CLIENTES · blanco. Logos y nada más. -->
@@ -97,15 +99,15 @@ const logos = [
 
         {groups.map(group => (
           <div class="models__group">
-            <h3 class="models__group-name t-h3 reveal">{group.name}</h3>
-            <ul class="models__grid" tabindex="0" aria-label={`Modelos: ${group.name}`}>
+            {groups.length > 1 && <h3 class="models__group-name t-h3 reveal">{group.name}</h3>}
+            <ul class="models__grid" tabindex="0" aria-label={`Modelos: ${group.name}`} style={`--cols: ${Math.min(3, group.models.length)}`}>
               {group.models.map(m => (
                 <li class="model reveal">
                   <div class="model__media">
                     <Image src={m.image} alt="" widths={[360, 640]} sizes="(min-width: 900px) 30vw, 80vw" />
                   </div>
                   <div class="model__body">
-                    <h4 class="model__name">{m.name}</h4>
+                    <ModelHeading class="model__name">{m.name}</ModelHeading>
                     {m.specs.length > 0 && (
                       <dl class="model__specs">
                         {m.specs.map(([label, value]) => <div><dt>{label}</dt><dd>{value}</dd></div>)}
@@ -185,7 +187,7 @@ const logos = [
       <div class="wrap">
         <div class="closing__panel band--red">
           <h2 class="t-display" id="cta-title">{l.closing.title}</h2>
-          <p class="t-lead muted">{l.closing.lead}</p>
+          <p class="t-lead">{l.closing.lead}</p>
           <div class="closing__actions">
             <a class="btn btn--light" href={wa(l.wa.quote)} target="_blank" rel="noopener noreferrer"
                data-conversion="whatsapp_click" data-conversion-placement="landing_final" data-context={context}>
@@ -233,7 +235,7 @@ const logos = [
       }
     }
   }
-  @keyframes light-up { from { color: color-mix(in srgb, var(--ink) 38%, var(--white)); } to { color: var(--ink); } }
+  @keyframes light-up { from { color: color-mix(in srgb, var(--ink) 62%, var(--white)); } to { color: var(--ink); } }
 
   /* ---------- Modelos ---------- */
   .models .t-h2 { max-width: 18ch; }
@@ -270,12 +272,13 @@ const logos = [
 
   .gallery { list-style: none; margin: clamp(40px, 5vw, 64px) 0 0; padding: 0; display: grid; gap: 24px; }
   .gallery figure { margin: 0; display: grid; gap: 12px; }
-  .gallery__frame { border-radius: var(--radius); overflow: clip; }
+  .gallery__frame { border-radius: var(--radius); overflow: clip; background: var(--white); }
   .gallery__frame :global(img) { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
   .gallery figcaption { font-size: var(--fs-small); }
 
   @media (min-width: 900px) {
-    .models__grid { grid-auto-flow: row; grid-template-columns: repeat(3, 1fr); gap: 24px; margin: 0; padding: 0; overflow: visible; }
+    /* Tantas columnas como modelos (máx. 3): con 2 modelos no queda una columna vacía. */
+    .models__grid { grid-auto-flow: row; grid-template-columns: repeat(var(--cols, 3), minmax(0, 360px)); gap: 24px; margin: 0; padding: 0; overflow: visible; }
     .model { padding: 28px; gap: 24px; }
     .gallery { grid-template-columns: repeat(2, 1fr); }
   }
@@ -312,7 +315,8 @@ const logos = [
   /* ---------- Proyectos (3 a 5 fotos) ---------- */
   .projects__bento { list-style: none; margin: clamp(40px, 5vw, 64px) 0 0; padding: 0; display: grid; gap: 28px; }
   .projects__cell figure { margin: 0; display: grid; gap: 12px; }
-  .projects__frame { overflow: clip; border-radius: var(--radius); }
+  /* Fondo gris claro: los renders de producto con fondo blanco no se funden con la banda. */
+  .projects__frame { overflow: clip; border-radius: var(--radius); background: var(--mist); }
   .projects__frame :global(img) { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; transition: transform 0.9s var(--ease); }
   .projects__cell:hover .projects__frame :global(img) { transform: scale(1.04); }
   .projects__cell figcaption { font-size: var(--fs-small); }

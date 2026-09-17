@@ -13,7 +13,7 @@ export interface Landing {
   product: string;           // nombre corto para aria-label ("Pantallas LED")
   trackingVersion: string;   // ?v= de conversion-tracking.js
   seo: { title: string; description: string; ogImage: string };
-  hero: { h1: string[]; accent?: string; lead: string; image: string };
+  hero: { h1: string[]; accent?: string; lead: string; image: string; focus?: string }; // focus: object-position ("30% 50%")
   statement: string;         // una frase corta
   models: {
     title: string;
@@ -49,7 +49,8 @@ export function shortSpec(value: string): string {
   if (v.includes(' / ')) { const parts = v.split(' / '); return `${parts[0]} a ${parts.at(-1)}`; }
   const dims = v.match(/^(\d+(?:[.,]\d+)?)\s*x\s*(\d+(?:[.,]\d+)?)(?:\s*x\s*\d+(?:[.,]\d+)?)?\s*(mm|cm|m)$/i);
   if (dims) return `${dims[1]} × ${dims[2]} ${dims[3]}`;
-  return v.replace(/\s+-\s+/g, ' a ');
+  // Sólo rangos numéricos ("500 - 600 nits"); "MSD-260 - 2000 horas" no es un rango.
+  return /^\d/.test(v) ? v.replace(/(\d)\s+-\s+(\d)/g, '$1 a $2') : v;
 }
 
 export interface ModelCard {
