@@ -1,24 +1,21 @@
 ---
+/**
+ * Plantilla de las landings de producto (/productos/<slug>.html).
+ * El contenido de cada una vive en src/data/landings/<slug>.ts. Los modelos salen de data/products.json.
+ * CONTRATO (lo leen Google Ads y el tracking; ver site/README.md): anclas #modelos-title #proceso-title
+ * #cotizar y los placements landing_header/hero/modelos/final/footer/persistent + landing_hero_catalogo
+ * y landing_final_proyectos. No renombrar.
+ */
 import { Image } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
 import Header from '../../components/Header.astro';
+import Hero from '../../components/Hero.astro';
 import Footer from '../../components/Footer.astro';
 import Dock from '../../components/Dock.astro';
 import Icon from '../../components/Icon.astro';
-import Hero from '../../components/Hero.astro';
 import { wa } from '../../data/site';
+import { image, modelGroups, type Landing } from '../../lib/landing';
 
-import ifi960 from '@repo/imagenes_productos/pantallas_led/indoor/IFI960.webp';
-import ri640 from '@repo/imagenes_productos/pantallas_led/indoor/RI640.webp';
-import ri960 from '@repo/imagenes_productos/pantallas_led/indoor/RI960.webp';
-import vp960 from '@repo/imagenes_productos/pantallas_led/outdoor/VP960.webp';
-import re640 from '@repo/imagenes_productos/pantallas_led/outdoor/RE640.webp';
-import re960 from '@repo/imagenes_productos/pantallas_led/outdoor/RE960.webp';
-import p2 from '@repo/proyectos_imagenes/proyecto_2.webp';
-import p16 from '@repo/proyectos_imagenes/proyecto_16.webp';
-import p3 from '@repo/proyectos_imagenes/proyecto_3.webp';
-import p15 from '@repo/proyectos_imagenes/proyecto_15.webp';
-import p18 from '@repo/proyectos_imagenes/proyecto_18.webp';
 import aa2000 from '@repo/logos_clientes/2560px-Aerop_arg_2000_logo.svg.webp';
 import bcra from '@repo/logos_clientes/BCRA_logo.svg.webp';
 import shell from '@repo/logos_clientes/Logo-Shell.webp';
@@ -27,28 +24,16 @@ import tyc from '@repo/logos_clientes/TyCSp.webp';
 import speed from '@repo/logos_clientes/logo-speed.webp';
 import minciencia from '@repo/logos_clientes/Mincienciaarg.webp';
 
-const context = 'pantallas-led';
-const quote = 'Hola, quiero cotizar una pantalla LED.\n\nDónde va: \nMedida aproximada: \nUso previsto: ';
-const advice = 'Hola, estoy viendo pantallas LED y quiero asesoramiento para elegir la serie y el pitch.';
+export function getStaticPaths() {
+  const files = import.meta.glob<{ default: Landing }>('../../data/landings/*.ts', { eager: true });
+  return Object.values(files).map(f => ({ params: { slug: f.default.slug }, props: { landing: f.default } }));
+}
 
-const groups = [
-  {
-    name: 'Interior',
-    models: [
-      { img: ifi960, serie: 'Serie IFI, interior fija', name: 'IFI960', text: 'Instalación fija con mantenimiento frontal por imanes. Para estudios de TV, aeropuertos y centros de convenciones.', pitch: 'P1.25 a P4', nits: '500 a 600 nits', panel: '960 × 960 mm', href: '/productos.html?cat=pantallas-led&sub=indoor&model=ifi960' },
-      { img: ri640, serie: 'Serie RI, interior', name: 'RI640', text: 'Gabinete de aluminio y magnesio fundido a presión. Montaje rápido con quick lock, liviano y versátil.', pitch: 'P1.86 a P4', nits: '500 a 600 nits', panel: '640 × 640 mm', href: '/productos.html?cat=pantallas-led&sub=indoor&model=ri640' },
-      { img: ri960, serie: 'Serie RI, interior', name: 'RI960', text: 'Gabinete de aluminio y magnesio con quick lock y puerta trasera de doble batiente.', pitch: 'P2.5 a P4', nits: '500 a 600 nits', panel: '960 × 960 mm', href: '/productos.html?cat=pantallas-led&sub=indoor&model=ri960' },
-    ],
-  },
-  {
-    name: 'Exterior y eventos',
-    models: [
-      { img: vp960, serie: 'Serie VP, exterior fija', name: 'VP960', text: 'Para cartelería digital y publicidad exterior. Protección IP65 frontal.', pitch: 'P2.5 a P8', nits: '4500 a 5500 nits', panel: '960 × 960 mm', href: '/productos.html?cat=pantallas-led&sub=outdoor&model=vp960' },
-      { img: re640, serie: 'Serie RE, eventos y escenario', name: 'RE640', text: 'IP65 frontal, para eventos al aire libre y escenarios.', pitch: 'P2.5 a P8', nits: '4500 a 5500 nits', panel: '640 × 640 mm', href: '/productos.html?cat=pantallas-led&sub=outdoor&model=re640' },
-      { img: re960, serie: 'Serie RE, eventos y escenario', name: 'RE960', text: 'Alta protección IP, diseñado para shows y eventos exteriores.', pitch: 'P2.5 a P8', nits: '4500 a 5500 nits', panel: '960 × 960 mm', href: '/productos.html?cat=pantallas-led&sub=outdoor&model=re960' },
-    ],
-  },
-];
+const { landing: l } = Astro.props as { landing: Landing };
+const context = l.slug;
+const path = `/productos/${l.slug}.html`;
+const groups = modelGroups(l);
+const catalog = `/productos.html?cat=${l.category}`;
 
 const logos = [
   { img: aa2000, alt: 'Aeropuertos Argentina 2000' },
@@ -59,47 +44,31 @@ const logos = [
   { img: minciencia, alt: 'Ministerio de Ciencia' },
   { img: speed, alt: 'Speed' },
 ];
-
-const projects = [
-  { img: p2, caption: 'Estación de servicio' },
-  { img: p16, caption: 'Showroom de vehículos' },
-  { img: p3, caption: 'Escenario de evento' },
-  { img: p15, caption: 'Salón de eventos' },
-  { img: p18, caption: 'Local nocturno' },
-];
-
-const steps = [
-  { title: 'Relevamiento y definición técnica', text: 'Medidas, distancia de visión y consumo eléctrico antes de cotizar.' },
-  { title: 'Fabricación e instalación', text: 'Armado en la medida y el pitch definidos, con estructura y puesta en marcha a cargo nuestro.' },
-  { title: 'Repuestos y servicio técnico', text: 'Módulos, fuentes y placas disponibles después de la instalación.' },
-];
-
-const statement = 'Primero definimos dónde va, desde qué distancia se mira y cuánta luz recibe. Después elegimos la serie, el pitch y el gabinete.';
 ---
 <Base
-  title="Pantallas LED para interior y exterior — Fabricación e instalación | RTM"
-  description="Fabricamos, vendemos e instalamos pantallas LED de interior, exterior, escenario y vehiculares. Definimos serie, pitch y medida según el lugar y el uso."
-  path="/productos/pantallas-led.html"
-  ogImage="/proyectos_imagenes/proyecto_2.webp"
-  trackingVersion="20260813-beacon1"
+  title={l.seo.title}
+  description={l.seo.description}
+  path={path}
+  ogImage={l.seo.ogImage}
+  trackingVersion={l.trackingVersion}
   breadcrumb={[
     { name: 'Inicio', path: '/' },
     { name: 'Productos', path: '/productos.html' },
-    { name: 'Pantallas LED', path: '/productos/pantallas-led.html' },
+    { name: l.product, path },
   ]}
 >
-  <Header context={context} advice={advice} current="/productos.html" />
+  <Header context={context} advice={l.wa.advice} current="/productos.html" />
 
   <main id="contenido">
     <Hero
-      crumbs={[{ name: 'Inicio', href: '/index.html' }, { name: 'Productos', href: '/productos.html' }, { name: 'Pantallas LED' }]}
-      title={['Pantallas LED', 'profesionales']}
-      sub="fabricación, venta e instalación"
-      lead="Fabricamos a medida según el espacio y la distancia de visión, e instalamos en todo el país."
+      crumbs={[{ name: 'Inicio', href: '/index.html' }, { name: 'Productos', href: '/productos.html' }, { name: l.product }]}
+      title={l.hero.h1}
+      sub={l.hero.accent}
+      lead={l.hero.lead}
       context={context}
-      quoteHref={wa(quote)}
-      catalogHref="/productos.html?cat=pantallas-led"
-      image={p18}
+      quoteHref={wa(l.wa.quote)}
+      catalogHref={catalog}
+      image={image(l.hero.image)}
     />
 
     <!-- CLIENTES · blanco. Logos y nada más. -->
@@ -107,44 +76,42 @@ const statement = 'Primero definimos dónde va, desde qué distancia se mira y c
       <div class="wrap">
         <h2 id="logos-title" class="logos__title muted reveal">Empresas e instituciones que eligieron RTM</h2>
         <ul class="logos__row reveal">
-          {logos.map(l => <li><Image src={l.img} alt={l.alt} height={56} densities={[1, 2]} /></li>)}
+          {logos.map(logo => <li><Image src={logo.img} alt={logo.alt} height={56} densities={[1, 2]} /></li>)}
         </ul>
       </div>
     </section>
 
-    <!-- CRITERIO · blanco. La frase se ilumina palabra por palabra al leerla: sigue al scroll, no lo frena. -->
-    <section class="statement band band--white" aria-label="Cómo definimos cada pantalla">
+    <!-- FRASE · blanco. Una sola frase corta que se ilumina al pasar. -->
+    <section class="statement band band--white">
       <div class="wrap">
-        <p class="statement__text t-display">
-          {statement.split(' ').map(w => <span class="w">{w} </span>)}
+        <p class="statement__text t-hero">
+          {l.statement.split(' ').map(w => <span class="w">{w} </span>)}
         </p>
       </div>
     </section>
 
-    <!-- MODELOS · gris claro. Ancla #modelos-title: la usan sitelinks de Google Ads. -->
+    <!-- MODELOS · gris claro. Ancla #modelos-title (sitelinks de Google Ads). -->
     <section class="models band band--mist" aria-labelledby="modelos-title">
       <div class="wrap">
-        <h2 class="t-h2 reveal" id="modelos-title">Seis modelos para interior, exterior y eventos</h2>
+        <h2 class="t-h2 reveal" id="modelos-title">{l.models.title}</h2>
 
         {groups.map(group => (
           <div class="models__group">
             <h3 class="models__group-name t-h3 reveal">{group.name}</h3>
-            <ul class="models__grid" tabindex="0" aria-label={`Modelos de ${group.name.toLowerCase()}`}>
+            <ul class="models__grid" tabindex="0" aria-label={`Modelos: ${group.name}`}>
               {group.models.map(m => (
                 <li class="model reveal">
                   <div class="model__media">
-                    <Image src={m.img} alt="" widths={[360, 640]} sizes="(min-width: 900px) 30vw, 40vw" />
+                    <Image src={m.image} alt="" widths={[360, 640]} sizes="(min-width: 900px) 30vw, 80vw" />
                   </div>
                   <div class="model__body">
-                    <p class="model__serie muted">{m.serie}</p>
                     <h4 class="model__name">{m.name}</h4>
-                    <p class="model__text muted">{m.text}</p>
-                    <dl class="model__specs">
-                      <div><dt>Pitch</dt><dd>{m.pitch}</dd></div>
-                      <div><dt>Brillo</dt><dd>{m.nits}</dd></div>
-                      <div><dt>Panel</dt><dd>{m.panel}</dd></div>
-                    </dl>
-                    <a class="link-arrow model__link" href={m.href}>Ver ficha técnica<span class="sr-only"> de {m.name}</span><Icon name="arrow-right" /></a>
+                    {m.specs.length > 0 && (
+                      <dl class="model__specs">
+                        {m.specs.map(([label, value]) => <div><dt>{label}</dt><dd>{value}</dd></div>)}
+                      </dl>
+                    )}
+                    <a class="link-arrow model__link" href={m.href}>Ver ficha<span class="sr-only"> de {m.name}</span><Icon name="arrow-right" /></a>
                   </div>
                 </li>
               ))}
@@ -152,9 +119,22 @@ const statement = 'Primero definimos dónde va, desde qué distancia se mira y c
           </div>
         ))}
 
+        {groups.length === 0 && l.models.gallery && (
+          <ul class="gallery">
+            {l.models.gallery.map(g => (
+              <li class="reveal">
+                <figure>
+                  <div class="gallery__frame"><Image src={image(g.image)} alt={g.caption} widths={[480, 960]} sizes="(min-width: 900px) 40vw, 100vw" /></div>
+                  <figcaption class="muted">{g.caption}</figcaption>
+                </figure>
+              </li>
+            ))}
+          </ul>
+        )}
+
         <div class="models__more reveal">
-          <p class="muted">También fabricamos las series Galileo para configuraciones especiales y Shell para vehículos o flotas.</p>
-          <a class="btn btn--primary" href={wa(quote)} target="_blank" rel="noopener noreferrer"
+          {l.models.note && <p class="muted">{l.models.note}</p>}
+          <a class="btn btn--primary" href={wa(l.wa.quote)} target="_blank" rel="noopener noreferrer"
              data-conversion="whatsapp_click" data-conversion-placement="landing_modelos" data-context={context}>
             <Icon name="whatsapp-logo" />Pedir cotización
           </a>
@@ -162,15 +142,15 @@ const statement = 'Primero definimos dónde va, desde qué distancia se mira y c
       </div>
     </section>
 
-    <!-- PROCESO · oscuro. Ancla #proceso-title. La línea roja avanza con la lectura. -->
+    <!-- PROCESO · azul noche. Ancla #proceso-title (sitelinks de Google Ads). -->
     <section class="process band band--ink" aria-labelledby="proceso-title">
       <div class="wrap process__grid">
         <div class="process__head">
           <h2 class="t-h2 reveal" id="proceso-title">Qué incluye el trabajo</h2>
-          <p class="t-lead muted reveal">Respondemos con serie, medida y valor.</p>
+          {l.process.lead && <p class="t-lead muted reveal">{l.process.lead}</p>}
         </div>
         <ol class="process__steps">
-          {steps.map(s => (
+          {l.process.steps.map(s => (
             <li class="reveal">
               <h3 class="t-h3">{s.title}</h3>
               <p class="muted">{s.text}</p>
@@ -180,16 +160,16 @@ const statement = 'Primero definimos dónde va, desde qué distancia se mira y c
       </div>
     </section>
 
-    <!-- PROYECTOS · blanco. Bento de 5 fotos reales, 5 celdas. -->
+    <!-- PROYECTOS · blanco. Fotos reales, 3 a 5 celdas. -->
     <section class="projects band band--white" aria-labelledby="proyectos-title">
       <div class="wrap">
-        <h2 class="t-h2 reveal" id="proyectos-title">Instaladas y funcionando</h2>
-        <ul class="projects__bento">
-          {projects.map((p, i) => (
+        <h2 class="t-h2 reveal" id="proyectos-title">{l.projects.title}</h2>
+        <ul class="projects__bento" data-count={l.projects.items.length}>
+          {l.projects.items.map((p, i) => (
             <li class={`projects__cell projects__cell--${i + 1}`}>
               <figure>
                 <div class="projects__frame reveal-media">
-                  <Image src={p.img} alt={p.caption} widths={[480, 960]} sizes={i === 0 ? '(min-width: 900px) 60vw, 100vw' : '(min-width: 900px) 30vw, 100vw'} />
+                  <Image src={image(p.image)} alt={p.caption} widths={[480, 960]} sizes={i === 0 ? '(min-width: 900px) 60vw, 100vw' : '(min-width: 900px) 40vw, 100vw'} />
                 </div>
                 <figcaption class="muted">{p.caption}</figcaption>
               </figure>
@@ -200,20 +180,20 @@ const statement = 'Primero definimos dónde va, desde qué distancia se mira y c
       </div>
     </section>
 
-    <!-- CIERRE · el único bloque rojo de la página. Ancla #cotizar: la usan sitelinks de Google Ads. -->
+    <!-- CIERRE · el único bloque rojo. Ancla #cotizar (sitelinks de Google Ads). -->
     <section class="closing" id="cotizar" aria-labelledby="cta-title">
       <div class="wrap">
         <div class="closing__panel band--red">
-          <h2 class="t-display" id="cta-title">Contanos dónde va la pantalla</h2>
-          <p class="t-lead muted">Indicanos la ubicación, la medida aproximada y el uso previsto. Devolvemos una propuesta con serie, pitch, medida final y valor.</p>
+          <h2 class="t-display" id="cta-title">{l.closing.title}</h2>
+          <p class="t-lead muted">{l.closing.lead}</p>
           <div class="closing__actions">
-            <a class="btn btn--light" href={wa(quote)} target="_blank" rel="noopener noreferrer"
+            <a class="btn btn--light" href={wa(l.wa.quote)} target="_blank" rel="noopener noreferrer"
                data-conversion="whatsapp_click" data-conversion-placement="landing_final" data-context={context}>
               <Icon name="whatsapp-logo" />Pedir cotización
             </a>
             <a class="btn btn--ghost" href="/proyectos.html"
                data-conversion="content_cta_click" data-conversion-placement="landing_final_proyectos" data-context={context}>
-              Ver proyectos instalados
+              Ver proyectos
             </a>
           </div>
         </div>
@@ -221,8 +201,8 @@ const statement = 'Primero definimos dónde va, desde qué distancia se mira y c
     </section>
   </main>
 
-  <Footer context={context} advice={advice} />
-  <Dock context={context} advice={advice} product="Pantallas LED" />
+  <Footer context={context} advice={l.wa.advice} />
+  <Dock context={context} advice={l.wa.advice} product={l.product} />
 </Base>
 
 <style>
@@ -243,13 +223,13 @@ const statement = 'Primero definimos dónde va, desde qué distancia se mira y c
 
   /* ---------- Frase ---------- */
   .statement { padding-top: 0; }
-  .statement__text { max-width: 22ch; font-weight: 600; }
+  .statement__text { max-width: 14ch; font-weight: 700; }
   @media (prefers-reduced-motion: no-preference) {
     @supports (animation-timeline: view()) {
       .statement .w {
         animation: light-up linear both;
         animation-timeline: view();
-        animation-range: cover 18% cover 42%;
+        animation-range: cover 20% cover 45%;
       }
     }
   }
@@ -259,11 +239,10 @@ const statement = 'Primero definimos dónde va, desde qué distancia se mira y c
   .models .t-h2 { max-width: 18ch; }
   .models__group { margin-top: clamp(56px, 7vw, 96px); }
   .models__group-name { padding-top: 18px; border-top: 1px solid var(--line); margin-bottom: 28px; }
-  /* Mobile: fila deslizable con la tarjeta siguiente asomando (se entiende que hay más sin leer nada).
-     Desktop: grilla de 3. */
+  /* Mobile: fila deslizable con la tarjeta siguiente asomando. Desktop: grilla de 3. */
   .models__grid {
     list-style: none; margin: 0 calc(var(--gutter) * -1); padding: 0 var(--gutter) 8px;
-    display: grid; grid-auto-flow: column; grid-auto-columns: 84%; gap: 14px;
+    display: grid; grid-auto-flow: column; grid-auto-columns: 78%; gap: 14px;
     overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--gutter);
     scrollbar-width: none;
   }
@@ -281,19 +260,24 @@ const statement = 'Primero definimos dónde va, desde qué distancia se mira y c
   .model__media { display: block; background: var(--white); border-radius: var(--radius-sm); overflow: clip; align-self: start; }
   .model__media :global(img) { width: 100%; aspect-ratio: 4 / 3; object-fit: contain; transition: transform 0.7s var(--ease); }
   .model:hover .model__media :global(img) { transform: scale(1.05); }
-  .model__body { display: grid; gap: 8px; align-content: start; }
-  .model__serie { font-size: var(--fs-small); }
+  .model__body { display: grid; gap: 10px; align-content: start; }
   .model__name { font-size: var(--fs-h3); letter-spacing: -0.01em; line-height: 1.1; }
-  .model__text { font-size: var(--fs-small); line-height: 1.5; }
-  .model__specs { display: grid; gap: 4px; margin: 8px 0 0; }
+  .model__specs { display: grid; gap: 4px; margin: 0; }
   .model__specs div { display: flex; gap: 10px; font-size: var(--fs-small); }
-  .model__specs dt { color: var(--muted); min-width: 56px; }
+  .model__specs dt { color: var(--muted); min-width: 64px; }
   .model__specs dd { margin: 0; font-weight: 600; }
   .models__more { display: grid; gap: 24px; justify-items: start; margin-top: clamp(48px, 6vw, 72px); max-width: 60ch; }
+
+  .gallery { list-style: none; margin: clamp(40px, 5vw, 64px) 0 0; padding: 0; display: grid; gap: 24px; }
+  .gallery figure { margin: 0; display: grid; gap: 12px; }
+  .gallery__frame { border-radius: var(--radius); overflow: clip; }
+  .gallery__frame :global(img) { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+  .gallery figcaption { font-size: var(--fs-small); }
 
   @media (min-width: 900px) {
     .models__grid { grid-auto-flow: row; grid-template-columns: repeat(3, 1fr); gap: 24px; margin: 0; padding: 0; overflow: visible; }
     .model { padding: 28px; gap: 24px; }
+    .gallery { grid-template-columns: repeat(2, 1fr); }
   }
 
   /* ---------- Proceso ---------- */
@@ -307,7 +291,7 @@ const statement = 'Primero definimos dónde va, desde qué distancia se mira y c
   .process__steps::before { background: var(--line); }
   .process__steps::after { background: var(--red); transform-origin: top; }
   .process__steps li { display: grid; gap: 10px; }
-  .process__steps p { max-width: 46ch; }
+  .process__steps p { max-width: 40ch; }
 
   @media (min-width: 900px) {
     .process__grid { grid-template-columns: 5fr 7fr; gap: 80px; }
@@ -325,7 +309,7 @@ const statement = 'Primero definimos dónde va, desde qué distancia se mira y c
   }
   @keyframes draw { from { transform: scaleY(0); } to { transform: scaleY(1); } }
 
-  /* ---------- Proyectos ---------- */
+  /* ---------- Proyectos (3 a 5 fotos) ---------- */
   .projects__bento { list-style: none; margin: clamp(40px, 5vw, 64px) 0 0; padding: 0; display: grid; gap: 28px; }
   .projects__cell figure { margin: 0; display: grid; gap: 12px; }
   .projects__frame { overflow: clip; border-radius: var(--radius); }
@@ -336,16 +320,19 @@ const statement = 'Primero definimos dónde va, desde qué distancia se mira y c
 
   @media (min-width: 900px) {
     .projects__bento { grid-template-columns: repeat(12, 1fr); gap: 24px; }
-    .projects__cell--1 { grid-column: 1 / 8; grid-row: span 2; }
-    .projects__cell--1 :global(img) { aspect-ratio: auto; height: 100%; min-height: 560px; }
-    .projects__cell--1 figure { height: 100%; grid-template-rows: 1fr auto; }
-    .projects__cell--1 .projects__frame { height: 100%; }
-    .projects__cell--2 { grid-column: 8 / 13; }
-    .projects__cell--3 { grid-column: 8 / 13; }
-    .projects__cell--4 { grid-column: 1 / 6; }
-    .projects__cell--5 { grid-column: 6 / 13; }
-    .projects__cell--2 :global(img), .projects__cell--3 :global(img) { aspect-ratio: 16 / 10; }
-    .projects__cell--4 :global(img), .projects__cell--5 :global(img) { aspect-ratio: auto; height: 420px; }
+    /* 3 y 5: una foto grande a la izquierda, dos apiladas a la derecha. */
+    .projects__bento:is([data-count="3"], [data-count="5"]) .projects__cell--1 { grid-column: 1 / 8; grid-row: span 2; }
+    .projects__bento:is([data-count="3"], [data-count="5"]) .projects__cell--1 figure { height: 100%; grid-template-rows: 1fr auto; }
+    .projects__bento:is([data-count="3"], [data-count="5"]) .projects__cell--1 .projects__frame { height: 100%; }
+    .projects__bento:is([data-count="3"], [data-count="5"]) .projects__cell--1 :global(img) { aspect-ratio: auto; height: 100%; min-height: 560px; }
+    .projects__bento:is([data-count="3"], [data-count="5"]) :is(.projects__cell--2, .projects__cell--3) { grid-column: 8 / 13; }
+    .projects__bento:is([data-count="3"], [data-count="5"]) :is(.projects__cell--2, .projects__cell--3) :global(img) { aspect-ratio: 16 / 10; }
+    /* 5: fila de abajo con dos fotos de igual alto. */
+    .projects__bento[data-count="5"] .projects__cell--4 { grid-column: 1 / 6; }
+    .projects__bento[data-count="5"] .projects__cell--5 { grid-column: 6 / 13; }
+    .projects__bento[data-count="5"] :is(.projects__cell--4, .projects__cell--5) :global(img) { aspect-ratio: auto; height: 420px; }
+    /* 4: dos por dos. */
+    .projects__bento[data-count="4"] .projects__cell { grid-column: span 6; }
   }
 
   /* ---------- Cierre ---------- */

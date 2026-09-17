@@ -5,8 +5,8 @@ import Icon from './Icon.astro';
 
 interface Props {
   crumbs: { name: string; href?: string }[];
-  title: [string, string];
-  sub: string;
+  title: string[];      // líneas del H1 (contrato SEO: el texto unido no cambia)
+  sub?: string;         // última parte del H1, en rojo
   lead: string;
   context: string;
   quoteHref: string;
@@ -14,6 +14,8 @@ interface Props {
   image: ImageMetadata;
 }
 const { crumbs, title, sub, lead, context, quoteHref, catalogHref, image } = Astro.props;
+// H1 largos (algunos del contrato tienen 8-10 palabras) bajan de escala para no pasar de 3-4 líneas.
+const long = title.join(' ').length > 30;
 ---
 <!-- Hero: instalación real a pantalla completa con velo; el texto va encima con contraste AA medido. -->
 <section class="hero band--black">
@@ -31,10 +33,11 @@ const { crumbs, title, sub, lead, context, quoteHref, catalogHref, image } = Ast
       ))}
     </nav>
 
-    <h1 class="hero__title">
-      <span class="rise hero__line"><span style="--d: 80ms">{title[0]}</span></span>{' '}
-      <span class="rise hero__line"><span style="--d: 180ms">{title[1]}</span></span>{' '}
-      <span class="rise hero__sub"><span style="--d: 300ms">{sub}</span></span>
+    <h1 class:list={['hero__title', { 'hero__title--long': long }]}>
+      {title.map((line, i) => (
+        <Fragment><span class="rise hero__line"><span style={`--d: ${80 + i * 100}ms`}>{line}</span></span>{' '}</Fragment>
+      ))}
+      {sub && <span class="rise hero__sub"><span style={`--d: ${80 + title.length * 100}ms`}>{sub}</span></span>}
     </h1>
 
     <p class="t-lead hero__lead fade-in" style="--d: 450ms">{lead}</p>
@@ -75,6 +78,7 @@ const { crumbs, title, sub, lead, context, quoteHref, catalogHref, image } = Ast
   .hero__crumbs a:hover { color: var(--white); }
   .hero__title { display: grid; }
   .hero__line { font-size: clamp(2.75rem, 1.2rem + 5.2vw, 5.75rem); line-height: 0.94; letter-spacing: -0.04em; }
+  .hero__title--long .hero__line { font-size: clamp(2.25rem, 1rem + 3.9vw, 4.25rem); line-height: 0.98; }
   .hero__sub { margin-top: 0.35em; font-size: clamp(1.75rem, 1rem + 2.6vw, 3rem); line-height: 1; letter-spacing: -0.03em; color: var(--red); }
   .hero__lead { color: #dfe6ee; }
   .hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; }
