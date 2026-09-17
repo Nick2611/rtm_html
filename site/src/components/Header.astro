@@ -8,7 +8,7 @@ const { context, advice, current } = Astro.props;
 <header class="header">
   <div class="wrap header__bar">
     <a class="header__brand" href="/index.html" aria-label="RTM Pantallas LED, inicio">
-      <img src="/rtm_logo/rtmLogo.png" alt="RTM Pantallas LED" width="300" height="60">
+      <img src="/rtm_logo/rtmLogo-transparente.png" alt="RTM Pantallas LED" width="300" height="60">
     </a>
 
     <nav class="header__nav" aria-label="Principal">
@@ -36,6 +36,7 @@ const { context, advice, current } = Astro.props;
     color: var(--white);
   }
   .header__bar { display: flex; align-items: center; gap: 40px; height: var(--header-h); }
+  /* rtmLogo-transparente.png: el PNG original trae fondo #141416, que se veía como recuadro sobre las fotos. */
   .header__brand img { width: 132px; height: auto; }
   .header__nav { display: none; gap: 36px; margin-left: auto; }
   .header__nav a { font-size: var(--fs-small); text-decoration: none; color: var(--muted-dark); transition: color 0.3s var(--ease); }

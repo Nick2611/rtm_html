@@ -28,10 +28,25 @@ const { context, advice, product } = Astro.props;
   /* Reserva para que el botón nunca tape el final de la página. */
   :global(body) { padding-bottom: 92px; }
 
+  /* Desktop: visible desde que carga. Mobile: aparece apenas se empieza a scrollear, así no queda
+     pegado al botón del hero en la primera pantalla. Con reduced-motion, visible siempre. */
   @media (prefers-reduced-motion: no-preference) {
     .dock { animation: dock-in 0.7s var(--ease) 0.9s both; }
+    @media (max-width: 959px) {
+      @supports (animation-timeline: scroll()) {
+        .dock {
+          animation: dock-scroll linear both;
+          animation-timeline: scroll(root);
+          animation-range: 0 12vh;
+        }
+      }
+    }
   }
   @keyframes dock-in { from { opacity: 0; transform: translateY(24px); } }
+  @keyframes dock-scroll {
+    from { opacity: 0; transform: translateY(24px); visibility: hidden; }
+    to { opacity: 1; transform: none; visibility: visible; }
+  }
 
   @media (min-width: 960px) {
     .dock { left: auto; right: 32px; bottom: 32px; padding: 0 28px 0 22px; }

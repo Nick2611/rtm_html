@@ -1,0 +1,103 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Icon from './Icon.astro';
+
+interface Props {
+  crumbs: { name: string; href?: string }[];
+  title: [string, string];
+  sub: string;
+  lead: string;
+  context: string;
+  quoteHref: string;
+  catalogHref: string;
+  image: ImageMetadata;
+}
+const { crumbs, title, sub, lead, context, quoteHref, catalogHref, image } = Astro.props;
+---
+<!-- Hero: instalación real a pantalla completa con velo; el texto va encima con contraste AA medido. -->
+<section class="hero band--black">
+  <div class="hero__bg" aria-hidden="true">
+    <Image src={image} alt="" widths={[640, 1024, 1600]} sizes="100vw" loading="eager" fetchpriority="high" />
+  </div>
+
+  <div class="wrap hero__text">
+    <nav class="hero__crumbs fade-in" aria-label="Migas de pan">
+      {crumbs.map((c, i) => (
+        <Fragment>
+          {i > 0 && <span aria-hidden="true">/</span>}
+          {c.href ? <a href={c.href}>{c.name}</a> : <span aria-current="page">{c.name}</span>}
+        </Fragment>
+      ))}
+    </nav>
+
+    <h1 class="hero__title">
+      <span class="rise hero__line"><span style="--d: 80ms">{title[0]}</span></span>{' '}
+      <span class="rise hero__line"><span style="--d: 180ms">{title[1]}</span></span>{' '}
+      <span class="rise hero__sub"><span style="--d: 300ms">{sub}</span></span>
+    </h1>
+
+    <p class="t-lead hero__lead fade-in" style="--d: 450ms">{lead}</p>
+    <div class="hero__actions fade-in" style="--d: 560ms">
+      <a class="btn btn--primary" href={quoteHref} target="_blank" rel="noopener noreferrer"
+         data-conversion="whatsapp_click" data-conversion-placement="landing_hero" data-context={context}>
+        <Icon name="whatsapp-logo" />Pedir cotización
+      </a>
+      <a class="link-arrow" href={catalogHref}
+         data-conversion="content_cta_click" data-conversion-placement="landing_hero_catalogo" data-context={context}>
+        Ver modelos y fichas técnicas<Icon name="arrow-right" />
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative; overflow: clip;
+    display: grid; align-items: end;
+    min-height: min(100dvh, 920px);
+    margin-top: calc(var(--header-h) * -1);
+    padding-top: calc(var(--header-h) + 48px);
+    padding-bottom: clamp(56px, 8vw, 112px);
+  }
+  .hero__bg { position: absolute; inset: 0; }
+  .hero__bg :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  /* Velo: casi sólido donde está el texto, se abre hacia donde no hay texto. */
+  .hero__bg::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to top, rgb(20 20 22 / 0.98) 0%, rgb(20 20 22 / 0.95) 58%, rgb(20 20 22 / 0.5) 100%);
+  }
+
+  .hero__text { position: relative; display: grid; gap: 24px; }
+  .hero__text > * { max-width: 760px; }
+  .hero__crumbs { display: flex; flex-wrap: wrap; gap: 10px; font-size: var(--fs-small); color: var(--muted-dark); }
+  .hero__crumbs a { text-decoration: none; }
+  .hero__crumbs a:hover { color: var(--white); }
+  .hero__title { display: grid; }
+  .hero__line { font-size: clamp(2.75rem, 1.2rem + 5.2vw, 5.75rem); line-height: 0.94; letter-spacing: -0.04em; }
+  .hero__sub { margin-top: 0.35em; font-size: clamp(1.75rem, 1rem + 2.6vw, 3rem); line-height: 1; letter-spacing: -0.03em; color: var(--red); }
+  .hero__lead { color: #dfe6ee; }
+  .hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; }
+  @media (max-width: 599px) { .hero__actions .btn { width: 100%; } }
+  /* En mobile el botón fijo de WhatsApp ocupa el borde inferior: el hero le deja lugar. */
+  @media (max-width: 959px) { .hero { padding-bottom: 120px; } }
+
+  @media (min-width: 960px) {
+    .hero { align-items: center; }
+    .hero__bg::after {
+      background: linear-gradient(to right, rgb(20 20 22 / 0.98) 0%, rgb(20 20 22 / 0.95) 55%, rgb(20 20 22 / 0.3) 100%);
+    }
+  }
+
+  /* La foto se acerca apenas al bajar: profundidad sin mover el texto. */
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: scroll()) {
+      .hero__bg :global(img) {
+        animation: drift linear both;
+        animation-timeline: scroll(root);
+        animation-range: 0 100vh;
+      }
+    }
+  }
+  @keyframes drift { from { transform: scale(1.08); } to { transform: scale(1); } }
+</style>

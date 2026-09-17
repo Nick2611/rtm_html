@@ -5,9 +5,9 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Dock from '../../components/Dock.astro';
 import Icon from '../../components/Icon.astro';
+import Hero from '../../components/Hero.astro';
 import { wa } from '../../data/site';
 
-import heroImg from '@repo/proyectos_imagenes/proyecto_14.webp';
 import ifi960 from '@repo/imagenes_productos/pantallas_led/indoor/IFI960.webp';
 import ri640 from '@repo/imagenes_productos/pantallas_led/indoor/RI640.webp';
 import ri960 from '@repo/imagenes_productos/pantallas_led/indoor/RI960.webp';
@@ -91,38 +91,16 @@ const statement = 'Primero definimos dónde va, desde qué distancia se mira y c
   <Header context={context} advice={advice} current="/productos.html" />
 
   <main id="contenido">
-    <!-- HERO · oscuro. Tipografía a escala arquitectónica + el producto encendido. -->
-    <section class="hero band--black">
-      <div class="wrap hero__grid">
-        <nav class="hero__crumbs fade-in" aria-label="Migas de pan">
-          <a href="/index.html">Inicio</a><span aria-hidden="true">/</span><a href="/productos.html">Productos</a><span aria-hidden="true">/</span><span aria-current="page">Pantallas LED</span>
-        </nav>
-
-        <h1 class="hero__title">
-          <span class="rise t-hero"><span style="--d: 80ms">Pantallas LED</span></span>{' '}
-          <span class="rise t-hero"><span style="--d: 180ms">profesionales</span></span>{' '}
-          <span class="rise hero__sub t-display"><span style="--d: 300ms">fabricación, venta e instalación</span></span>
-        </h1>
-
-        <div class="hero__copy">
-          <p class="t-lead muted fade-in" style="--d: 450ms">Fabricamos a medida según el espacio y la distancia de visión, e instalamos en todo el país.</p>
-          <div class="hero__actions fade-in" style="--d: 560ms">
-            <a class="btn btn--primary" href={wa(quote)} target="_blank" rel="noopener noreferrer"
-               data-conversion="whatsapp_click" data-conversion-placement="landing_hero" data-context={context}>
-              <Icon name="whatsapp-logo" />Pedir cotización
-            </a>
-            <a class="link-arrow" href="/productos.html?cat=pantallas-led"
-               data-conversion="content_cta_click" data-conversion-placement="landing_hero_catalogo" data-context={context}>
-              Ver modelos y fichas técnicas<Icon name="arrow-right" />
-            </a>
-          </div>
-        </div>
-
-        <div class="hero__media fade-in" style="--d: 250ms">
-          <Image src={heroImg} alt="Pantalla LED encendida en un salón oscuro" widths={[480, 800, 1280]} sizes="(min-width: 960px) 56vw, 100vw" loading="eager" fetchpriority="high" />
-        </div>
-      </div>
-    </section>
+    <Hero
+      crumbs={[{ name: 'Inicio', href: '/index.html' }, { name: 'Productos', href: '/productos.html' }, { name: 'Pantallas LED' }]}
+      title={['Pantallas LED', 'profesionales']}
+      sub="fabricación, venta e instalación"
+      lead="Fabricamos a medida según el espacio y la distancia de visión, e instalamos en todo el país."
+      context={context}
+      quoteHref={wa(quote)}
+      catalogHref="/productos.html?cat=pantallas-led"
+      image={p18}
+    />
 
     <!-- CLIENTES · blanco. Logos y nada más. -->
     <section class="logos band band--white" aria-labelledby="logos-title">
@@ -249,51 +227,6 @@ const statement = 'Primero definimos dónde va, desde qué distancia se mira y c
 
 <style>
   .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-
-  /* ---------- Hero ---------- */
-  .hero {
-    margin-top: calc(var(--header-h) * -1);
-    padding-top: calc(var(--header-h) + clamp(28px, 5vw, 72px));
-    padding-bottom: clamp(56px, 8vw, 120px);
-    overflow: clip;
-  }
-  .hero__grid { display: grid; gap: 28px; }
-  .hero__crumbs { display: flex; flex-wrap: wrap; gap: 10px; font-size: var(--fs-small); color: var(--muted-dark); }
-  .hero__crumbs a { text-decoration: none; }
-  .hero__crumbs a:hover { color: var(--white); }
-  .hero__title { display: grid; }
-  .hero__sub { margin-top: 0.3em; color: var(--red); }
-  .hero__copy { display: grid; gap: 28px; }
-  .hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; }
-  .hero__media { margin-inline: calc(var(--gutter) * -1); }
-  .hero__media :global(img) {
-    width: 100%; aspect-ratio: 4 / 3; object-fit: cover;
-    -webkit-mask-image: radial-gradient(ellipse closest-side, #000 58%, transparent 100%);
-    mask-image: radial-gradient(ellipse closest-side, #000 58%, transparent 100%);
-  }
-
-  @media (max-width: 599px) {
-    .hero__actions .btn { width: 100%; }
-  }
-
-  @media (min-width: 960px) {
-    .hero__grid { grid-template-columns: 5fr 7fr; column-gap: 56px; row-gap: 40px; }
-    .hero__crumbs, .hero__title { grid-column: 1 / -1; }
-    .hero__copy { align-self: start; padding-top: 12px; }
-    .hero__media { margin-inline: 0 calc(var(--gutter) * -1); }
-  }
-
-  /* El producto se acerca apenas mientras se baja: profundidad sin mover el texto. */
-  @media (prefers-reduced-motion: no-preference) {
-    @supports (animation-timeline: scroll()) {
-      .hero__media :global(img) {
-        animation: drift linear both;
-        animation-timeline: scroll(root);
-        animation-range: 0 100vh;
-      }
-    }
-  }
-  @keyframes drift { from { transform: scale(1.06); } to { transform: scale(1) translateY(-4%); } }
 
   /* ---------- Logos ---------- */
   .logos { padding-block: clamp(56px, 7vw, 96px); }
