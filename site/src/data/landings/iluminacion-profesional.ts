@@ -16,7 +16,6 @@ export default defineLanding({
     lead: 'Cabezales, barras y flashes para show.',
     image: 'proyectos_imagenes/conjunto_2_1.webp',
   },
-  statement: 'El rig, según tu espacio.',
   models: {
     title: 'Modelos',
     groups: { beam: 'Beam', '3en1': '3 en 1', 'barras-moviles': 'Barras móviles', flashes: 'Flashes' },

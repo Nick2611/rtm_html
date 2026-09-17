@@ -16,7 +16,6 @@ export default defineLanding({
     lead: 'Entregamos el camión funcionando.',
     image: 'proyectos_imagenes/proyecto_11.webp',
   },
-  statement: 'Tu pantalla, en movimiento.',
   models: {
     title: 'Camiones con pantalla',
     gallery: [

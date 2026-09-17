@@ -16,7 +16,6 @@ export default defineLanding({
     lead: 'Interior y exterior, instalados en todo el país.',
     image: 'proyectos_imagenes/conjunto_3_2.webp',
   },
-  statement: 'Vertical, a la altura de la vista.',
   models: {
     title: 'Modelos',
     groups: { indoor: 'Interior', outdoor: 'Exterior' },

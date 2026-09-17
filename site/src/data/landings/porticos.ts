@@ -16,7 +16,6 @@ export default defineLanding({
     lead: 'Mensajería variable, a medida del pescante.',
     image: 'imagenes_productos/soluciones/LPR1264.webp',
   },
-  statement: 'Legible a la velocidad de paso.',
   models: {
     title: 'Modelos',
     groups: { modelos: 'Señalización vial' },

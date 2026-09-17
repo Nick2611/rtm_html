@@ -83,15 +83,6 @@ const logos = [
       </div>
     </section>
 
-    <!-- FRASE · blanco. Una sola frase corta que se ilumina al pasar. -->
-    <section class="statement band band--white">
-      <div class="wrap">
-        <p class="statement__text t-hero">
-          {l.statement.split(' ').map(w => <span class="w">{w} </span>)}
-        </p>
-      </div>
-    </section>
-
     <!-- MODELOS · gris claro. Ancla #modelos-title (sitelinks de Google Ads). -->
     <section class="models band band--mist" aria-labelledby="modelos-title">
       <div class="wrap">
@@ -211,8 +202,8 @@ const logos = [
   .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
   /* ---------- Logos ---------- */
-  .logos { padding-block: clamp(56px, 7vw, 96px); }
-  .logos__title { font-size: var(--fs-small); font-weight: 500; text-align: center; margin-bottom: 36px; }
+  .logos { padding-block: clamp(40px, 5vw, 64px); }
+  .logos__title { font-size: var(--fs-small); font-weight: 500; text-align: center; margin-bottom: 24px; }
   .logos__row {
     list-style: none; margin: 0; padding: 0;
     display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 28px 56px;
@@ -223,23 +214,9 @@ const logos = [
   }
   .logos__row li:hover :global(img) { filter: none; opacity: 1; }
 
-  /* ---------- Frase ---------- */
-  .statement { padding-top: 0; }
-  .statement__text { max-width: 14ch; font-weight: 700; }
-  @media (prefers-reduced-motion: no-preference) {
-    @supports (animation-timeline: view()) {
-      .statement .w {
-        animation: light-up linear both;
-        animation-timeline: view();
-        animation-range: cover 20% cover 45%;
-      }
-    }
-  }
-  @keyframes light-up { from { color: color-mix(in srgb, var(--ink) 62%, var(--white)); } to { color: var(--ink); } }
-
   /* ---------- Modelos ---------- */
   .models .t-h2 { max-width: 18ch; }
-  .models__group { margin-top: clamp(56px, 7vw, 96px); }
+  .models__group { margin-top: clamp(28px, 3vw, 40px); }
   .models__group-name { padding-top: 18px; border-top: 1px solid var(--line); margin-bottom: 28px; }
   /* Mobile: fila deslizable con la tarjeta siguiente asomando. Desktop: grilla de 3. */
   .models__grid {
@@ -268,7 +245,7 @@ const logos = [
   .model__specs div { display: flex; gap: 10px; font-size: var(--fs-small); }
   .model__specs dt { color: var(--muted); min-width: 64px; }
   .model__specs dd { margin: 0; font-weight: 600; }
-  .models__more { display: grid; gap: 24px; justify-items: start; margin-top: clamp(48px, 6vw, 72px); max-width: 60ch; }
+  .models__more { display: grid; gap: 20px; justify-items: start; margin-top: clamp(32px, 4vw, 48px); max-width: 60ch; }
 
   .gallery { list-style: none; margin: clamp(40px, 5vw, 64px) 0 0; padding: 0; display: grid; gap: 24px; }
   .gallery figure { margin: 0; display: grid; gap: 12px; }
@@ -299,7 +276,7 @@ const logos = [
   @media (min-width: 900px) {
     .process__grid { grid-template-columns: 5fr 7fr; gap: 80px; }
     .process__head { position: sticky; top: calc(var(--header-h) + 48px); align-self: start; }
-    .process__steps { padding-left: 48px; gap: 72px; }
+    .process__steps { padding-left: 48px; gap: 44px; }
   }
   @media (prefers-reduced-motion: no-preference) {
     @supports (animation-timeline: view()) {
@@ -313,14 +290,14 @@ const logos = [
   @keyframes draw { from { transform: scaleY(0); } to { transform: scaleY(1); } }
 
   /* ---------- Proyectos (3 a 5 fotos) ---------- */
-  .projects__bento { list-style: none; margin: clamp(40px, 5vw, 64px) 0 0; padding: 0; display: grid; gap: 28px; }
+  .projects__bento { list-style: none; margin: clamp(28px, 3vw, 40px) 0 0; padding: 0; display: grid; gap: 24px; }
   .projects__cell figure { margin: 0; display: grid; gap: 12px; }
   /* Fondo gris claro: los renders de producto con fondo blanco no se funden con la banda. */
   .projects__frame { overflow: clip; border-radius: var(--radius); background: var(--mist); }
   .projects__frame :global(img) { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; transition: transform 0.9s var(--ease); }
   .projects__cell:hover .projects__frame :global(img) { transform: scale(1.04); }
   .projects__cell figcaption { font-size: var(--fs-small); }
-  .projects__all { margin-top: 36px; }
+  .projects__all { margin-top: 24px; }
 
   @media (min-width: 900px) {
     .projects__bento { grid-template-columns: repeat(12, 1fr); gap: 24px; }
@@ -341,7 +318,7 @@ const logos = [
 
   /* ---------- Cierre ---------- */
   .closing { background: var(--white); padding-bottom: var(--section); }
-  .closing__panel { padding: clamp(40px, 7vw, 104px) clamp(24px, 6vw, 96px); display: grid; gap: 28px; border-radius: var(--radius-lg); }
+  .closing__panel { padding: clamp(36px, 5vw, 72px) clamp(24px, 5vw, 72px); display: grid; gap: 28px; border-radius: var(--radius-lg); }
   .closing__panel .t-display { max-width: 16ch; }
   .closing__actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 8px; }
   @media (max-width: 599px) { .closing__actions .btn { width: 100%; } }

@@ -16,7 +16,6 @@ export default defineLanding({
     lead: 'A medida, instaladas en todo el país.',
     image: 'proyectos_imagenes/proyecto_18.webp',
   },
-  statement: 'Cada pantalla, hecha a medida.',
   models: {
     title: 'Modelos',
     groups: { indoor: 'Interior', outdoor: 'Exterior y eventos' },

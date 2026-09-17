@@ -41,7 +41,7 @@
 
   --wrap: 1280px;
   --gutter: clamp(16px, 4vw, 48px);
-  --section: clamp(88px, 11vw, 168px);
+  --section: clamp(64px, 7vw, 112px);
   --header-h: 72px;
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
 }

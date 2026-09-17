@@ -11,6 +11,9 @@ frontend:
       commands:
         # site/public enlaza el sitio actual por symlinks: dist/ sale completo (páginas Astro + el resto tal cual).
         - npm --prefix site run build
+        # Ramas de preview (variable RTM_PREVIEW=1 sólo en esa rama de Amplify): que los buscadores no indexen
+        # la copia en amplifyapp.com. main no la tiene, así que producción publica su robots.txt normal.
+        - 'if [ "$RTM_PREVIEW" = "1" ]; then printf "User-agent: *\nDisallow: /\n" > site/dist/robots.txt; fi'
   artifacts:
     baseDirectory: site/dist
     files:

@@ -14,7 +14,6 @@ export interface Landing {
   trackingVersion: string;   // ?v= de conversion-tracking.js
   seo: { title: string; description: string; ogImage: string };
   hero: { h1: string[]; accent?: string; lead: string; image: string; focus?: string }; // focus: object-position ("30% 50%")
-  statement: string;         // una frase corta
   models: {
     title: string;
     groups?: Record<string, string>;        // slug de subcategoría → nombre visible

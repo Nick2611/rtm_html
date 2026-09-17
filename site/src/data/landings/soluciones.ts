@@ -16,7 +16,6 @@ export default defineLanding({
     lead: 'Colectivos y proyectos sin medida estándar.',
     image: 'proyectos_imagenes/conjunto_7_1.webp',
   },
-  statement: 'Si no existe, lo fabricamos.',
   models: {
     title: 'Modelos',
     groups: { 'unidades-colectivos': 'Colectivos', 'disenos-especiales': 'Diseños especiales' },

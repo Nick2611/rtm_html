@@ -6,6 +6,7 @@ export const EMAIL = 'info@pantallasledrtm.com';
 export const wa = (text: string) => `https://wa.me/${PHONE}?text=${encodeURIComponent(text)}`;
 
 export const nav = [
+  { label: 'Inicio', href: '/index.html' },
   { label: 'Productos', href: '/productos.html' },
   { label: 'Proyectos', href: '/proyectos.html' },
   { label: 'Nosotros', href: '/index.html#about' },

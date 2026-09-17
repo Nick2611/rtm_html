@@ -16,7 +16,6 @@ export default defineLanding({
     lead: 'Video, efectos de luz o interactivos.',
     image: 'proyectos_imagenes/proyecto_8.webp',
   },
-  statement: 'La pista también es pantalla.',
   models: {
     title: 'Modelos',
     groups: { modelos: 'Transitables' },
