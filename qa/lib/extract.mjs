@@ -182,6 +182,7 @@ export function amplifyArtifactGlobs(root) {
 export function coveredByGlobs(path, globs) {
   const p = path.replace(/^\//, '');
   return globs.some(g => {
+    if (g === '**/*') return true;
     if (g.endsWith('/**/*')) return p.startsWith(g.slice(0, -4));
     return p === g;
   });
