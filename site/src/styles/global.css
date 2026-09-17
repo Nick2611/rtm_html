@@ -1,0 +1,149 @@
+/*
+  Sistema visual RTM.
+  Estilo: DESIGN-2.md (display enorme con tracking cerrado, cuerpo 18/1.61, pills, cero sombras,
+  jerarquía por cambio de superficie). Colores: los de css/main.css, que no se negocian.
+
+  Reglas que mantienen la cohesión en todo el sitio:
+  - Bandas: ink (#0f1420), white, mist (#f3f4fa), red (UNA por página, el bloque destacado), footer (#141416).
+  - Forma: lo interactivo es pill; paneles e imágenes, 0 radio.
+  - Acento: rojo. Botón #cf3d39 con texto blanco (4.79:1). #e84a45 sólo sobre fondos oscuros.
+  - Texto: nunca por debajo de 17px. Público de 50+.
+*/
+@import '@fontsource-variable/inter-tight/wght.css';
+
+:root {
+  --ink: #141416;
+  --night: #0f1420;
+  --white: #ffffff;
+  --mist: #f3f4fa;
+  --red: #e84a45;
+  --red-strong: #cf3d39;
+  --muted-light: #4b5563;
+  --muted-dark: #aab3bf;
+  --line-light: #d3d6da;
+  --line-dark: rgb(255 255 255 / 0.12);
+
+  --font: 'Inter Tight Variable', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --fs-hero: clamp(2.75rem, 1rem + 7.2vw, 7.25rem);
+  --fs-display: clamp(2.25rem, 1.2rem + 4.2vw, 4.75rem);
+  --fs-h2: clamp(2rem, 1.3rem + 2.8vw, 3.5rem);
+  --fs-h3: 1.4375rem;
+  --fs-body: 1.125rem;
+  --fs-small: 1.0625rem;
+
+  --wrap: 1280px;
+  --gutter: clamp(16px, 4vw, 48px);
+  --section: clamp(88px, 11vw, 168px);
+  --header-h: 72px;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--header-h) + 24px);
+}
+
+body {
+  margin: 0;
+  background: var(--white);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: var(--fs-body);
+  line-height: 1.61;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+p { margin: 0; text-wrap: pretty; }
+h1, h2, h3, h4 { margin: 0; font-weight: 700; text-wrap: balance; }
+
+.wrap { width: 100%; max-width: var(--wrap); margin-inline: auto; padding-inline: var(--gutter); }
+
+.skip-link {
+  position: absolute; left: 12px; top: -60px; z-index: 100;
+  padding: 12px 20px; border-radius: 999px; background: var(--ink); color: var(--white);
+}
+.skip-link:focus { top: 12px; }
+:focus-visible { outline: 3px solid var(--red); outline-offset: 3px; }
+
+/* ---------- Tipografía ---------- */
+.t-hero { font-size: var(--fs-hero); line-height: 0.92; letter-spacing: -0.04em; }
+.t-display { font-size: var(--fs-display); line-height: 0.98; letter-spacing: -0.035em; }
+.t-h2 { font-size: var(--fs-h2); line-height: 1.02; letter-spacing: -0.03em; }
+.t-h3 { font-size: var(--fs-h3); line-height: 1.2; letter-spacing: -0.01em; }
+.t-lead { font-size: clamp(1.125rem, 1rem + 0.45vw, 1.3125rem); line-height: 1.55; max-width: 44ch; }
+
+/* ---------- Bandas ---------- */
+.band { padding-block: var(--section); }
+.band--white { background: var(--white); color: var(--ink); --muted: var(--muted-light); --line: var(--line-light); }
+.band--mist { background: var(--mist); color: var(--ink); --muted: var(--muted-light); --line: var(--line-light); }
+.band--black { background: var(--ink); color: var(--white); --muted: var(--muted-dark); --line: var(--line-dark); }
+.band--ink { background: var(--night); color: var(--white); --muted: var(--muted-dark); --line: var(--line-dark); }
+.band--red { background: var(--red-strong); color: var(--white); --muted: rgb(255 255 255 / 0.9); --line: rgb(255 255 255 / 0.3); }
+.muted { color: var(--muted); }
+
+/* ---------- Botones (pill) ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+  min-height: 58px; padding: 0 30px; border-radius: 999px;
+  font: 600 1.125rem/1 var(--font); text-decoration: none; white-space: nowrap;
+  transition: transform 0.2s var(--ease), background-color 0.3s var(--ease), color 0.3s var(--ease);
+}
+.btn svg { width: 24px; height: 24px; flex: none; }
+.btn:active { transform: scale(0.98); }
+.btn--primary { background: var(--red-strong); color: var(--white); }
+.btn--primary:hover { filter: brightness(0.92); }
+.btn--light { background: var(--white); color: var(--ink); }
+.btn--light:hover { background: var(--mist); }
+.btn--ghost { border: 1.5px solid currentColor; color: inherit; }
+.btn--ghost:hover { background: rgb(255 255 255 / 0.1); }
+
+.link-arrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-weight: 600; text-decoration: none; min-height: 48px;
+  background: linear-gradient(currentColor, currentColor) 0 calc(100% - 10px) / 0 1.5px no-repeat;
+  transition: background-size 0.4s var(--ease);
+}
+.link-arrow svg { width: 20px; height: 20px; transition: transform 0.4s var(--ease); }
+.link-arrow:hover { background-size: calc(100% - 30px) 1.5px; }
+.link-arrow:hover svg { transform: translateX(5px); }
+
+.rise { display: block; }
+
+/* ---------- Movimiento ----------
+   Todo va dentro de prefers-reduced-motion: no-preference. Con reduced-motion, o en navegadores sin
+   scroll-driven animations, el contenido queda visible y quieto: nunca hay nada oculto esperando JS.
+   Nada secuestra el scroll: las animaciones siguen al scroll, no lo reemplazan. */
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+  @view-transition { navigation: auto; }
+
+  /* Entrada del hero al cargar: las líneas suben desde una máscara. */
+  .rise { overflow: clip; padding-bottom: 0.08em; margin-bottom: -0.08em; }
+  .rise > span { display: block; animation: rise 1.1s var(--ease) both; animation-delay: var(--d, 0ms); }
+  .fade-in { animation: fade-up 1s var(--ease) both; animation-delay: var(--d, 0ms); }
+
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: fade-up linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 70%;
+    }
+    .reveal-media {
+      animation: unmask linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 40%;
+    }
+  }
+}
+
+@keyframes rise { from { transform: translateY(105%); } to { transform: none; } }
+@keyframes fade-up { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: none; } }
+@keyframes unmask {
+  from { clip-path: inset(22% 0 0 0); transform: scale(1.08); }
+  to { clip-path: inset(0); transform: none; }
+}

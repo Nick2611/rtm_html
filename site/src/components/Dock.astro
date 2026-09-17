@@ -1,0 +1,49 @@
+---
+import Icon from './Icon.astro';
+import { wa } from '../data/site';
+
+interface Props { context: string; advice: string; product: string }
+const { context, advice, product } = Astro.props;
+---
+<a class="dock" href={wa(advice)} target="_blank" rel="noopener noreferrer"
+   aria-label={`Pedir cotización por WhatsApp sobre ${product}`}
+   data-conversion="whatsapp_click" data-conversion-placement="landing_persistent" data-context={context}>
+  <Icon name="whatsapp-logo" /><span>Pedir cotización</span>
+</a>
+
+<style>
+  .dock {
+    position: fixed; z-index: 40;
+    left: 16px; right: 16px; bottom: max(16px, env(safe-area-inset-bottom));
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+    min-height: 60px; border-radius: 999px;
+    background: var(--red-strong); color: var(--white);
+    font-weight: 600; font-size: 1.125rem; text-decoration: none;
+    transition: transform 0.2s var(--ease), filter 0.3s var(--ease);
+  }
+  .dock:hover { filter: brightness(0.92); }
+  .dock:active { transform: scale(0.98); }
+  .dock :global(svg) { width: 26px; height: 26px; }
+  :global(body) { padding-bottom: 92px; }
+
+  /* Aparece cuando el botón del hero sale de pantalla: dos botones iguales a la vista sería ruido. */
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: scroll()) {
+      .dock {
+        animation: dock-in linear both;
+        animation-timeline: scroll(root);
+        animation-range: 40vh 70vh;
+      }
+    }
+  }
+  @keyframes dock-in {
+    from { opacity: 0; transform: translateY(24px); visibility: hidden; }
+    to { opacity: 1; transform: none; visibility: visible; }
+  }
+
+  @media (min-width: 960px) {
+    /* En desktop el header fijo ya tiene el botón: el dock sería un segundo botón idéntico a la vista. */
+    .dock { display: none; }
+    :global(body) { padding-bottom: 0; }
+  }
+</style>

@@ -1,0 +1,62 @@
+---
+import Icon from './Icon.astro';
+import { EMAIL, PHONE, PHONE_LABEL, products, wa } from '../data/site';
+
+interface Props { context: string; advice: string }
+const { context, advice } = Astro.props;
+---
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__top">
+      <img class="footer__logo" src="/rtm_logo/rtmLogo.png" alt="RTM Pantallas LED" width="300" height="60" loading="lazy">
+      <p class="footer__claim t-h3">Fabricación, instalación y servicio técnico en toda la Argentina.</p>
+    </div>
+
+    <div class="footer__grid">
+      <nav aria-label="Productos">
+        <h2 class="footer__label">Productos</h2>
+        {products.map(p => <a href={p.href}>{p.label}</a>)}
+      </nav>
+      <nav aria-label="Empresa">
+        <h2 class="footer__label">Empresa</h2>
+        <a href="/index.html#about">Nosotros</a>
+        <a href="/index.html#clientes">Clientes</a>
+        <a href="/proyectos.html">Proyectos</a>
+        <a href="/guia.html#guia-productos">Guía de productos</a>
+      </nav>
+      <div>
+        <h2 class="footer__label">Contacto</h2>
+        <a href={`tel:+${PHONE}`} data-conversion="phone_footer" data-context={context}><Icon name="phone" />{PHONE_LABEL}</a>
+        <a href={`mailto:${EMAIL}`} data-conversion="email_footer" data-context={context}><Icon name="envelope-simple" />{EMAIL}</a>
+        <a href={wa(advice)} target="_blank" rel="noopener noreferrer"
+           data-conversion="whatsapp_click" data-conversion-placement="landing_footer" data-context={context}><Icon name="whatsapp-logo" />WhatsApp</a>
+      </div>
+    </div>
+
+    <div class="footer__legal">
+      <p>© {new Date().getFullYear()} RTM Pantallas LED</p>
+      <a href="/privacidad.html">Política de privacidad</a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer { background: var(--ink); color: var(--white); padding-block: clamp(64px, 8vw, 112px) 40px; }
+  .footer a { color: var(--muted-dark); text-decoration: none; transition: color 0.3s var(--ease); }
+  .footer a:hover { color: var(--white); }
+  .footer__top { display: grid; gap: 28px; padding-bottom: 64px; border-bottom: 1px solid var(--line-dark); }
+  .footer__logo { width: min(320px, 70vw); height: auto; }
+  .footer__claim { max-width: 26ch; color: var(--white); }
+  .footer__grid { display: grid; gap: 48px; padding-block: 56px; }
+  .footer__grid > * { display: grid; gap: 14px; align-content: start; }
+  .footer__grid a { display: inline-flex; align-items: center; gap: 12px; min-height: 32px; font-size: var(--fs-small); }
+  .footer__grid :global(svg) { width: 20px; height: 20px; }
+  .footer__label { font-size: var(--fs-small); font-weight: 600; color: var(--white); margin-bottom: 4px; }
+  .footer__legal { display: flex; flex-wrap: wrap; gap: 12px 32px; padding-top: 28px; border-top: 1px solid var(--line-dark); color: var(--muted-dark); font-size: var(--fs-small); }
+  .footer__legal p { margin-right: auto; }
+
+  @media (min-width: 800px) {
+    .footer__top { grid-template-columns: 1fr 1fr; align-items: end; }
+    .footer__grid { grid-template-columns: 1.4fr 1fr 1.2fr; }
+  }
+</style>

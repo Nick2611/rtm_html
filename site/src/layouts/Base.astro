@@ -1,0 +1,90 @@
+---
+import '../styles/global.css';
+
+interface Crumb { name: string; path: string }
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+  ogImage: string;
+  breadcrumb: Crumb[];
+  trackingVersion: string;
+}
+const { title, description, path, ogImage, breadcrumb, trackingVersion } = Astro.props;
+const url = new URL(path, Astro.site).href;
+const breadcrumbLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: breadcrumb.map((c, i) => ({
+    '@type': 'ListItem', position: i + 1, name: c.name, item: new URL(c.path, Astro.site).href,
+  })),
+};
+---
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{title}</title>
+  <meta name="description" content={description}>
+  <link rel="canonical" href={url}>
+  <meta name="theme-color" content="#141416">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content={url}>
+  <meta property="og:title" content={title}>
+  <meta property="og:description" content={description}>
+  <meta property="og:image" content={new URL(ogImage, Astro.site).href}>
+
+  <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="any">
+  <link rel="icon" type="image/png" sizes="48x48" href="/rtm_logo/favicon-48x48.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/rtm_logo/favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/rtm_logo/apple-touch-icon.png">
+
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />
+
+  <!-- Etiquetas de medición copiadas tal cual de las landings: todas con guard de producción. -->
+  <script is:inline>
+    if (/(^|\.)pantallasledrtm\.com$/i.test(location.hostname)) {
+      (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "xvo6v2qw7h");
+    }
+  </script>
+  <script is:inline>
+    if (/(^|\.)pantallasledrtm\.com$/i.test(location.hostname)) {
+      const googleTag = document.createElement('script');
+      googleTag.async = true;
+      googleTag.src = 'https://www.googletagmanager.com/gtag/js?id=AW-18364923277';
+      document.head.appendChild(googleTag);
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function(){ window.dataLayer.push(arguments); };
+      window.gtag('js', new Date());
+      window.gtag('config', 'AW-18364923277');
+      window.gtag('config', 'G-6BP4Y1KSSK');
+    }
+  </script>
+  <script is:inline>
+    if (/(^|\.)pantallasledrtm\.com$/i.test(location.hostname)) {
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '1666229321733217');
+      fbq('track', 'PageView');
+    }
+  </script>
+</head>
+<body>
+  <a href="#contenido" class="skip-link">Saltar al contenido</a>
+  <slot />
+  <!-- Enlaces wa.me reales + este módulo: marca de origen, código de referencia y conversión. -->
+  <script is:inline src={`/js/conversion-tracking.js?v=${trackingVersion}`} defer></script>
+</body>
+</html>

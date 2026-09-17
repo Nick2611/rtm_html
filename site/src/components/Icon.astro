@@ -1,0 +1,11 @@
+---
+// Phosphor (regular), incrustado en build: cero peticiones y cero JS.
+const icons = import.meta.glob('/node_modules/@phosphor-icons/core/assets/regular/*.svg', {
+  query: '?raw', import: 'default', eager: true,
+}) as Record<string, string>;
+
+interface Props { name: string }
+const svg = icons[`/node_modules/@phosphor-icons/core/assets/regular/${Astro.props.name}.svg`];
+if (!svg) throw new Error(`Ícono inexistente: ${Astro.props.name}`);
+---
+<Fragment set:html={svg.replace('<svg ', '<svg aria-hidden="true" focusable="false" ')} />

@@ -1,0 +1,76 @@
+---
+import Icon from './Icon.astro';
+import { nav, wa } from '../data/site';
+
+interface Props { context: string; advice: string; current?: string }
+const { context, advice, current } = Astro.props;
+---
+<header class="header">
+  <div class="wrap header__bar">
+    <a class="header__brand" href="/index.html" aria-label="RTM Pantallas LED, inicio">
+      <img src="/rtm_logo/rtmLogo.png" alt="RTM Pantallas LED" width="300" height="60">
+    </a>
+
+    <nav class="header__nav" aria-label="Principal">
+      {nav.map(item => <a href={item.href} aria-current={item.href === current ? 'page' : undefined}>{item.label}</a>)}
+    </nav>
+
+    <a class="btn btn--primary header__cta" href={wa(advice)} target="_blank" rel="noopener noreferrer"
+       data-conversion="whatsapp_click" data-conversion-placement="landing_header" data-context={context}>
+      <Icon name="whatsapp-logo" />Pedir cotización
+    </a>
+
+    <details class="header__menu">
+      <summary aria-label="Abrir menú"><Icon name="list" /></summary>
+      <nav aria-label="Menú móvil">
+        {nav.map(item => <a href={item.href}>{item.label}</a>)}
+      </nav>
+    </details>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--ink);
+    color: var(--white);
+  }
+  .header__bar { display: flex; align-items: center; gap: 40px; height: var(--header-h); }
+  .header__brand img { width: 132px; height: auto; }
+  .header__nav { display: none; gap: 36px; margin-left: auto; }
+  .header__nav a { font-size: var(--fs-small); text-decoration: none; color: var(--muted-dark); transition: color 0.3s var(--ease); }
+  .header__nav a:hover, .header__nav a[aria-current] { color: var(--white); }
+  .header__cta { display: none; min-height: 48px; padding: 0 22px; font-size: 1.0625rem; }
+  .header__cta :global(svg) { width: 20px; height: 20px; }
+
+  .header__menu { margin-left: auto; position: relative; }
+  .header__menu summary {
+    list-style: none; display: grid; place-items: center;
+    width: 48px; height: 48px; border-radius: 999px; cursor: pointer;
+    background: rgb(255 255 255 / 0.08);
+  }
+  .header__menu summary::-webkit-details-marker { display: none; }
+  .header__menu summary :global(svg) { width: 24px; height: 24px; }
+  .header__menu nav {
+    position: absolute; right: 0; top: calc(100% + 12px); min-width: 240px;
+    display: grid; padding: 10px; background: var(--ink); border: 1px solid var(--line-dark);
+  }
+  .header__menu nav a { padding: 14px 16px; text-decoration: none; font-size: var(--fs-body); }
+
+  /* Sobre el hero el header es transparente; al bajar toma fondo. Sigue al scroll, no lo intercepta. */
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: scroll()) {
+      .header {
+        animation: header-solid linear both;
+        animation-timeline: scroll(root);
+        animation-range: 0 160px;
+      }
+    }
+  }
+  @keyframes header-solid { from { background: rgb(20 20 22 / 0); } to { background: var(--ink); } }
+
+  @media (min-width: 960px) {
+    .header__nav, .header__cta { display: inline-flex; }
+    .header__menu { display: none; }
+  }
+</style>
