@@ -112,14 +112,19 @@
     }
   </script>
 
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18364923277"></script>
+  <!-- Google Analytics y Ads, sólo en producción para no contaminar las mediciones con QA local. -->
   <script type="text/javascript">
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){ dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'AW-18364923277');
-    gtag('config', 'G-6BP4Y1KSSK');
+    if (/(^|\.)pantallasledrtm\.com$/i.test(location.hostname)) {
+      const googleTag = document.createElement('script');
+      googleTag.async = true;
+      googleTag.src = 'https://www.googletagmanager.com/gtag/js?id=AW-18364923277';
+      document.head.appendChild(googleTag);
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function(){ window.dataLayer.push(arguments); };
+      window.gtag('js', new Date());
+      window.gtag('config', 'AW-18364923277');
+      window.gtag('config', 'G-6BP4Y1KSSK');
+    }
   </script>
 
   <!--
