@@ -3,47 +3,21 @@ frontend:
   phases:
     preBuild:
       commands:
-        - echo "🚀 Iniciando build para AWS Amplify..."
-        - echo "📁 Verificando archivos críticos:"
-        - ls -la favicon.ico rtm_logo/rtmLogo.png robots.txt sitemap.xml || echo "⚠️ Algunos archivos no encontrados"
-        - echo "📁 Estructura del proyecto:"
-        - ls -la
+        # Astro 7 exige Node >= 22.12.
+        - nvm install 22
+        - nvm use 22
+        - npm --prefix site ci
     build:
       commands:
-        - echo "🔧 Build completado - sitio estático"
+        # site/public enlaza el sitio actual por symlinks: dist/ sale completo (páginas Astro + el resto tal cual).
+        - npm --prefix site run build
   artifacts:
-    baseDirectory: .
+    baseDirectory: site/dist
     files:
-      # Archivos raíz críticos para SEO
-      - favicon.ico
-      - robots.txt
-      - sitemap.xml
-      - _redirects
-      - _headers
-      # Páginas HTML
-      - index.html
-      - productos.html
-      - servicios.html
-      - guia.html
-      - privacidad.html
-      - proyectos.html
-      - 404.html
-      # Landings de categoría (una por categoría de producto)
-      - 'productos/**/*'
-      # Assets y carpetas
-      - 'rtm_logo/**/*'
-      - 'css/**/*'
-      - 'js/**/*'
-      - 'data/**/*'
-      - 'imagenes_productos/**/*'
-      - 'imagenes_productos_restantes/**/*'
-      - 'background_hero/**/*'
-      - 'about_background/**/*'
-      - 'logos_clientes/**/*'
-      - 'miniaturas_videos/**/*'
-      - 'proyectos_imagenes/**/*'
-      - 'proyectos_videos/**/*'
-      - 'seccion_servicios/**/*'
+      - '**/*'
+  cache:
+    paths:
+      - site/node_modules/**/*
   customHeaders:
     - pattern: 'favicon.ico'
       headers:
