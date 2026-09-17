@@ -16,6 +16,8 @@ export default defineLanding({
     lead: 'Gabinetes livianos, planos o curvos.',
     image: 'proyectos_imagenes/proyecto_14.webp',
   },
+  statement: 'Se arma, se desarma, viaja.',
+  facts: [{ icon: 'lock-simple', text: 'Traba rápida' }, { icon: 'arrows-out-line-horizontal', text: 'Versiones curvas' }, { icon: 'drop', text: 'IP65 frontal' }],
   models: {
     title: 'Modelos',
     groups: { indoor: 'Interior', outdoor: 'Exterior' },

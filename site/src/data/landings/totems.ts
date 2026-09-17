@@ -16,6 +16,8 @@ export default defineLanding({
     lead: 'Interior y exterior, instalados en todo el país.',
     image: 'proyectos_imagenes/conjunto_3_2.webp',
   },
+  statement: 'Vertical, a la altura de la vista.',
+  facts: [{ icon: 'monitor', text: 'Interior desde P1.53' }, { icon: 'drop', text: 'Exterior IP65' }, { icon: 'columns', text: 'Simple o doble cara' }],
   models: {
     title: 'Modelos',
     groups: { indoor: 'Interior', outdoor: 'Exterior' },

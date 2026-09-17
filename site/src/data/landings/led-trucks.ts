@@ -16,6 +16,8 @@ export default defineLanding({
     lead: 'Entregamos el camión funcionando.',
     image: 'proyectos_imagenes/proyecto_11.webp',
   },
+  statement: 'Tu pantalla, en movimiento.',
+  facts: [{ icon: 'factory', text: 'Fabricación e instalación propias' }, { icon: 'speaker-high', text: 'Sonido integrado' }, { icon: 'sun', text: 'Alta resolución exterior' }],
   models: {
     title: 'Camiones con pantalla',
     gallery: [

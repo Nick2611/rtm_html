@@ -16,6 +16,8 @@ export default defineLanding({
     lead: 'Colectivos y proyectos sin medida estándar.',
     image: 'proyectos_imagenes/conjunto_7_1.webp',
   },
+  statement: 'Si no existe, lo fabricamos.',
+  facts: [{ icon: 'bus', text: 'Transporte público' }, { icon: 'broadcast', text: 'Control por 4G y GPS' }, { icon: 'ruler', text: 'Diseños a medida' }],
   models: {
     title: 'Modelos',
     groups: { 'unidades-colectivos': 'Colectivos', 'disenos-especiales': 'Diseños especiales' },

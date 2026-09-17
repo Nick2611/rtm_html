@@ -16,6 +16,8 @@ export default defineLanding({
     lead: 'Video, efectos de luz o interactivos.',
     image: 'proyectos_imagenes/proyecto_8.webp',
   },
+  statement: 'La pista también es pantalla.',
+  facts: [{ icon: 'shield-check', text: 'Vidrio templado de 10 mm' }, { icon: 'drop', text: 'Resiste impacto y agua' }, { icon: 'monitor-play', text: 'Video o efectos RGB' }],
   models: {
     title: 'Modelos',
     groups: { modelos: 'Transitables' },
