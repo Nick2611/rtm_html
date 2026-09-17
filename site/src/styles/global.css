@@ -117,6 +117,14 @@ button:disabled { cursor: wait; opacity: .65; }
 .btn--ghost { border: 1.5px solid currentColor; color: inherit; }
 .btn--ghost:hover { background: rgb(255 255 255 / 0.1); }
 
+/* En teléfono los 56 px de alto y 18 px de texto se comían la pantalla: con el botón fijo de
+   WhatsApp abajo y el CTA del header arriba había tres bloques rojos del mismo tamaño en una
+   pantalla de 400 px. 50 px sigue siendo un blanco cómodo y el texto no baja de 17 px. */
+@media (max-width: 599px) {
+  .btn { min-height: 50px; padding: 12px 22px; font-size: 1.0625rem; gap: 10px; }
+  .btn svg { width: 21px; height: 21px; }
+}
+
 .link-arrow {
   display: inline-flex; align-items: center; gap: 10px;
   font-weight: 600; text-decoration: none; min-height: 48px;
@@ -143,21 +151,29 @@ button:disabled { cursor: wait; opacity: .65; }
   .fade-in { animation: fade-up .65s var(--ease) both; animation-delay: var(--d, 0ms); }
 
   @supports (animation-timeline: view()) {
-    .reveal {
+    .reveal, .reveal-media {
       animation: fade-up linear both;
       animation-timeline: view();
-      animation-range: entry 0% entry 30%;
-    }
-    .reveal-media {
-      animation: fade-up linear both;
-      animation-timeline: view();
-      animation-range: entry 0% entry 30%;
+      /* El final se mide en `cover`, contra el viewport, no en `entry`, contra el alto del
+         elemento. Con `entry 30%` un título de 36 px terminaba su movimiento en 11 px de scroll,
+         con el borde superior todavía a 849 px de 860: abajo de todo y tapado por el botón de
+         WhatsApp. Nunca se veía. Con `cover 30%` el movimiento pasa dentro de la pantalla. */
+      animation-range: entry 0% cover 30%;
     }
   }
+
+  /* Donde no hay animaciones ligadas al scroll (iOS anterior a Safari 26) el mismo efecto lo hace
+     un IntersectionObserver. La clase la agrega JS desde el <head>: sin JS no se agrega y nada
+     queda escondido esperando. */
+  :root.reveal-js .reveal, :root.reveal-js .reveal-media {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+  }
+  :root.reveal-js .reveal.is-in, :root.reveal-js .reveal-media.is-in { opacity: 1; transform: none; }
 }
 
 @keyframes rise { from { transform: translateY(105%); } to { transform: none; } }
-@keyframes fade-up { from { opacity: .4; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+@keyframes fade-up { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
 @keyframes unmask {
   from { clip-path: inset(22% 0 0 0); transform: scale(1.08); }
   to { clip-path: inset(0); transform: none; }

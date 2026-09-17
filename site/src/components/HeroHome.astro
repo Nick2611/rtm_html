@@ -142,7 +142,7 @@ const quote = 'Hola, quiero cotizar una pantalla LED.\n\nDónde va: \nMedida apr
   .hero-home__accent { color: var(--red); display: block; }
   .hero-home__lead { margin-top: 24px; max-width: 54ch; color: var(--muted-dark); }
   .hero-home__actions { margin-top: 32px; display: flex; flex-wrap: wrap; gap: 16px; }
-  .hero-home__actions :global(.btn) { min-height: 52px; }
+  @media (min-width: 600px) { .hero-home__actions :global(.btn) { min-height: 52px; } }
 
   .hero-home__proof {
     margin: 32px 0 0; padding: 0; list-style: none;

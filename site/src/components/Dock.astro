@@ -29,21 +29,25 @@ const {
 </a>
 
 <style>
-  /* Botón fijo de WhatsApp: visible siempre, en todos los tamaños. Verde para que se reconozca sin leer. */
+  /* Botón fijo de WhatsApp: visible siempre, en todos los tamaños. Verde para que se reconozca sin
+     leer. En móvil era una franja verde de 60 px a todo el ancho: junto al CTA del header quedaban dos
+     bloques fijos, del mismo tamaño y al mismo WhatsApp. Ahora es una pastilla al ancho de su
+     texto, apoyada a la derecha. Conserva el texto, que es lo que hace que la toquen. */
   .dock {
     position: fixed; z-index: 40;
-    left: 16px; right: 16px; bottom: max(16px, env(safe-area-inset-bottom));
-    display: flex; align-items: center; justify-content: center; gap: 12px;
-    min-height: 60px; border-radius: 999px;
+    right: 16px; bottom: max(16px, env(safe-area-inset-bottom));
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    min-height: 52px; padding: 0 20px; border-radius: 999px;
     background: var(--wa); color: var(--ink);
-    font-weight: 700; font-size: 1.125rem; text-decoration: none;
+    font-weight: 600; font-size: var(--fs-small); text-decoration: none;
+    box-shadow: 0 8px 24px rgb(0 0 0 / 0.2);
     transition: transform 0.2s var(--ease), background-color 0.3s var(--ease);
   }
   .dock:hover { background: var(--wa-hover); }
   .dock:active { transform: scale(0.98); }
-  .dock :global(svg) { width: 28px; height: 28px; }
+  .dock :global(svg) { width: 24px; height: 24px; }
   /* Reserva para que el botón nunca tape el final de la página. */
-  :global(body) { padding-bottom: 92px; }
+  :global(body) { padding-bottom: 76px; }
 
   /* Desktop: visible desde que carga. Mobile: aparece apenas se empieza a scrollear, así no queda
      pegado al botón del hero en la primera pantalla. Con reduced-motion, visible siempre. */
@@ -66,7 +70,8 @@ const {
   }
 
   @media (min-width: 960px) {
-    .dock { left: auto; right: 32px; bottom: 32px; padding: 0 28px 0 22px; }
+    .dock { right: 32px; bottom: 32px; min-height: 60px; padding: 0 28px 0 22px; font-size: 1.125rem; }
+    .dock :global(svg) { width: 28px; height: 28px; }
     :global(body) { padding-bottom: 0; }
   }
 </style>

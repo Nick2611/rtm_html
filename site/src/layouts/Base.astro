@@ -50,6 +50,26 @@ const schemas = [
 
   {schemas.map(schema => <script type="application/ld+json" set:html={JSON.stringify(schema)} />)}
 
+  <!-- Reveals donde el navegador no tiene animaciones ligadas al scroll (iOS anterior a Safari 26).
+       La clase se pone acá, antes de pintar, para que no haya un salto al cargar; si no hay JS no
+       se agrega y el contenido queda visible y quieto, como con reduced-motion. -->
+  <script is:inline>
+    if (!CSS.supports('animation-timeline', 'view()') &&
+        matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+      document.documentElement.classList.add('reveal-js');
+      addEventListener('DOMContentLoaded', function () {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('is-in');
+            io.unobserve(entry.target);
+          });
+        }, { rootMargin: '0px 0px -15% 0px' });
+        document.querySelectorAll('.reveal, .reveal-media').forEach(function (el) { io.observe(el); });
+      });
+    }
+  </script>
+
   <!-- Etiquetas de medición copiadas tal cual de las landings: todas con guard de producción. -->
   <script is:inline>
     if (/(^|\.)pantallasledrtm\.com$/i.test(location.hostname)) {

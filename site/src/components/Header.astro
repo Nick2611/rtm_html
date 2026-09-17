@@ -68,7 +68,8 @@ const sections = [
 
       <button type="button" class="hdr__burger" aria-expanded="false" aria-controls="hdr-drawer"
               aria-label="Abrir menú">
-        <Icon name="list" />
+        <span class="hdr__burger-open"><Icon name="list" /></span>
+        <span class="hdr__burger-close"><Icon name="x" /></span>
       </button>
     </div>
   </div>
@@ -90,17 +91,19 @@ const sections = [
     </div>
   </div>
 
-  <!-- Menú móvil, pantalla completa. -->
+  <!-- Menú móvil. Ocupa la pantalla pero queda POR DEBAJO de la barra: el botón que lo abre es el
+       mismo que lo cierra y tiene que seguir siendo tocable. Dos grillas de dos columnas, para que
+       los doce enlaces entren en una pantalla sin scrollear y se lean alineados. -->
   <div class="hdr__drawer" id="hdr-drawer" hidden>
     <div class="hdr__drawer-inner">
-      <p class="hdr__drawer-label">Productos</p>
-      <ul class="hdr__drawer-products">
+      <p class="hdr__drawer-label" id="hdr-drawer-prod">Productos</p>
+      <ul class="hdr__drawer-products" aria-labelledby="hdr-drawer-prod">
         {menuCategories.map(cat => <li><a href={cat.href}>{cat.label}</a></li>)}
       </ul>
-      <p class="hdr__drawer-label">Secciones</p>
-      <ul class="hdr__drawer-links">
+      <p class="hdr__drawer-label" id="hdr-drawer-sec">Secciones</p>
+      <ul class="hdr__drawer-links" aria-labelledby="hdr-drawer-sec">
         <li><a href="/index.html">Inicio</a></li>
-        <li><a href="/productos.html">Catálogo completo</a></li>
+        <li><a href="/productos.html">Catálogo</a></li>
         {sections.map(s => <li><a href={s.href}>{s.label}</a></li>)}
       </ul>
       {mobileCta && (
@@ -128,22 +131,62 @@ const sections = [
     const toggle = (el: HTMLElement, btn: HTMLButtonElement, open: boolean) => {
       el.hidden = !open;
       btn.setAttribute('aria-expanded', String(open));
-      if (el === drawer) document.documentElement.style.overflow = open ? 'hidden' : '';
+    };
+
+    /**
+     * Menú móvil. Tres cosas que antes no estaban:
+     * - el botón cambia de cara y de etiqueta, porque es el único modo de cerrar con el pulgar;
+     * - el fondo se congela guardando y devolviendo la posición (con `overflow: hidden` a secas
+     *   iOS pierde dónde estabas al cerrar);
+     * - abrir empuja una entrada de historia, así el botón "atrás" del teléfono cierra el menú en
+     *   vez de sacar del sitio. Al tocar un link no se deshace: el link ya navega, y llamar a
+     *   history.back() ahí compite con esa navegación.
+     */
+    let lockedAt = 0;
+    const setDrawer = (open: boolean) => {
+      if (open === !drawer.hidden) return;
+      toggle(drawer, burger, open);
+      burger.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+      header.classList.toggle('hdr--open', open);
+      const body = document.body;
+      if (open) {
+        lockedAt = window.scrollY;
+        body.style.position = 'fixed';
+        body.style.top = `-${lockedAt}px`;
+        body.style.width = '100%';
+      } else {
+        body.style.position = '';
+        body.style.top = '';
+        body.style.width = '';
+        window.scrollTo(0, lockedAt);
+      }
+    };
+    const closeDrawer = () => {
+      if (history.state?.rtmMenu) history.back(); // popstate termina de cerrar
+      else setDrawer(false);
     };
 
     panelBtn.addEventListener('click', () => toggle(panel, panelBtn, panel.hidden));
-    burger.addEventListener('click', () => toggle(drawer, burger, drawer.hidden));
+    burger.addEventListener('click', () => {
+      // La entrada de historia se empuja ANTES de congelar el fondo: con el body en `fixed` el
+      // scroll vale 0, y el navegador guardaría ese 0 para restaurarlo al volver.
+      if (drawer.hidden) { history.pushState({ rtmMenu: true }, ''); setDrawer(true); }
+      else closeDrawer();
+    });
+    window.addEventListener('popstate', () => setDrawer(false));
+    // Al volver con el botón "atrás" la página puede restaurarse desde el bfcache con el menú abierto.
+    window.addEventListener('pageshow', event => { if (event.persisted) setDrawer(false); });
 
     document.addEventListener('keydown', event => {
       if (event.key !== 'Escape') return;
       if (!panel.hidden) { toggle(panel, panelBtn, false); panelBtn.focus(); }
-      if (!drawer.hidden) { toggle(drawer, burger, false); burger.focus(); }
+      if (!drawer.hidden) { closeDrawer(); burger.focus(); }
     });
     document.addEventListener('click', event => {
       const target = event.target as Element;
       if (!panel.hidden && !panel.contains(target) && !panelBtn.contains(target)) toggle(panel, panelBtn, false);
       if (target.closest('.hdr__panel a')) toggle(panel, panelBtn, false);
-      if (target.closest('.hdr__drawer a')) toggle(drawer, burger, false);
+      if (target.closest('.hdr__drawer a')) setDrawer(false);
     });
 
     // Fallback donde no hay animación ligada al scroll: la misma variable, movida a mano.
@@ -193,6 +236,10 @@ const sections = [
     pointer-events: none;
   }
 
+  /* Con el menú abierto la barra deja de ser pastilla: ancha, opaca y pegada arriba, para que se
+     lea como el techo del menú y no como algo flotando encima. */
+  .hdr--open .hdr__bar { --hdr-t: 0; background: var(--ink); }
+
   @supports (animation-timeline: scroll()) {
     .hdr {
       animation: hdr-morph linear both;
@@ -204,7 +251,7 @@ const sections = [
 
   /* ---------- La barra: todo lo que se contrae ---------- */
   .hdr__bar {
-    position: relative;
+    position: relative; z-index: 2;
     box-sizing: border-box;
     display: flex; align-items: center; gap: 20px;
     width: calc(100% - var(--hdr-t) * 32px);
@@ -254,7 +301,18 @@ const sections = [
     border: 0; border-radius: 999px; cursor: pointer;
     background: rgb(255 255 255 / 0.1); color: var(--white);
   }
-  .hdr__burger :global(svg) { width: 22px; height: 22px; }
+  .hdr__burger :global(svg) { width: 22px; height: 22px; display: block; }
+  .hdr__burger-close { display: none; }
+  .hdr__burger[aria-expanded='true'] .hdr__burger-open { display: none; }
+  .hdr__burger[aria-expanded='true'] .hdr__burger-close { display: block; }
+
+  /* En móvil el CTA del header no puede pesar como el botón verde fijo de abajo: los dos van al
+     mismo WhatsApp. Pastilla chica, sin encoger con el scroll (ya es el tamaño mínimo tocable).
+     No se saca: es el evento whatsapp_header / landing_header que mide GA4. */
+  @media (max-width: 1099px) {
+    .hdr__cta { min-height: 42px; padding-inline: 14px; font-size: 1rem; gap: 8px; }
+    .hdr__cta :global(svg) { width: 18px; height: 18px; }
+  }
 
   /* En teléfonos chicos el logo cede ancho: logo + CTA + botón tienen que entrar en 375 px. */
   @media (max-width: 520px) {
@@ -308,16 +366,37 @@ const sections = [
   }
   .hdr__panel-all :global(svg) { width: 18px; height: 18px; }
 
-  /* ---------- Menú de pantalla completa ---------- */
-  .hdr__drawer { position: fixed; inset: 0; background: var(--ink); overflow-y: auto; }
-  .hdr__drawer-inner {
-    width: 100%; max-width: var(--wrap); margin-inline: auto;
-    padding: calc(var(--header-h) + 24px) var(--gutter) 48px;
+  /* ---------- Menú de pantalla completa ----------
+     z-index 1: por debajo de la barra (z-index 2). Antes iba encima y tapaba el botón que lo
+     abría, así que no había forma de cerrarlo sin navegar a otra página. */
+  .hdr__drawer {
+    position: fixed; inset: 0; z-index: 1;
+    background: var(--ink);
+    overflow-y: auto; overscroll-behavior: contain;
   }
-  .hdr__drawer-label { font-size: var(--fs-small); color: var(--muted-dark); margin: 28px 0 8px; }
-  .hdr__drawer-inner ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
-  .hdr__drawer-inner a { color: var(--white); text-decoration: none; display: block; padding: 10px 0; }
-  .hdr__drawer-products a { font-size: clamp(1.375rem, 5vw, 1.75rem); font-weight: 600; }
-  .hdr__drawer-links a { font-size: var(--fs-body); color: var(--muted-dark); }
-  .hdr__drawer-cta { margin-top: 32px; width: 100%; }
+  .hdr__drawer-inner {
+    width: 100%; max-width: 620px; margin-inline: auto;
+    padding: calc(var(--header-h) + 14px) var(--gutter) calc(28px + env(safe-area-inset-bottom));
+  }
+  .hdr__drawer-label { font-size: var(--fs-small); color: var(--muted-dark); margin: 0 0 2px; }
+  .hdr__drawer-inner .hdr__drawer-products { margin-bottom: 30px; }
+  /* Dos columnas con filete arriba: ocho productos ocupan cuatro filas y todo entra en una
+     pantalla. En una sola columna había que scrollear dentro del menú. */
+  .hdr__drawer-inner ul {
+    list-style: none; margin: 0; padding: 0;
+    display: grid; grid-template-columns: 1fr 1fr; column-gap: 20px;
+  }
+  .hdr__drawer-inner li { border-top: 1px solid var(--line-dark); }
+  .hdr__drawer-inner a {
+    display: flex; align-items: center; min-height: 54px;
+    color: var(--white); text-decoration: none;
+    font-size: var(--fs-small); font-weight: 600; line-height: 1.25;
+  }
+  .hdr__drawer-links a { color: var(--muted-dark); font-weight: 400; }
+  .hdr__drawer-cta { margin-top: 20px; width: 100%; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .hdr__drawer { animation: drawer-in 0.18s var(--ease) both; }
+  }
+  @keyframes drawer-in { from { opacity: 0; } }
 </style>
