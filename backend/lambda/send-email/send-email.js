@@ -3,7 +3,8 @@
 const { randomUUID } = require('node:crypto');
 const { SESClient, SendEmailCommand } = require('@aws-sdk/client-ses');
 const { buildEmail } = require('./email-template');
-const { persistLead } = require('./lead-store');
+const { persistLead, persistWhatsAppClick } = require('./lead-store');
+const { isWhatsAppClick, validateWhatsAppClick } = require('./whatsapp-click');
 const {
     hasValidationErrors,
     isValidEmailAddress,
@@ -53,6 +54,46 @@ function parseRequestBody(event) {
     return JSON.parse(decodedBody);
 }
 
+/**
+ * El registro de un clic en WhatsApp. El navegador lo manda con `sendBeacon` y nunca lee la
+ * respuesta, así que el código de estado es para los logs y para las pruebas con curl.
+ */
+async function handleWhatsAppClick(body, event) {
+    const requestId = event?.requestContext?.requestId;
+    const { value, errors } = validateWhatsAppClick(body);
+
+    if (!value) {
+        console.warn(JSON.stringify({
+            event: 'whatsapp_click_rejected',
+            fields: Object.keys(errors),
+            requestId
+        }));
+        return response(400, { success: false, error: 'Registro inválido.' });
+    }
+
+    const outcome = await persistWhatsAppClick(value, {
+        receivedAt: new Date().toISOString(),
+        requestId
+    });
+
+    if (!outcome.stored) {
+        console.warn(JSON.stringify({
+            event: 'whatsapp_click_not_persisted',
+            reason: outcome.reason,
+            requestId
+        }));
+        return response(503, { success: false, error: 'No se pudo registrar.' });
+    }
+
+    console.info(JSON.stringify({
+        event: 'whatsapp_click_stored',
+        hasClickId: Boolean(value.clickIds),
+        requestId
+    }));
+
+    return response(202, { success: true });
+}
+
 exports.handler = async (event) => {
     const method = event?.httpMethod || event?.requestContext?.http?.method;
 
@@ -83,6 +124,12 @@ exports.handler = async (event) => {
             success: false,
             error: 'La solicitud no contiene un JSON válido.'
         });
+    }
+
+    // Antes de validar como formulario: un clic en WhatsApp no es una consulta, no tiene nombre ni
+    // teléfono, y por nada del mundo puede terminar mandando un mail.
+    if (isWhatsAppClick(body)) {
+        return handleWhatsAppClick(body, event);
     }
 
     const { value: submission, errors } = validateSubmission(body);

@@ -17,6 +17,13 @@ Parameters:
       Dias que se conserva un lead en el buzon. 400 cubre mas de un ano completo de comparaciones
       interanuales y sigue siendo un limite real: el buzon es un punto de entrega, no el archivo
       definitivo, que es la base de datos del almacen.
+  ClickRetentionDays:
+    Type: Number
+    Default: 120
+    Description: >
+      Dias que se conserva un clic en WhatsApp con su codigo de referencia. Google Ads acepta subir
+      una conversion hasta 90 dias despues del clic; 120 deja margen para reintentos y nada mas. Un
+      clic viejo no sirve para subir nada y el identificador de clic no tiene por que quedar guardado.
   LambdaRoleName:
     Type: String
     Default: rtm-email-sender-role
@@ -50,6 +57,11 @@ Resources:
             Prefix: leads/
             ExpirationInDays: !Ref RetentionDays
             NoncurrentVersionExpirationInDays: 30
+          - Id: expirar-clics-whatsapp
+            Status: Enabled
+            Prefix: whatsapp-clicks/
+            ExpirationInDays: !Ref ClickRetentionDays
+            NoncurrentVersionExpirationInDays: 7
           - Id: limpiar-multipart-incompletas
             Status: Enabled
             AbortIncompleteMultipartUpload:
@@ -77,10 +89,14 @@ Resources:
 
   # Permiso de ESCRITURA para la Lambda del formulario, y nada mas. No puede leer ni listar: la
   # Lambda solo deposita, y un permiso de lectura que nadie usa es superficie de ataque gratis.
+  # Escribe en dos prefijos: leads/ (el formulario) y whatsapp-clicks/ (el codigo de referencia de
+  # cada clic en WhatsApp, que despues se une con los mensajes que llegaron).
   LambdaWriteLeadsPolicy:
     Type: AWS::IAM::ManagedPolicy
     Properties:
       ManagedPolicyName: rtm-lambda-write-leads
+      # La descripcion de una ManagedPolicy es inmutable: cambiarla obliga a REEMPLAZAR la politica, y
+      # con ManagedPolicyName fijo el reemplazo choca con el nombre existente. No tocar este texto.
       Description: Permite a la Lambda del formulario depositar leads en el buzon.
       Roles:
         - !Ref LambdaRoleName
@@ -90,10 +106,13 @@ Resources:
           - Sid: DepositarLead
             Effect: Allow
             Action: 's3:PutObject'
-            Resource: !Sub '${LeadsBucket.Arn}/leads/*'
+            Resource:
+              - !Sub '${LeadsBucket.Arn}/leads/*'
+              - !Sub '${LeadsBucket.Arn}/whatsapp-clicks/*'
 
   # Usuario dedicado para el worker del ETL, que corre fuera de AWS y por lo tanto no puede usar un
-  # rol. Solo lectura, y solo bajo el prefijo leads/.
+  # rol. Solo lectura, y solo bajo los prefijos leads/ y whatsapp-clicks/. El segundo lo lee el
+  # script de subida de conversiones offline (scripts/ads/).
   LeadsReaderUser:
     Type: AWS::IAM::User
     Properties:
@@ -109,11 +128,15 @@ Resources:
                 Resource: !GetAtt LeadsBucket.Arn
                 Condition:
                   StringLike:
-                    's3:prefix': 'leads/*'
+                    's3:prefix':
+                      - 'leads/*'
+                      - 'whatsapp-clicks/*'
               - Sid: LeerLead
                 Effect: Allow
                 Action: 's3:GetObject'
-                Resource: !Sub '${LeadsBucket.Arn}/leads/*'
+                Resource:
+                  - !Sub '${LeadsBucket.Arn}/leads/*'
+                  - !Sub '${LeadsBucket.Arn}/whatsapp-clicks/*'
 
 Outputs:
   BucketName:

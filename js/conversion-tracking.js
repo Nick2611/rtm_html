@@ -652,13 +652,19 @@
    * `canonicalEvent`. Si divergieran, el mensaje que llega al teléfono diría un origen y el informe
    * de GA4 otro, que es peor que no tener marca.
    */
-  function whatsappRef(element, pathname) {
-    const page = whatsappPageSlug(pathname);
+  function whatsappPlacement(element) {
     const declared = nearestDatasetValue(element, ['conversionPlacement']);
     const canonical = canonicalEvent(element?.getAttribute?.('data-conversion'));
     const placement = declared || canonical?.placement || '';
 
-    return placement ? `${page} · ${String(placement).replace(/_/g, '-').toLowerCase()}` : page;
+    return placement ? String(placement).replace(/_/g, '-').toLowerCase() : '';
+  }
+
+  function whatsappRef(element, pathname) {
+    const page = whatsappPageSlug(pathname);
+    const placement = whatsappPlacement(element);
+
+    return placement ? `${page} · ${placement}` : page;
   }
 
   /**
@@ -683,7 +689,7 @@
    * acción por defecto lee el `href` recién cuando termina el despacho del evento, así que la
    * marca llega a tiempo. Nada acá llama a `preventDefault`, igual que el resto del módulo.
    */
-  function decorateWhatsAppLink(element, pathname) {
+  function decorateWhatsAppLink(element, pathname, refCode = '') {
     const anchor = element?.closest?.('a[href]');
     if (!anchor) return null;
 
@@ -705,10 +711,244 @@
     const ref = whatsappRef(element, pathname);
     if (!ref) return null;
 
-    const marked = `(${WHATSAPP_REF_PREFIX}${ref})`;
+    // El código va último y con `#` delante: quien atiende lo encuentra a simple vista, y el script
+    // de subida lo reconoce sin confundirlo con el slug, que siempre está en minúsculas.
+    const code = REF_CODE_PATTERN.test(refCode) ? refCode : '';
+    const marked = code
+      ? `(${WHATSAPP_REF_PREFIX}${ref} · #${code})`
+      : `(${WHATSAPP_REF_PREFIX}${ref})`;
     anchor.setAttribute('href', whatsappHrefWithText(url, baseText ? `${baseText}\n\n${marked}` : marked));
 
     return ref;
+  }
+
+  /*
+   * ===============================================================================================
+   * CÓDIGO DE REFERENCIA E IDENTIFICADORES DE CLIC DE GOOGLE ADS
+   * ===============================================================================================
+   *
+   * POR QUÉ EXISTE. La marca de origen dice de qué PÁGINA salió un mensaje, no de qué CLIC. Para que
+   * Google Ads optimice por mensajes que llegaron —y no por toques al botón— hay que subirle, por
+   * cada mensaje real, el identificador del clic que lo originó (importación de conversiones
+   * offline). El navegador no puede saber si el mensaje se mandó, así que el puente es un código:
+   *
+   *   1. al tocar WhatsApp, el código viaja escrito al final del mensaje: `· #K7Q3M)`;
+   *   2. en paralelo, el código y el gclid/gbraid/wbraid viajan a la Lambda, que los guarda en S3;
+   *   3. quien atiende anota el código del mensaje que llegó, y `scripts/ads/` une las dos puntas y
+   *      sube la conversión a Google Ads.
+   *
+   * UN CÓDIGO POR VISTA DE PÁGINA, NO POR CLIC. Volver atrás desde WhatsApp y volver a tocar es
+   * normal en móvil; con un código por clic el `href` cambiaría en cada toque, y dos toques serían
+   * dos códigos para una sola persona. Los registros repetidos del mismo código los une el script.
+   *
+   * NI EL CÓDIGO NI LOS IDENTIFICADORES VAN A CLARITY NI A GA4. El identificador de clic tiene más de
+   * ocho dígitos y `looksSensitive` lo descartaría igual, pero el código no: es corto y pasaría el
+   * filtro. No debe pasar, porque unido a la conversación de WhatsApp identifica a una persona, y
+   * Clarity guarda la grabación de su sesión (AGENTS.md §6). Viajan sólo por `sendWhatsAppClick`.
+   */
+
+  // Sin 0/O, 1/I/L: el código se lee en un teléfono y lo copia una persona a una planilla.
+  const REF_CODE_ALPHABET = '23456789ABCDEFGHJKMNPQRSTUVWXYZ';
+  const REF_CODE_LENGTH = 5;
+  // 31^5 ≈ 28,6 millones de códigos: a miles de clics por año, la chance de que dos coincidan en la
+  // ventana de 30 días que mira el script es despreciable, y el script igual descarta los ambiguos.
+  const REF_CODE_PATTERN = /^[2-9A-HJKMNP-Z]{5}$/;
+
+  const CLICK_ID_NAMES = Object.freeze(['gclid', 'gbraid', 'wbraid']);
+  // La forma que Google emite, y nada más: es lo mismo que acepta la Lambda.
+  const CLICK_ID_PATTERN = /^[A-Za-z0-9_-]{1,200}$/;
+  const CLICK_ID_STORAGE_KEY = 'rtm_ads_click_ids';
+  // Google Ads acepta subir una conversión hasta 90 días después del clic. Un identificador más
+  // viejo que eso no sirve para nada y no hay razón para seguir guardándolo.
+  const CLICK_ID_MAX_AGE_MS = 90 * 24 * 60 * 60 * 1000;
+
+  const WHATSAPP_CLICK_ENDPOINT = 'https://2j77uv25gk.execute-api.us-east-1.amazonaws.com/Prod/send-email';
+  // El mismo criterio que usan Clarity y el Pixel de Meta: desde localhost o una preview no se
+  // escribe nada en el buzón de producción.
+  const PRODUCTION_HOST_PATTERN = /(^|\.)pantallasledrtm\.com$/i;
+
+  let pageViewRefCode = '';
+  let cachedClickIds = null;
+
+  function generateRefCode() {
+    const alphabetSize = REF_CODE_ALPHABET.length;
+    // Muestreo por rechazo: 256 no es múltiplo de 31, y tomar el módulo de un byte cualquiera haría
+    // más probables los primeros caracteres del alfabeto.
+    const limit = Math.floor(256 / alphabetSize) * alphabetSize;
+    const cryptoApi = globalScope?.crypto;
+    let code = '';
+
+    for (let attempts = 0; code.length < REF_CODE_LENGTH && attempts < 20; attempts += 1) {
+      let bytes;
+      if (typeof cryptoApi?.getRandomValues === 'function') {
+        bytes = cryptoApi.getRandomValues(new Uint8Array(16));
+      } else {
+        bytes = Array.from({ length: 16 }, () => Math.floor(Math.random() * 256));
+      }
+
+      for (const byte of bytes) {
+        if (byte >= limit) continue;
+        code += REF_CODE_ALPHABET[byte % alphabetSize];
+        if (code.length === REF_CODE_LENGTH) break;
+      }
+    }
+
+    return REF_CODE_PATTERN.test(code) ? code : '';
+  }
+
+  function currentRefCode() {
+    if (!pageViewRefCode) pageViewRefCode = generateRefCode();
+    return pageViewRefCode;
+  }
+
+  function validClickIds(source) {
+    if (!source || typeof source !== 'object' || Array.isArray(source)) return {};
+
+    const ids = {};
+    CLICK_ID_NAMES.forEach(name => {
+      const value = typeof source[name] === 'string' ? source[name].trim() : '';
+      if (CLICK_ID_PATTERN.test(value)) ids[name] = value;
+    });
+    return ids;
+  }
+
+  function readUrlClickIds() {
+    const params = getSearchParams();
+    if (!params) return {};
+
+    const raw = {};
+    CLICK_ID_NAMES.forEach(name => {
+      const value = params.get(name);
+      if (value) raw[name] = value;
+    });
+    return validClickIds(raw);
+  }
+
+  function readStoredClickIds(now) {
+    try {
+      const stored = JSON.parse(globalScope?.localStorage?.getItem(CLICK_ID_STORAGE_KEY) || 'null');
+      if (!stored || typeof stored.capturedAt !== 'number') return {};
+      if (now - stored.capturedAt > CLICK_ID_MAX_AGE_MS || stored.capturedAt > now) return {};
+      return validClickIds(stored.ids);
+    } catch (_error) {
+      return {};
+    }
+  }
+
+  function storeClickIds(ids, now) {
+    try {
+      globalScope?.localStorage?.setItem(
+        CLICK_ID_STORAGE_KEY,
+        JSON.stringify({ ids, capturedAt: now })
+      );
+    } catch (_error) {
+      // Con localStorage bloqueado se pierde la atribución entre visitas, no el clic de WhatsApp.
+    }
+  }
+
+  /**
+   * El `gclid` que guarda la propia etiqueta de Google en la cookie `_gcl_aw`, con el formato
+   * `GCL.<segundos>.<gclid>`. Es un respaldo para quien llegó por un anuncio ANTES de que este código
+   * existiera o con localStorage bloqueado; nunca le gana a lo que trae la URL.
+   */
+  function readGoogleCookieClickIds(now) {
+    try {
+      const cookie = String(globalScope?.document?.cookie || '');
+      const match = cookie.match(/(?:^|;\s*)_gcl_aw=([^;]+)/);
+      if (!match) return {};
+
+      const parts = decodeURIComponent(match[1]).split('.');
+      if (parts.length < 3 || parts[0] !== 'GCL') return {};
+
+      const capturedAt = Number(parts[1]) * 1000;
+      if (!Number.isFinite(capturedAt) || now - capturedAt > CLICK_ID_MAX_AGE_MS) return {};
+
+      return validClickIds({ gclid: parts.slice(2).join('.') });
+    } catch (_error) {
+      return {};
+    }
+  }
+
+  /**
+   * Los identificadores del último clic en un anuncio.
+   *
+   * GANA EL ÚLTIMO, al revés que en el formulario. Si alguien vuelve por otro anuncio, el clic que
+   * hay que subirle a Google es el más reciente: es el que lo trajo a escribir. Y se reemplaza el
+   * juego entero, no se mezcla: un `gbraid` nuevo junto a un `gclid` viejo serían dos clics
+   * distintos disfrazados de uno.
+   */
+  function captureClickIds(now = Date.now()) {
+    if (cachedClickIds) return { ...cachedClickIds };
+
+    const fromUrl = readUrlClickIds();
+    if (Object.keys(fromUrl).length > 0) {
+      storeClickIds(fromUrl, now);
+      cachedClickIds = fromUrl;
+    } else {
+      const stored = readStoredClickIds(now);
+      cachedClickIds = Object.keys(stored).length > 0 ? stored : readGoogleCookieClickIds(now);
+    }
+
+    return { ...cachedClickIds };
+  }
+
+  function buildWhatsAppClickPayload(element, pathname, refCode) {
+    const utm = getUtmContext();
+    const clickIds = captureClickIds();
+    const context = { page: String(pathname || '/').slice(0, 300) };
+
+    if (Object.keys(utm).length > 0) context.utm = utm;
+    if (Object.keys(clickIds).length > 0) context.clickIds = clickIds;
+
+    return {
+      event: 'whatsapp_click',
+      ref: refCode,
+      placement: whatsappPlacement(element),
+      context
+    };
+  }
+
+  /**
+   * Manda el registro del clic a la Lambda. Nunca lanza y nunca frena la salida a WhatsApp.
+   *
+   * `sendBeacon` con un STRING viaja como `text/plain`, que es una petición simple: no dispara el
+   * preflight de CORS, que un beacon no puede hacer. Con `application/json` el navegador lo
+   * descartaría en silencio. El `fetch` con `keepalive` es el respaldo para navegadores sin beacon.
+   */
+  function sendWhatsAppClick(payload) {
+    const hostname = globalScope?.location?.hostname || '';
+    if (!PRODUCTION_HOST_PATTERN.test(hostname)) return false;
+    if (!REF_CODE_PATTERN.test(payload?.ref || '')) return false;
+
+    const body = JSON.stringify(payload);
+
+    try {
+      const navigatorApi = globalScope?.navigator;
+      if (typeof navigatorApi?.sendBeacon === 'function' &&
+          navigatorApi.sendBeacon(WHATSAPP_CLICK_ENDPOINT, body)) {
+        return true;
+      }
+    } catch (_error) {
+      // Se intenta el respaldo.
+    }
+
+    try {
+      if (typeof globalScope?.fetch === 'function') {
+        const pending = globalScope.fetch(WHATSAPP_CLICK_ENDPOINT, {
+          method: 'POST',
+          body,
+          keepalive: true,
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=UTF-8' }
+        });
+        if (pending && typeof pending.catch === 'function') pending.catch(() => {});
+        return true;
+      }
+    } catch (_error) {
+      // Sin transporte no hay registro; el enlace a WhatsApp sigue funcionando igual.
+    }
+
+    return false;
   }
 
   function handleDelegatedClick(event) {
@@ -717,7 +957,13 @@
     // Se decora aunque el enlace no tenga `data-conversion`: la marca de origen no depende de que
     // el clic además se trackee, y así un enlace nuevo queda cubierto sin acordarse del atributo.
     const target = event?.target?.nodeType === 1 ? event.target : event?.target?.parentElement;
-    decorateWhatsAppLink(element || target, globalScope?.location?.pathname);
+    const pathname = globalScope?.location?.pathname;
+    const refCode = currentRefCode();
+    const decorated = decorateWhatsAppLink(element || target, pathname, refCode);
+
+    if (decorated) {
+      sendWhatsAppClick(buildWhatsAppClickPayload(element || target, pathname, refCode));
+    }
 
     if (!element) return;
 
@@ -726,6 +972,9 @@
 
   function init() {
     getUtmContext();
+    // Se captura al cargar, no al tocar WhatsApp: el `gclid` está en la URL de aterrizaje, y el
+    // clic en WhatsApp suele pasar en otra página, cuando la URL ya no lo tiene.
+    captureClickIds();
 
     const document = globalScope?.document;
     if (!document || document[LISTENER_FLAG]) return false;
@@ -747,7 +996,12 @@
     // clics necesita poder reproducir exactamente la marca que se escribió en el enlace.
     whatsappPageSlug,
     whatsappRef,
-    decorateWhatsAppLink
+    decorateWhatsAppLink,
+    generateRefCode,
+    captureClickIds,
+    buildWhatsAppClickPayload,
+    sendWhatsAppClick,
+    REF_CODE_PATTERN
   });
   init();
   return api;

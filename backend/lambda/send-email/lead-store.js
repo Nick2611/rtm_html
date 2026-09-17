@@ -118,4 +118,68 @@ async function persistLead(submission, meta = {}) {
     }
 }
 
-module.exports = { persistLead, leadKey, buildLeadRecord };
+/**
+ * `whatsapp-clicks/YYYY/MM/DD/<código>-<uuid>.json`.
+ *
+ * El código va en el nombre para que el script de subida encuentre un mensaje sin abrir cada
+ * objeto del día. El UUID va igual porque el mismo código se repite legítimamente: es uno por vista
+ * de página, y cada toque en esa página es un registro.
+ *
+ * Prefijo propio, fuera de `leads/`: tiene otra retención (Google Ads no acepta conversiones de
+ * clics de más de 90 días) y otro lector.
+ */
+function whatsappClickKey(ref, now = new Date(), id = randomUUID()) {
+    const year = now.getUTCFullYear();
+    const month = String(now.getUTCMonth() + 1).padStart(2, '0');
+    const day = String(now.getUTCDate()).padStart(2, '0');
+    return `whatsapp-clicks/${year}/${month}/${day}/${ref}-${id}.json`;
+}
+
+function buildWhatsAppClickRecord(click, meta) {
+    return {
+        schemaVersion: 1,
+        clickId: meta.clickId,
+        // La hora del SERVIDOR. El reloj del teléfono puede estar corrido, y Google Ads rechaza una
+        // conversión cuya hora es anterior a la del clic del anuncio.
+        receivedAt: meta.receivedAt,
+        requestId: meta.requestId || null,
+        click
+    };
+}
+
+/**
+ * Guarda un clic en WhatsApp. Nunca lanza, con la misma regla y el mismo resultado que
+ * `persistLead`.
+ */
+async function persistWhatsAppClick(click, meta = {}) {
+    if (!BUCKET) {
+        return { stored: false, reason: 'bucket_not_configured', key: null };
+    }
+
+    const receivedAt = meta.receivedAt || new Date().toISOString();
+    const clickId = meta.clickId || randomUUID();
+    const key = whatsappClickKey(click.ref, new Date(receivedAt), clickId);
+
+    try {
+        await client().send(new PutObjectCommand({
+            Bucket: BUCKET,
+            Key: key,
+            Body: JSON.stringify(buildWhatsAppClickRecord(click, { ...meta, clickId, receivedAt })),
+            ContentType: 'application/json; charset=utf-8',
+            ServerSideEncryption: 'AES256'
+        }));
+
+        return { stored: true, reason: null, key };
+    } catch (error) {
+        return { stored: false, reason: error?.name || 'unknown_error', key };
+    }
+}
+
+module.exports = {
+    persistLead,
+    leadKey,
+    buildLeadRecord,
+    persistWhatsAppClick,
+    whatsappClickKey,
+    buildWhatsAppClickRecord
+};

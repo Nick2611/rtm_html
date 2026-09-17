@@ -20,25 +20,44 @@ const assert = require('node:assert/strict');
  *      ni el nombre que ya recibe Clarity.
  */
 
-function loadModule({ gtag, clarity } = {}) {
+function fakeStorage(store = new Map()) {
+  return {
+    store,
+    getItem: key => (store.has(key) ? store.get(key) : null),
+    setItem: (key, value) => store.set(key, String(value))
+  };
+}
+
+function loadModule({
+  gtag,
+  clarity,
+  search = '',
+  pathname = '/index.html',
+  hostname = 'localhost',
+  localStorage,
+  cookie = '',
+  navigator,
+  fetch
+} = {}) {
   delete require.cache[require.resolve('./conversion-tracking.js')];
 
-  const store = new Map();
   const listeners = [];
   const fakeWindow = {
-    location: { search: '', pathname: '/index.html' },
+    location: { search, pathname, hostname, href: `https://${hostname}${pathname}${search}` },
     URLSearchParams,
-    sessionStorage: {
-      getItem: key => (store.has(key) ? store.get(key) : null),
-      setItem: (key, value) => store.set(key, value)
-    },
+    sessionStorage: fakeStorage(),
     document: {
       body: { dataset: {} },
+      cookie,
       addEventListener: (type, handler) => listeners.push({ type, handler })
-    }
+    },
+    listeners
   };
   if (gtag) fakeWindow.gtag = gtag;
   if (clarity) fakeWindow.clarity = clarity;
+  if (localStorage) fakeWindow.localStorage = localStorage;
+  if (navigator) fakeWindow.navigator = navigator;
+  if (fetch) fakeWindow.fetch = fetch;
 
   const previous = global.window;
   global.window = fakeWindow;
@@ -459,4 +478,217 @@ test('los enlaces que no son de WhatsApp no se tocan', () => {
   assert.equal(tel.getAttribute('href'), 'tel:+5491151531530');
   assert.equal(api.decorateWhatsAppLink(internal, '/index.html'), null);
   assert.equal(internal.getAttribute('href'), '/productos/totems.html');
+});
+
+/**
+ * Código de referencia e identificadores de clic de Google Ads.
+ *
+ * Lo que protegen estas pruebas, en orden de gravedad si se rompen:
+ *
+ *   1. Ni el código ni el gclid llegan a Clarity o a GA4. El código, unido a la conversación de
+ *      WhatsApp, identifica a una persona; Clarity guarda la grabación de su sesión.
+ *   2. Desde localhost no se escribe nada en el buzón de producción.
+ *   3. El gclid de la URL de aterrizaje sobrevive a la navegación: el clic en WhatsApp casi nunca
+ *      pasa en la página donde entró el anuncio.
+ *   4. El código es legible por una persona: sin 0/O ni 1/I/L.
+ */
+
+const GCLID = 'Cj0KCQjw_abc-123XYZ';
+
+function recordingBeacon({ accept = true } = {}) {
+  const sent = [];
+  return {
+    sent,
+    navigator: {
+      sendBeacon(url, body) {
+        sent.push({ url, body });
+        return accept;
+      }
+    }
+  };
+}
+
+/** Un clic delegado como el que despacha el navegador en fase de captura. */
+function clickOn(fakeWindow, anchor) {
+  anchor.matches = selector => selector === '[data-conversion]' && Boolean(anchor.dataset.conversion);
+  const listener = fakeWindow.listeners.find(({ type }) => type === 'click');
+  listener.handler({ target: anchor, composedPath: () => [anchor] });
+}
+
+test('el código usa sólo el alfabeto legible y siempre tiene cinco caracteres', () => {
+  const { api } = loadModule();
+
+  for (let i = 0; i < 500; i += 1) {
+    const code = api.generateRefCode();
+    assert.match(code, api.REF_CODE_PATTERN);
+    assert.doesNotMatch(code, /[01ILO]/);
+  }
+});
+
+test('la marca lleva el código al final y no se apila con dos toques', () => {
+  const { api } = loadModule();
+  const anchor = fakeAnchor(WA_BASE, { conversion: 'whatsapp_click', conversionPlacement: 'landing_hero' });
+
+  api.decorateWhatsAppLink(anchor, '/productos/pisos-led.html', 'K7Q3M');
+  api.decorateWhatsAppLink(anchor, '/productos/pisos-led.html', 'K7Q3M');
+  const text = new URL(anchor.getAttribute('href')).searchParams.get('text');
+
+  assert.ok(text.endsWith('(rtm: productos/pisos-led · landing-hero · #K7Q3M)'));
+  assert.equal(text.match(/#K7Q3M/g).length, 1);
+});
+
+test('un código con forma inválida no se escribe en el mensaje', () => {
+  const { api } = loadModule();
+  const anchor = fakeAnchor(WA_BASE, { conversion: 'whatsapp_click' });
+
+  api.decorateWhatsAppLink(anchor, '/index.html', 'abc<script>');
+  const text = new URL(anchor.getAttribute('href')).searchParams.get('text');
+
+  assert.ok(text.endsWith('(rtm: home)'));
+});
+
+test('el mismo código se usa en todos los toques de una vista de página', () => {
+  const beacon = recordingBeacon();
+  const { fakeWindow } = loadModule({ hostname: 'pantallasledrtm.com', navigator: beacon.navigator });
+  const hero = fakeAnchor(WA_BASE, { conversion: 'whatsapp_hero' });
+  const dock = fakeAnchor(WA_BASE, { conversion: 'whatsapp_floating' });
+
+  clickOn(fakeWindow, hero);
+  clickOn(fakeWindow, dock);
+
+  const refs = beacon.sent.map(({ body }) => JSON.parse(body).ref);
+  assert.equal(refs.length, 2);
+  assert.equal(refs[0], refs[1]);
+  assert.ok(new URL(dock.getAttribute('href')).searchParams.get('text').endsWith(`#${refs[0]})`));
+});
+
+test('el gclid de la URL se guarda y sobrevive a la página siguiente', () => {
+  const localStorage = fakeStorage();
+  loadModule({ search: `?gclid=${GCLID}`, pathname: '/productos/pisos-led.html', localStorage });
+
+  // Segunda página de la misma visita: la URL ya no trae el gclid.
+  const { api } = loadModule({ pathname: '/productos.html', localStorage });
+
+  assert.deepEqual(api.captureClickIds(), { gclid: GCLID });
+});
+
+test('gana el último clic y reemplaza el juego entero de identificadores', () => {
+  const localStorage = fakeStorage();
+  loadModule({ search: `?gclid=${GCLID}`, localStorage });
+  const { api } = loadModule({ search: '?gbraid=0AAAAAnueva', localStorage });
+
+  assert.deepEqual(api.captureClickIds(), { gbraid: '0AAAAAnueva' });
+});
+
+test('un identificador de más de 90 días se descarta', () => {
+  const localStorage = fakeStorage();
+  const old = Date.now() - 91 * 24 * 60 * 60 * 1000;
+  localStorage.setItem('rtm_ads_click_ids', JSON.stringify({ ids: { gclid: GCLID }, capturedAt: old }));
+
+  const { api } = loadModule({ localStorage });
+
+  assert.deepEqual(api.captureClickIds(), {});
+});
+
+test('un gclid con forma manipulada no se acepta', () => {
+  const localStorage = fakeStorage();
+  const { api } = loadModule({ search: '?gclid=abc%22%3E%3Cscript%3E', localStorage });
+
+  assert.deepEqual(api.captureClickIds(), {});
+  assert.equal(localStorage.getItem('rtm_ads_click_ids'), null);
+});
+
+test('sin URL ni almacenamiento, se usa el gclid de la cookie _gcl_aw', () => {
+  const seconds = Math.floor(Date.now() / 1000) - 3600;
+  const { api } = loadModule({ cookie: `otra=1; _gcl_aw=GCL.${seconds}.${GCLID}; _ga=GA1` });
+
+  assert.deepEqual(api.captureClickIds(), { gclid: GCLID });
+});
+
+test('desde localhost no se manda nada al buzón de producción', () => {
+  const beacon = recordingBeacon();
+  const { fakeWindow } = loadModule({ search: `?gclid=${GCLID}`, navigator: beacon.navigator });
+
+  clickOn(fakeWindow, fakeAnchor(WA_BASE, { conversion: 'whatsapp_hero' }));
+
+  assert.equal(beacon.sent.length, 0);
+});
+
+test('en producción el registro lleva código, emplazamiento, página e identificador', () => {
+  const beacon = recordingBeacon();
+  const { fakeWindow } = loadModule({
+    hostname: 'pantallasledrtm.com',
+    pathname: '/productos/pisos-led.html',
+    search: `?gclid=${GCLID}&utm_source=google`,
+    localStorage: fakeStorage(),
+    navigator: beacon.navigator
+  });
+
+  clickOn(fakeWindow, fakeAnchor(WA_BASE, { conversion: 'whatsapp_hero', conversionPlacement: 'landing_hero' }));
+
+  assert.equal(beacon.sent.length, 1);
+  assert.match(beacon.sent[0].url, /execute-api\.us-east-1\.amazonaws\.com\/Prod\/send-email$/);
+  // Un string, no un Blob JSON: viaja como text/plain y no dispara preflight de CORS.
+  assert.equal(typeof beacon.sent[0].body, 'string');
+
+  const payload = JSON.parse(beacon.sent[0].body);
+  assert.equal(payload.event, 'whatsapp_click');
+  assert.match(payload.ref, /^[2-9A-HJKMNP-Z]{5}$/);
+  assert.equal(payload.placement, 'landing-hero');
+  assert.equal(payload.context.page, '/productos/pisos-led.html');
+  assert.deepEqual(payload.context.clickIds, { gclid: GCLID });
+  assert.equal(payload.context.utm.utm_source, 'google');
+});
+
+test('si el beacon se rechaza, se usa fetch con keepalive', () => {
+  const beacon = recordingBeacon({ accept: false });
+  const fetchCalls = [];
+  const { fakeWindow } = loadModule({
+    hostname: 'pantallasledrtm.com',
+    navigator: beacon.navigator,
+    fetch: (url, options) => {
+      fetchCalls.push({ url, options });
+      return Promise.resolve();
+    }
+  });
+
+  clickOn(fakeWindow, fakeAnchor(WA_BASE, { conversion: 'whatsapp_hero' }));
+
+  assert.equal(fetchCalls.length, 1);
+  assert.equal(fetchCalls[0].options.keepalive, true);
+  assert.equal(fetchCalls[0].options.headers['Content-Type'], 'text/plain;charset=UTF-8');
+});
+
+test('un transporte que lanza no rompe el clic ni el tracking', () => {
+  const clarityCalls = [];
+  const { fakeWindow } = loadModule({
+    hostname: 'pantallasledrtm.com',
+    clarity: (...args) => clarityCalls.push(args),
+    navigator: { sendBeacon: () => { throw new Error('bloqueado'); } },
+    fetch: () => { throw new Error('bloqueado'); }
+  });
+
+  assert.doesNotThrow(() => clickOn(fakeWindow, fakeAnchor(WA_BASE, { conversion: 'whatsapp_hero' })));
+  assert.ok(clarityCalls.some(([kind]) => kind === 'event'), 'Clarity igual recibe el evento');
+});
+
+test('ni el código ni el gclid llegan a Clarity ni a GA4', () => {
+  const clarityCalls = [];
+  const { gtag, calls: gtagCalls } = recordingGtag();
+  const beacon = recordingBeacon();
+  const { fakeWindow } = loadModule({
+    hostname: 'pantallasledrtm.com',
+    search: `?gclid=${GCLID}`,
+    localStorage: fakeStorage(),
+    navigator: beacon.navigator,
+    gtag,
+    clarity: (...args) => clarityCalls.push(args)
+  });
+
+  clickOn(fakeWindow, fakeAnchor(WA_BASE, { conversion: 'whatsapp_hero' }));
+
+  const { ref } = JSON.parse(beacon.sent[0].body);
+  const analytics = JSON.stringify([clarityCalls, gtagCalls]);
+  assert.ok(!analytics.includes(ref), 'el código no puede viajar a la analítica');
+  assert.ok(!analytics.includes(GCLID), 'el gclid no puede viajar a la analítica');
 });
